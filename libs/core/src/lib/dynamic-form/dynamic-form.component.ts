@@ -10,18 +10,18 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import { DynamicFormGroup } from "../dynamic-form-group";
+import { FastFormsGroup } from "../fast-forms-group";
 import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from "../model";
 import { FormControlFactoryService } from '../control/form-control-factory.service';
 import { ValidatorFactoryService } from "../validation/validator-factory.service";
 
 @Component({
-  selector: 'code-dynamic-form',
+  selector: 'fast-form',
   templateUrl: './dynamic-form.component.html',
 })
 export class DynamicFormComponent implements OnChanges {
 
-  @Input() public form: DynamicFormGroup;
+  @Input() public form: FastFormsGroup;
   @ViewChild("componentViewContainer", {
     read: ViewContainerRef,
     static: true
@@ -32,7 +32,7 @@ export class DynamicFormComponent implements OnChanges {
   constructor(private controlFactory: FormControlFactoryService,
               private validatorFactory: ValidatorFactoryService,
               @Optional() @Inject(DYNAMIC_FORM_CONTROL) private controlDefinitions?: Array<DynamicFormDefinition>) {
-    this.form = new DynamicFormGroup([], this.controlFactory, this.validatorFactory);
+    this.form = new FastFormsGroup([], this.controlFactory, this.validatorFactory);
   }
 
   ngOnChanges(changes: SimpleChanges): void {

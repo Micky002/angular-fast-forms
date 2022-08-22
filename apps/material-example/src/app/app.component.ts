@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FastFormsGroup, FastFormsService } from '@ngx-fast-forms/core';
 
 @Component({
   selector: 'frontend-root',
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'material-example';
+
+  public form!: FastFormsGroup;
+
+  constructor(private fastFormService: FastFormsService) {
+    this.form = fastFormService.createDynamicForm([{
+      id: 'test-input',
+      type: 'input'
+    }])
+  }
 }

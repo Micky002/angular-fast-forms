@@ -2,12 +2,22 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { NxWelcomeComponent } from './nx-welcome.component';
+import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
-  declarations: [AppComponent, NxWelcomeComponent],
-  imports: [BrowserModule],
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    MaterialFastFormsModule
+  ],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [
+    AppComponent
+  ]
 })
-export class AppModule {}
+export class AppModule {
+}

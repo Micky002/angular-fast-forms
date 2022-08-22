@@ -10,6 +10,7 @@
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main",
     "start": "nx serve",
     "start:auth-ui": "nx serve auth-ui",
+    "start:material-example": "nx serve material-example",
     "start:auth-client-test": "nx serve auth-client-test-app",
     "build": "nx build",
     "build:auth-ui:production": "nx build auth-ui --configuration=production",
@@ -59,7 +60,7 @@
     "date-fns": "2.29.2",
     "luxon": "3.0.1",
     "rxjs": "7.5.6",
-    "tslib": "~2.0.0",
+    "tslib": "~2.3.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
@@ -90,7 +91,7 @@
     "jasmine-spec-reporter": "~7.0.0",
     "jest": "27.5.1",
     "jest-preset-angular": "~11.1.2",
-    "ng-packagr": "14.1.0",
+    "ng-packagr": "~14.1.0",
     "nx": "14.5.9",
     "postcss": "~8.4.5",
     "postcss-import": "~14.1.0",

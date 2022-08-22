@@ -25,6 +25,9 @@ export class ValidatorFactoryService {
     if (options.maxLength) {
       validators.push(Validators.maxLength(options.maxLength));
     }
+    if (options.email) {
+      validators.push(Validators.email);
+    }
     return validators;
   }
 }

@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DynamicFormService } from './dynamic-form.service';
+import { FastFormsService } from './fast-forms.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormControlFactoryService } from './control/form-control-factory.service';
 import { ValidatorFactoryService } from './validation/validator-factory.service';
 
-describe('DynamicFormService', () => {
-  let service: DynamicFormService;
+describe('FastFormsService', () => {
+  let service: FastFormsService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -14,12 +14,12 @@ describe('DynamicFormService', () => {
         HttpClientTestingModule
       ],
       providers: [
-        DynamicFormService,
+        FastFormsService,
         FormControlFactoryService,
         ValidatorFactoryService
       ]
     });
-    service = TestBed.inject(DynamicFormService);
+    service = TestBed.inject(FastFormsService);
   });
 
   it('should be created', () => {

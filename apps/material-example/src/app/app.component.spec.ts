@@ -1,11 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { NxWelcomeComponent } from './nx-welcome.component';
+import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AppComponent, NxWelcomeComponent],
+      imports: [
+        NoopAnimationsModule,
+        MaterialFastFormsModule
+      ],
+      declarations: [
+        AppComponent
+      ],
     }).compileComponents();
   });
 
@@ -19,14 +26,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app.title).toEqual('material-example');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Welcome material-example'
-    );
   });
 });

@@ -3,7 +3,7 @@ import { Question } from './model';
 import { FormControlFactoryService } from './control/form-control-factory.service';
 import { ValidatorFactoryService } from "./validation/validator-factory.service";
 
-export class DynamicFormGroup extends FormGroup {
+export class FastFormsGroup extends FormGroup {
   private readonly _questions: Array<Question>;
 
   constructor(questions: Array<Question>,
@@ -26,7 +26,7 @@ export class DynamicFormGroup extends FormGroup {
 
   private toDef(form: FormGroup, control: Question) {
     if (control.type === 'group') {
-      const subFormGroup = new DynamicFormGroup(control.children || [], this.controlFactory, this.validatorFactory);
+      const subFormGroup = new FastFormsGroup(control.children || [], this.controlFactory, this.validatorFactory);
       form.addControl(control.id, subFormGroup);
     } else {
       const formControl = this.controlFactory.createControl(control.type);

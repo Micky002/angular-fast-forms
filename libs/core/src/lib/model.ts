@@ -1,12 +1,12 @@
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { InjectionToken, Type } from "@angular/core";
-import { DynamicFormControl } from "./dynamic-form-control";
+import { FastFormControl } from "./fast-form-control";
 
 export const DYNAMIC_FORM_CONTROL = new InjectionToken<DynamicFormDefinition>('DYNAMIC_FORM_CONTROL');
 
 export interface DynamicFormDefinition {
   type: string;
-  component: Type<DynamicFormControl>;
+  component: Type<FastFormControl>;
   controlFactory?: () => AbstractControl;
 }
 
@@ -29,6 +29,7 @@ export interface ValidationOptions {
   minLength?: number;
   max?: number;
   maxLength?: number;
+  email?: boolean;
 }
 
 export interface FormDefinition {

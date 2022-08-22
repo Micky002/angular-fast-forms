@@ -3,7 +3,7 @@
 
   <ng-container *ngFor="let question of form.questions">
     <ng-container *ngIf="question.type === 'group'">
-      <code-dynamic-form [form]="$any(form.get(question.id))"></code-dynamic-form>
+      <fast-form [form]="$any(form.get(question.id))"></fast-form>
     </ng-container>
   </ng-container>
 
