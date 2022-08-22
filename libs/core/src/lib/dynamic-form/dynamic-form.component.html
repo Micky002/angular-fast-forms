@@ -1,0 +1,11 @@
+<form (ngSubmit)="processOnSubmit($event)" [formGroup]="form" class="codentury-dynamic-form">
+  <ng-container #componentViewContainer></ng-container>
+
+  <ng-container *ngFor="let question of form.questions">
+    <ng-container *ngIf="question.type === 'group'">
+      <code-dynamic-form [form]="$any(form.get(question.id))"></code-dynamic-form>
+    </ng-container>
+  </ng-container>
+
+  <button style="display: none" type="submit">hidden submit</button>
+</form>
