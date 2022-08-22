@@ -1,0 +1,46 @@
+{
+  "projectType": "library",
+  "sourceRoot": "libs/dynamic-forms/src",
+  "prefix": "frontend",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "outputs": [
+        "dist/libs/dynamic-forms"
+      ],
+      "options": {
+        "project": "libs/dynamic-forms/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/dynamic-forms/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/dynamic-forms/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "coverage/libs/dynamic-forms"
+      ],
+      "options": {
+        "jestConfig": "libs/dynamic-forms/jest.config.ts",
+        "passWithNoTests": true,
+        "runInBand": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/dynamic-forms/**/*.ts",
+          "libs/dynamic-forms/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

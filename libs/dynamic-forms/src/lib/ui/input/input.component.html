@@ -1,0 +1,21 @@
+<mat-form-field>
+  <mat-label *ngIf="question.label">{{question.label}}</mat-label>
+  <input #inputElement [formControl]="getControl()" [type]="type" matInput>
+  <mat-icon *ngIf="format === 'currency'" matSuffix>€</mat-icon>
+  <mat-error *ngIf="control.hasError('required')">
+    Value is required
+  </mat-error>
+  <mat-error *ngIf="control.hasError('min')">
+    Min value is {{validation?.min}}
+  </mat-error>
+  <mat-error *ngIf="control.hasError('minlength')">
+    Min length is {{validation?.minLength}}
+  </mat-error>
+  <mat-error *ngIf="control.hasError('max')">
+    Max value is {{validation?.max}}
+  </mat-error>
+  <mat-error *ngIf="control.hasError('maxlength')">
+    Max length is {{validation?.maxLength}}
+  </mat-error>
+</mat-form-field>
+
