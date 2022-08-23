@@ -3,7 +3,6 @@
   "version": 2,
   "projects": {
     "core": "libs/core",
-    "dynamic-forms": "libs/dynamic-forms",
     "material": "libs/material",
     "material-example": "apps/material-example",
     "material-example-e2e": "apps/material-example-e2e"

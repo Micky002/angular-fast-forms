@@ -15,7 +15,6 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@codentury/dynamic-forms": ["libs/dynamic-forms/src/index.ts"],
       "@ngx-fast-forms/core": ["libs/core/src/index.ts"],
       "@ngx-fast-forms/material": ["libs/material/src/index.ts"]
     }
