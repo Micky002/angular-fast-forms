@@ -15,6 +15,9 @@ export class AppComponent {
     this.form = fastFormService.createDynamicForm([{
       id: 'test-input',
       type: 'input'
+    }, {
+      id: 'test-another-input',
+      type: 'input'
     }])
   }
 }

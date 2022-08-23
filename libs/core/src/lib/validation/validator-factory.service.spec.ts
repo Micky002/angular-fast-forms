@@ -2,12 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { ValidatorFactoryService } from './validator-factory.service';
 import { FormControl, Validators } from '@angular/forms';
-import {
-  AsyncValidatorRegistration,
-  registerAsyncValidator,
-  registerAsyncValidatorWithDeps,
-  registerValidator
-} from './validation.model';
+import { AsyncValidatorRegistration, registerValidator } from './validation.model';
 import { HttpClient } from '@angular/common/http';
 import { Provider } from '@angular/core';
 import { CUSTOM_ASYNC_VALIDATOR } from '@ngx-fast-forms/core';

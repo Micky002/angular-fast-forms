@@ -3,12 +3,31 @@ import { AsyncValidatorFn, ValidatorFn, Validators } from '@angular/forms';
 import { CUSTOM_ASYNC_VALIDATOR, CUSTOM_VALIDATOR, ValidationOptions } from '../model';
 import { AsyncValidatorRegistration, ValidatorRegistration } from './validation.model';
 
+
 @Injectable()
 export class ValidatorFactoryService {
 
+  private validatorRegistry: {[key: string]: ValidatorFn} = {};
+  private asyncValidatorRegistry: {[key: string]: AsyncValidatorFn} = {};
+
   constructor(@Optional() @Inject(CUSTOM_VALIDATOR) private customValidators?: Array<ValidatorRegistration>,
               @Optional() @Inject(CUSTOM_ASYNC_VALIDATOR) private customAsyncValidators?: Array<AsyncValidatorRegistration>) {
-    // TODO validate validators
+    if (customValidators) {
+      customValidators.forEach(valReg => {
+        if (!valReg.id) {
+          throw new Error('Id of validator is missing.');
+        }
+        this.validatorRegistry[valReg.id] = valReg.validator;
+      })
+    }
+    if (customAsyncValidators) {
+      customAsyncValidators.forEach(valReg => {
+        if (!valReg.id) {
+          throw new Error('Id of async validator is missing.');
+        }
+        this.asyncValidatorRegistry[valReg.id] = valReg.validator;
+      })
+    }
   }
 
   public createValidators(options?: ValidationOptions): ValidatorFn | null {
@@ -47,17 +66,17 @@ export class ValidatorFactoryService {
     return validators;
   }
 
-  private registerCustomValidators<T extends ValidatorFn | AsyncValidatorFn, R extends ValidatorRegistration | AsyncValidatorRegistration>(
-    validatorResolver: (id: string) => R, custom?: string | Array<string>, customFn?: T | Array<T>
+  private registerCustomValidators<T extends ValidatorFn | AsyncValidatorFn>(
+    validatorResolver: (id: string) => T, custom?: string | Array<string>, customFn?: T | Array<T>
   ): Array<T> {
     const validators: T[] = [];
     if (custom) {
       if (custom instanceof Array) {
         custom.map(validatorId => validatorResolver(validatorId))
-          .forEach(validator => validators.push(validator.validator as T));
+          .forEach(validator => validators.push(validator));
       } else {
         const validator = validatorResolver(custom);
-        validators.push(validator.validator as T);
+        validators.push(validator);
       }
     }
     if (customFn) {
@@ -70,22 +89,16 @@ export class ValidatorFactoryService {
     return validators;
   }
 
-  private getCustomValidator = (id: string): ValidatorRegistration => {
-    if (!this.customValidators || this.customValidators.length === 0) {
-      throw new Error(`No validator registered with id [${id}].`);
-    }
-    const validator = this.customValidators.find(vali => vali.id === id);
+  private getCustomValidator = (id: string): ValidatorFn => {
+    const validator = this.validatorRegistry[id];
     if (!validator) {
       throw new Error(`No validator registered with id [${id}].`);
     }
     return validator;
   }
 
-  private getCustomAsyncValidator = (id: string): AsyncValidatorRegistration => {
-    if (!this.customAsyncValidators || this.customAsyncValidators.length === 0) {
-      throw new Error(`No async validator registered with id [${id}].`);
-    }
-    const validator = this.customAsyncValidators.find(vali => vali.id === id);
+  private getCustomAsyncValidator = (id: string): AsyncValidatorFn => {
+    const validator = this.asyncValidatorRegistry[id];
     if (!validator) {
       throw new Error(`No async validator registered with id [${id}].`);
     }

@@ -8,11 +8,9 @@
   "scripts": {
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main",
-    "start": "nx serve",
-    "start:auth-ui": "nx serve auth-ui",
-    "start:material-example": "nx serve material-example",
-    "start:auth-client-test": "nx serve auth-client-test-app",
-    "build": "nx build",
+    "build:core": "nx build core:build",
+    "build:material": "nx build material:build",
+
     "build:auth-ui:production": "nx build auth-ui --configuration=production",
     "build:api-client:production": "nx build api-client --configuration=production",
     "build:auth-client:production": "nx build auth-client --configuration=production",

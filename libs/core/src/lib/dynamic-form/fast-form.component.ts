@@ -6,14 +6,13 @@ import {
   OnChanges,
   Optional,
   Output,
-  SimpleChanges,
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import { FastFormsGroup } from "../fast-forms-group";
-import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from "../model";
+import { FastFormsGroup } from '../fast-forms-group';
+import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from '../model';
 import { FormControlFactoryService } from '../control/form-control-factory.service';
-import { ValidatorFactoryService } from "../validation/validator-factory.service";
+import { ValidatorFactoryService } from '../validation/validator-factory.service';
 
 @Component({
   selector: 'aff-form-group',

@@ -17,7 +17,10 @@
           "apps/material-example/src/favicon.ico",
           "apps/material-example/src/assets"
         ],
-        "styles": ["apps/material-example/src/styles.scss"],
+        "styles": [
+          "apps/material-example/src/styles.scss",
+          "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css"
+        ],
         "scripts": []
       },
       "configurations": {

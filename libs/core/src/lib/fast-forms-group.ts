@@ -10,6 +10,13 @@ export class FastFormsGroup extends FormGroup {
               private controlFactory: FormControlFactoryService,
               private validatorFactory: ValidatorFactoryService) {
     super({})
+    const ids = new Set();
+    questions.forEach(q => {
+      if (ids.has(q.id)) {
+        throw new Error(`Duplicated form control id ${q.id} found.`);
+      }
+      ids.add(q.id);
+    });
     this._questions = questions;
     this.toDefinition();
   }
