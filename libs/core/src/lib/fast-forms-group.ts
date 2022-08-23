@@ -30,8 +30,10 @@ export class FastFormsGroup extends FormGroup {
       form.addControl(control.id, subFormGroup);
     } else {
       const formControl = this.controlFactory.createControl(control.type);
-      const validators = this.validatorFactory.createValidators(control.validation);
-      formControl.addValidators(validators);
+      const validator = this.validatorFactory.createValidators(control.validation);
+      const asyncValidator = this.validatorFactory.createAsyncValidators(control.validation);
+      formControl.setValidators(validator);
+      formControl.setAsyncValidators(asyncValidator);
       form.addControl(control.id, formControl);
     }
   }

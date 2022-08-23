@@ -1,8 +1,10 @@
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormGroup, ValidatorFn } from '@angular/forms';
 import { InjectionToken, Type } from "@angular/core";
 import { FastFormControl } from "./fast-form-control";
 
-export const DYNAMIC_FORM_CONTROL = new InjectionToken<DynamicFormDefinition>('DYNAMIC_FORM_CONTROL');
+export const DYNAMIC_FORM_CONTROL = new InjectionToken<DynamicFormDefinition>('AFF_DYNAMIC_FORM_CONTROL');
+export const CUSTOM_VALIDATOR = new InjectionToken<DynamicFormDefinition>('AFF_CUSTOM_VALIDATOR');
+export const CUSTOM_ASYNC_VALIDATOR = new InjectionToken<DynamicFormDefinition>('AFF_CUSTOM_ASYNC_VALIDATOR');
 
 export interface DynamicFormDefinition {
   type: string;
@@ -30,6 +32,10 @@ export interface ValidationOptions {
   max?: number;
   maxLength?: number;
   email?: boolean;
+  custom?: string | Array<string>;
+  customFn?: ValidatorFn | Array<ValidatorFn>;
+  customAsync?: string | Array<string>;
+  customAsyncFn?: AsyncValidatorFn | Array<AsyncValidatorFn>;
 }
 
 export interface FormDefinition {
