@@ -21,7 +21,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "angular-fast-forms",
+            "prefix": "aff",
             "style": "kebab-case"
           }
         ]

@@ -3,7 +3,7 @@
 
   <ng-container *ngFor="let question of form.questions">
     <ng-container *ngIf="question.type === 'group'">
-      <fast-form [form]="$any(form.get(question.id))"></fast-form>
+      <aff-form-group [form]="$any(form.get(question.id))"></aff-form-group>
     </ng-container>
   </ng-container>
 

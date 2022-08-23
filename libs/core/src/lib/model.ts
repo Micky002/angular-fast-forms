@@ -19,7 +19,7 @@ export interface Question {
   validation?: ValidationOptions;
   hidden?: boolean;
   properties?: QuestionProperties
-  defaultValue?: string | number | undefined;
+  defaultValue?: string | number;
   children?: Array<Question>
 }
 

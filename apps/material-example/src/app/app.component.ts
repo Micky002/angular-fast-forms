@@ -12,7 +12,6 @@ export class AppComponent {
   public form!: FastFormsGroup;
 
   constructor(private fastFormService: FastFormsService) {
-    console.log('testing');
     this.form = fastFormService.createDynamicForm([{
       id: 'test-input',
       type: 'input'

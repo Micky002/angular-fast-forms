@@ -16,10 +16,10 @@ import { FormControlFactoryService } from '../control/form-control-factory.servi
 import { ValidatorFactoryService } from "../validation/validator-factory.service";
 
 @Component({
-  selector: 'fast-form',
-  templateUrl: './dynamic-form.component.html',
+  selector: 'aff-form-group',
+  templateUrl: './fast-form.component.html',
 })
-export class DynamicFormComponent implements OnChanges {
+export class FastFormComponent implements OnChanges {
 
   @Input() public form: FastFormsGroup;
   @ViewChild("componentViewContainer", {
@@ -35,7 +35,7 @@ export class DynamicFormComponent implements OnChanges {
     this.form = new FastFormsGroup([], this.controlFactory, this.validatorFactory);
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.componentViewContainerRef.clear();
     this.form.questions.filter(question => !question.hidden)
       .forEach(question => {

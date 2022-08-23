@@ -7,7 +7,7 @@ import { FormControl } from '@angular/forms';
 
 
 @Component({
-  selector: 'testing-control',
+  selector: 'aff-testing-control',
   template: ''
 })
 class DummyFormComponent extends FastFormControl {

@@ -6,8 +6,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatLuxonDateModule } from '@angular/material-luxon-adapter';
-import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
-import { FastFormsService } from './fast-forms.service';
+import { FastFormComponent } from './dynamic-form/fast-form.component';
+import { FastFormsService } from './service/fast-forms.service';
 import { ValidatorFactoryService } from './validation/validator-factory.service';
 import { FormControlFactoryService } from './control/form-control-factory.service';
 
@@ -22,10 +22,10 @@ import { FormControlFactoryService } from './control/form-control-factory.servic
     MatLuxonDateModule
   ],
   declarations: [
-    DynamicFormComponent
+    FastFormComponent
   ],
   exports: [
-    DynamicFormComponent
+    FastFormComponent
   ],
   providers: [
     FastFormsService,
