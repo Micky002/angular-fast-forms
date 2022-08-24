@@ -1,10 +1,7 @@
 {
-  "name": "frontend",
+  "name": "root",
   "version": "0.0.0",
   "license": "MIT",
-  "publishConfig": {
-    "registry": "https://nexus.contabo-donald.codentury.com/repository/npm-codentury-hosted"
-  },
   "scripts": {
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main",
