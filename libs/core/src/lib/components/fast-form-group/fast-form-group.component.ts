@@ -35,7 +35,7 @@ export class FastFormGroupComponent implements OnChanges {
       });
   }
 
-  processOnSubmit(event: any) {
+  processOnSubmit(event: unknown) {
     this.form.markAllAsTouched();
     this.codeOnSubmit.next(event);
   }
@@ -48,7 +48,6 @@ export class FastFormGroupComponent implements OnChanges {
         const component = dynamicFormControlRef.instance as FastFormInline;
         component.formGroup = this.form
         component.questions = question.children || [];
-        // component.control = this.form.controls[question.id];
       } else {
         const dynamicFormControlRef = this.componentViewContainerRef.createComponent(dynamicFormDefinition.component);
         const component = dynamicFormControlRef.instance as FastFormControl;

@@ -12,7 +12,7 @@ export interface DynamicFormDefinition {
   controlFactory?: () => AbstractControl;
 }
 
-export type QuestionProperties = { [key: string]: any };
+export type QuestionProperties = { [key: string]: unknown };
 
 export interface Question {
   id: string;
