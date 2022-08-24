@@ -43,13 +43,12 @@ export class FastFormGroupComponent implements OnChanges {
   private createComponent(question: Question) {
     const dynamicFormDefinition = this.uiRegistry.find(question.type);
     if (dynamicFormDefinition) {
+      const dynamicFormControlRef = this.componentViewContainerRef.createComponent(dynamicFormDefinition.component);
       if (dynamicFormDefinition.inline) {
-        const dynamicFormControlRef = this.componentViewContainerRef.createComponent(dynamicFormDefinition.component);
         const component = dynamicFormControlRef.instance as FastFormInline;
         component.formGroup = this.form
         component.questions = question.children || [];
       } else {
-        const dynamicFormControlRef = this.componentViewContainerRef.createComponent(dynamicFormDefinition.component);
         const component = dynamicFormControlRef.instance as FastFormControl;
         component.formGroup = this.form
         component.question = question;

@@ -23,7 +23,6 @@ export class FastFormRowComponent extends FastFormInline implements OnInit, OnCh
 
   ngOnInit(): void {
     this.componentViewContainerRef.clear();
-    console.log(this.questions);
     this.questions?.filter(question => !question.hidden)
       .forEach(question => {
         this.createComponent(question);
@@ -32,7 +31,6 @@ export class FastFormRowComponent extends FastFormInline implements OnInit, OnCh
 
   ngOnChanges(): void {
     this.componentViewContainerRef.clear();
-    console.log(this.questions);
     this.questions.filter(question => !question.hidden)
       .forEach(question => {
         this.createComponent(question);
