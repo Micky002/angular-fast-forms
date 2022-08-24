@@ -1,7 +1,7 @@
 import { AbstractControl, FormGroup } from "@angular/forms";
 import { Question, QuestionProperties, ValidationOptions } from '../model';
 
-export abstract class FastFormControl {
+export abstract class FastFormControl<T = QuestionProperties> {
   formGroup!: FormGroup;
   control!: AbstractControl;
   question!: Question;
@@ -10,7 +10,7 @@ export abstract class FastFormControl {
     return this.question.validation;
   }
 
-  protected get baseProperties(): QuestionProperties {
-    return this.question?.properties || {};
+  protected get properties(): T {
+    return (this.question?.properties || {}) as unknown as T;
   }
 }
