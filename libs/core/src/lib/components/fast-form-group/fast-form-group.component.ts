@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, ViewChild, ViewContainerRef } from '@angular/core';
-import { FastFormsGroup } from '../../control/fast-forms-group';
+import { FastFormGroup } from '../../control/fast-form-group';
 import { Question } from '../../model';
 import { FormControlFactoryService } from '../../service/form-control-factory.service';
 import { ValidatorFactoryService } from '../../validation/validator-factory.service';
@@ -13,7 +13,7 @@ import { FastFormInline } from '../../control/abstract-inline';
 })
 export class FastFormGroupComponent implements OnChanges {
 
-  @Input() public form: FastFormsGroup;
+  @Input() public form: FastFormGroup;
   @ViewChild("componentViewContainer", {
     read: ViewContainerRef,
     static: true
@@ -24,7 +24,7 @@ export class FastFormGroupComponent implements OnChanges {
   constructor(private controlFactory: FormControlFactoryService,
               private validatorFactory: ValidatorFactoryService,
               private uiRegistry: UiRegistryService) {
-    this.form = new FastFormsGroup([], this.controlFactory, this.validatorFactory, this.uiRegistry);
+    this.form = new FastFormGroup([], this.controlFactory, this.validatorFactory, this.uiRegistry);
   }
 
   ngOnChanges(): void {

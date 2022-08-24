@@ -1,7 +1,9 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from '@ngx-fast-forms/core';
 
-@Injectable()
+@Injectable({
+  providedIn: 'any'
+})
 export class UiRegistryService {
 
   private uiComponents: {[key: string]: DynamicFormDefinition} = {};

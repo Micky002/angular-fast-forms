@@ -1,19 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FastFormRowComponent } from './fast-form-row.component';
+import { LazyInputComponent } from './lazy-input.component';
 
-describe('FastFormRowComponent', () => {
-  let component: FastFormRowComponent;
-  let fixture: ComponentFixture<FastFormRowComponent>;
+describe('LazyInputComponent', () => {
+  let component: LazyInputComponent;
+  let fixture: ComponentFixture<LazyInputComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        FastFormRowComponent
-      ]
+      declarations: [LazyInputComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FastFormRowComponent);
+    fixture = TestBed.createComponent(LazyInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,6 +1,6 @@
-import { AbstractControl, AsyncValidatorFn, FormGroup, ValidatorFn } from '@angular/forms';
-import { InjectionToken, Type } from "@angular/core";
-import { FastFormControl } from "./control/abstract-control";
+import { AbstractControl, AsyncValidatorFn, ValidatorFn } from '@angular/forms';
+import { InjectionToken, Type } from '@angular/core';
+import { FastFormControl } from './control/abstract-control';
 import { FastFormInline } from './control/abstract-inline';
 
 export const DYNAMIC_FORM_CONTROL = new InjectionToken<DynamicFormDefinition>('AFF_DYNAMIC_FORM_CONTROL');
