@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FastFormGroup, FastFormsService } from '@ngx-fast-forms/core';
 
 @Component({
@@ -6,9 +6,10 @@ import { FastFormGroup, FastFormsService } from '@ngx-fast-forms/core';
   templateUrl: './material-example.component.html',
   styleUrls: ['./material-example.component.scss'],
 })
-export class MaterialExampleComponent {
+export class MaterialExampleComponent implements OnInit {
 
   public form!: FastFormGroup;
+  public httpForm!: FastFormGroup;
 
   constructor(private fastFormService: FastFormsService) {
     this.form = fastFormService.createDynamicForm([{
@@ -38,5 +39,16 @@ export class MaterialExampleComponent {
         }
       }]
     }]);
+  }
+
+  ngOnInit(): void {
+    this.httpForm = this.fastFormService.createHttpForm('assets/example-form.json');
+    this.httpForm.valueChanges.subscribe(value => {
+      console.log(value);
+    });
+  }
+
+  submitEvent(data: any) {
+    console.log(data);
   }
 }

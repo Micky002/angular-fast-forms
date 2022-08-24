@@ -1,0 +1,9 @@
+[{
+  "id": "first-input",
+  "type": "input",
+  "label": "Http input",
+  "validation": {
+    "required": true,
+    "minLength": 5
+  }
+}]

@@ -37,3 +37,8 @@ export interface ValidationOptions {
   customAsync?: string | Array<string>;
   customAsyncFn?: AsyncValidatorFn | Array<AsyncValidatorFn>;
 }
+
+export interface FastFormSubmitEvent {
+  event: unknown;
+  data: unknown;
+}

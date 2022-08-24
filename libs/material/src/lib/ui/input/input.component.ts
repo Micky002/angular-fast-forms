@@ -38,8 +38,6 @@ export class InputComponent extends FastFormControl<InputProperties> implements 
   }
 
   ngOnInit(): void {
-    console.log(this.question);
-    console.log(this.formGroup);
     const inputElement = this.inputRef.nativeElement;
     if (this.properties.attributes) {
       Object.keys(this.properties.attributes).forEach(attribute => {
