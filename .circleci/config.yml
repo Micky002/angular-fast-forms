@@ -29,6 +29,8 @@ jobs:
       - run:
           name: Run tests
           command: npm run build:core
+      - store_test_results:
+          path: reports/test
 
 workflows:
   # Below is the definition of your workflow.
