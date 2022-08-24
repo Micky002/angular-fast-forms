@@ -12,7 +12,6 @@ import { ValidatorFactoryService } from './validation/validator-factory.service'
 import { FormControlFactoryService } from './service/form-control-factory.service';
 import { FastFormRowComponent } from './components/fast-form-row/fast-form-row.component';
 import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from './model';
-import { UiRegistryService } from './service/ui-registry.service';
 
 @NgModule({
   imports: [
@@ -24,11 +23,15 @@ import { UiRegistryService } from './service/ui-registry.service';
     MatDatepickerModule,
     MatLuxonDateModule,
   ],
-  declarations: [FastFormGroupComponent, FastFormRowComponent],
-  exports: [FastFormGroupComponent],
+  declarations: [
+    FastFormGroupComponent,
+    FastFormRowComponent
+  ],
+  exports: [
+    FastFormGroupComponent
+  ],
   providers: [
     FastFormsService,
-    UiRegistryService,
     FormControlFactoryService,
     ValidatorFactoryService,
     {
@@ -42,4 +45,6 @@ import { UiRegistryService } from './service/ui-registry.service';
     }
   ],
 })
-export class FastFormsCoreModule {}
+export class FastFormsCoreModule {
+
+}

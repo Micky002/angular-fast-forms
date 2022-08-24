@@ -4,7 +4,7 @@ import { FormControlFactoryService } from '../service/form-control-factory.servi
 import { ValidatorFactoryService } from "../validation/validator-factory.service";
 import { UiRegistryService } from '../service/ui-registry.service';
 
-export class FastFormsGroup extends FormGroup {
+export class FastFormGroup extends FormGroup {
   private readonly _questions: Array<Question>;
 
   constructor(questions: Array<Question>,
@@ -35,7 +35,7 @@ export class FastFormsGroup extends FormGroup {
 
   private toDef(form: FormGroup, question: Question) {
     if (question.type === 'group') {
-      const subFormGroup = new FastFormsGroup(question.children || [], this.controlFactory, this.validatorFactory, this.uiRegistry);
+      const subFormGroup = new FastFormGroup(question.children || [], this.controlFactory, this.validatorFactory, this.uiRegistry);
       form.addControl(question.id, subFormGroup);
     } else {
       const ui = this.uiRegistry.find(question.type);

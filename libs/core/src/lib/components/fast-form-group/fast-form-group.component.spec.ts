@@ -1,10 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormControlFactoryService } from '../../service/form-control-factory.service';
-import { ValidatorFactoryService } from "../../validation/validator-factory.service";
+import { ValidatorFactoryService } from '../../validation/validator-factory.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FastFormGroupComponent, FastFormsService } from '@ngx-fast-forms/core';
-import { UiRegistryService } from '../../service/ui-registry.service';
 
 describe('FastFormGroupComponent', () => {
   let component: FastFormGroupComponent;
@@ -22,8 +21,7 @@ describe('FastFormGroupComponent', () => {
       providers: [
         FastFormsService,
         FormControlFactoryService,
-        ValidatorFactoryService,
-        UiRegistryService
+        ValidatorFactoryService
       ]
     }).compileComponents();
 

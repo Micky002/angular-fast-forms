@@ -1,10 +1,10 @@
-import { FastFormsGroup } from '@ngx-fast-forms/core';
+import { FastFormGroup } from '@ngx-fast-forms/core';
 import { FormControlFactoryService } from '../service/form-control-factory.service';
 import { ValidatorFactoryService } from '../validation/validator-factory.service';
 import { TestBed } from '@angular/core/testing';
 import { UiRegistryService } from '../service/ui-registry.service';
 
-describe('FastFormsGroup', () => {
+describe('FastFormGroup', () => {
   let controlFactory: FormControlFactoryService;
   let validatorFactory: ValidatorFactoryService;
   let uiRegistry: UiRegistryService;
@@ -13,8 +13,7 @@ describe('FastFormsGroup', () => {
     TestBed.configureTestingModule({
       providers: [
         FormControlFactoryService,
-        ValidatorFactoryService,
-        UiRegistryService
+        ValidatorFactoryService
       ]
     });
     controlFactory = TestBed.inject(FormControlFactoryService);
@@ -24,7 +23,7 @@ describe('FastFormsGroup', () => {
 
   it('should throw error when id is duplicated', () => {
     expect(() =>
-      new FastFormsGroup([{
+      new FastFormGroup([{
         id: 'test',
         type: ''
       }, {

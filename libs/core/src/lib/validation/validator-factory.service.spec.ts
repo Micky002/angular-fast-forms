@@ -51,9 +51,12 @@ describe('ValidatorFactoryService', () => {
     const validator = service.createValidators({
       required: true
     });
-    const result = validator!(new FormControl());
-    expect(result).toBeDefined();
-    expect(result).toEqual({required: true});
+    expect(validator).toBeDefined();
+    if (validator) {
+      const result = validator(new FormControl());
+      expect(result).toBeDefined();
+      expect(result).toEqual({required: true});
+    }
   });
 
   it('should create required and min validator', () => {
@@ -61,35 +64,48 @@ describe('ValidatorFactoryService', () => {
       required: true,
       min: 5
     });
-    let result = validator!(new FormControl());
-    expect(result).toBeDefined();
-    expect(result).toEqual({required: true});
-    result = validator!(new FormControl(0));
-    expect(result).toEqual({min: {actual: 0, min: 5}});
+    expect(validator).toBeDefined();
+    if (validator) {
+      let result = validator(new FormControl());
+      expect(result).toBeDefined();
+      expect(result).not.toBeNull();
+      expect(result).toEqual({required: true});
+      result = validator(new FormControl(0));
+      expect(result).toEqual({min: {actual: 0, min: 5}});
+    }
   });
 
   it('should add custom validator', () => {
     const validator = service.createValidators({
       customFn: Validators.minLength(5)
     });
-    const result = validator!(new FormControl('asdf'));
-    expect(result).toEqual({minlength: {actualLength: 4, requiredLength: 5}})
+    expect(validator).toBeDefined();
+    if (validator) {
+      const result = validator(new FormControl('asdf'));
+      expect(result).toEqual({minlength: {actualLength: 4, requiredLength: 5}})
+    }
   });
 
   it('should add custom validator with string id', () => {
     const validator = service.createValidators({
       custom: 'test-max-length'
     });
-    const result = validator!(new FormControl('This is a test'));
-    expect(result).toEqual({maxlength: {actualLength: 14, requiredLength: 5}})
+    expect(validator).toBeDefined();
+    if (validator) {
+      const result = validator(new FormControl('This is a test'));
+      expect(result).toEqual({maxlength: {actualLength: 14, requiredLength: 5}})
+    }
   });
 
   it('should add multiple validators with string id', () => {
     const validator = service.createValidators({
       custom: ['test-max-length', 'test-required']
     });
-    const result = validator!(new FormControl());
-    expect(result).toEqual({required: true})
+    expect(validator).toBeDefined();
+    if (validator) {
+      const result = validator(new FormControl());
+      expect(result).toEqual({required: true})
+    }
   });
 
   it('should add async validator with http dependency', () => {
