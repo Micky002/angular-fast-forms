@@ -1,4 +1,4 @@
-export * from './lib/dynamic-form/fast-form.component';
+export * from './lib/components/fast-form-group/fast-form-group.component';
 
 export * from './lib/service/fast-forms.service';
 export * from './lib/control/abstract-control';

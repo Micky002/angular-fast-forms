@@ -5,10 +5,9 @@ import { UiRegistryService } from '../../service/ui-registry.service';
 
 @Component({
   selector: 'angular-fast-forms-form-row',
-  templateUrl: './form-row.component.html',
-  styleUrls: ['./form-row.component.scss']
+  templateUrl: './fast-form-row.component.html'
 })
-export class FormRowComponent extends FastFormInline implements OnInit, OnChanges {
+export class FastFormRowComponent extends FastFormInline implements OnInit, OnChanges {
 
   @ViewChild('componentViewContainer', {
     read: ViewContainerRef,
@@ -24,7 +23,7 @@ export class FormRowComponent extends FastFormInline implements OnInit, OnChange
   ngOnInit(): void {
     this.componentViewContainerRef.clear();
     console.log(this.questions);
-    this.questions.filter(question => !question.hidden)
+    this.questions?.filter(question => !question.hidden)
       .forEach(question => {
         if (question.type === 'row' && question.children) {
           // question.children.forEach(c => this.createComponent(c));

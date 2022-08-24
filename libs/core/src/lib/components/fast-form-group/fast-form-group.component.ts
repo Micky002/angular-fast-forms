@@ -1,17 +1,17 @@
 import { Component, EventEmitter, Input, OnChanges, Output, ViewChild, ViewContainerRef } from '@angular/core';
-import { FastFormsGroup } from '../control/fast-forms-group';
-import { Question } from '../model';
-import { FormControlFactoryService } from '../service/form-control-factory.service';
-import { ValidatorFactoryService } from '../validation/validator-factory.service';
-import { UiRegistryService } from '../service/ui-registry.service';
-import { FastFormControl } from '../control/abstract-control';
-import { FastFormInline } from '../control/abstract-inline';
+import { FastFormsGroup } from '../../control/fast-forms-group';
+import { Question } from '../../model';
+import { FormControlFactoryService } from '../../service/form-control-factory.service';
+import { ValidatorFactoryService } from '../../validation/validator-factory.service';
+import { UiRegistryService } from '../../service/ui-registry.service';
+import { FastFormControl } from '../../control/abstract-control';
+import { FastFormInline } from '../../control/abstract-inline';
 
 @Component({
   selector: 'aff-form-group',
-  templateUrl: './fast-form.component.html'
+  templateUrl: './fast-form-group.component.html'
 })
-export class FastFormComponent implements OnChanges {
+export class FastFormGroupComponent implements OnChanges {
 
   @Input() public form: FastFormsGroup;
   @ViewChild("componentViewContainer", {

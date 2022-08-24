@@ -1,14 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { FormControlFactoryService } from '../service/form-control-factory.service';
-import { ValidatorFactoryService } from "../validation/validator-factory.service";
+import { FormControlFactoryService } from '../../service/form-control-factory.service';
+import { ValidatorFactoryService } from "../../validation/validator-factory.service";
 import { ReactiveFormsModule } from '@angular/forms';
-import { FastFormComponent, FastFormsService } from '@ngx-fast-forms/core';
-import { UiRegistryService } from '../service/ui-registry.service';
+import { FastFormGroupComponent, FastFormsService } from '@ngx-fast-forms/core';
+import { UiRegistryService } from '../../service/ui-registry.service';
 
-describe('FastFormComponent', () => {
-  let component: FastFormComponent;
-  let fixture: ComponentFixture<FastFormComponent>;
+describe('FastFormGroupComponent', () => {
+  let component: FastFormGroupComponent;
+  let fixture: ComponentFixture<FastFormGroupComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -17,7 +17,7 @@ describe('FastFormComponent', () => {
         ReactiveFormsModule
       ],
       declarations: [
-        FastFormComponent
+        FastFormGroupComponent
       ],
       providers: [
         FastFormsService,
@@ -27,7 +27,7 @@ describe('FastFormComponent', () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FastFormComponent);
+    fixture = TestBed.createComponent(FastFormGroupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

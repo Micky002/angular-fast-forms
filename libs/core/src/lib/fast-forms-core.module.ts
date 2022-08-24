@@ -6,11 +6,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatLuxonDateModule } from '@angular/material-luxon-adapter';
-import { FastFormComponent } from './dynamic-form/fast-form.component';
+import { FastFormGroupComponent } from './components/fast-form-group/fast-form-group.component';
 import { FastFormsService } from './service/fast-forms.service';
 import { ValidatorFactoryService } from './validation/validator-factory.service';
 import { FormControlFactoryService } from './service/form-control-factory.service';
-import { FormRowComponent } from './components/form-row/form-row.component';
+import { FastFormRowComponent } from './components/fast-form-row/fast-form-row.component';
 import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from './model';
 import { UiRegistryService } from './service/ui-registry.service';
 
@@ -24,8 +24,8 @@ import { UiRegistryService } from './service/ui-registry.service';
     MatDatepickerModule,
     MatLuxonDateModule,
   ],
-  declarations: [FastFormComponent, FormRowComponent],
-  exports: [FastFormComponent],
+  declarations: [FastFormGroupComponent, FastFormRowComponent],
+  exports: [FastFormGroupComponent],
   providers: [
     FastFormsService,
     UiRegistryService,
@@ -36,7 +36,7 @@ import { UiRegistryService } from './service/ui-registry.service';
       useValue: {
         type: 'row',
         inline: true,
-        component: FormRowComponent
+        component: FastFormRowComponent
       } as DynamicFormDefinition,
       multi: true
     }
