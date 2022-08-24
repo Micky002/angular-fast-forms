@@ -8,9 +8,10 @@
     "build:core": "nx build core:build",
     "build:material": "nx build material:build",
     "start:material-example": "nx serve material-example",
+    "test:affected": "nx affected --target=test --all",
+    "test:all": "nx run-many --target=test --projects=core,material",
     "lint:core": "nx lint core",
     "lint:material": "nx lint material",
-    "test:affected": "nx affected --target=test --all",
     "lint:affected": "nx affected --target=lint --all",
     "graph": "nx graph"
   },

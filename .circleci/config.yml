@@ -28,7 +28,7 @@ jobs:
           pkg-manager: npm
       - run:
           name: Run tests
-          command: npm run build:core
+          command: npm run test:all
       - store_test_results:
           path: reports/test
 
