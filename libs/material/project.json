@@ -1,0 +1,38 @@
+{
+  "projectType": "library",
+  "sourceRoot": "libs/material/src",
+  "prefix": "angular-fast-forms",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "outputs": ["dist/libs/material"],
+      "options": {
+        "project": "libs/material/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/material/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/material/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/material"],
+      "options": {
+        "jestConfig": "libs/material/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/material/**/*.ts", "libs/material/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}
