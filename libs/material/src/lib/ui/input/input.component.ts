@@ -6,7 +6,7 @@ import { FastFormControl } from '@ngx-fast-forms/core';
 
 @UntilDestroy()
 @Component({
-  selector: 'code-input',
+  selector: 'aff-material-input',
   templateUrl: './input.component.html'
 })
 export class InputComponent extends FastFormControl implements OnInit {
@@ -42,6 +42,8 @@ export class InputComponent extends FastFormControl implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.question);
+    console.log(this.formGroup);
     const inputElement = this.inputRef.nativeElement;
     if (this.properties.attributes) {
       Object.keys(this.properties.attributes).forEach(attribute => {

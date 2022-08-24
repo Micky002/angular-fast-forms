@@ -8,7 +8,7 @@ import { FastFormControl } from '@ngx-fast-forms/core';
 
 @UntilDestroy()
 @Component({
-  selector: 'code-date-input',
+  selector: 'aff-material-date-input',
   templateUrl: './date-input.component.html',
   providers: [{
     provide: DateAdapter,

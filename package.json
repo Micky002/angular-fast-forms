@@ -10,6 +10,9 @@
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main",
     "build:core": "nx build core:build",
     "build:material": "nx build material:build",
+    "start:material-example": "nx serve material-example",
+    "lint:core": "nx lint core",
+    "lint:material": "nx lint material",
 
     "build:auth-ui:production": "nx build auth-ui --configuration=production",
     "build:api-client:production": "nx build api-client --configuration=production",

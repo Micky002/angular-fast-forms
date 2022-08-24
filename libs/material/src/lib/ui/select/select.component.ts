@@ -6,7 +6,7 @@ import { SelectProperties } from './select.properties';
 import { FastFormControl } from '@ngx-fast-forms/core';
 
 @Component({
-  selector: 'code-select',
+  selector: 'aff-material-select',
   templateUrl: './select.component.html'
 })
 export class SelectComponent extends FastFormControl implements OnInit {

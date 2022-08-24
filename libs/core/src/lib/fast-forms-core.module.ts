@@ -9,7 +9,10 @@ import { MatLuxonDateModule } from '@angular/material-luxon-adapter';
 import { FastFormComponent } from './dynamic-form/fast-form.component';
 import { FastFormsService } from './service/fast-forms.service';
 import { ValidatorFactoryService } from './validation/validator-factory.service';
-import { FormControlFactoryService } from './control/form-control-factory.service';
+import { FormControlFactoryService } from './service/form-control-factory.service';
+import { FormRowComponent } from './components/form-row/form-row.component';
+import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from './model';
+import { UiRegistryService } from './service/ui-registry.service';
 
 @NgModule({
   imports: [
@@ -19,19 +22,24 @@ import { FormControlFactoryService } from './control/form-control-factory.servic
     MatSelectModule,
     MatIconModule,
     MatDatepickerModule,
-    MatLuxonDateModule
+    MatLuxonDateModule,
   ],
-  declarations: [
-    FastFormComponent
-  ],
-  exports: [
-    FastFormComponent
-  ],
+  declarations: [FastFormComponent, FormRowComponent],
+  exports: [FastFormComponent],
   providers: [
     FastFormsService,
+    UiRegistryService,
     FormControlFactoryService,
-    ValidatorFactoryService
-  ]
+    ValidatorFactoryService,
+    {
+      provide: DYNAMIC_FORM_CONTROL,
+      useValue: {
+        type: 'row',
+        inline: true,
+        component: FormRowComponent
+      } as DynamicFormDefinition,
+      multi: true
+    }
+  ],
 })
-export class FastFormsCoreModule {
-}
+export class FastFormsCoreModule {}

@@ -2,10 +2,9 @@ import { TestBed } from '@angular/core/testing';
 
 import { ValidatorFactoryService } from './validator-factory.service';
 import { FormControl, Validators } from '@angular/forms';
-import { AsyncValidatorRegistration, registerValidator } from './validation.model';
+import { AsyncValidatorRegistration, CUSTOM_ASYNC_VALIDATOR, registerValidator } from './validation.model';
 import { HttpClient } from '@angular/common/http';
 import { Provider } from '@angular/core';
-import { CUSTOM_ASYNC_VALIDATOR } from '@ngx-fast-forms/core';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { map } from 'rxjs';
 
@@ -97,7 +96,7 @@ describe('ValidatorFactoryService', () => {
     const validator = service.createAsyncValidators({
       customAsync: ['test-async-required']
     });
-    let control = new FormControl();
+    const control = new FormControl();
     control.setAsyncValidators(validator);
     expect(control.valid).toBeTruthy();
 

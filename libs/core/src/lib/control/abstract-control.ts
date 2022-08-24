@@ -1,5 +1,5 @@
 import { AbstractControl, FormGroup } from "@angular/forms";
-import { Question, QuestionProperties, ValidationOptions } from './model';
+import { Question, QuestionProperties, ValidationOptions } from '../model';
 
 export abstract class FastFormControl {
   formGroup!: FormGroup;

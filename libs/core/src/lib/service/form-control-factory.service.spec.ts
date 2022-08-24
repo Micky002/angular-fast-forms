@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { FormControlFactoryService } from './form-control-factory.service';
 import { Component } from '@angular/core';
-import { FastFormControl } from '../fast-form-control';
+import { FastFormControl } from '../control/abstract-control';
 import { FormControl } from '@angular/forms';
 
 

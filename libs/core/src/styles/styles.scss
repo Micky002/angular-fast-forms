@@ -1,0 +1,21 @@
+.aff-form-group {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.aff-form-row {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+
+  > * {
+    flex-grow: 1;
+  }
+}
+
+.aff-form-row, .aff-form-group {
+  mat-form-field {
+    width: 100%;
+  }
+}

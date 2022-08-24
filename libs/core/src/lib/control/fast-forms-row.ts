@@ -1,15 +1,15 @@
 import { FormGroup } from '@angular/forms';
-import { Question } from './model';
-import { FormControlFactoryService } from './control/form-control-factory.service';
-import { ValidatorFactoryService } from "./validation/validator-factory.service";
+import { Question } from '../model';
+import { FormControlFactoryService } from '../service/form-control-factory.service';
+import { ValidatorFactoryService } from "../validation/validator-factory.service";
+import { FastFormsGroup } from '@ngx-fast-forms/core';
 
-export class FastFormsGroup extends FormGroup {
+export class FastFormsRow {
   private readonly _questions: Array<Question>;
 
   constructor(questions: Array<Question>,
               private controlFactory: FormControlFactoryService,
               private validatorFactory: ValidatorFactoryService) {
-    super({})
     const ids = new Set();
     questions.forEach(q => {
       if (ids.has(q.id)) {
@@ -33,7 +33,7 @@ export class FastFormsGroup extends FormGroup {
 
   private toDef(form: FormGroup, control: Question) {
     if (control.type === 'group') {
-      const subFormGroup = new FastFormsGroup(control.children || [], this.controlFactory, this.validatorFactory);
+      const subFormGroup = new FastFormsGroup(control.children || [], this.controlFactory, this.validatorFactory, null);
       form.addControl(control.id, subFormGroup);
     } else {
       const formControl = this.controlFactory.createControl(control.type);

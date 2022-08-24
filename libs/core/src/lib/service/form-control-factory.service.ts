@@ -1,6 +1,6 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
-import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from '../model';
+import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition, Question } from '../model';
 
 @Injectable()
 export class FormControlFactoryService {
@@ -18,5 +18,14 @@ export class FormControlFactoryService {
     } else {
       return new FormControl();
     }
+  }
+
+  public createRow(questions: Array<Question>): Array<{id: string, control: AbstractControl}> {
+    return questions.map(q => {
+      return {
+        id: q.id,
+        control: this.createControl(q.id)
+      };
+    });
   }
 }

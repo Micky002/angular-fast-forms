@@ -1,7 +1,12 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { AsyncValidatorFn, ValidatorFn, Validators } from '@angular/forms';
-import { CUSTOM_ASYNC_VALIDATOR, CUSTOM_VALIDATOR, ValidationOptions } from '../model';
-import { AsyncValidatorRegistration, ValidatorRegistration } from './validation.model';
+import { ValidationOptions } from '../model';
+import {
+  AsyncValidatorRegistration,
+  CUSTOM_ASYNC_VALIDATOR,
+  CUSTOM_VALIDATOR,
+  ValidatorRegistration
+} from './validation.model';
 
 
 @Injectable()
