@@ -9,16 +9,12 @@ import { FastFormControl } from '@ngx-fast-forms/core';
   selector: 'aff-material-select',
   templateUrl: './select.component.html'
 })
-export class SelectComponent extends FastFormControl implements OnInit {
+export class SelectComponent extends FastFormControl<SelectProperties> implements OnInit {
 
   public selectOptions: Array<SelectOption> = [];
 
   constructor(private http: HttpClient) {
     super();
-  }
-
-  private get properties(): SelectProperties {
-    return this.baseProperties as SelectProperties;
   }
 
   ngOnInit(): void {

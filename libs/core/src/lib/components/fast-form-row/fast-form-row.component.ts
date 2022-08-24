@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnChanges, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import { FastFormControl } from '../../control/abstract-control';
 import { FastFormInline } from '../../control/abstract-inline';
-import { FastFormControl, Question } from '@ngx-fast-forms/core';
+import { Question } from '../../model';
 import { UiRegistryService } from '../../service/ui-registry.service';
 
 @Component({

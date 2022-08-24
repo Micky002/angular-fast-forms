@@ -1,5 +1,5 @@
 import { Inject, Injectable, Optional } from '@angular/core';
-import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from '@ngx-fast-forms/core';
+import { DynamicFormDefinition, DYNAMIC_FORM_CONTROL } from '../model';
 
 @Injectable({
   providedIn: 'any'
