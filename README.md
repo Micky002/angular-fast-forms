@@ -1,5 +1,4 @@
-[![CircleCI](https://dl.circleci.com/status-badge/img/null/Micky002/angular-fast-forms/tree/master.svg?style=svg&circle-token=a0e7c82872929927eeba1d2316afb4aa8c8fd546)](https://dl.circleci.com/status-badge/redirect/null/Micky002/angular-fast-forms/tree/master)
-
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/Micky002/angular-fast-forms/tree/master.svg?style=svg&circle-token=5182f3996623125630e7270dd338191f450be391)](https://dl.circleci.com/status-badge/redirect/gh/Micky002/angular-fast-forms/tree/master)
 # Angular Fast Forms
 
 Angular Fast Forms (AFF) is an angular library which aims to improve development speed
