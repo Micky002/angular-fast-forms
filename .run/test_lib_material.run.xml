@@ -1,11 +1,11 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="test:lib:material-example" type="JavaScriptTestRunnerJest">
-    <config-file value="$PROJECT_DIR$/apps/material-example/jest.config.ts" />
+  <configuration default="false" name="test:lib:material" type="JavaScriptTestRunnerJest">
+    <config-file value="$PROJECT_DIR$/libs/material/jest.config.ts" />
     <node-interpreter value="project" />
     <node-options value="" />
     <jest-package value="$PROJECT_DIR$/node_modules/jest" />
     <working-dir value="$PROJECT_DIR$" />
-    <jest-options value="--watchAll" />
+    <jest-options value="--watchAll --runInBand" />
     <envs />
     <scope-kind value="ALL" />
     <method v="2" />

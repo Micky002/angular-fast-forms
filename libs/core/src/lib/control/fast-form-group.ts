@@ -3,15 +3,19 @@ import { Question } from '../model';
 import { FormControlFactoryService } from '../service/form-control-factory.service';
 import { ValidatorFactoryService } from "../validation/validator-factory.service";
 import { UiRegistryService } from '../service/ui-registry.service';
+import { Observable, Subject } from 'rxjs';
 
 export class FastFormGroup extends FormGroup {
-  private readonly _questions: Array<Question>;
+  public readonly questionChanges: Observable<Array<Question>>;
+  private _questions: Array<Question>;
+  private _questionChanges$ = new Subject<Array<Question>>();
 
   constructor(questions: Array<Question>,
               private controlFactory: FormControlFactoryService,
               private validatorFactory: ValidatorFactoryService,
               private uiRegistry: UiRegistryService) {
     super({})
+    this.questionChanges = this._questionChanges$.asObservable();
     const ids = new Set();
     questions.forEach(q => {
       if (ids.has(q.id)) {
@@ -60,5 +64,12 @@ export class FastFormGroup extends FormGroup {
     control.setValidators(validator);
     control.setAsyncValidators(asyncValidator);
     return control;
+  }
+
+  setQuestions(questions: Array<Question>) {
+    this._questions = questions;
+    this.controls = {};
+    this.toDefinition();
+    this._questionChanges$.next(questions);
   }
 }

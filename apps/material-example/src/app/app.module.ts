@@ -6,6 +6,7 @@ import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { MaterialExampleComponent } from './pages/material-example/material-example.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, MaterialExampleComponent],
@@ -13,6 +14,7 @@ import { MaterialExampleComponent } from './pages/material-example/material-exam
     BrowserModule,
     BrowserAnimationsModule,
     MaterialFastFormsModule,
+    HttpClientModule,
     RouterModule.forRoot([
       {
         path: 'home',

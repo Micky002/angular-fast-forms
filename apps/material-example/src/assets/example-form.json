@@ -1,0 +1,19 @@
+[{
+  "id": "first-input",
+  "type": "input",
+  "label": "Http input",
+  "validation": {
+    "required": true,
+    "minLength": 5
+  }
+}, {
+  "id": "my-select",
+  "type": "select",
+  "label": "Http select",
+  "validation": {
+    "required": true
+  },
+  "properties": {
+    "optionsEndpoint": "assets/select-example-options.json"
+  }
+}]

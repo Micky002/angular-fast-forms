@@ -52,3 +52,40 @@ export class ExampleComponent {
   }
 }
 ```
+
+
+## Register custom Controls
+
+1. Create new angular component. Extend the component class from `FastFormControl`
+
+```ts
+@Component({
+  selector: 'my-custom-input',
+  templateUrl: './input.component.html'
+})
+export class InputComponent extends FastFormControl<InputProperties> implements OnInit {
+
+  public get type(): string {
+    switch (this.format) {
+      case 'text':
+        return 'text';
+      case 'number':
+        return 'number';
+      case 'currency':
+        return 'number';
+      default:
+        return 'text';
+    }
+  }
+
+  public get format(): InputFormat {
+    return this.properties.format || 'text';
+  }
+}
+
+interface InputProperties {
+  format?: InputFormat;
+}
+```
+
+2. 

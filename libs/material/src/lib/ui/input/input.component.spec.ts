@@ -28,6 +28,7 @@ describe('InputComponent', () => {
       id: 'test-id'
     };
     component.control = new FormControl();
+    component.properties = {};
     fixture.detectChanges();
   });
 
