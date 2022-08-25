@@ -12,6 +12,7 @@ import { ValidatorFactoryService } from './validation/validator-factory.service'
 import { FormControlFactoryService } from './service/form-control-factory.service';
 import { FastFormRowComponent } from './components/fast-form-row/fast-form-row.component';
 import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from './model';
+import { FastFormArrayComponent } from './components/fast-form-array/fast-form-array.component';
 
 @NgModule({
   imports: [
@@ -25,11 +26,10 @@ import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from './model';
   ],
   declarations: [
     FastFormGroupComponent,
-    FastFormRowComponent
+    FastFormRowComponent,
+    FastFormArrayComponent,
   ],
-  exports: [
-    FastFormGroupComponent
-  ],
+  exports: [FastFormGroupComponent],
   providers: [
     FastFormsService,
     FormControlFactoryService,
@@ -39,12 +39,10 @@ import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from './model';
       useValue: {
         type: 'row',
         inline: true,
-        component: FastFormRowComponent
+        component: FastFormRowComponent,
       } as DynamicFormDefinition,
-      multi: true
-    }
+      multi: true,
+    },
   ],
 })
-export class FastFormsCoreModule {
-
-}
+export class FastFormsCoreModule {}
