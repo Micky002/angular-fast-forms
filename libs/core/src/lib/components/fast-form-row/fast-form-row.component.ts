@@ -1,5 +1,4 @@
 import { Component, EventEmitter, OnChanges, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
-import { FastFormControl } from '../../control/abstract-control';
 import { FastFormInline } from '../../control/abstract-inline';
 import { Question } from '../../model';
 import { UiRegistryService } from '../../service/ui-registry.service';
@@ -38,13 +37,14 @@ export class FastFormRowComponent extends FastFormInline implements OnInit, OnCh
   }
 
   private createComponent(question: Question) {
-    const dynamicFormDefinition = this.uiRegistry.find(question.type);
-    if (dynamicFormDefinition) {
-      const dynamicFormControlRef = this.componentViewContainerRef.createComponent(dynamicFormDefinition.component);
-      const component = dynamicFormControlRef.instance as FastFormControl;
-      component.formGroup = this.formGroup;
-      component.question = question;
-      component.control = this.formGroup.controls[question.id];
+    const formDefinition = this.uiRegistry.find(question.type);
+    if (formDefinition) {
+      this.uiRegistry.render(
+        this.componentViewContainerRef,
+        this.formGroup,
+        question,
+        formDefinition
+      );
     }
   }
 }

@@ -9,7 +9,7 @@ import { FastFormControl } from '@ngx-fast-forms/core';
   selector: 'aff-material-input',
   templateUrl: './input.component.html'
 })
-export class InputComponent extends FastFormControl<InputProperties> implements OnInit {
+export class InputComponent extends FastFormControl<InputProperties, FormControl> implements OnInit {
 
   @ViewChild('inputElement', {static: true}) inputRef!: ElementRef<HTMLInputElement>;
 
@@ -45,9 +45,5 @@ export class InputComponent extends FastFormControl<InputProperties> implements 
         inputElement.setAttribute(attribute, value)
       });
     }
-  }
-
-  getControl(): FormControl {
-    return this.control as FormControl;
   }
 }

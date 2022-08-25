@@ -58,12 +58,12 @@ describe('FastFormGroupComponent', () => {
         minLength: 5
       }
     }])
-    jest.spyOn(component.codeOnSubmit, 'next');
+    jest.spyOn(component.submitEvent, 'next');
     component.processOnSubmit({id: 'meins'});
-    expect(component.codeOnSubmit.next).toHaveBeenCalledTimes(0);
+    expect(component.submitEvent.next).toHaveBeenCalledTimes(0);
 
     component.form.patchValue({test: 'Hallo'})
     component.processOnSubmit({id: 'meins'});
-    expect(component.codeOnSubmit.next).toHaveBeenCalledTimes(1);
+    expect(component.submitEvent.next).toHaveBeenCalledTimes(1);
   });
 });
