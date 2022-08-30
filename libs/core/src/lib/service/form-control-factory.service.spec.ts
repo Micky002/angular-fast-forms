@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { ControlFactoryService } from './control-factory.service';
 import { Component } from '@angular/core';
-import { FastFormControl } from '../control/abstract-control';
+import { FastFormControlComponent } from '../control/abstract-control.component';
 import { FormControl } from '@angular/forms';
 
 
@@ -10,7 +10,7 @@ import { FormControl } from '@angular/forms';
   selector: 'aff-testing-control',
   template: ''
 })
-class DummyFormComponent extends FastFormControl {
+class DummyFormComponent extends FastFormControlComponent {
 
 }
 

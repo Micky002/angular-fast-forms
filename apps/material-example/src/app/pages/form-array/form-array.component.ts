@@ -19,27 +19,23 @@ export class FormArrayComponent implements OnInit {
         type: 'input'
       }]
     }]);
-
-    // {
-    //   id: 'test-group',
-    //     type: 'group',
-    //   children: [{
-    //   id: 'first-input',
-    //   type: 'input'
-    // }]
-    // }
   }
 
   ngOnInit(): void {
     this.form.setValue({
-      'test-array': ['asdf', 'meins'
+      'test-array': [
+        'asdf',
+        'meins'
       ]
     });
   }
 
   testing() {
     this.form.setValue({
-      'test-array': ['asdf', 'meins'
+      'test-array': [
+        'asdfasdfasdf',
+        'meinasdfasdfs',
+        'asdfasdfs'
       ]
     });
   }

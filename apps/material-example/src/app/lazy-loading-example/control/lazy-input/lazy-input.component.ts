@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FastFormControl } from '@ngx-fast-forms/core';
+import { FastFormControlComponent } from '@ngx-fast-forms/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -7,7 +7,7 @@ import { FormControl } from '@angular/forms';
   templateUrl: './lazy-input.component.html',
   styleUrls: ['./lazy-input.component.scss'],
 })
-export class LazyInputComponent extends FastFormControl {
+export class LazyInputComponent extends FastFormControlComponent {
 
   get formControl(): FormControl {
     return this.control as FormControl;

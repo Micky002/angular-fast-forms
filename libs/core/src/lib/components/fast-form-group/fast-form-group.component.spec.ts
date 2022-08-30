@@ -5,12 +5,12 @@ import { ValidatorFactoryService } from '../../validation/validator-factory.serv
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   DYNAMIC_FORM_CONTROL,
-  DynamicFormDefinition, FastFormControl,
+  DynamicFormDefinition, FastFormControlComponent,
   FastFormGroupComponent,
   FastFormsService
 } from '@ngx-fast-forms/core';
 
-class DummyControl extends FastFormControl {}
+class DummyControl extends FastFormControlComponent {}
 
 describe('FastFormGroupComponent', () => {
   let component: FastFormGroupComponent;

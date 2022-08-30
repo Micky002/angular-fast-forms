@@ -60,6 +60,7 @@ export class FastFormGroupComponent implements OnChanges, OnInit {
 
   private render() {
     this.componentViewContainerRef.clear();
+    console.log('form: ', this.form);
     this.form.questions.filter(question => !question.hidden)
       .forEach(question => {
         this.createComponent(question);

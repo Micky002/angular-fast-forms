@@ -13,6 +13,7 @@ import { ControlFactoryService } from './service/control-factory.service';
 import { FastFormRowComponent } from './components/fast-form-row/fast-form-row.component';
 import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from './model';
 import { FastFormArrayComponent } from './components/fast-form-array/fast-form-array.component';
+import { FastFormControlComponentAsdf } from './components/fast-form-control/fast-form-control.component';
 
 @NgModule({
   imports: [
@@ -22,12 +23,13 @@ import { FastFormArrayComponent } from './components/fast-form-array/fast-form-a
     MatSelectModule,
     MatIconModule,
     MatDatepickerModule,
-    MatLuxonDateModule
+    MatLuxonDateModule,
   ],
   declarations: [
     FastFormGroupComponent,
     FastFormRowComponent,
-    FastFormArrayComponent
+    FastFormArrayComponent,
+    FastFormControlComponentAsdf,
   ],
   exports: [FastFormGroupComponent],
   providers: [
@@ -39,19 +41,19 @@ import { FastFormArrayComponent } from './components/fast-form-array/fast-form-a
       useValue: {
         type: 'row',
         inline: true,
-        component: FastFormRowComponent
+        component: FastFormRowComponent,
       } as DynamicFormDefinition,
-      multi: true
-    }, {
+      multi: true,
+    },
+    {
       provide: DYNAMIC_FORM_CONTROL,
       useValue: {
         type: 'array',
         inline: true,
-        component: FastFormArrayComponent
+        component: FastFormArrayComponent,
       } as DynamicFormDefinition,
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
-export class FastFormsCoreModule {
-}
+export class FastFormsCoreModule {}

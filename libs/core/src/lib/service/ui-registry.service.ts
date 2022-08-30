@@ -1,7 +1,7 @@
 import { Inject, Injectable, Optional, ViewContainerRef } from '@angular/core';
 import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition, Question } from '../model';
 import { FastFormInline } from '../control/abstract-inline';
-import { FastFormControl } from '@ngx-fast-forms/core';
+import { FastFormControlComponent } from '@ngx-fast-forms/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { FastFormArrayAsdf } from '../control/abstract-array';
 import { FastFormArray } from '../control/fast-form-array';
@@ -32,7 +32,8 @@ export class UiRegistryService {
     return uiComponent;
   }
 
-  render(viewContainerRef: ViewContainerRef, formGroup: FormGroup, question: Question, formDefinition: DynamicFormDefinition) {
+  render(viewContainerRef: ViewContainerRef, formGroup: FormGroup | FormControl, question: Question, formDefinition: DynamicFormDefinition) {
+    console.log('render form group: ', formGroup);
     const dynamicFormControlRef = viewContainerRef.createComponent(formDefinition.component);
     // console.log('render', formGroup);
     // console.log('component', dynamicFormControlRef.instance);
@@ -51,7 +52,8 @@ export class UiRegistryService {
   }
 
   // TODO better type check
-  private createAndInitComponent(formGroup: FormGroup | FormArray, question: Question, component: FastFormArrayAsdf | FastFormInline | FastFormControl) {
+  private createAndInitComponent(formGroup: FormGroup | FormArray | FormControl, question: Question, component: FastFormArrayAsdf | FastFormInline | FastFormControlComponent) {
+    console.log('createAndInitComponent', formGroup, question, component);
     if (component instanceof FastFormArrayAsdf) {
       const arrayComponent = component as FastFormArrayAsdf;// const component = dynamicFormControlRef.instance as FastFormControl;
       arrayComponent.formGroup = formGroup as FormGroup;
@@ -64,8 +66,8 @@ export class UiRegistryService {
       const inlineComponent = component as FastFormInline;// const component = dynamicFormControlRef.instance as FastFormControl;
       inlineComponent.formGroup = formGroup as FormGroup;
       inlineComponent.questions = question.children ?? [];
-    } else if (component instanceof FastFormControl) {
-      const controlComponent = component as FastFormControl;// const component = dynamicFormControlRef.instance as FastFormControl;
+    } else if (component instanceof FastFormControlComponent) {
+      const controlComponent = component as FastFormControlComponent;// const component = dynamicFormControlRef.instance as FastFormControl;
       controlComponent.formGroup = formGroup as FormGroup;
       controlComponent.question = question;
       console.log(question.id);
@@ -76,7 +78,11 @@ export class UiRegistryService {
       } else {
         console.log('form group');
       }
-      controlComponent.control = (formGroup as FormGroup).controls[question.id];
+      if (formGroup && formGroup instanceof FormGroup) {
+        controlComponent.control = (formGroup as FormGroup).controls[question.id];
+      } else if (formGroup && formGroup instanceof FormControl) {
+        controlComponent.control = formGroup;
+      }
       controlComponent.properties = question?.properties ?? {};
       console.log(controlComponent.control);
     }

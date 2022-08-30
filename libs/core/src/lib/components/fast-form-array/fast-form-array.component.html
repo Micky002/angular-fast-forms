@@ -1,17 +1,11 @@
-<p>fast-form-array works!</p>
-
 <form [formGroup]="formGroup" class="aff-form-array">
-  <ng-container [formArrayName]="formArrayName">
-<!--    <ng-container *ngFor="let item of formArray.controls" >-->
-      <ng-container #componentViewContainer></ng-container>
-<!--    </ng-container>-->
+  <ng-container *ngFor="let subForm of formArray.controls; let i = index">
+    <ng-container *ngIf="isControl(subForm)">
+      <aff-form-control [control1]="$any(subForm)"></aff-form-control>
+    </ng-container>
+    <ng-container *ngIf="isGroup(subForm)">
+      <aff-form-group [form]="$any(subForm)"></aff-form-group>
+    </ng-container>
   </ng-container>
-
-  <!--  <ng-container *ngFor="let question of form.questions">-->
-  <!--    <ng-container *ngIf="question.type === 'group'">-->
-  <!--      <aff-form-group [form]="$any(form.get(question.id))"></aff-form-group>-->
-  <!--    </ng-container>-->
-  <!--  </ng-container>-->
-
-  <!--  <button style="display: none" type="submit">hidden submit</button>-->
+  <ng-container #componentViewContainer></ng-container>
 </form>

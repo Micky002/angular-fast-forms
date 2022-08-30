@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output, ViewChild, ViewContainerRef } 
 import { FastFormArrayAsdf } from '../../control/abstract-array';
 import { UiRegistryService } from '../../service/ui-registry.service';
 import { Question } from '@ngx-fast-forms/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'aff-form-array',
@@ -38,7 +39,7 @@ export class FastFormArrayComponent extends FastFormArrayAsdf implements OnInit 
     console.log('len: ', this.formArray.length);
 
     for (let i = 0; i < this.formArray.length; i++) {
-      this.createComponent(this.question);
+      // this.createComponent(this.question);
     }
   }
 
@@ -48,6 +49,14 @@ export class FastFormArrayComponent extends FastFormArrayAsdf implements OnInit 
     //   .forEach(question => {
     //     this.createComponent(question);
     //   });
+  }
+
+  public isControl(data: any): boolean {
+    return data instanceof FormControl;
+  }
+
+  public isGroup(data: any): boolean {
+    return data instanceof FormGroup;
   }
 
   private createComponent(question: Question) {

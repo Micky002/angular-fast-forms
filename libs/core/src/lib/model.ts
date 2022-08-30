@@ -1,6 +1,6 @@
 import { AbstractControl, AsyncValidatorFn, ValidatorFn } from '@angular/forms';
 import { InjectionToken, Type } from '@angular/core';
-import { FastFormControl } from './control/abstract-control';
+import { FastFormControlComponent } from './control/abstract-control.component';
 import { FastFormInline } from './control/abstract-inline';
 import { FastFormArrayAsdf } from './control/abstract-array';
 
@@ -9,8 +9,8 @@ export const DYNAMIC_FORM_CONTROL = new InjectionToken<DynamicFormDefinition>('A
 export interface DynamicFormDefinition {
   type: string;
   inline?: boolean;
-  component: Type<FastFormControl | FastFormInline | FastFormArrayAsdf>;
-  controlFactory?: () => AbstractControl;
+  component: Type<FastFormControlComponent | FastFormInline | FastFormArrayAsdf>;
+  controlFactory?: (question: Question) => AbstractControl;
 }
 
 export type QuestionProperties = { [key: string]: unknown };
