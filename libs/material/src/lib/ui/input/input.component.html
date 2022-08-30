@@ -1,5 +1,7 @@
+<!--<mat-form-field [formGroup]="formGroup">-->
 <mat-form-field>
   <mat-label *ngIf="question.label">{{question.label}}</mat-label>
+<!--  <input #inputElement [formControlName]="question.id"  [type]="type" matInput>-->
   <input #inputElement [formControl]="control" [type]="type" matInput>
   <mat-icon *ngIf="format === 'currency'" matSuffix>€</mat-icon>
   <mat-error *ngIf="control.hasError('required')">
@@ -18,4 +20,3 @@
     Max length is {{control.getError('maxlength').requiredLength}}
   </mat-error>
 </mat-form-field>
-

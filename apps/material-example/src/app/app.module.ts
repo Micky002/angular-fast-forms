@@ -7,9 +7,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { MaterialExampleComponent } from './pages/material-example/material-example.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FormArrayComponent } from './pages/form-array/form-array.component';
 
 @NgModule({
-  declarations: [AppComponent, MaterialExampleComponent],
+  declarations: [AppComponent, MaterialExampleComponent, FormArrayComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -18,7 +19,11 @@ import { HttpClientModule } from '@angular/common/http';
     RouterModule.forRoot([
       {
         path: 'home',
-        component: MaterialExampleComponent
+        component: MaterialExampleComponent,
+      },
+      {
+        path: 'form-array',
+        component: FormArrayComponent
       },
       {
         path: 'lazy-loading-example',

@@ -1,6 +1,6 @@
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { Question } from '../model';
-import { FormControlFactoryService } from '../service/form-control-factory.service';
+import { ControlFactoryService } from '../service/control-factory.service';
 import { ValidatorFactoryService } from "../validation/validator-factory.service";
 import { UiRegistryService } from '../service/ui-registry.service';
 import { Observable, Subject } from 'rxjs';
@@ -11,9 +11,7 @@ export class FastFormGroup extends FormGroup {
   private _questionChanges$ = new Subject<Array<Question>>();
 
   constructor(questions: Array<Question>,
-              private controlFactory: FormControlFactoryService,
-              private validatorFactory: ValidatorFactoryService,
-              private uiRegistry: UiRegistryService) {
+              private controlFactory: ControlFactoryService) {
     super({})
     this.questionChanges = this._questionChanges$.asObservable();
     const ids = new Set();
@@ -32,39 +30,10 @@ export class FastFormGroup extends FormGroup {
   }
 
   private toDefinition() {
-    for (const control of this._questions || []) {
-      this.toDef(this, control);
-    }
+    this.controlFactory.createFromQuestions(this, this._questions);
   }
 
-  private toDef(form: FormGroup, question: Question) {
-    if (question.type === 'group') {
-      const subFormGroup = new FastFormGroup(question.children || [], this.controlFactory, this.validatorFactory, this.uiRegistry);
-      form.addControl(question.id, subFormGroup);
-    } else {
-      const ui = this.uiRegistry.find(question.type);
-      if (ui) {
-        if (ui.inline) {
-          (question.children || []).forEach(cq => {
-            const formControl = this.createControl(cq);
-            form.addControl(cq.id, formControl);
-          })
-        } else {
-          const formControl = this.createControl(question);
-          form.addControl(question.id, formControl);
-        }
-      }
-    }
-  }
 
-  private createControl(question: Question): AbstractControl {
-    const control = this.controlFactory.createControl(question.type);
-    const validator = this.validatorFactory.createValidators(question.validation);
-    const asyncValidator = this.validatorFactory.createAsyncValidators(question.validation);
-    control.setValidators(validator);
-    control.setAsyncValidators(asyncValidator);
-    return control;
-  }
 
   setQuestions(questions: Array<Question>) {
     this._questions = questions;

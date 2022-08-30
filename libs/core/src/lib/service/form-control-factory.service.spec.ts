@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FormControlFactoryService } from './form-control-factory.service';
+import { ControlFactoryService } from './control-factory.service';
 import { Component } from '@angular/core';
 import { FastFormControl } from '../control/abstract-control';
 import { FormControl } from '@angular/forms';
@@ -15,15 +15,15 @@ class DummyFormComponent extends FastFormControl {
 }
 
 describe('FormControlFactoryService', () => {
-  let service: FormControlFactoryService;
+  let service: ControlFactoryService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        FormControlFactoryService
+        ControlFactoryService
       ]
     });
-    service = TestBed.inject(FormControlFactoryService);
+    service = TestBed.inject(ControlFactoryService);
   });
 
   it('should be created', () => {
@@ -36,7 +36,7 @@ describe('FormControlFactoryService', () => {
   });
 
   it('should create control from registered factory', () => {
-    service.controlFactory = [{
+    service.componentRegistry = [{
       type: 'test-control',
       component: DummyFormComponent,
       controlFactory: () => new FormControl('initial-state')
