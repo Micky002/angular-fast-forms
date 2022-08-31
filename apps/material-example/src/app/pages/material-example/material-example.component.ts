@@ -29,14 +29,14 @@ export class MaterialExampleComponent implements OnInit {
       }, {
         id: 'row-input-2',
         type: 'input',
-        label: 'Row 2'
-      }, {
-        id: 'row-input-3',
-        type: 'input',
-        label: 'Row 3',
+        label: 'Row 2',
         validation: {
           minLength: 5
         }
+      }, {
+        id: 'row-input-3',
+        type: 'date-input',
+        label: 'Date input'
       }]
     }]);
   }

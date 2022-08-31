@@ -15,13 +15,5 @@ import { BaseFormControlComponent } from '@ngx-fast-forms/core';
     useClass: CodenturyLuxonDateAdapter
   }]
 })
-export class DateInputComponent extends BaseFormControlComponent<DateInputProperties> {
-
-  constructor() {
-    super();
-  }
-
-  public getControl(): FormControl<string> {
-    return this.control as FormControl;
-  }
+export class DateInputComponent extends BaseFormControlComponent<DateInputProperties, FormControl> {
 }

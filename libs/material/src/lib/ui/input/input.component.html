@@ -1,22 +1,20 @@
-<!--<mat-form-field [formGroup]="formGroup">-->
 <mat-form-field>
   <mat-label *ngIf="question.label">{{question.label}}</mat-label>
-<!--  <input #inputElement [formControlName]="question.id"  [type]="type" matInput>-->
   <input #inputElement [formControl]="control" [type]="type" matInput>
-<!--  <mat-icon *ngIf="format === 'currency'" matSuffix>€</mat-icon>-->
-<!--  <mat-error *ngIf="control.hasError('required')">-->
-<!--    Value is required-->
-<!--  </mat-error>-->
-<!--  <mat-error *ngIf="control.hasError('min')">-->
-<!--    Min value is {{control.getError('min').min}}-->
-<!--  </mat-error>-->
-<!--  <mat-error *ngIf="control.hasError('minlength')">-->
-<!--    Min length is {{control.getError('minlength').requiredLength}}-->
-<!--  </mat-error>-->
-<!--  <mat-error *ngIf="control.hasError('max')">-->
-<!--    Max value is {{control.getError('max').max}}-->
-<!--  </mat-error>-->
-<!--  <mat-error *ngIf="control.hasError('maxlength')">-->
-<!--    Max length is {{control.getError('maxlength').requiredLength}}-->
-<!--  </mat-error>-->
+  <mat-icon *ngIf="format === 'currency'" matSuffix>€</mat-icon>
+  <mat-error *ngIf="control.hasError('required')">
+    Value is required
+  </mat-error>
+  <mat-error *ngIf="control.hasError('min')">
+    Min value is {{control.getError('min').min}}
+  </mat-error>
+  <mat-error *ngIf="control.hasError('minlength')">
+    Min length is {{control.getError('minlength').requiredLength}}
+  </mat-error>
+  <mat-error *ngIf="control.hasError('max')">
+    Max value is {{control.getError('max').max}}
+  </mat-error>
+  <mat-error *ngIf="control.hasError('maxlength')">
+    Max length is {{control.getError('maxlength').requiredLength}}
+  </mat-error>
 </mat-form-field>
