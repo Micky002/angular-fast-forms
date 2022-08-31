@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
-import { Question } from '@ngx-fast-forms/core';
 import { UiRegistryService } from '../../service/ui-registry.service';
 import { FastFormControl } from '../../control/fast-form-control';
+import { Question } from '../../model';
 
 @Component({
   selector: 'aff-form-control',

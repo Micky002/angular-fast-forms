@@ -1,11 +1,11 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition, Question } from '../model';
-import { FastFormGroup } from '@ngx-fast-forms/core';
 import { ValidatorFactoryService } from '../validation/validator-factory.service';
 import { UiRegistryService } from './ui-registry.service';
 import { FastFormArray } from '../control/fast-form-array';
 import { FastFormControl } from '../control/fast-form-control';
+import { FastFormGroup } from '../control/fast-form-group';
 
 @Injectable()
 export class ControlFactoryService {
