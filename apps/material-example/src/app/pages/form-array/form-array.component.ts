@@ -30,12 +30,23 @@ export class FormArrayComponent implements OnInit {
     });
   }
 
-  testing() {
+  setValue() {
     this.form.setValue({
       'test-array': [
         'asdfasdfasdf',
         'meinasdfasdfs',
         'asdfasdfs'
+      ]
+    });
+  }
+
+  patchValue() {
+    this.form.patchValue({
+      'test-array': [
+        'first value',
+        'second value',
+        'third value',
+        'fourth value'
       ]
     });
   }
