@@ -1,7 +1,7 @@
 <form [formGroup]="formGroup" class="aff-form-array">
   <ng-container *ngFor="let subForm of formArray.controls; let i = index">
     <ng-container *ngIf="isControl(subForm)">
-      <aff-form-control [control1]="$any(subForm)"></aff-form-control>
+      <aff-form-control [control]="$any(subForm)"></aff-form-control>
     </ng-container>
     <ng-container *ngIf="isGroup(subForm)">
       <aff-form-group [form]="$any(subForm)"></aff-form-group>

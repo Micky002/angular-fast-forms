@@ -1,5 +1,5 @@
 import { Inject, Injectable, Optional } from '@angular/core';
-import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition, Question } from '../model';
 import { FastFormGroup } from '@ngx-fast-forms/core';
 import { ValidatorFactoryService } from '../validation/validator-factory.service';
@@ -48,7 +48,7 @@ export class ControlFactoryService {
   }
 
   private createControl(question: Question): AbstractControl {
-    const control = this.createControlAsdf(question);
+    const control = this.createAngularFormControl(question);
     const validator = this.validatorFactory.createValidators(question.validation);
     const asyncValidator = this.validatorFactory.createAsyncValidators(question.validation);
     control.setValidators(validator);
@@ -56,7 +56,7 @@ export class ControlFactoryService {
     return control;
   }
 
-  public createControlAsdf(question: Question): AbstractControl {
+  public createAngularFormControl(question: Question): AbstractControl {
     if (this.componentRegistry) {
       const formDefinition = this.componentRegistry.find(def => def.type === question.type);
       if (formDefinition && formDefinition.controlFactory) {
@@ -73,7 +73,7 @@ export class ControlFactoryService {
     return questions.map(q => {
       return {
         id: q.id,
-        control: this.createControlAsdf(q)
+        control: this.createAngularFormControl(q)
       };
     });
   }

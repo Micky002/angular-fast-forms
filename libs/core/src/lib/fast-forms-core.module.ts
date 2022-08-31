@@ -13,7 +13,7 @@ import { ControlFactoryService } from './service/control-factory.service';
 import { FastFormRowComponent } from './components/fast-form-row/fast-form-row.component';
 import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from './model';
 import { FastFormArrayComponent } from './components/fast-form-array/fast-form-array.component';
-import { FastFormControlComponentAsdf } from './components/fast-form-control/fast-form-control.component';
+import { FastFormControlComponent } from './components/fast-form-control/fast-form-control.component';
 
 @NgModule({
   imports: [
@@ -29,7 +29,7 @@ import { FastFormControlComponentAsdf } from './components/fast-form-control/fas
     FastFormGroupComponent,
     FastFormRowComponent,
     FastFormArrayComponent,
-    FastFormControlComponentAsdf,
+    FastFormControlComponent,
   ],
   exports: [FastFormGroupComponent],
   providers: [

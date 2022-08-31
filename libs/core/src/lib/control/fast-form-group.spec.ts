@@ -29,7 +29,7 @@ describe('FastFormGroup', () => {
       }, {
         id: 'test',
         type: ''
-      }], controlFactory, validatorFactory, uiRegistry)
+      }], controlFactory)
     ).toThrowError();
   });
 });

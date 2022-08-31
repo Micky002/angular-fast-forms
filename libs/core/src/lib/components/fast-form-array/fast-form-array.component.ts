@@ -1,15 +1,15 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
-import { FastFormArrayAsdf } from '../../control/abstract-array';
 import { UiRegistryService } from '../../service/ui-registry.service';
 import { Question } from '@ngx-fast-forms/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { BaseFormArrayComponent } from '../base/base-array.component';
 
 @Component({
   selector: 'aff-form-array',
   templateUrl: './fast-form-array.component.html',
   styles: [],
 })
-export class FastFormArrayComponent extends FastFormArrayAsdf implements OnInit {
+export class FastFormArrayComponent extends BaseFormArrayComponent implements OnInit {
 
   @ViewChild('componentViewContainer', {
     read: ViewContainerRef,
@@ -23,20 +23,20 @@ export class FastFormArrayComponent extends FastFormArrayAsdf implements OnInit 
   }
 
   ngOnInit(): void {
-    console.log('form-array-component init');
+    // console.log('form-array-component init');
     this.componentViewContainerRef.clear();
-    this.formGroup.valueChanges.subscribe(value => {
+    // this.formGroup.valueChanges.subscribe(value => {
+    //
+    // });
+    // console.log(this.formArray);
+    // this.formArray.renderChanged.subscribe(render => {
+    //   console.log('render');
+    // });
+    // this.formArray.register(() => {
+    //   console.log('render registered');
+    // })
 
-    });
-    console.log(this.formArray);
-    this.formArray.renderChanged.subscribe(render => {
-      console.log('render');
-    });
-    this.formArray.register(() => {
-      console.log('render registered');
-    })
-
-    console.log('len: ', this.formArray.length);
+    // console.log('len: ', this.formArray.length);
 
     for (let i = 0; i < this.formArray.length; i++) {
       // this.createComponent(this.question);

@@ -2,25 +2,27 @@ import { TestBed } from '@angular/core/testing';
 
 import { ControlFactoryService } from './control-factory.service';
 import { Component } from '@angular/core';
-import { FastFormControlComponent } from '../control/abstract-control.component';
+import { BaseFormControlComponent } from '../components/base/base-control.component';
 import { FormControl } from '@angular/forms';
+import { ValidatorFactoryService } from '../validation/validator-factory.service';
 
 
 @Component({
   selector: 'aff-testing-control',
   template: ''
 })
-class DummyFormComponent extends FastFormControlComponent {
+class DummyFormComponent extends BaseFormControlComponent {
 
 }
 
-describe('FormControlFactoryService', () => {
+describe('ControlFactoryService', () => {
   let service: ControlFactoryService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        ControlFactoryService
+        ControlFactoryService,
+        ValidatorFactoryService
       ]
     });
     service = TestBed.inject(ControlFactoryService);
@@ -31,7 +33,7 @@ describe('FormControlFactoryService', () => {
   });
 
   it('should create control if nothing is registered', () => {
-    const control = service.createControl('test-control');
+    const control = service.createAngularFormControl({type: 'test-control', id: 'test'});
     expect(control).toBeDefined();
   });
 
@@ -41,7 +43,7 @@ describe('FormControlFactoryService', () => {
       component: DummyFormComponent,
       controlFactory: () => new FormControl('initial-state')
     }];
-    const control = service.createControl('test-control');
+    const control = service.createAngularFormControl({type: 'test-control', id: 'test'});
     expect(control).toBeDefined();
     expect(control.value).toEqual('initial-state');
   });

@@ -32,11 +32,11 @@ export class FastFormArray extends FormArray {
 
   override setValue(value: any, options?: { onlySelf?: boolean; emitEvent?: boolean }) {
     this._render$.next(null);
-    console.log('value: ', value);
+    // console.log('value: ', value);
     this.clear();
     if (value instanceof Array) {
       for (let i = 0; i < value.length; i++) {
-        console.log(`create array control ${i}: `, this.question);
+        // console.log(`create array control ${i}: `, this.question);
         // this.question.id = '' + i
         this.controlFactory.createFromQuestion(this, this.question);
         // this.push();
@@ -47,9 +47,9 @@ export class FastFormArray extends FormArray {
     super.setValue(value, options);
   }
 
-  private renderAsdf!: () => void;
+  // private renderAsdf!: () => void;
 
-  register(param: () => void) {
-
-  }
+  // register(param: () => void) {
+  //
+  // }
 }
