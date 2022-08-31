@@ -9,7 +9,7 @@
 }, {
   "id": "my-select",
   "type": "select",
-  "label": "Http select",
+  "label": "Http select with values fetched from endpoint",
   "validation": {
     "required": true
   },

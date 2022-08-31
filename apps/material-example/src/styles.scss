@@ -2,3 +2,8 @@
 
 @import "../../../libs/core/src/styles/styles";
 @import "../../../libs/material/src/styles/styles";
+
+.example-button-row {
+  display: flex;
+  gap: 10px;
+}

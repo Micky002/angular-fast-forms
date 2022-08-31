@@ -9,7 +9,7 @@ export const DYNAMIC_FORM_CONTROL = new InjectionToken<DynamicFormDefinition>('A
 export interface DynamicFormDefinition {
   type: string;
   inline?: boolean;
-  component: Type<BaseFormControlComponent | BaseFormInlineComponent | BaseFormArrayComponent>;
+  component: Type<BaseFormControlComponent<any, any> | BaseFormInlineComponent | BaseFormArrayComponent<any>>;
   controlFactory?: (question: Question) => AbstractControl;
 }
 
@@ -17,7 +17,7 @@ export type QuestionProperties = { [key: string]: unknown };
 
 export interface Question {
   id: string;
-  type: 'group' | 'row' | 'input' | 'select' | 'date-input' | string;
+  type: string;
   label?: string;
   validation?: ValidationOptions;
   hidden?: boolean;

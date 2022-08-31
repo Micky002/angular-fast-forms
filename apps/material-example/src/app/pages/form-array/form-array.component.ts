@@ -24,8 +24,8 @@ export class FormArrayComponent implements OnInit {
   ngOnInit(): void {
     this.form.setValue({
       'test-array': [
-        'asdf',
-        'meins'
+        'prefilled value',
+        ''
       ]
     });
   }
@@ -33,9 +33,9 @@ export class FormArrayComponent implements OnInit {
   setValue() {
     this.form.setValue({
       'test-array': [
-        'asdfasdfasdf',
-        'meinasdfasdfs',
-        'asdfasdfs'
+        'testing testing testing',
+        'just for demo',
+        'automatic array size adoption'
       ]
     });
   }
