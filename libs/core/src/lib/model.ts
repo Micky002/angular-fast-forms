@@ -3,13 +3,15 @@ import { InjectionToken, Type } from '@angular/core';
 import { BaseFormControlComponent } from './components/base/base-control.component';
 import { BaseFormInlineComponent } from './components/base/base-inline.component';
 import { BaseFormArrayComponent } from './components/base/base-array.component';
+import { BaseFormGroupComponent } from './components/base/base-group.component';
 
 export const DYNAMIC_FORM_CONTROL = new InjectionToken<DynamicFormDefinition>('AFF_DYNAMIC_FORM_CONTROL');
 
 export interface DynamicFormDefinition {
   type: string;
   inline?: boolean;
-  component: Type<BaseFormControlComponent | BaseFormInlineComponent | BaseFormArrayComponent>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  component: Type<BaseFormControlComponent<any, any> | BaseFormInlineComponent | BaseFormArrayComponent<any> | BaseFormGroupComponent>;
   controlFactory?: (question: Question) => AbstractControl;
 }
 
@@ -17,7 +19,7 @@ export type QuestionProperties = { [key: string]: unknown };
 
 export interface Question {
   id: string;
-  type: 'group' | 'row' | 'input' | 'select' | 'date-input' | string;
+  type: string;
   label?: string;
   validation?: ValidationOptions;
   hidden?: boolean;

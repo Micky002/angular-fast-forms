@@ -61,6 +61,8 @@ export class ControlFactoryService {
       const formDefinition = this.componentRegistry.find(def => def.type === question.type);
       if (formDefinition && formDefinition.controlFactory) {
         return formDefinition.controlFactory(question);
+      } else if (question.type === 'group') {
+        return new FastFormGroup(question.children ?? [], this);
       } else {
         return new FastFormControl(question);
       }

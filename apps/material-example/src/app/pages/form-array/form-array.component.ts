@@ -9,6 +9,7 @@ import { FastFormGroup, FastFormsService } from '@ngx-fast-forms/core';
 export class FormArrayComponent implements OnInit {
 
   form: FastFormGroup;
+  formArrayWithGroup: FastFormGroup;
 
   constructor(private formService: FastFormsService) {
     this.form = this.formService.createDynamicForm([{
@@ -19,23 +20,52 @@ export class FormArrayComponent implements OnInit {
         type: 'input'
       }]
     }]);
+    this.formArrayWithGroup = this.formService.createDynamicForm([{
+      id: 'test-array',
+      type: 'array',
+      children: [{
+        id: 'first-group',
+        type: 'group',
+        children: [{
+          id: 'ignore',
+          type: 'row',
+          children: [{
+            id: 'first-input',
+            type: 'input',
+            label: 'Input one'
+          }, {
+            id: 'second-input',
+            type: 'input',
+            label: 'Input Two'
+          }]
+        }]
+      }]
+    }]);
   }
 
   ngOnInit(): void {
     this.form.setValue({
       'test-array': [
-        'asdf',
-        'meins'
+        'prefilled value',
+        ''
       ]
+    });
+    this.formArrayWithGroup.patchValue({
+      'test-array': [{
+        'first-input': 'first',
+      }, {
+        'first-input': 'first',
+        'second-input': 'testing'
+      }]
     });
   }
 
   setValue() {
     this.form.setValue({
       'test-array': [
-        'asdfasdfasdf',
-        'meinasdfasdfs',
-        'asdfasdfs'
+        'testing testing testing',
+        'just for demo',
+        'automatic array size adoption'
       ]
     });
   }
