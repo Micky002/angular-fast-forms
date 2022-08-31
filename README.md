@@ -24,7 +24,9 @@ Install the library in your angular project
 npm i @ngx-fast-forms/core
 ```
 
-Select one of the provided ui component libraries and also install it:
+Select one of the provided ui component libraries or [add your own form components](#register-custom-controls) and also install it:
+
+Select one of the provided ui component libraries or [add your own form components](https://github.com/Micky002/angular-fast-forms#register-custom-controls) and also install it:
 
 * `@ngx-fast-forms/material`
 
