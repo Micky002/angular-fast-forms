@@ -8,11 +8,11 @@ import { BaseFormArrayComponent } from '../base/base-array.component';
 })
 export class FastFormArrayComponent extends BaseFormArrayComponent {
 
-  public isControl(data: any): boolean {
+  public isControl(data: unknown): boolean {
     return data instanceof FormControl;
   }
 
-  public isGroup(data: any): boolean {
+  public isGroup(data: unknown): boolean {
     return data instanceof FormGroup;
   }
 }

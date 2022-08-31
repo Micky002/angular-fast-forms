@@ -9,6 +9,7 @@ export class FastFormArray extends FormArray {
     super([]);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   override setValue(values: any, options?: { onlySelf?: boolean; emitEvent?: boolean }) {
     if (values instanceof Array) {
       this.updateControlCount(values.length);
@@ -18,6 +19,7 @@ export class FastFormArray extends FormArray {
     super.setValue(values, options);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   override patchValue(values: any, options?: { onlySelf?: boolean; emitEvent?: boolean }) {
     if (values instanceof Array) {
       this.updateControlCount(values.length);

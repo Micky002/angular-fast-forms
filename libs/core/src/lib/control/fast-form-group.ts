@@ -1,8 +1,6 @@
-import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { Question } from '../model';
 import { ControlFactoryService } from '../service/control-factory.service';
-import { ValidatorFactoryService } from "../validation/validator-factory.service";
-import { UiRegistryService } from '../service/ui-registry.service';
 import { Observable, Subject } from 'rxjs';
 
 export class FastFormGroup extends FormGroup {
