@@ -15,12 +15,13 @@ import { ControlFactoryService } from '../../service/control-factory.service';
 import { ValidatorFactoryService } from '../../validation/validator-factory.service';
 import { UiRegistryService } from '../../service/ui-registry.service';
 import { HttpClient } from '@angular/common/http';
+import { BaseFormGroupComponent } from '../base/base-group.component';
 
 @Component({
   selector: 'aff-form-group',
   templateUrl: './fast-form-group.component.html'
 })
-export class FastFormGroupComponent implements OnChanges, OnInit {
+export class FastFormGroupComponent extends BaseFormGroupComponent implements OnChanges, OnInit {
 
   @Input() public form: FastFormGroup;
   @Input() public endpoint!: string;
@@ -35,6 +36,7 @@ export class FastFormGroupComponent implements OnChanges, OnInit {
               private validatorFactory: ValidatorFactoryService,
               private uiRegistry: UiRegistryService,
               @Optional() private http?: HttpClient) {
+    super();
     this.form = new FastFormGroup([], this.controlFactory);
   }
 
@@ -60,7 +62,6 @@ export class FastFormGroupComponent implements OnChanges, OnInit {
 
   private render() {
     this.componentViewContainerRef.clear();
-    // console.log('form: ', this.form);
     this.form.questions.filter(question => !question.hidden)
       .forEach(question => {
         this.createComponent(question);

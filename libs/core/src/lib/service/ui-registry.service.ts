@@ -5,6 +5,7 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { BaseFormArrayComponent } from '../components/base/base-array.component';
 import { FastFormArray } from '../control/fast-form-array';
 import { BaseFormControlComponent } from '../components/base/base-control.component';
+import { BaseFormGroupComponent } from '../components/base/base-group.component';
 
 @Injectable({
   providedIn: 'any'
@@ -45,8 +46,10 @@ export class UiRegistryService {
       this.initializeFormInlineComponent(control, question, component);
     } else if (component instanceof BaseFormControlComponent && (control instanceof FormGroup || control instanceof FormControl)) {
       this.initializeFormControlComponent(control, question, component);
+    } else if (component instanceof BaseFormGroupComponent && control instanceof FormGroup) {
+      this.initializeFormGroupComponent(control, question, component);
     } else {
-      throw new Error(`Cannot create component of type [${typeof component}] with control of type [${typeof control}] for question with id [${question.id}]`);
+      throw new Error(`Cannot create component of type [...] with control of type [...] for question with id [${question.id}]`);
     }
   }
 
@@ -65,6 +68,11 @@ export class UiRegistryService {
   }
 
   private initializeFormInlineComponent(control: FormGroup, question: Question, component: BaseFormInlineComponent) {
+    component.formGroup = control;
+    component.questions = question.children ?? [];
+  }
+
+  private initializeFormGroupComponent(control: FormGroup, question: Question, component: BaseFormGroupComponent) {
     component.formGroup = control;
     component.questions = question.children ?? [];
   }
