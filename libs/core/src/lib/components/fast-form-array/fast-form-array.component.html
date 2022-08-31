@@ -1,4 +1,4 @@
-<form [formGroup]="formGroup" class="aff-form-array">
+<form class="aff-form-array">
   <ng-container *ngFor="let subForm of formArray.controls; let i = index">
     <ng-container *ngIf="isControl(subForm)">
       <aff-form-control [control]="$any(subForm)"></aff-form-control>
@@ -7,5 +7,4 @@
       <aff-form-group [form]="$any(subForm)"></aff-form-group>
     </ng-container>
   </ng-container>
-  <ng-container #componentViewContainer></ng-container>
 </form>

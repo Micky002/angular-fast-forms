@@ -56,9 +56,7 @@ export class UiRegistryService {
     // console.log('createAndInitComponent', formGroup, question, component);
     if (component instanceof BaseFormArrayComponent) {
       const arrayComponent = component as BaseFormArrayComponent;// const component = dynamicFormControlRef.instance as FastFormControl;
-      arrayComponent.formGroup = formGroup as FormGroup;
       arrayComponent.formArray = (formGroup as FormGroup).controls[question.id] as FastFormArray;
-      arrayComponent.formArrayName = question?.id;
       arrayComponent.question = (question.children ?? [])[0];
       arrayComponent.properties = question?.properties ?? {};
       // arrayComponent.questions = question.children || [];
