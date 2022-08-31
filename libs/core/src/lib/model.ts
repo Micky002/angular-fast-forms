@@ -9,6 +9,7 @@ export const DYNAMIC_FORM_CONTROL = new InjectionToken<DynamicFormDefinition>('A
 export interface DynamicFormDefinition {
   type: string;
   inline?: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component: Type<BaseFormControlComponent<any, any> | BaseFormInlineComponent | BaseFormArrayComponent<any>>;
   controlFactory?: (question: Question) => AbstractControl;
 }
