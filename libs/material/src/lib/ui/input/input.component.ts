@@ -2,14 +2,14 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { InputFormat, InputProperties } from './input.properties';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { FormControl } from "@angular/forms";
-import { FastFormControl } from '@ngx-fast-forms/core';
+import { BaseFormControlComponent } from '@ngx-fast-forms/core';
 
 @UntilDestroy()
 @Component({
   selector: 'aff-material-input',
   templateUrl: './input.component.html'
 })
-export class InputComponent extends FastFormControl<InputProperties, FormControl> implements OnInit {
+export class InputComponent extends BaseFormControlComponent<InputProperties, FormControl> implements OnInit {
 
   @ViewChild('inputElement', {static: true}) inputRef!: ElementRef<HTMLInputElement>;
 
@@ -38,6 +38,7 @@ export class InputComponent extends FastFormControl<InputProperties, FormControl
   }
 
   ngOnInit(): void {
+    // console.log('control: ', this.control);
     const inputElement = this.inputRef.nativeElement;
     if (this.properties.attributes) {
       Object.keys(this.properties.attributes).forEach(attribute => {

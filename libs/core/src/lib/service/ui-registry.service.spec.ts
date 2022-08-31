@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 
 import { UiRegistryService } from './ui-registry.service';
-import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition, FastFormControl } from '@ngx-fast-forms/core';
+import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition, BaseFormControlComponent } from '@ngx-fast-forms/core';
 
-class DummyControl extends FastFormControl {}
+class DummyControl extends BaseFormControlComponent {}
 
 describe('UiRegistryService', () => {
   let service: UiRegistryService;

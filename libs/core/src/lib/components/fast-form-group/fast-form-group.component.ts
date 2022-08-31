@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { FastFormGroup } from '../../control/fast-form-group';
 import { FastFormSubmitEvent, Question } from '../../model';
-import { FormControlFactoryService } from '../../service/form-control-factory.service';
+import { ControlFactoryService } from '../../service/control-factory.service';
 import { ValidatorFactoryService } from '../../validation/validator-factory.service';
 import { UiRegistryService } from '../../service/ui-registry.service';
 import { HttpClient } from '@angular/common/http';
@@ -31,11 +31,11 @@ export class FastFormGroupComponent implements OnChanges, OnInit {
 
   @Output() submitEvent = new EventEmitter<FastFormSubmitEvent>();
 
-  constructor(private controlFactory: FormControlFactoryService,
+  constructor(private controlFactory: ControlFactoryService,
               private validatorFactory: ValidatorFactoryService,
               private uiRegistry: UiRegistryService,
               @Optional() private http?: HttpClient) {
-    this.form = new FastFormGroup([], this.controlFactory, this.validatorFactory, this.uiRegistry);
+    this.form = new FastFormGroup([], this.controlFactory);
   }
 
   ngOnInit(): void {
@@ -60,6 +60,7 @@ export class FastFormGroupComponent implements OnChanges, OnInit {
 
   private render() {
     this.componentViewContainerRef.clear();
+    // console.log('form: ', this.form);
     this.form.questions.filter(question => !question.hidden)
       .forEach(question => {
         this.createComponent(question);

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnChanges, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
-import { FastFormInline } from '../../control/abstract-inline';
+import { BaseFormInlineComponent } from '../base/base-inline.component';
 import { Question } from '../../model';
 import { UiRegistryService } from '../../service/ui-registry.service';
 
@@ -7,7 +7,7 @@ import { UiRegistryService } from '../../service/ui-registry.service';
   selector: 'aff-form-row',
   templateUrl: './fast-form-row.component.html'
 })
-export class FastFormRowComponent extends FastFormInline implements OnInit, OnChanges {
+export class FastFormRowComponent extends BaseFormInlineComponent implements OnInit, OnChanges {
 
   @ViewChild('componentViewContainer', {
     read: ViewContainerRef,

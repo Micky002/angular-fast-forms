@@ -3,14 +3,14 @@ import { SelectOption } from './select-option.model';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, of } from 'rxjs';
 import { SelectProperties } from './select.properties';
-import { FastFormControl } from '@ngx-fast-forms/core';
+import { BaseFormControlComponent } from '@ngx-fast-forms/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'aff-material-select',
   templateUrl: './select.component.html'
 })
-export class SelectComponent extends FastFormControl<SelectProperties, FormControl> implements OnInit {
+export class SelectComponent extends BaseFormControlComponent<SelectProperties, FormControl> implements OnInit {
 
   public selectOptions: Array<SelectOption> = [];
 

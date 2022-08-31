@@ -4,7 +4,7 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import { DateAdapter } from '@angular/material/core';
 import { FormControl } from '@angular/forms';
 import { CodenturyLuxonDateAdapter } from './codentury-luxon-date-adapter';
-import { FastFormControl } from '@ngx-fast-forms/core';
+import { BaseFormControlComponent } from '@ngx-fast-forms/core';
 
 @UntilDestroy()
 @Component({
@@ -15,13 +15,5 @@ import { FastFormControl } from '@ngx-fast-forms/core';
     useClass: CodenturyLuxonDateAdapter
   }]
 })
-export class DateInputComponent extends FastFormControl<DateInputProperties> {
-
-  constructor() {
-    super();
-  }
-
-  public getControl(): FormControl<string> {
-    return this.control as FormControl;
-  }
+export class DateInputComponent extends BaseFormControlComponent<DateInputProperties, FormControl> {
 }

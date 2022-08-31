@@ -1,29 +1,31 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FormControlFactoryService } from './form-control-factory.service';
+import { ControlFactoryService } from './control-factory.service';
 import { Component } from '@angular/core';
-import { FastFormControl } from '../control/abstract-control';
+import { BaseFormControlComponent } from '../components/base/base-control.component';
 import { FormControl } from '@angular/forms';
+import { ValidatorFactoryService } from '../validation/validator-factory.service';
 
 
 @Component({
   selector: 'aff-testing-control',
   template: ''
 })
-class DummyFormComponent extends FastFormControl {
+class DummyFormComponent extends BaseFormControlComponent {
 
 }
 
-describe('FormControlFactoryService', () => {
-  let service: FormControlFactoryService;
+describe('ControlFactoryService', () => {
+  let service: ControlFactoryService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        FormControlFactoryService
+        ControlFactoryService,
+        ValidatorFactoryService
       ]
     });
-    service = TestBed.inject(FormControlFactoryService);
+    service = TestBed.inject(ControlFactoryService);
   });
 
   it('should be created', () => {
@@ -31,17 +33,17 @@ describe('FormControlFactoryService', () => {
   });
 
   it('should create control if nothing is registered', () => {
-    const control = service.createControl('test-control');
+    const control = service.createAngularFormControl({type: 'test-control', id: 'test'});
     expect(control).toBeDefined();
   });
 
   it('should create control from registered factory', () => {
-    service.controlFactory = [{
+    service.componentRegistry = [{
       type: 'test-control',
       component: DummyFormComponent,
       controlFactory: () => new FormControl('initial-state')
     }];
-    const control = service.createControl('test-control');
+    const control = service.createAngularFormControl({type: 'test-control', id: 'test'});
     expect(control).toBeDefined();
     expect(control.value).toEqual('initial-state');
   });

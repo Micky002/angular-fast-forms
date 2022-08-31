@@ -1,9 +1,9 @@
-import { FastFormGroup } from '@ngx-fast-forms/core';
 import { ControlFactoryService } from '../service/control-factory.service';
 import { ValidatorFactoryService } from '../validation/validator-factory.service';
 import { TestBed } from '@angular/core/testing';
+import { FastFormArray } from './fast-form-array';
 
-describe('FastFormGroup', () => {
+describe('FastFormArray', () => {
   let controlFactory: ControlFactoryService;
 
   beforeEach(() => {
@@ -14,17 +14,13 @@ describe('FastFormGroup', () => {
       ]
     });
     controlFactory = TestBed.inject(ControlFactoryService);
-  })
+  });
 
-  it('should throw error when id is duplicated', () => {
-    expect(() =>
-      new FastFormGroup([{
-        id: 'test',
-        type: ''
-      }, {
-        id: 'test',
-        type: ''
-      }], controlFactory)
-    ).toThrowError();
+  it('should create form array', () => {
+    const fastFormArray = new FastFormArray({
+      id: 'test',
+      type: ''
+    }, controlFactory);
+    expect(fastFormArray).toBeDefined();
   });
 });

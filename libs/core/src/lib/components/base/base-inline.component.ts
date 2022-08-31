@@ -1,7 +1,7 @@
 import { FormGroup } from '@angular/forms';
-import { Question } from '../model';
+import { Question } from '../../model';
 
-export abstract class FastFormInline {
+export abstract class BaseFormInlineComponent {
   formGroup!: FormGroup;
   questions!: Array<Question>;
 }

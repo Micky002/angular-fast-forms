@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { FormControlFactoryService } from '../../service/form-control-factory.service';
+import { ControlFactoryService } from '../../service/control-factory.service';
 import { ValidatorFactoryService } from '../../validation/validator-factory.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   DYNAMIC_FORM_CONTROL,
-  DynamicFormDefinition, FastFormControl,
+  DynamicFormDefinition, BaseFormControlComponent,
   FastFormGroupComponent,
   FastFormsService
 } from '@ngx-fast-forms/core';
 
-class DummyControl extends FastFormControl {}
+class DummyControl extends BaseFormControlComponent {}
 
 describe('FastFormGroupComponent', () => {
   let component: FastFormGroupComponent;
@@ -27,7 +27,7 @@ describe('FastFormGroupComponent', () => {
       ],
       providers: [
         FastFormsService,
-        FormControlFactoryService,
+        ControlFactoryService,
         ValidatorFactoryService,
         {
           provide: DYNAMIC_FORM_CONTROL,
