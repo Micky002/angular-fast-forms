@@ -44,7 +44,7 @@ jobs:
 workflows:
   development:
     jobs:
-      - test:
+      - test
   publish:
     jobs:
       - test-and-publish:
