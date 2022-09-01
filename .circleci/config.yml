@@ -45,14 +45,13 @@ workflows:
   development:
     jobs:
       - test:
-          filters:
-            branches:
-              only: /.*/
   publish:
     jobs:
       - test-and-publish:
           filters:
             tags:
               only: /.*/
+            branches:
+              ignore: /.*/
 
 
