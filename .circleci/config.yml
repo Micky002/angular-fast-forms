@@ -44,10 +44,11 @@ jobs:
 #      - node/install-packages:
 #          pkg-manager: npm
       - run:
-          name: Publish libraries
-          command:
-            - npm publish dist/libs/core
-            - npm publish dist/libs/material
+          name: Publish core library
+          command: npm publish dist/libs/core
+      - run:
+          name: Publish material library
+          command: npm publish dist/libs/material
 #      - run:
 #          name: Run tests
 #          command: npm run test:all
