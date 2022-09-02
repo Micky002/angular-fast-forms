@@ -43,9 +43,11 @@ jobs:
           command: echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" > .npmrc
 #      - node/install-packages:
 #          pkg-manager: npm
-#      - run:
-#          name: Run linter
-#          command: npm run lint:all
+      - run:
+          name: Publish libraries
+          command:
+            - npm publish dist/libs/core
+            - npm publish dist/libs/material
 #      - run:
 #          name: Run tests
 #          command: npm run test:all
