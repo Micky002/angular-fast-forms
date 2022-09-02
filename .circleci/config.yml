@@ -4,33 +4,43 @@ orbs:
   node: circleci/node@5.0.2
 
 jobs:
-  test:
+  test_and_build_job:
     docker:
       - image: cimg/node:16.17.0
     steps:
       - checkout
+      - node/install-packages:
+          pkg-manager: npm
       - run:
           name: Run linter
-          command: echo branch
-#      - node/install-packages:
-#          pkg-manager: npm
-#      - run:
-#          name: Run linter
-#          command: npm run lint:all
-#      - run:
-#          name: Run tests
-#          command: npm run test:all
-#      - store_test_results:
-#          path: reports/test
+          command: npm run lint:all
+      - run:
+          name: Run tests
+          command: npm run test:all
+      - run:
+          name: Run build
+          command: npm run build:all
+      - store_test_results:
+          path: reports/test
+      - persist_to_workspace:
+          # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
+          # taken to be the root directory of the workspace.
+          root: dist
+          # Must be relative path from root
+          paths:
+            - .
 
-  test-and-publish:
+  publish_job:
     docker:
       - image: cimg/node:16.17.0
     steps:
       - checkout
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: dist
       - run:
-          name: Run linter
-          command: echo tags
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" > .npmrc
 #      - node/install-packages:
 #          pkg-manager: npm
 #      - run:
@@ -44,10 +54,10 @@ jobs:
 workflows:
   development:
     jobs:
-      - test
-  publish:
-    jobs:
-      - test-and-publish:
+      - test_and_build_job
+      - publish_job:
+          requires:
+            - test_and_build_job
           filters:
             tags:
               only: /.*/

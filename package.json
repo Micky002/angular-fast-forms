@@ -5,8 +5,9 @@
   "scripts": {
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main",
-    "build:core": "nx build core:build",
-    "build:material": "nx build material:build",
+    "build:core": "nx run core:build",
+    "build:material": "nx run material:build",
+    "build:all": "nx run-many --target=build --projects=core,material",
     "start:material-example": "nx serve material-example",
     "test:affected": "nx affected --target=test --all",
     "test:all": "nx run-many --target=test --runInBand --projects=core,material",
