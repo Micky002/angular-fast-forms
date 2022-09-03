@@ -45,10 +45,10 @@ jobs:
 #          pkg-manager: npm
       - run:
           name: Publish core library
-          command: npm publish dist/libs/core
+          command: npm publish dist/libs/core --access public
       - run:
           name: Publish material library
-          command: npm publish dist/libs/material
+          command: npm publish dist/libs/material --access public
 #      - run:
 #          name: Run tests
 #          command: npm run test:all
