@@ -57,7 +57,10 @@ jobs:
 workflows:
   development:
     jobs:
-      - test_and_build_job
+      - test_and_build_job:
+          filters:
+            tags:
+              only: /.*/
       - publish_job:
           requires:
             - test_and_build_job
