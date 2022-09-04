@@ -11,6 +11,7 @@ jobs:
       - checkout
       - node/install-packages:
           pkg-manager: npm
+          with-cache: false
       - run:
           name: Run linter
           command: npm run lint:all
@@ -23,10 +24,7 @@ jobs:
       - store_test_results:
           path: reports/test
       - persist_to_workspace:
-          # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
-          # taken to be the root directory of the workspace.
           root: dist
-          # Must be relative path from root
           paths:
             - .
 
@@ -36,24 +34,17 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          # Must be absolute path or relative path from working_directory
           at: dist
       - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" > .npmrc
-#      - node/install-packages:
-#          pkg-manager: npm
       - run:
           name: Publish core library
           command: npm publish dist/libs/core --access public
       - run:
           name: Publish material library
           command: npm publish dist/libs/material --access public
-#      - run:
-#          name: Run tests
-#          command: npm run test:all
-#      - store_test_results:
-#          path: reports/test
+
 workflows:
   development:
     jobs:
