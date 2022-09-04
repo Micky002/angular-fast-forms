@@ -1,4 +1,7 @@
-import { SelectOption } from './select-option.model';
+export interface SelectOption {
+  value: string | number;
+  name: string;
+}
 
 export interface SelectProperties {
   emptyOptionName?: string

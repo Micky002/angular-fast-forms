@@ -1,8 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { InputFormat, InputProperties } from './input.properties';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { FormControl } from "@angular/forms";
 import { BaseFormControlComponent } from '@ngx-fast-forms/core';
+import { InputFormat, InputProperties } from './input.models';
 
 @UntilDestroy()
 @Component({
@@ -38,7 +38,6 @@ export class InputComponent extends BaseFormControlComponent<InputProperties, Fo
   }
 
   ngOnInit(): void {
-    // console.log('control: ', this.control);
     const inputElement = this.inputRef.nativeElement;
     if (this.properties.attributes) {
       Object.keys(this.properties.attributes).forEach(attribute => {
