@@ -1,7 +1,5 @@
-# material
+# Angular fast forms - material
 
-This library was generated with [Nx](https://nx.dev).
+Angular fast forms material library.
 
-## Running unit tests
-
-Run `nx test material` to execute the unit tests.
+See documentation at [https://github.com/Micky002/angular-fast-forms](https://github.com/Micky002/angular-fast-forms)

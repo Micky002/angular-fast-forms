@@ -23,7 +23,7 @@ export interface Question {
   label?: string;
   validation?: ValidationOptions;
   hidden?: boolean;
-  properties?: QuestionProperties
+  properties?: QuestionProperties;
   defaultValue?: string | number;
   children?: Array<Question>;
 }

@@ -1,7 +1,5 @@
-# core
+# Angular fast forms - core
 
-This library was generated with [Nx](https://nx.dev).
+Angular fast forms core library.
 
-## Running unit tests
-
-Run `nx test core` to execute the unit tests.
+See documentation at [https://github.com/Micky002/angular-fast-forms](https://github.com/Micky002/angular-fast-forms)

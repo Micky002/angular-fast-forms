@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { SelectOption } from './select-option.model';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, of } from 'rxjs';
-import { SelectProperties } from './select.properties';
 import { BaseFormControlComponent } from '@ngx-fast-forms/core';
 import { FormControl } from '@angular/forms';
+import { SelectOption, SelectProperties } from './select.models';
 
 @Component({
   selector: 'aff-material-select',
