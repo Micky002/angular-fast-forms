@@ -1,4 +1,5 @@
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/Micky002/angular-fast-forms/tree/master.svg?style=svg&circle-token=5182f3996623125630e7270dd338191f450be391)](https://dl.circleci.com/status-badge/redirect/gh/Micky002/angular-fast-forms/tree/master)
+[![npm version](https://badge.fury.io/js/@ngx-fast-forms%2Fcore.svg)](https://badge.fury.io/js/@ngx-fast-forms%2Fcore)
 
 # Angular Fast Forms
 
