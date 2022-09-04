@@ -1,10 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { UntilDestroy } from '@ngneat/until-destroy';
-import { FormControl } from "@angular/forms";
+import { FormControl } from '@angular/forms';
 import { BaseFormControlComponent } from '@ngx-fast-forms/core';
 import { InputFormat, InputProperties } from './input.models';
 
-@UntilDestroy()
 @Component({
   selector: 'aff-material-input',
   templateUrl: './input.component.html'
