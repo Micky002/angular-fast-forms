@@ -1,6 +1,6 @@
 {
   "name": "angular-fast-forms",
-  "version": "0.0.1-rc3",
+  "version": "0.0.1-rc4",
   "license": "MIT",
   "scripts": {
     "ng": "nx",
