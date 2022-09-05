@@ -14,3 +14,10 @@ form components.
 * Lazy loading support
 * Supports JSON form definitions (also fetching them via HTTP)
 * Small size
+
+
+## Work in progress
+
+The documentation is still work in progress and incomplete. There is also an
+example project in the repository which can be used in addition to the 
+documentation. The example project should include an example for every feature.
