@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { ValidatorFactoryService } from './validator-factory.service';
 import { FormControl, Validators } from '@angular/forms';
-import { AsyncValidatorRegistration, CUSTOM_ASYNC_VALIDATOR, registerValidator } from './validation.model';
+import { AsyncValidatorRegistration, CUSTOM_ASYNC_VALIDATOR, registerValidatorFn } from './validation.model';
 import { HttpClient } from '@angular/common/http';
 import { Provider } from '@angular/core';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
@@ -19,8 +19,8 @@ describe('ValidatorFactoryService', () => {
       ],
       providers: [
         ValidatorFactoryService,
-        registerValidator('test-max-length', Validators.maxLength(5)),
-        registerValidator('test-required', Validators.required),
+        registerValidatorFn('test-max-length', Validators.maxLength(5)),
+        registerValidatorFn('test-required', Validators.required),
         {
           provide: CUSTOM_ASYNC_VALIDATOR,
           deps: [HttpClient],

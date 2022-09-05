@@ -25,7 +25,6 @@ import { FastFormControlComponent } from './components/fast-form-control/fast-fo
   providers: [
     FastFormsService,
     ControlFactoryService,
-    ValidatorFactoryService,
     {
       provide: DYNAMIC_FORM_CONTROL,
       useValue: {

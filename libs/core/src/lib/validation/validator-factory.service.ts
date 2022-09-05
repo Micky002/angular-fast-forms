@@ -5,14 +5,18 @@ import {
   AsyncValidatorRegistration,
   CUSTOM_ASYNC_VALIDATOR,
   CUSTOM_VALIDATOR,
+  SyncValidator,
   ValidatorRegistration
 } from './validation.model';
+import { ValidatorDefinition } from './validator-definition.util';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'any'
+})
 export class ValidatorFactoryService {
 
-  private validatorRegistry: {[key: string]: ValidatorFn} = {};
+  private validatorRegistry: {[key: string]: SyncValidator} = {};
   private asyncValidatorRegistry: {[key: string]: AsyncValidatorFn} = {};
 
   constructor(@Optional() @Inject(CUSTOM_VALIDATOR) private customValidators?: Array<ValidatorRegistration>,
@@ -58,6 +62,9 @@ export class ValidatorFactoryService {
     if (options.email) {
       validators.push(Validators.email);
     }
+    if (options.pattern) {
+      validators.push(Validators.pattern(options.pattern));
+    }
     this.registerCustomValidators(this.getCustomValidator, options.custom, options.customFn).forEach(v => validators.push(v));
     return Validators.compose(validators);
   }
@@ -72,15 +79,15 @@ export class ValidatorFactoryService {
   }
 
   private registerCustomValidators<T extends ValidatorFn | AsyncValidatorFn>(
-    validatorResolver: (id: string) => T, custom?: string | Array<string>, customFn?: T | Array<T>
+    validatorResolver: (id: ValidatorDefinition) => T, custom?: string | Array<string>, customFn?: T | Array<T>
   ): Array<T> {
     const validators: T[] = [];
     if (custom) {
       if (custom instanceof Array) {
-        custom.map(validatorId => validatorResolver(validatorId))
+        custom.map(validatorId => validatorResolver(new ValidatorDefinition(validatorId)))
           .forEach(validator => validators.push(validator));
       } else {
-        const validator = validatorResolver(custom);
+        const validator = validatorResolver(new ValidatorDefinition(custom));
         validators.push(validator);
       }
     }
@@ -94,18 +101,18 @@ export class ValidatorFactoryService {
     return validators;
   }
 
-  private getCustomValidator = (id: string): ValidatorFn => {
-    const validator = this.validatorRegistry[id];
+  private getCustomValidator = (def: ValidatorDefinition): ValidatorFn => {
+    const validator = this.validatorRegistry[def.id];
     if (!validator) {
-      throw new Error(`No validator registered with id [${id}].`);
+      throw new Error(`No validator registered with id [${def.id}].`);
     }
-    return validator;
+    return validator(def.args);
   }
 
-  private getCustomAsyncValidator = (id: string): AsyncValidatorFn => {
-    const validator = this.asyncValidatorRegistry[id];
+  private getCustomAsyncValidator = (def: ValidatorDefinition): AsyncValidatorFn => {
+    const validator = this.asyncValidatorRegistry[def.id];
     if (!validator) {
-      throw new Error(`No async validator registered with id [${id}].`);
+      throw new Error(`No async validator registered with id [${def.id}].`);
     }
     return validator;
   }
