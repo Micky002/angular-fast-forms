@@ -19,5 +19,6 @@ form components.
 ## Work in progress
 
 The documentation is still work in progress and incomplete. There is also an
-example project in the repository which can be used in addition to the 
-documentation. The example project should include an example for every feature.
+[example project](https://github.com/Micky002/angular-fast-forms/tree/master/apps/material-example)
+in the repository which can be used in addition to the documentation. 
+The example project should include an example for every feature.
