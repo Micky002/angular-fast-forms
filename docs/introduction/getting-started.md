@@ -7,7 +7,7 @@ npm i @ngx-fast-forms/core
 ```
 
 Select one of the provided ui component libraries and also install
-it ([or add your own form components](#register-custom-controls)):
+it ([or add your own form components](/core-features/custom-form-controls)):
 
 * `@ngx-fast-forms/material` (add `MaterialFastFormsModule` to your module imports)
 
@@ -39,4 +39,4 @@ export class ExampleComponent {
 
 Start the app and you should see the created form
 
-![Github simple example](docs/pics/github-simple-example.png)
+![Github simple example](../pics/github-simple-example.png)
