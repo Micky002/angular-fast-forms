@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { ValidationComponent } from './validation/validation.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
-import { registerValidatorFnWithArgs } from '@ngx-fast-forms/core';
+import { registerValidatorFn, registerValidatorFnWithArgs } from '@ngx-fast-forms/core';
 
 @NgModule({
   declarations: [CustomValidatorComponent, ValidationComponent],
@@ -36,6 +36,15 @@ import { registerValidatorFnWithArgs } from '@ngx-fast-forms/core';
         }
         return null;
       };
+    }),
+    registerValidatorFn('custom-required', control => {
+      if (control.value) {
+        return null;
+      } else {
+        return {
+          required: true
+        };
+      }
     })]
 })
 export class ValidationModule {
