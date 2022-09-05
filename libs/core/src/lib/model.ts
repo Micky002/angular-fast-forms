@@ -35,6 +35,7 @@ export interface ValidationOptions {
   max?: number;
   maxLength?: number;
   email?: boolean;
+  pattern?: string | RegExp;
   custom?: string | Array<string>;
   customFn?: ValidatorFn | Array<ValidatorFn>;
   customAsync?: string | Array<string>;

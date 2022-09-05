@@ -16,7 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
     AppComponent,
     MaterialExampleComponent,
     FormArrayComponent,
-    GithubReadmeExampleComponent,
+    GithubReadmeExampleComponent
   ],
   imports: [
     BrowserModule,
@@ -39,14 +39,20 @@ import { MatButtonModule } from '@angular/material/button';
       {
         path: 'lazy-loading-example',
         loadChildren: () =>
-          import('./lazy-loading-example/lazy-loading-example.module').then(
-            (m) => m.LazyLoadingExampleModule
-          )
+          import('./lazy-loading-example/lazy-loading-example.module')
+            .then((m) => m.LazyLoadingExampleModule)
+      },
+      {
+        path: 'validation',
+        loadChildren: () =>
+          import('./pages/validation/validation.module')
+            .then((m) => m.ValidationModule)
       }
     ]),
     MatButtonModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+}
