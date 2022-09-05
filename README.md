@@ -59,7 +59,7 @@ export class ExampleComponent {
 
 Start the app and you should see the created form
 
-![Github simple example](docs/github-simple-example.png)
+![Github simple example](docs/pics/github-simple-example.png)
 
 ## Register custom Controls
 
