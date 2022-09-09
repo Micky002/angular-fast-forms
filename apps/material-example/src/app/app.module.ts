@@ -47,6 +47,12 @@ import { MatButtonModule } from '@angular/material/button';
         loadChildren: () =>
           import('./pages/validation/validation.module')
             .then((m) => m.ValidationModule)
+      },
+      {
+        path: 'nested-control',
+        loadChildren: () =>
+          import('./pages/custom-nested-control/custom-nested-control.module')
+            .then((m) => m.CustomNestedControlModule)
       }
     ]),
     MatButtonModule

@@ -1,4 +1,4 @@
-import { AbstractControl, AsyncValidatorFn, FormControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { AsyncValidatorFn, ValidatorFn } from '@angular/forms';
 import { InjectionToken } from '@angular/core';
 
 export const CUSTOM_VALIDATOR = new InjectionToken<ValidatorRegistration>('AFF_CUSTOM_VALIDATOR');

@@ -1,7 +1,8 @@
 import { FormGroup } from '@angular/forms';
-import { Question } from '../../model';
+import { Question, QuestionProperties } from '../../model';
 
-export abstract class BaseFormGroupComponent {
+export abstract class BaseFormGroupComponent<T = QuestionProperties> {
   formGroup!: FormGroup;
   questions!: Array<Question>;
+  properties!: T;
 }

@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FastFormGroupComponent } from './components/fast-form-group/fast-form-group.component';
 import { FastFormsService } from './service/fast-forms.service';
-import { ValidatorFactoryService } from './validation/validator-factory.service';
 import { ControlFactoryService } from './service/control-factory.service';
 import { FastFormRowComponent } from './components/fast-form-row/fast-form-row.component';
 import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from './model';

@@ -5,7 +5,13 @@ import { RouterModule } from '@angular/router';
 import { ValidationComponent } from './validation/validation.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
-import { registerValidatorFn, registerValidatorFnWithArgs } from '@ngx-fast-forms/core';
+import {
+  AsyncValidatorRegistration,
+  CUSTOM_ASYNC_VALIDATOR,
+  registerValidatorFn,
+  registerValidatorFnWithArgs
+} from '@ngx-fast-forms/core';
+import { HttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [CustomValidatorComponent, ValidationComponent],
@@ -45,7 +51,21 @@ import { registerValidatorFn, registerValidatorFnWithArgs } from '@ngx-fast-form
           required: true
         };
       }
-    })]
+    }),
+    {
+      provide: CUSTOM_ASYNC_VALIDATOR,
+      deps: [HttpClient],
+      multi: true,
+      useFactory: (http: HttpClient) => {
+        return {
+          id: 'async-start-with',
+          validator: control => {
+            return http.get('assets/validation/async-start-with.json');
+          }
+        } as AsyncValidatorRegistration;
+      }
+    }
+  ]
 })
 export class ValidationModule {
 }

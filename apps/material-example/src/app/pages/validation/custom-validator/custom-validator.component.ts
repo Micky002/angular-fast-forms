@@ -18,6 +18,13 @@ export class CustomValidatorComponent {
       validation: {
         custom: 'custom-start-with:asdf'
       }
+    }, {
+      id: 'test-async-input',
+      type: 'input',
+      label: 'Start with \'asdf\' async',
+      validation: {
+        customAsync: 'async-start-with'
+      }
     }]);
   }
 }

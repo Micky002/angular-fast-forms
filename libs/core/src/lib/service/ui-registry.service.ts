@@ -67,14 +67,15 @@ export class UiRegistryService {
     component.properties = question?.properties ?? {};
   }
 
-  private initializeFormInlineComponent(control: FormGroup, question: Question, component: BaseFormInlineComponent) {
-    component.formGroup = control;
+  private initializeFormInlineComponent(formGroup: FormGroup, question: Question, component: BaseFormInlineComponent) {
+    component.formGroup = formGroup;
     component.questions = question.children ?? [];
   }
 
-  private initializeFormGroupComponent(control: FormGroup, question: Question, component: BaseFormGroupComponent) {
-    component.formGroup = control;
+  private initializeFormGroupComponent(formGroup: FormGroup, question: Question, component: BaseFormGroupComponent) {
+    component.formGroup = formGroup.controls[question.id] as FormGroup;
     component.questions = question.children ?? [];
+    component.properties = question?.properties ?? {};
   }
 
   private initializeFormControlComponent(control: FormGroup | FormControl, question: Question, component: BaseFormControlComponent) {
