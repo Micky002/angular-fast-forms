@@ -10,7 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormArrayComponent } from './pages/form-array/form-array.component';
 import { GithubReadmeExampleComponent } from './pages/github-readme-example/github-readme-example.component';
 import { MatButtonModule } from '@angular/material/button';
-import { FastFormsModule } from '../../../../libs/core/src/lib/fast-forms.module';
+import { FastFormsModule } from '@ngx-fast-forms/core';
 
 @NgModule({
   declarations: [
