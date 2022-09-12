@@ -6,7 +6,9 @@ import { ValidatorFactoryService } from '../validation/validator-factory.service
 import { UiRegistryService } from './ui-registry.service';
 import { HttpClient } from '@angular/common/http';
 
-@Injectable()
+@Injectable({
+  providedIn: 'any'
+})
 export class FastFormsService {
 
   constructor(private controlFactory: ControlFactoryService,

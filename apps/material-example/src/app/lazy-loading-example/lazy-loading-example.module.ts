@@ -6,6 +6,7 @@ import { LazyInputComponent } from './control/lazy-input/lazy-input.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { registerControl } from '@ngx-fast-forms/core';
 import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
+import { FastFormsModule } from '@ngx-fast-forms/core';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
       }
     ]),
     ReactiveFormsModule,
+    FastFormsModule.forChild(),
     MaterialFastFormsModule
   ],
   providers: [

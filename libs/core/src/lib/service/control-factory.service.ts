@@ -7,7 +7,9 @@ import { FastFormArray } from '../control/fast-form-array';
 import { FastFormControl } from '../control/fast-form-control';
 import { FastFormGroup } from '../control/fast-form-group';
 
-@Injectable()
+@Injectable({
+  providedIn: 'any'
+})
 export class ControlFactoryService {
 
   constructor(private validatorFactory: ValidatorFactoryService,

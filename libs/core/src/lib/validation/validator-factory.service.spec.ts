@@ -1,12 +1,51 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ValidatorFactoryService } from './validator-factory.service';
-import { FormControl, Validators } from '@angular/forms';
-import { AsyncValidatorRegistration, CUSTOM_ASYNC_VALIDATOR, registerValidatorFn } from './validation.model';
-import { HttpClient } from '@angular/common/http';
-import { Provider } from '@angular/core';
+import { AsyncValidatorFn, FormControl, ValidatorFn, Validators } from '@angular/forms';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { BaseValidator } from './base-validator.service';
+import { BaseAsyncValidator, Validator } from '@ngx-fast-forms/core';
+import { Injectable } from '@angular/core';
+import { FastFormsModule } from '../fast-forms.module';
+import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
+
+@Validator({
+  id: 'test-max-length',
+  type: 'sync'
+})
+@Injectable()
+class CustomMaxLengthValidator implements BaseValidator {
+  createValidator(args: string[]): ValidatorFn {
+    return Validators.maxLength(5);
+  }
+}
+
+@Validator({
+  id: 'test-required',
+  type: 'sync'
+})
+@Injectable()
+class CustomRequiredValidator implements BaseValidator {
+  createValidator(args: string[]): ValidatorFn {
+    return Validators.required;
+  }
+}
+
+@Validator({
+  id: 'test-async-required',
+  type: 'async'
+})
+@Injectable()
+class CustomAsyncValidator implements BaseAsyncValidator {
+
+  constructor(private http: HttpClient) {
+  }
+
+  createValidator(args: string[]): AsyncValidatorFn {
+    return () => this.http.get('/test').pipe(map(value => value ? null : {asyncRequired: true}));
+  }
+}
 
 describe('ValidatorFactoryService', () => {
   let service: ValidatorFactoryService;
@@ -15,23 +54,17 @@ describe('ValidatorFactoryService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        FastFormsModule.forRoot({
+          validators: [
+            CustomMaxLengthValidator,
+            CustomRequiredValidator,
+            CustomAsyncValidator
+          ]
+        })
       ],
       providers: [
-        ValidatorFactoryService,
-        registerValidatorFn('test-max-length', Validators.maxLength(5)),
-        registerValidatorFn('test-required', Validators.required),
-        {
-          provide: CUSTOM_ASYNC_VALIDATOR,
-          deps: [HttpClient],
-          useFactory: (http: HttpClient) => {
-            return {
-              id: 'test-async-required',
-              validator: () => http.get('/test').pipe(map(value => value ? null : {asyncRequired: true}))
-            } as AsyncValidatorRegistration
-          },
-          multi: true
-        } as Provider
+        ValidatorFactoryService
       ]
     });
     service = TestBed.inject(ValidatorFactoryService);
@@ -56,6 +89,8 @@ describe('ValidatorFactoryService', () => {
       const result = validator(new FormControl());
       expect(result).toBeDefined();
       expect(result).toEqual({required: true});
+    } else {
+      throw new Error('Validator must be defined');
     }
   });
 
@@ -72,6 +107,8 @@ describe('ValidatorFactoryService', () => {
       expect(result).toEqual({required: true});
       result = validator(new FormControl(0));
       expect(result).toEqual({min: {actual: 0, min: 5}});
+    } else {
+      throw new Error('Validator must be defined');
     }
   });
 
@@ -82,7 +119,9 @@ describe('ValidatorFactoryService', () => {
     expect(validator).toBeDefined();
     if (validator) {
       const result = validator(new FormControl('asdf'));
-      expect(result).toEqual({minlength: {actualLength: 4, requiredLength: 5}})
+      expect(result).toEqual({minlength: {actualLength: 4, requiredLength: 5}});
+    } else {
+      throw new Error('Validator must be defined');
     }
   });
 
@@ -90,10 +129,11 @@ describe('ValidatorFactoryService', () => {
     const validator = service.createValidators({
       custom: 'test-max-length'
     });
-    expect(validator).toBeDefined();
     if (validator) {
       const result = validator(new FormControl('This is a test'));
-      expect(result).toEqual({maxlength: {actualLength: 14, requiredLength: 5}})
+      expect(result).toEqual({maxlength: {actualLength: 14, requiredLength: 5}});
+    } else {
+      throw new Error('Validator must be defined');
     }
   });
 
@@ -101,10 +141,11 @@ describe('ValidatorFactoryService', () => {
     const validator = service.createValidators({
       custom: ['test-max-length', 'test-required']
     });
-    expect(validator).toBeDefined();
     if (validator) {
       const result = validator(new FormControl());
-      expect(result).toEqual({required: true})
+      expect(result).toEqual({required: true});
+    } else {
+      throw new Error('Validator must be defined');
     }
   });
 

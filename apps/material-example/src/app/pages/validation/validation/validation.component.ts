@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AsyncRequiredValidatorService } from '../validators/async-required-validator.service';
 
 @Component({
   selector: 'frontend-validation',
@@ -8,6 +7,6 @@ import { AsyncRequiredValidatorService } from '../validators/async-required-vali
 })
 export class ValidationComponent {
 
-  constructor(private vali: AsyncRequiredValidatorService) {
+  constructor() {
   }
 }

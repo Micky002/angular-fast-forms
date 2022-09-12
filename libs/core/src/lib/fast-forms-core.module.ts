@@ -11,16 +11,14 @@ import { FastFormControlComponent } from './components/fast-form-control/fast-fo
 
 @NgModule({
   imports: [
-    CommonModule,
+    // CommonModule,
     ReactiveFormsModule
   ],
   declarations: [
-    FastFormGroupComponent,
-    FastFormRowComponent,
-    FastFormArrayComponent,
-    FastFormControlComponent,
+    // FastFormRowComponent,
+    // FastFormArrayComponent,
+    // FastFormControlComponent,
   ],
-  exports: [FastFormGroupComponent],
   providers: [
     FastFormsService,
     ControlFactoryService,

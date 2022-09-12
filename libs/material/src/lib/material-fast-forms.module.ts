@@ -10,12 +10,12 @@ import { DateInputComponent } from './ui/date-input/date-input.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatLuxonDateModule } from '@angular/material-luxon-adapter';
 import { DateFormControl } from './ui/date-input/date-form-control';
-import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition, FastFormsCoreModule } from '@ngx-fast-forms/core';
+import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from '@ngx-fast-forms/core';
 
 @NgModule({
   imports: [
     CommonModule,
-    FastFormsCoreModule,
+    // FastFormsCoreModule,
     MatInputModule,
     ReactiveFormsModule,
     MatSelectModule,
@@ -28,9 +28,9 @@ import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition, FastFormsCoreModule } from
     InputComponent,
     DateInputComponent
   ],
-  exports: [
-    FastFormsCoreModule
-  ],
+  // exports: [
+  //   FastFormsCoreModule
+  // ],
   providers: [
     {
       provide: DYNAMIC_FORM_CONTROL,

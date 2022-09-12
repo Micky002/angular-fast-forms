@@ -12,5 +12,6 @@ export * from './lib/validation/validation.model';
 export * from './lib/validation/base-validator.service';
 export * from './lib/validation/base-async-validator.service';
 
+export * from './lib/fast-forms.module';
 export * from './lib/fast-forms-core.module';
 export * from './lib/model';

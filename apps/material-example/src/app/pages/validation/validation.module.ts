@@ -5,16 +5,17 @@ import { RouterModule } from '@angular/router';
 import { ValidationComponent } from './validation/validation.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
-import {
-  AsyncValidatorRegistration,
-  CUSTOM_ASYNC_VALIDATOR,
-  registerValidatorFn,
-  registerValidatorFnWithArgs
-} from '@ngx-fast-forms/core';
-import { HttpClient } from '@angular/common/http';
+import { AsyncRequiredValidatorService } from './validators/async-required-validator.service';
+import { CustomStartWithService } from './validators/custom-start-with.service';
+import { CustomRequiredService } from './validators/custom-required.service';
+import { FastFormsModule } from '@ngx-fast-forms/core';
+import { AsyncStartWithService } from './validators/async-start-with.service';
 
 @NgModule({
-  declarations: [CustomValidatorComponent, ValidationComponent],
+  declarations: [
+    CustomValidatorComponent,
+    ValidationComponent
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild([
@@ -28,43 +29,15 @@ import { HttpClient } from '@angular/common/http';
       }
     ]),
     MatButtonModule,
+    FastFormsModule.forChild({
+      validators: [
+        AsyncRequiredValidatorService,
+        CustomStartWithService,
+        CustomRequiredService,
+        AsyncStartWithService
+      ]
+    }),
     MaterialFastFormsModule
-  ],
-  providers: [
-    registerValidatorFnWithArgs('custom-start-with', args => {
-      return control => {
-        if (!(control.value + '').startsWith(args[0])) {
-          return {
-            startWith: {
-              requiredStart: 'test'
-            }
-          };
-        }
-        return null;
-      };
-    }),
-    registerValidatorFn('custom-required', control => {
-      if (control.value) {
-        return null;
-      } else {
-        return {
-          required: true
-        };
-      }
-    }),
-    {
-      provide: CUSTOM_ASYNC_VALIDATOR,
-      deps: [HttpClient],
-      multi: true,
-      useFactory: (http: HttpClient) => {
-        return {
-          id: 'async-start-with',
-          validator: control => {
-            return http.get('assets/validation/async-start-with.json');
-          }
-        } as AsyncValidatorRegistration;
-      }
-    }
   ]
 })
 export class ValidationModule {

@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 import { BaseAsyncValidator, Validator } from '@ngx-fast-forms/core';
 import { AsyncValidatorFn } from '@angular/forms';
-import { of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Validator({
-  id: 'custom-async-required',
+  id: 'async-start-with',
   type: 'async'
 })
 @Injectable()
-export class AsyncRequiredValidatorService implements BaseAsyncValidator {
+export class AsyncStartWithService implements BaseAsyncValidator {
+
+  constructor(private http: HttpClient) { }
 
   createValidator(args: string[]): AsyncValidatorFn {
     return control => {
-      return of({
-        required: true
-      })
-    };
+      return this.http.get('assets/validation/async-start-with.json');
+    }
   }
 }
