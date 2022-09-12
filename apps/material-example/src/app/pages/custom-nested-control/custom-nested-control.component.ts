@@ -18,18 +18,11 @@ export class CustomNestedControlComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.form.valueChanges.subscribe(value => {
-      console.log(value);
-    });
     this.form.setValue({
       date_range: {
         from: new Date(),
         until: new Date()
       }
     });
-  }
-
-  update() {
-    console.log(this.form.value);
   }
 }
