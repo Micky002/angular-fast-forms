@@ -5,10 +5,17 @@ import { RouterModule } from '@angular/router';
 import { ValidationComponent } from './validation/validation.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
-import { registerValidatorFn, registerValidatorFnWithArgs } from '@ngx-fast-forms/core';
+import { AsyncRequiredValidatorService } from './validators/async-required-validator.service';
+import { CustomStartWithService } from './validators/custom-start-with.service';
+import { CustomRequiredService } from './validators/custom-required.service';
+import { FastFormsModule } from '@ngx-fast-forms/core';
+import { AsyncStartWithService } from './validators/async-start-with.service';
 
 @NgModule({
-  declarations: [CustomValidatorComponent, ValidationComponent],
+  declarations: [
+    CustomValidatorComponent,
+    ValidationComponent
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild([
@@ -22,30 +29,16 @@ import { registerValidatorFn, registerValidatorFnWithArgs } from '@ngx-fast-form
       }
     ]),
     MatButtonModule,
-    MaterialFastFormsModule
-  ],
-  providers: [
-    registerValidatorFnWithArgs('custom-start-with', args => {
-      return control => {
-        if (!(control.value + '').startsWith(args[0])) {
-          return {
-            startWith: {
-              requiredStart: 'test'
-            }
-          };
-        }
-        return null;
-      };
+    FastFormsModule.forChild({
+      validators: [
+        AsyncRequiredValidatorService,
+        CustomStartWithService,
+        CustomRequiredService,
+        AsyncStartWithService
+      ]
     }),
-    registerValidatorFn('custom-required', control => {
-      if (control.value) {
-        return null;
-      } else {
-        return {
-          required: true
-        };
-      }
-    })]
+    MaterialFastFormsModule
+  ]
 })
 export class ValidationModule {
 }

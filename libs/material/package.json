@@ -1,6 +1,6 @@
 {
   "name": "@ngx-fast-forms/material",
-  "version": "1.0.0-rc1",
+  "version": "1.0.0",
   "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^14.0.0",
@@ -8,9 +8,7 @@
     "@angular/forms": "^14.0.0",
     "@angular/platform-browser": "^14.0.0",
     "@angular/material": "^14.0.0",
-    "@angular/material-luxon-adapter": "^14.0.0",
-    "rxjs": "^6.5.3 || ^7.4.0",
-    "luxon": "^2.0.0"
+    "rxjs": "^6.5.3 || ^7.4.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"

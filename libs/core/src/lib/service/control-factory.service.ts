@@ -7,7 +7,9 @@ import { FastFormArray } from '../control/fast-form-array';
 import { FastFormControl } from '../control/fast-form-control';
 import { FastFormGroup } from '../control/fast-form-group';
 
-@Injectable()
+@Injectable({
+  providedIn: 'any'
+})
 export class ControlFactoryService {
 
   constructor(private validatorFactory: ValidatorFactoryService,
@@ -59,7 +61,9 @@ export class ControlFactoryService {
   public createAngularFormControl(question: Question): AbstractControl {
     if (this.componentRegistry) {
       const formDefinition = this.componentRegistry.find(def => def.type === question.type);
-      if (formDefinition && formDefinition.controlFactory) {
+      if (formDefinition && formDefinition.component && (formDefinition.component as any)['controlFactory']) {
+        return (formDefinition.component as any)['controlFactory'](question);
+      } else if (formDefinition && formDefinition.controlFactory) {
         return formDefinition.controlFactory(question);
       } else if (question.type === 'group') {
         return new FastFormGroup(question.children ?? [], this);

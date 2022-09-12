@@ -1,18 +1,27 @@
-# Register custom Controls
+# Custom control
 
-1. Import `FastFormsModule` to your module imports
-2. Create a new angular component. Extend the component from the control base class `BaseFormControlComponent`.
-   The `InputProperties`
-   is just an example, if your component does not have custom properties you can omit this.
+To add a custom control you have to create a new angular component via the angular 
+[CLI](https://angular.io/cli/generate#component) or manually. These component must extend the
+`BaseFormControlComponent<T = QuestionProperties, C = AbstractControl>` abstract class. If the control has custom
+properties then the type parameter `T` should declare this type. `C` should define either the angular `FormControl` 
+or a custom subtype of this. The last step is to register the control.
+
+
+
+## Example
+
+In this example a basic input control is registered.
+
+
+
+### Step 1 - Create component
 
 ```typescript
-import { BaseFormControlComponent } from './base-control.component';
-
 @Component({
   selector: 'my-custom-input',
   templateUrl: './input.component.html'
 })
-export class InputComponent extends BaseFormControlComponent<InputProperties> implements OnInit {
+export class InputComponent extends BaseFormControlComponent<InputProperties, FormControl> {
 
   public get type(): string {
     switch (this.format) {
@@ -37,10 +46,7 @@ interface InputProperties {
 }
 ```
 
-3. Add the control html template (see the following for an angular material input example)
-
 ```html
-
 <mat-form-field>
   <mat-label *ngIf="question.label">{{question.label}}</mat-label>
   <input #inputElement [formControl]="control" [type]="type" matInput>
@@ -51,23 +57,30 @@ interface InputProperties {
 </mat-form-field>
 ```
 
-4. Register the control in your module
+
+
+### Step 2 - Registration
+
+It is possible to register the control via the helper method `registerControl(type, component)` or manually.
+
+
+#### Register via helper method
 
 ```typescript
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FastFormsCoreModule,
-    MatInputModule,
-    MatIconModule
-  ],
-  declarations: [
-    InputComponent,
-  ],
-  exports: [
-    FastFormsCoreModule
-  ],
+  providers: [
+    registerControl('custom-input', InputComponent)
+  ]
+})
+export class CustomFormControlModule {
+}
+```
+
+
+#### Register manually
+
+```typescript
+@NgModule({
   providers: [
     {
       provide: DYNAMIC_FORM_CONTROL,
@@ -82,3 +95,4 @@ interface InputProperties {
 export class CustomFormControlModule {
 }
 ```
+

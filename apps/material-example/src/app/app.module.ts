@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormArrayComponent } from './pages/form-array/form-array.component';
 import { GithubReadmeExampleComponent } from './pages/github-readme-example/github-readme-example.component';
 import { MatButtonModule } from '@angular/material/button';
+import { FastFormsModule } from '@ngx-fast-forms/core';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FastFormsModule.forRoot(),
     MaterialFastFormsModule,
     HttpClientModule,
     RouterModule.forRoot([
@@ -47,6 +49,12 @@ import { MatButtonModule } from '@angular/material/button';
         loadChildren: () =>
           import('./pages/validation/validation.module')
             .then((m) => m.ValidationModule)
+      },
+      {
+        path: 'nested-control',
+        loadChildren: () =>
+          import('./pages/custom-nested-control/custom-nested-control.module')
+            .then((m) => m.CustomNestedControlModule)
       }
     ]),
     MatButtonModule

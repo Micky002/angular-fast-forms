@@ -6,16 +6,13 @@ import { MatSelectModule } from '@angular/material/select';
 import { SelectComponent } from './ui/select/select.component';
 import { InputComponent } from './ui/input/input.component';
 import { MatIconModule } from '@angular/material/icon';
-import { DateInputComponent } from './ui/date-input/date-input.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatLuxonDateModule } from '@angular/material-luxon-adapter';
-import { DateFormControl } from './ui/date-input/date-form-control';
-import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition, FastFormsCoreModule } from '@ngx-fast-forms/core';
+import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from '@ngx-fast-forms/core';
 
 @NgModule({
   imports: [
     CommonModule,
-    FastFormsCoreModule,
     MatInputModule,
     ReactiveFormsModule,
     MatSelectModule,
@@ -25,11 +22,7 @@ import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition, FastFormsCoreModule } from
   ],
   declarations: [
     SelectComponent,
-    InputComponent,
-    DateInputComponent
-  ],
-  exports: [
-    FastFormsCoreModule
+    InputComponent
   ],
   providers: [
     {
@@ -47,15 +40,6 @@ import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition, FastFormsCoreModule } from
         type: 'input',
         component: InputComponent
       } as DynamicFormDefinition
-    },
-    {
-      provide: DYNAMIC_FORM_CONTROL,
-      multi: true,
-      useValue: {
-        type: 'date-input',
-        component: DateInputComponent,
-        controlFactory: () => new DateFormControl()
-      }
     }
   ]
 })

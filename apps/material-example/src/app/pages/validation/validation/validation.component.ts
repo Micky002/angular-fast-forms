@@ -6,4 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./validation.component.scss'],
 })
 export class ValidationComponent {
+
+  constructor() {
+  }
 }

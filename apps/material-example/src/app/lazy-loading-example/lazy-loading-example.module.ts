@@ -4,8 +4,9 @@ import { LazyLoadingExampleComponent } from './lazy-loading-example.component';
 import { RouterModule } from '@angular/router';
 import { LazyInputComponent } from './control/lazy-input/lazy-input.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from '@ngx-fast-forms/core';
+import { registerControl } from '@ngx-fast-forms/core';
 import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
+import { FastFormsModule } from '@ngx-fast-forms/core';
 
 @NgModule({
   declarations: [
@@ -21,17 +22,11 @@ import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
       }
     ]),
     ReactiveFormsModule,
+    FastFormsModule.forChild(),
     MaterialFastFormsModule
   ],
   providers: [
-    {
-      provide: DYNAMIC_FORM_CONTROL,
-      useValue: {
-        type: 'lazy-input',
-        component: LazyInputComponent
-      } as DynamicFormDefinition,
-      multi: true
-    }
+    registerControl('lazy-input', LazyInputComponent)
   ]
 })
 export class LazyLoadingExampleModule {}
