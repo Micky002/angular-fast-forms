@@ -19,6 +19,15 @@ jobs:
           name: Run tests
           command: npm run test:all
       - run:
+          name: Code climate coverage
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-0.10.3-linux-amd64 > ./cc-test-reporter
+            chmod +x cc-test-reporter
+            ./cc-test-reporter format-coverage -t lcov -o coverage/codeclimate.core.json coverage/libs/core/lcov.info
+            ./cc-test-reporter format-coverage -t lcov -o coverage/codeclimate.material.json coverage/libs/material/lcov.info
+            ./cc-test-reporter sum-coverage coverage/codeclimate.*.json -p 2 -o coverage/codeclimate.total.json
+            ./cc-test-reporter upload-coverage -i coverage/codeclimate.total.json
+      - run:
           name: Run build
           command: npm run build:all
       - store_test_results:

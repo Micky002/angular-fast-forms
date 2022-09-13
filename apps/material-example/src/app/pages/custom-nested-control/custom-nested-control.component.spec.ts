@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CustomNestedControlComponent } from './custom-nested-control.component';
-import { FastFormsCoreModule, registerGroup } from '@ngx-fast-forms/core';
+import { FastFormsModule, registerGroup } from '@ngx-fast-forms/core';
 import { DateRangeInputComponent } from './date-range-input/date-range-input.component';
 
 describe('CustomNestedControlComponent', () => {
@@ -11,7 +11,7 @@ describe('CustomNestedControlComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FastFormsCoreModule
+        FastFormsModule.forRoot()
       ],
       declarations: [
         CustomNestedControlComponent,

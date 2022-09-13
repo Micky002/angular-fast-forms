@@ -19,5 +19,6 @@ if (process.env.CI) {
 }
 
 module.exports = {
-  ...nxPreset
+  ...nxPreset,
+  coverageReporters: ['lcov']
 };

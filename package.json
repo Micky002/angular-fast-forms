@@ -10,7 +10,7 @@
     "build:all": "nx run-many --target=build --projects=core,material",
     "start:material-example": "nx serve material-example",
     "test:affected": "nx affected --target=test --all",
-    "test:all": "nx run-many --target=test --runInBand --projects=core,material",
+    "test:all": "nx run-many --target=test --runInBand --coverage --projects=core,material",
     "lint:all": "nx run-many --target=lint --projects=core,material",
     "lint:core": "nx lint core",
     "lint:material": "nx lint material",
