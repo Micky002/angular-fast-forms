@@ -1,9 +1,10 @@
 import { META_VALIDATOR_OPTIONS_KEY } from '../internal/symbols';
 import { InternalValidator } from '../internal/validation/models';
+import { ValidatorType } from './symbols';
 
 export interface ValidatorOptions {
   id: string;
-  type: 'sync' | 'async';
+  type: ValidatorType;
 }
 
 export function Validator(options: ValidatorOptions) {

@@ -19,8 +19,22 @@ describe('FastFormArray', () => {
   it('should create form array', () => {
     const fastFormArray = new FastFormArray({
       id: 'test',
-      type: ''
+      type: 'input'
     }, controlFactory);
     expect(fastFormArray).toBeDefined();
+  });
+
+  it('should update control count on setValue and patchValue', () => {
+    const formArray = new FastFormArray({
+      id: 'test',
+      type: 'input'
+    }, controlFactory);
+    expect(formArray.length).toEqual(0);
+
+    formArray.setValue(['first', 'second', 'third']);
+    expect(formArray.length).toEqual(3);
+
+    formArray.patchValue(['first']);
+    expect(formArray.length).toEqual(1);
   });
 });
