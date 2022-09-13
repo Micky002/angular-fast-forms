@@ -1,10 +1,9 @@
 import { Injector } from '@angular/core';
-import { BaseValidator } from '../../validation/base-validator.service';
 import { InternalValidator } from './models';
 import { ValidatorDefinition } from './validator-definition.util';
 import { META_VALIDATOR_OPTIONS_KEY } from '../symbols';
 import { AsyncValidatorFn, ValidatorFn } from '@angular/forms';
-import { BaseAsyncValidator } from '../../validation/base-async-validator.service';
+import { ValidatorType } from '../../validation/symbols';
 
 export class ValidatorRegistry {
 
@@ -29,24 +28,23 @@ export class ValidatorRegistry {
   }
 
   public getSyncValidator(def: ValidatorDefinition): ValidatorFn {
-    const validatorType = this.getValidatorType(def, 'sync');
-    if (!validatorType) {
-      throw new Error(`No sync validator registered with type [${def.id}]`);
-    }
-    const validatorFactory = this.injector.get(validatorType) as BaseValidator;
-    return validatorFactory.createValidator(def.args);
+    return this.getValidator(def, 'sync');
   }
 
   public getAsyncValidator(def: ValidatorDefinition): AsyncValidatorFn {
-    const validatorType = this.getValidatorType(def, 'async');
+    return this.getValidator(def, 'async');
+  }
+
+  private getValidator(def: ValidatorDefinition, type: ValidatorType) {
+    const validatorType = this.getValidatorType(def, type);
     if (!validatorType) {
-      throw new Error(`No async validator registered with type [${def.id}]`);
+      throw new Error(`No ${type} validator registered with type [${def.id}]`);
     }
-    const validatorFactory = this.injector.get(validatorType) as BaseAsyncValidator;
+    const validatorFactory = this.injector.get(validatorType);
     return validatorFactory.createValidator(def.args);
   }
 
-  private getValidatorType(def: ValidatorDefinition, type: 'sync' | 'async'): InternalValidator | undefined {
+  private getValidatorType(def: ValidatorDefinition, type: ValidatorType): InternalValidator | undefined {
     return this.validators.find(validator => {
       const options = validator[META_VALIDATOR_OPTIONS_KEY];
       return options.type === type && options.id === def.id;

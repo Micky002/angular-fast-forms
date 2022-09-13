@@ -51,11 +51,7 @@ export class ValidatorFactoryService {
   }
 
   public createAsyncValidators(options?: ValidationOptions): Array<AsyncValidatorFn> {
-    const validators: AsyncValidatorFn[] = [];
-    if (!options) {
-      return [];
-    }
-    toArray(options.customAsync).map(id => new ValidatorDefinition(id))
+    const validators = toArray(options?.customAsync).map(id => new ValidatorDefinition(id))
       .filter(def => {
         if (this.registry.hasAsyncValidator(def)) {
           return true;
@@ -64,10 +60,9 @@ export class ValidatorFactoryService {
           return false;
         }
       })
-      .map(def => this.registry.getAsyncValidator(def))
-      .forEach(v => validators.push(v));
+      .map(def => this.registry.getAsyncValidator(def));
 
-    if (options.customAsyncFn) {
+    if (options?.customAsyncFn) {
       if (options.customAsyncFn instanceof Array) {
         validators.push(...options.customAsyncFn);
       } else {
@@ -78,11 +73,7 @@ export class ValidatorFactoryService {
   }
 
   private createCustomSyncValidators(options?: ValidationOptions): Array<ValidatorFn> {
-    const validators: ValidatorFn[] = [];
-    if (!options) {
-      return [];
-    }
-    toArray(options.custom).map(id => new ValidatorDefinition(id))
+    const validators = toArray(options?.custom).map(id => new ValidatorDefinition(id))
       .filter(def => {
         if (this.registry.hasSyncValidator(def)) {
           return true;
@@ -91,10 +82,9 @@ export class ValidatorFactoryService {
           return false;
         }
       })
-      .map(def => this.registry.getSyncValidator(def))
-      .forEach(v => validators.push(v));
+      .map(def => this.registry.getSyncValidator(def));
 
-    if (options.customFn) {
+    if (options?.customFn) {
       if (options.customFn instanceof Array) {
         validators.push(...options.customFn);
       } else {
