@@ -74,13 +74,4 @@ export class ControlFactoryService {
       return new FastFormControl(question);
     }
   }
-
-  public createRow(questions: Array<Question>): Array<{id: string, control: AbstractControl}> {
-    return questions.map(q => {
-      return {
-        id: q.id,
-        control: this.createAngularFormControl(q)
-      };
-    });
-  }
 }

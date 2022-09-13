@@ -31,8 +31,6 @@ export class FastFormGroup extends FormGroup {
     this.controlFactory.createFromQuestions(this, this._questions);
   }
 
-
-
   setQuestions(questions: Array<Question>) {
     this._questions = questions;
     this.controls = {};

@@ -1,6 +1,6 @@
-import { moduleMetadata, Story, Meta } from '@storybook/angular';
+import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { AppComponent } from './app.component';
-import { FastFormsCoreModule } from '@ngx-fast-forms/core';
+import { FastFormsModule } from '@ngx-fast-forms/core';
 
 export default {
   title: 'AppComponent',
@@ -8,7 +8,7 @@ export default {
   decorators: [
     moduleMetadata({
       imports: [
-        FastFormsCoreModule
+        FastFormsModule.forRoot()
       ],
     }),
   ],
