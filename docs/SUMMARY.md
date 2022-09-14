@@ -10,3 +10,5 @@
 * [Custom Validation](custom-validation/README.md)
   * [Sync Validator](custom-validation/sync.md)
   * [Async Validator](custom-validation/async.md)
+* [Advanced](advanced/README.md)
+  * [NGXS Support](advanced/ngxs.md)

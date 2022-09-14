@@ -6,7 +6,6 @@
     "material": "libs/material",
     "material-example": "apps/material-example",
     "material-example-e2e": "apps/material-example-e2e",
-    "material-experimental": "libs/material-experimental",
-    "ngxs-plugin": "libs/ngxs-plugin"
+    "material-experimental": "libs/material-experimental"
   }
 }

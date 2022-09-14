@@ -15,7 +15,7 @@ import { ControlFactoryService } from '../../service/control-factory.service';
 import { ValidatorFactoryService } from '../../validation/validator-factory.service';
 import { UiRegistryService } from '../../service/ui-registry.service';
 import { HttpClient } from '@angular/common/http';
-import { BaseFormGroupComponent } from '../base/base-group.component';
+import { FastFormsService } from '../../service/fast-forms.service';
 
 @Component({
   selector: 'aff-form-group',
@@ -23,7 +23,18 @@ import { BaseFormGroupComponent } from '../base/base-group.component';
 })
 export class FastFormGroupComponent implements OnChanges, OnInit {
 
-  @Input() public form: FastFormGroup;
+  /**
+   * @deprecated Will be removed in 2.0.0
+   */
+  @Input() public set form(formGroup: FastFormGroup) {
+    console.warn('The @Input() [form] of <aff-form-group> is deprecated and will be removed in version 2.0.0');
+    this._formGroup = formGroup;
+  }
+
+  @Input() public set formGroup(formGroup: FastFormGroup) {
+    this._formGroup = formGroup;
+  }
+
   @Input() public endpoint!: string;
   @ViewChild('componentViewContainer', {
     read: ViewContainerRef,
@@ -32,15 +43,17 @@ export class FastFormGroupComponent implements OnChanges, OnInit {
 
   @Output() submitEvent = new EventEmitter<FastFormSubmitEvent>();
 
+  public _formGroup: FastFormGroup;
+
   constructor(private controlFactory: ControlFactoryService,
               private validatorFactory: ValidatorFactoryService,
               private uiRegistry: UiRegistryService,
               @Optional() private http?: HttpClient) {
-    this.form = new FastFormGroup([], this.controlFactory);
+    this._formGroup = new FastFormGroup([], this.controlFactory);
   }
 
   ngOnInit(): void {
-    this.form.questionChanges.subscribe(() => {
+    this._formGroup.questionChanges.subscribe(() => {
       this.render();
     });
   }
@@ -50,18 +63,18 @@ export class FastFormGroupComponent implements OnChanges, OnInit {
   }
 
   processOnSubmit(event: unknown) {
-    this.form.markAllAsTouched();
-    if (this.form.valid) {
+    this._formGroup.markAllAsTouched();
+    if (this._formGroup.valid) {
       this.submitEvent.next({
         event: event,
-        data: this.form.value
+        data: this._formGroup.value
       });
     }
   }
 
   private render() {
     this.componentViewContainerRef.clear();
-    this.form.questions.filter(question => !question.hidden)
+    this._formGroup.questions.filter(question => !question.hidden)
       .forEach(question => {
         this.createComponent(question);
       });
@@ -72,7 +85,7 @@ export class FastFormGroupComponent implements OnChanges, OnInit {
     if (formDefinition) {
       this.uiRegistry.render(
         this.componentViewContainerRef,
-        this.form,
+        this._formGroup,
         question,
         formDefinition
       );

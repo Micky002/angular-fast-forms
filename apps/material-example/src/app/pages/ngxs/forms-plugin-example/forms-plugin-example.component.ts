@@ -6,7 +6,7 @@ import { FastFormGroup, FastFormsService } from '@ngx-fast-forms/core';
   templateUrl: './forms-plugin-example.component.html',
   styleUrls: ['./forms-plugin-example.component.scss'],
 })
-export class FormsPluginExampleComponent implements OnInit {
+export class FormsPluginExampleComponent {
 
   form: FastFormGroup;
 
@@ -18,11 +18,5 @@ export class FormsPluginExampleComponent implements OnInit {
         minLength: 10
       }
     }]);
-  }
-
-  ngOnInit(): void {
-    this.form.valueChanges.subscribe(value => {
-      console.log(value);
-    });
   }
 }
