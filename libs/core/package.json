@@ -19,5 +19,6 @@
     "./styles": {
       "sass": "./src/styles/styles.scss"
     }
-  }
+  },
+  "keywords": ["angular", "forms", "dynamic"]
 }
