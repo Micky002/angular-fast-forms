@@ -19,8 +19,7 @@
       "@ngx-fast-forms/material": ["libs/material/src/index.ts"],
       "@ngx-fast-forms/material-experimental": [
         "libs/material-experimental/src/index.ts"
-      ],
-      "@ngx-fast-forms/ngxs-plugin": ["libs/ngxs-plugin/src/index.ts"]
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
