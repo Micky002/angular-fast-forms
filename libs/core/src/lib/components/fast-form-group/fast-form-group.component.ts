@@ -23,7 +23,7 @@ import { BaseFormGroupComponent } from '../base/base-group.component';
 })
 export class FastFormGroupComponent implements OnChanges, OnInit {
 
-  @Input() public formGroup: FastFormGroup;
+  @Input() public form: FastFormGroup;
   @Input() public endpoint!: string;
   @ViewChild('componentViewContainer', {
     read: ViewContainerRef,
@@ -36,11 +36,11 @@ export class FastFormGroupComponent implements OnChanges, OnInit {
               private validatorFactory: ValidatorFactoryService,
               private uiRegistry: UiRegistryService,
               @Optional() private http?: HttpClient) {
-    this.formGroup = new FastFormGroup([], this.controlFactory);
+    this.form = new FastFormGroup([], this.controlFactory);
   }
 
   ngOnInit(): void {
-    this.formGroup.questionChanges.subscribe(() => {
+    this.form.questionChanges.subscribe(() => {
       this.render();
     });
   }
@@ -50,18 +50,18 @@ export class FastFormGroupComponent implements OnChanges, OnInit {
   }
 
   processOnSubmit(event: unknown) {
-    this.formGroup.markAllAsTouched();
-    if (this.formGroup.valid) {
+    this.form.markAllAsTouched();
+    if (this.form.valid) {
       this.submitEvent.next({
         event: event,
-        data: this.formGroup.value
+        data: this.form.value
       });
     }
   }
 
   private render() {
     this.componentViewContainerRef.clear();
-    this.formGroup.questions.filter(question => !question.hidden)
+    this.form.questions.filter(question => !question.hidden)
       .forEach(question => {
         this.createComponent(question);
       });
@@ -72,7 +72,7 @@ export class FastFormGroupComponent implements OnChanges, OnInit {
     if (formDefinition) {
       this.uiRegistry.render(
         this.componentViewContainerRef,
-        this.formGroup,
+        this.form,
         question,
         formDefinition
       );

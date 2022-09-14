@@ -50,7 +50,7 @@ describe('FastFormGroupComponent', () => {
   });
 
   it('should only trigger submit when form is valid', () => {
-    component.formGroup.setQuestions([{
+    component.form.setQuestions([{
       id: 'test',
       type: 'input',
       validation: {
@@ -62,7 +62,7 @@ describe('FastFormGroupComponent', () => {
     component.processOnSubmit({id: 'meins'});
     expect(component.submitEvent.next).toHaveBeenCalledTimes(0);
 
-    component.formGroup.patchValue({test: 'Hallo'})
+    component.form.patchValue({test: 'Hallo'})
     component.processOnSubmit({id: 'meins'});
     expect(component.submitEvent.next).toHaveBeenCalledTimes(1);
   });

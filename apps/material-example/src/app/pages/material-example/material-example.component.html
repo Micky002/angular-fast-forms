@@ -1,7 +1,7 @@
 <h2>Form definition in component</h2>
 
-<aff-form-group [formGroup]="form"></aff-form-group>
+<aff-form-group [form]="form"></aff-form-group>
 
 <h2>Form fetched via http</h2>
 
-<aff-form-group [formGroup]="httpForm" (submitEvent)="submitEvent($event)"></aff-form-group>
+<aff-form-group [form]="httpForm" (submitEvent)="submitEvent($event)"></aff-form-group>

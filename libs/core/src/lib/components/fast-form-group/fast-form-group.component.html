@@ -1,9 +1,9 @@
-<form (ngSubmit)="processOnSubmit($event)" [formGroup]="formGroup" class="aff-form-group">
+<form (ngSubmit)="processOnSubmit($event)" [formGroup]="form" class="aff-form-group">
   <ng-container #componentViewContainer></ng-container>
 
-  <ng-container *ngFor="let question of formGroup.questions">
+  <ng-container *ngFor="let question of form.questions">
     <ng-container *ngIf="question.type === 'group'">
-      <aff-form-group [formGroup]="$any(formGroup.get(question.id))"></aff-form-group>
+      <aff-form-group [form]="$any(form.get(question.id))"></aff-form-group>
     </ng-container>
   </ng-container>
 
