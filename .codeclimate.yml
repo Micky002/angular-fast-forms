@@ -55,3 +55,4 @@ exclude_patterns:
   - "**/*.d.ts"
   - "**/*.spec.ts"
   - "LICENSE"
+  - "../jest.config.ts"

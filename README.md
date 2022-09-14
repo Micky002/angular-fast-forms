@@ -22,4 +22,4 @@ form components.
 
 ## Documentation
 
-The documentation can be found at [https://angular-fast-forms.codentury.com](https://angular-fast-forms.codentury.com)
+The documentation can be found at [angular-fast-forms.codentury.com](https://angular-fast-forms.codentury.com)
