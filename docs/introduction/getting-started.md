@@ -20,7 +20,7 @@ Create your first fast form:
 
 ```html
 
-<aff-form-group [form]="form"></aff-form-group>
+<aff-form-group [formGroup]="form"></aff-form-group>
 ```
 
 ```typescript

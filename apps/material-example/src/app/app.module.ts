@@ -11,6 +11,8 @@ import { FormArrayComponent } from './pages/form-array/form-array.component';
 import { GithubReadmeExampleComponent } from './pages/github-readme-example/github-readme-example.component';
 import { MatButtonModule } from '@angular/material/button';
 import { FastFormsModule } from '@ngx-fast-forms/core';
+import { NgxsModule } from '@ngxs/store';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { FastFormsModule } from '@ngx-fast-forms/core';
     BrowserModule,
     BrowserAnimationsModule,
     FastFormsModule.forRoot(),
+    NgxsModule.forRoot(),
+    NgxsReduxDevtoolsPluginModule.forRoot(),
     MaterialFastFormsModule,
     HttpClientModule,
     RouterModule.forRoot([
@@ -55,6 +59,12 @@ import { FastFormsModule } from '@ngx-fast-forms/core';
         loadChildren: () =>
           import('./pages/custom-nested-control/custom-nested-control.module')
             .then((m) => m.CustomNestedControlModule)
+      },
+      {
+        path: 'ngxs',
+        loadChildren: () =>
+          import('./pages/ngxs/example-ngxs.module')
+            .then((m) => m.ExampleNgxsModule)
       }
     ]),
     MatButtonModule

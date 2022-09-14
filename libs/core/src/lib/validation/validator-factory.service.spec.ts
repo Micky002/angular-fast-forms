@@ -16,7 +16,7 @@ import { map } from 'rxjs';
 })
 @Injectable()
 class CustomMaxLengthValidator implements BaseValidator {
-  createValidator(args: string[]): ValidatorFn {
+  createValidator(): ValidatorFn {
     return Validators.maxLength(5);
   }
 }
@@ -27,7 +27,7 @@ class CustomMaxLengthValidator implements BaseValidator {
 })
 @Injectable()
 class CustomRequiredValidator implements BaseValidator {
-  createValidator(args: string[]): ValidatorFn {
+  createValidator(): ValidatorFn {
     return Validators.required;
   }
 }
@@ -80,19 +80,6 @@ describe('ValidatorFactoryService', () => {
     expect(validator).toBeNull();
   });
 
-  it('should add custom validator', () => {
-    const validator = service.createValidators({
-      customFn: Validators.minLength(5)
-    });
-    expect(validator).toBeDefined();
-    if (validator) {
-      const result = validator(new FormControl('asdf'));
-      expect(result).toEqual({minlength: {actualLength: 4, requiredLength: 5}});
-    } else {
-      throw new Error('Validator must be defined');
-    }
-  });
-
   it('should add custom validator with string id', () => {
     const validator = service.createValidators({
       custom: 'test-max-length'
@@ -138,129 +125,136 @@ describe('ValidatorFactoryService', () => {
     expect(control.valid).toBeTruthy();
   });
 
+  describe('custom validators', () => {
+    interface SpecCustomSyncValidator {
+      name: string;
+      vals: ValidatorFn | Array<ValidatorFn>;
+      tests: Array<{
+        value?: string | number;
+        expect: any;
+      }>;
+    }
+
+    const testDate: Array<SpecCustomSyncValidator> = [{
+      name: 'should add single custom validator',
+      vals: Validators.required,
+      tests: [
+        {expect: {required: true}},
+        {value: 'test', expect: null}
+      ]
+    }, {
+      name: 'should add multiple custom validators',
+      vals: [Validators.required, Validators.min(5)],
+      tests: [
+        {expect: {required: true}},
+        {value: 5, expect: null},
+      ]
+    }];
+
+    testDate.forEach(data => {
+      it(data.name, () => {
+        const validator = service.createValidators({
+          customFn: data.vals
+        });
+        expect(validator).toBeDefined();
+        if (validator) {
+          data.tests.forEach(test => {
+            const result = validator(new FormControl(test.value));
+            expect(result).toEqual(test.expect);
+          });
+        } else {
+          throw new Error('Validator must be defined');
+        }
+      });
+    });
+  });
+
   describe('built in validators', () => {
-    it('required', () => {
-      const validator = service.createValidators({
-        required: true
-      });
-      expect(validator).toBeDefined();
-      if (validator) {
-        let result = validator(new FormControl());
-        expect(result).toBeDefined();
-        expect(result).toEqual({required: true});
-        result = validator(new FormControl('test'));
-        expect(result).toBeNull();
-      } else {
-        throw new Error('Validator must be defined');
-      }
-    });
 
-    it('min', () => {
-      const validator = service.createValidators({
-        min: 10
-      });
-      expect(validator).toBeDefined();
-      if (validator) {
-        let result = validator(new FormControl(15));
-        expect(result).toBeNull();
-        result = validator(new FormControl(5));
-        expect(result).toEqual({min: {actual: 5, min: 10}});
-      } else {
-        throw new Error('Validator must be defined');
-      }
-    });
+    interface SpecValidator {
+      vals: Array<string>;
+      tests: Array<{
+        value?: string | number;
+        expect: any;
+      }>;
+    }
 
-    it('minLength', () => {
-      const validator = service.createValidators({
-        minLength: 5
-      });
-      expect(validator).toBeDefined();
-      if (validator) {
-        let result = validator(new FormControl('this is valid'));
-        expect(result).toBeNull();
-        result = validator(new FormControl('not'));
-        expect(result).toEqual({minlength: {actualLength: 3, requiredLength: 5}});
-      } else {
-        throw new Error('Validator must be defined');
-      }
-    });
+    const testData: Array<SpecValidator> = [{
+      vals: ['required:true'], tests: [
+        {expect: {required: true}},
+        {value: 'test', expect: null}
+      ]
+    }, {
+      vals: ['min:10'], tests: [
+        {expect: null},
+        {value: 5, expect: {min: {actual: 5, min: 10}}},
+        {value: 15, expect: null},
+      ]
+    }, {
+      vals: ['max:10'], tests: [
+        {expect: null},
+        {value: 5, expect: null},
+        {value: 15, expect: {max: {actual: 15, max: 10}}},
+      ]
+    }, {
+      vals: ['minLength:5'], tests: [
+        {expect: null},
+        {value: 'not', expect: {minlength: {actualLength: 3, requiredLength: 5}}},
+        {value: 'this is valid', expect: null},
+      ]
+    }, {
+      vals: ['maxLength:5'], tests: [
+        {expect: null},
+        {value: 'not', expect: null},
+        {value: 'this is valid', expect: {maxlength: {actualLength: 13, requiredLength: 5}}},
+      ]
+    }, {
+      vals: ['email:true'], tests: [
+        {expect: null},
+        {value: 'not', expect: {email: true}},
+        {value: 'test@company.at', expect: null},
+      ]
+    }, {
+      vals: ['pattern:/test.*/'], tests: [
+        {expect: null},
+        {value: 'test-stuff', expect: null},
+        {value: 'asdf', expect: {pattern: {actualValue: 'asdf', requiredPattern: '/test.*/'}}},
+      ]
+    }, {
+      vals: ['required:true', 'min:5', 'max:20'], tests: [
+        {expect: {required: true}},
+        {value: 4, expect: {min: {actual: 4, min: 5}}},
+        {value: 10, expect: null},
+        {value: 22, expect: {max: {actual: 22, max: 20}}},
+      ]
+    }];
 
-    it('max', () => {
-      const validator = service.createValidators({
-        max: 5
+    testData.forEach(data => {
+      it(`should create validator [${data.vals}]`, () => {
+        const options: any = {};
+        data.vals.forEach(val => {
+          const [id, value] = val.split(':');
+          if (value === 'true') {
+            options[id] = true;
+          } else if (value === 'false') {
+            options[id] = false;
+          } else if (value.startsWith('/') && value.endsWith('/')) {
+            options[id] = new RegExp(value.substring(1, value.length - 1));
+          } else {
+            options[id] = Number(value);
+          }
+        });
+        const validator = service.createValidators(options);
+        expect(validator).toBeDefined();
+        if (validator) {
+          data.tests.forEach(test => {
+            const result = validator(new FormControl(test.value));
+            expect(result).toEqual(test.expect);
+          });
+        } else {
+          throw new Error('Validator must be defined');
+        }
       });
-      expect(validator).toBeDefined();
-      if (validator) {
-        let result = validator(new FormControl(2));
-        expect(result).toBeNull();
-        result = validator(new FormControl(10));
-        expect(result).toEqual({max: {actual: 10, max: 5}});
-      } else {
-        throw new Error('Validator must be defined');
-      }
-    });
-
-    it('maxLength', () => {
-      const validator = service.createValidators({
-        maxLength: 5
-      });
-      expect(validator).toBeDefined();
-      if (validator) {
-        let result = validator(new FormControl('valid'));
-        expect(result).toBeNull();
-        result = validator(new FormControl('invalid'));
-        expect(result).toEqual({maxlength: {actualLength: 7, requiredLength: 5}});
-      } else {
-        throw new Error('Validator must be defined');
-      }
-    });
-
-    it('email', () => {
-      const validator = service.createValidators({
-        email: true
-      });
-      expect(validator).toBeDefined();
-      if (validator) {
-        let result = validator(new FormControl('test@company.at'));
-        expect(result).toBeNull();
-        result = validator(new FormControl('hello'));
-        expect(result).toEqual({email: true});
-      } else {
-        throw new Error('Validator must be defined');
-      }
-    });
-
-    it('pattern', () => {
-      const validator = service.createValidators({
-        pattern: /test.*/
-      });
-      expect(validator).toBeDefined();
-      if (validator) {
-        let result = validator(new FormControl('test-stuff'));
-        expect(result).toBeNull();
-        result = validator(new FormControl('asdf'));
-        expect(result).toEqual({pattern: {actualValue: 'asdf', requiredPattern: '/test.*/'}});
-      } else {
-        throw new Error('Validator must be defined');
-      }
-    });
-
-    it('should combine required and min validator', () => {
-      const validator = service.createValidators({
-        required: true,
-        min: 5
-      });
-      expect(validator).toBeDefined();
-      if (validator) {
-        let result = validator(new FormControl());
-        expect(result).toBeDefined();
-        expect(result).not.toBeNull();
-        expect(result).toEqual({required: true});
-        result = validator(new FormControl(0));
-        expect(result).toEqual({min: {actual: 0, min: 5}});
-      } else {
-        throw new Error('Validator must be defined');
-      }
     });
   });
 });

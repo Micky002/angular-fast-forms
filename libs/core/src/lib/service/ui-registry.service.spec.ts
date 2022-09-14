@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { UiRegistryService } from './ui-registry.service';
-import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition, BaseFormControlComponent } from '@ngx-fast-forms/core';
+import { BaseFormControlComponent, DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from '@ngx-fast-forms/core';
 
 class DummyControl extends BaseFormControlComponent {}
 
