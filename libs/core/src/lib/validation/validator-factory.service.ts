@@ -62,13 +62,7 @@ export class ValidatorFactoryService {
       })
       .map(def => this.registry.getAsyncValidator(def));
 
-    if (options?.customAsyncFn) {
-      if (options.customAsyncFn instanceof Array) {
-        validators.push(...options.customAsyncFn);
-      } else {
-        validators.push(options.customAsyncFn);
-      }
-    }
+    validators.push(...toArray(options?.customAsyncFn));
     return validators;
   }
 
@@ -84,13 +78,7 @@ export class ValidatorFactoryService {
       })
       .map(def => this.registry.getSyncValidator(def));
 
-    if (options?.customFn) {
-      if (options.customFn instanceof Array) {
-        validators.push(...options.customFn);
-      } else {
-        validators.push(options.customFn);
-      }
-    }
+    validators.push(...toArray(options?.customFn));
     return validators;
   }
 }

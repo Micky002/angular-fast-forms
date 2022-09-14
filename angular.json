@@ -4,8 +4,9 @@
   "projects": {
     "core": "libs/core",
     "material": "libs/material",
-    "material-experimental": "libs/material-experimental",
     "material-example": "apps/material-example",
-    "material-example-e2e": "apps/material-example-e2e"
+    "material-example-e2e": "apps/material-example-e2e",
+    "material-experimental": "libs/material-experimental",
+    "ngxs-plugin": "libs/ngxs-plugin"
   }
 }

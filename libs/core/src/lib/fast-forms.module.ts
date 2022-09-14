@@ -41,14 +41,14 @@ import { FastFormControlComponent } from './components/fast-form-control/fast-fo
       } as DynamicFormDefinition,
       multi: true
     },
-    {
-      provide: DYNAMIC_FORM_CONTROL,
-      useValue: {
-        type: 'group',
-        component: FastFormGroupComponent
-      } as DynamicFormDefinition,
-      multi: true
-    }
+    // {
+    //   provide: DYNAMIC_FORM_CONTROL,
+    //   useValue: {
+    //     type: 'group',
+    //     component: FastFormGroupComponent
+    //   } as DynamicFormDefinition,
+    //   multi: true
+    // }
   ]
 })
 export class FastFormsModule {

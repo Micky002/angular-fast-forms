@@ -21,9 +21,9 @@ import { BaseFormGroupComponent } from '../base/base-group.component';
   selector: 'aff-form-group',
   templateUrl: './fast-form-group.component.html'
 })
-export class FastFormGroupComponent extends BaseFormGroupComponent implements OnChanges, OnInit {
+export class FastFormGroupComponent implements OnChanges, OnInit {
 
-  @Input() public form: FastFormGroup;
+  @Input() public formGroup: FastFormGroup;
   @Input() public endpoint!: string;
   @ViewChild('componentViewContainer', {
     read: ViewContainerRef,
@@ -36,12 +36,11 @@ export class FastFormGroupComponent extends BaseFormGroupComponent implements On
               private validatorFactory: ValidatorFactoryService,
               private uiRegistry: UiRegistryService,
               @Optional() private http?: HttpClient) {
-    super();
-    this.form = new FastFormGroup([], this.controlFactory);
+    this.formGroup = new FastFormGroup([], this.controlFactory);
   }
 
   ngOnInit(): void {
-    this.form.questionChanges.subscribe(() => {
+    this.formGroup.questionChanges.subscribe(() => {
       this.render();
     });
   }
@@ -51,18 +50,18 @@ export class FastFormGroupComponent extends BaseFormGroupComponent implements On
   }
 
   processOnSubmit(event: unknown) {
-    this.form.markAllAsTouched();
-    if (this.form.valid) {
+    this.formGroup.markAllAsTouched();
+    if (this.formGroup.valid) {
       this.submitEvent.next({
         event: event,
-        data: this.form.value
+        data: this.formGroup.value
       });
     }
   }
 
   private render() {
     this.componentViewContainerRef.clear();
-    this.form.questions.filter(question => !question.hidden)
+    this.formGroup.questions.filter(question => !question.hidden)
       .forEach(question => {
         this.createComponent(question);
       });
@@ -73,7 +72,7 @@ export class FastFormGroupComponent extends BaseFormGroupComponent implements On
     if (formDefinition) {
       this.uiRegistry.render(
         this.componentViewContainerRef,
-        this.form,
+        this.formGroup,
         question,
         formDefinition
       );

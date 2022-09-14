@@ -4,7 +4,7 @@
       <aff-form-control [control]="$any(subForm)"></aff-form-control>
     </ng-container>
     <ng-container *ngIf="isGroup(subForm)">
-      <aff-form-group [form]="$any(subForm)"></aff-form-group>
+      <aff-form-group [formGroup]="$any(subForm)"></aff-form-group>
     </ng-container>
   </ng-container>
   <div *ngIf=""></div>

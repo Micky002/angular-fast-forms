@@ -23,7 +23,6 @@ export class FastFormControlComponent implements OnInit {
   }
 
   private createComponent(question: Question) {
-    // console.log('aff-form-control: ', question);
     const formDefinition = this.uiRegistry.find(question.type);
     if (formDefinition) {
       this.uiRegistry.render(
