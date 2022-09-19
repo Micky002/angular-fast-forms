@@ -6,6 +6,7 @@ import { VALIDATORS } from '../internal/token';
 import { InternalValidator } from '../internal/validation/models';
 import { ValidatorRegistry } from '../internal/validation/validator-registry';
 import { toArray } from '../internal/util/array.util';
+import { ValidatorType } from './symbols';
 
 
 @Injectable({
@@ -46,39 +47,33 @@ export class ValidatorFactoryService {
     if (options.pattern) {
       validators.push(Validators.pattern(options.pattern));
     }
-    validators.push(...this.createCustomSyncValidators(options));
+    validators.push(...this.createCustomValidators('sync', options));
     return Validators.compose(validators);
   }
 
   public createAsyncValidators(options?: ValidationOptions): Array<AsyncValidatorFn> {
-    const validators = toArray(options?.customAsync).map(id => new ValidatorDefinition(id))
-      .filter(def => {
-        if (this.registry.hasAsyncValidator(def)) {
-          return true;
-        } else {
-          console.warn(`No async validator registered with id [${def.id}].`)
-          return false;
-        }
-      })
-      .map(def => this.registry.getAsyncValidator(def));
-
-    validators.push(...toArray(options?.customAsyncFn));
-    return validators;
+    return this.createCustomValidators('async', options) as Array<AsyncValidatorFn>;
   }
 
-  private createCustomSyncValidators(options?: ValidationOptions): Array<ValidatorFn> {
-    const validators = toArray(options?.custom).map(id => new ValidatorDefinition(id))
+  private createCustomValidators(type: ValidatorType, options?: ValidationOptions): Array<ValidatorFn> | Array<AsyncValidatorFn> {
+    const validatorIds = toArray(type === 'sync' ? options?.custom : options?.customAsync);
+    const validators = validatorIds.map(id => new ValidatorDefinition(id))
       .filter(def => {
-        if (this.registry.hasSyncValidator(def)) {
+        if (this.registry.hasValidator(def.id, type)) {
           return true;
         } else {
-          console.warn(`No sync validator registered with id [${def.id}].`)
+          console.warn(`No ${type} validator registered with id [${def.id}].`)
           return false;
         }
       })
-      .map(def => this.registry.getSyncValidator(def));
+      .map(def => this.registry.getValidator(def, type));
 
-    validators.push(...toArray(options?.customFn));
+    if (type === 'sync') {
+      validators.push(...toArray(options?.customFn));
+    } else {
+      validators.push(...toArray(options?.customAsyncFn));
+    }
     return validators;
+
   }
 }

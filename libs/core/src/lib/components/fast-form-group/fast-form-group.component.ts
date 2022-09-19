@@ -15,7 +15,6 @@ import { ControlFactoryService } from '../../service/control-factory.service';
 import { ValidatorFactoryService } from '../../validation/validator-factory.service';
 import { UiRegistryService } from '../../service/ui-registry.service';
 import { HttpClient } from '@angular/common/http';
-import { FastFormsService } from '../../service/fast-forms.service';
 
 @Component({
   selector: 'aff-form-group',

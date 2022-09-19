@@ -77,9 +77,9 @@ describe('ValidatorRegistry', () => {
     });
 
     it('hasAsyncValidator', () => {
-      expect(registry.hasAsyncValidator(new ValidatorDefinition('dummy-async'))).toBeTruthy();
-      expect(registry.hasAsyncValidator(new ValidatorDefinition('id'))).toBeFalsy();
-      expect(registry.hasAsyncValidator(new ValidatorDefinition('dummy-sync'))).toBeFalsy();
+      expect(registry.hasAsyncValidator('dummy-async')).toBeTruthy();
+      expect(registry.hasAsyncValidator('id')).toBeFalsy();
+      expect(registry.hasAsyncValidator('dummy-sync')).toBeFalsy();
     });
 
     it('getAsyncValidator', async () => {
@@ -96,9 +96,9 @@ describe('ValidatorRegistry', () => {
     });
 
     it('hasSyncValidator', () => {
-      expect(registry.hasSyncValidator(new ValidatorDefinition('dummy-sync'))).toBeTruthy();
-      expect(registry.hasSyncValidator(new ValidatorDefinition('id'))).toBeFalsy();
-      expect(registry.hasSyncValidator(new ValidatorDefinition('dummy-async'))).toBeFalsy();
+      expect(registry.hasSyncValidator('dummy-sync')).toBeTruthy();
+      expect(registry.hasSyncValidator('id')).toBeFalsy();
+      expect(registry.hasSyncValidator('dummy-async')).toBeFalsy();
     });
 
     it('getSyncValidator',() => {

@@ -50,7 +50,7 @@ export class ControlFactoryService {
   }
 
   private createControl(question: Question): AbstractControl {
-    const control = this.createAngularFormControl(question);
+    const control = this.createRawControl(question);
     const validator = this.validatorFactory.createValidators(question.validation);
     const asyncValidator = this.validatorFactory.createAsyncValidators(question.validation);
     control.setValidators(validator);
@@ -58,7 +58,7 @@ export class ControlFactoryService {
     return control;
   }
 
-  public createAngularFormControl(question: Question): AbstractControl {
+  public createRawControl(question: Question): AbstractControl {
     if (this.componentRegistry) {
       const formDefinition = this.componentRegistry.find(def => def.type === question.type);
       if (formDefinition && formDefinition.component && (formDefinition.component as any)['controlFactory']) {
@@ -68,10 +68,10 @@ export class ControlFactoryService {
       } else if (question.type === 'group') {
         return new FastFormGroup(question.children ?? [], this);
       } else {
-        return new FastFormControl(question);
+        return new FastFormControl(question, question.defaultValue);
       }
     } else {
-      return new FastFormControl(question);
+      return new FastFormControl(question, question.defaultValue);
     }
   }
 }

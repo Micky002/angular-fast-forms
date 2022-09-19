@@ -19,24 +19,32 @@ export class ValidatorRegistry {
     }
   }
 
-  public hasSyncValidator(def: ValidatorDefinition): boolean {
-    return !!this.getValidatorType(def, 'sync');
+  public hasSyncValidator(id: string): boolean {
+    return !!this.getValidatorType(id, 'sync');
   }
 
-  public hasAsyncValidator(def: ValidatorDefinition): boolean {
-    return !!this.getValidatorType(def, 'async');
+  public hasAsyncValidator(id: string): boolean {
+    return !!this.getValidatorType(id, 'async');
+  }
+
+  public hasValidator(id: string, type: ValidatorType): boolean {
+    return !!this.getValidatorType(id, type);
   }
 
   public getSyncValidator(def: ValidatorDefinition): ValidatorFn {
-    return this.getValidator(def, 'sync');
+    return this.createValidator(def, 'sync');
   }
 
   public getAsyncValidator(def: ValidatorDefinition): AsyncValidatorFn {
-    return this.getValidator(def, 'async');
+    return this.createValidator(def, 'async');
   }
 
-  private getValidator(def: ValidatorDefinition, type: ValidatorType) {
-    const validatorType = this.getValidatorType(def, type);
+  public getValidator(def: ValidatorDefinition, type: ValidatorType): ValidatorFn | AsyncValidatorFn {
+    return this.createValidator(def, type);
+  }
+
+  private createValidator(def: ValidatorDefinition, type: ValidatorType) {
+    const validatorType = this.getValidatorType(def.id, type);
     if (!validatorType) {
       throw new Error(`No ${type} validator registered with type [${def.id}]`);
     }
@@ -44,10 +52,10 @@ export class ValidatorRegistry {
     return validatorFactory.createValidator(def.args);
   }
 
-  private getValidatorType(def: ValidatorDefinition, type: ValidatorType): InternalValidator | undefined {
+  private getValidatorType(id: string, type: ValidatorType): InternalValidator | undefined {
     return this.validators.find(validator => {
       const options = validator[META_VALIDATOR_OPTIONS_KEY];
-      return options.type === type && options.id === def.id;
+      return options.type === type && options.id === id;
     });
   }
 
