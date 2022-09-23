@@ -17,8 +17,14 @@ export class ControlRegistry extends AbstractRegistry<InternalControlComponent> 
     super(controlsInModule);
   }
 
-  id(item: InternalControlComponent): string {
-    return item[META_COMPONENT_OPTIONS_KEY].type;
+  override ids(item: InternalControlComponent): string[] {
+    return item[META_COMPONENT_OPTIONS_KEY].type.split(',');
+  }
+
+  override validate(control: InternalControlComponent) {
+    if (!control[META_COMPONENT_OPTIONS_KEY]) {
+      throw new Error(`Control component must be decorated with [@Control] decorator.`);
+    }
   }
 
   hasControlFactory(type: string): boolean {
@@ -27,12 +33,6 @@ export class ControlRegistry extends AbstractRegistry<InternalControlComponent> 
       return metaData.controlFactory !== undefined;
     } else {
       return false;
-    }
-  }
-
-  override validate(control: InternalControlComponent) {
-    if (!control[META_COMPONENT_OPTIONS_KEY]) {
-      throw new Error(`Control component must be decorated with [@Control] decorator.`);
     }
   }
 

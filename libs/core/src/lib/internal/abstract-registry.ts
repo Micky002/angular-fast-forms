@@ -5,7 +5,7 @@ export abstract class AbstractRegistry<T> {
   protected constructor(items?: Array<Array<T>>) {
     for (const item of this.flattenItems(items)) {
       this.validate(item);
-      this.items[this.id(item)] = item;
+      this.ids(item).forEach(id => this.items[id] = item);
     }
   }
 
@@ -23,7 +23,7 @@ export abstract class AbstractRegistry<T> {
 
   abstract validate(item: T): void;
 
-  abstract id(item: T): string;
+  abstract ids(item: T): string[];
 
   private flattenItems(itemsList?: Array<Array<T>>): Array<T> {
     const flattenedList: Array<T> = [];

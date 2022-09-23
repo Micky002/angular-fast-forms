@@ -4,7 +4,7 @@ import { ValidatorFactoryService } from './validator-factory.service';
 import { AsyncValidatorFn, FormControl, ValidatorFn, Validators } from '@angular/forms';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { BaseValidator } from './base-validator.service';
-import { BaseAsyncValidator, Validator } from '@ngx-fast-forms/core';
+import { BaseAsyncValidator, ValidationOptions, Validator } from '@ngx-fast-forms/core';
 import { Injectable } from '@angular/core';
 import { FastFormsModule } from '../fast-forms.module';
 import { HttpClient } from '@angular/common/http';
@@ -76,12 +76,12 @@ describe('ValidatorFactoryService', () => {
   });
 
   it('should return null if no validators defined', () => {
-    const validator = service.createValidators();
+    const validator = createValidators();
     expect(validator).toBeNull();
   });
 
   it('should add custom validator with string id', () => {
-    const validator = service.createValidators({
+    const validator = createValidators({
       custom: 'test-max-length'
     });
     if (validator) {
@@ -93,7 +93,7 @@ describe('ValidatorFactoryService', () => {
   });
 
   it('should add multiple validators with string id', () => {
-    const validator = service.createValidators({
+    const validator = createValidators({
       custom: ['test-max-length', 'test-required']
     });
     if (validator) {
@@ -131,7 +131,7 @@ describe('ValidatorFactoryService', () => {
     const validator = service.createValidators({
       custom: 'not-registered'
     });
-    expect(validator).toBeNull();
+    expect(validator).toHaveLength(0);
     expect(console.warn).toBeCalledTimes(1);
   });
 
@@ -163,7 +163,7 @@ describe('ValidatorFactoryService', () => {
 
     testDate.forEach(data => {
       it(data.name, () => {
-        const validator = service.createValidators({
+        const validator = createValidators({
           customFn: data.vals
         });
         expect(validator).toBeDefined();
@@ -254,7 +254,7 @@ describe('ValidatorFactoryService', () => {
             options[id] = Number(value);
           }
         });
-        const validator = service.createValidators(options);
+        const validator = createValidators(options);
         expect(validator).toBeDefined();
         if (validator) {
           data.tests.forEach(test => {
@@ -267,4 +267,8 @@ describe('ValidatorFactoryService', () => {
       });
     });
   });
+
+  function createValidators(options?: ValidationOptions): ValidatorFn | null {
+    return Validators.compose(service.createValidators(options) ?? []);
+  }
 });
