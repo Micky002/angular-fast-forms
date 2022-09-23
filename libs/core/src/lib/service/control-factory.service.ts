@@ -74,7 +74,7 @@ export class ControlFactoryService {
         return def.controlFactory(question);
       }
     }
-    return;
+    return undefined;
   }
 
   private createControlFromControlFactoryMethod(question: Question): AbstractControl | undefined {
@@ -86,18 +86,15 @@ export class ControlFactoryService {
         return formDefinition.controlFactory(question);
       }
     }
-    return;
+    return undefined;
   }
 
   private createControlDefault(question: Question): AbstractControl {
     if (this.componentRegistry) {
       if (question.type === 'group') {
         return new FastFormGroup(question.children ?? [], this);
-      } else {
-        return new FastFormControl(question, question.defaultValue);
       }
-    } else {
-      return new FastFormControl(question, question.defaultValue);
     }
+    return new FastFormControl(question, question.defaultValue);
   }
 }
