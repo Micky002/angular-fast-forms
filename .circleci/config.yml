@@ -60,13 +60,13 @@ workflows:
       - test_and_build_job:
           filters:
             tags:
-              only: /.*/
+              only: /v.*/
       - publish_job:
           requires:
             - test_and_build_job
           filters:
             tags:
-              only: /.*/
+              only: /v.*/
             branches:
               ignore: /.*/
 
