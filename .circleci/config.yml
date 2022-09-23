@@ -14,10 +14,10 @@ jobs:
           with-cache: false
       - run:
           name: Run linter
-          command: npm run lint:ci
+          command: npm run lint:all
       - run:
           name: Run tests
-          command: npm run test:ci
+          command: npm run test:all
       - run:
           name: Code climate coverage
           command: |
