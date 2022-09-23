@@ -1,7 +1,7 @@
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/Micky002/angular-fast-forms/tree/master.svg?style=svg&circle-token=5182f3996623125630e7270dd338191f450be391)](https://dl.circleci.com/status-badge/redirect/gh/Micky002/angular-fast-forms/tree/master)
-[![npm version](https://badge.fury.io/js/@ngx-fast-forms%2Fcore.svg)](https://badge.fury.io/js/@ngx-fast-forms%2Fcore)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/b6d723a21d64300ba914/test_coverage)](https://codeclimate.com/github/Micky002/angular-fast-forms/test_coverage)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b6d723a21d64300ba914/maintainability)](https://codeclimate.com/github/Micky002/angular-fast-forms/maintainability)
+[![NPM version](https://img.shields.io/npm/v/@ngx-fast-forms/core)](https://badge.fury.io/js/@ngx-fast-forms%2Fcore)
 
 # Angular Fast Forms
 
@@ -23,3 +23,19 @@ form components.
 ## Documentation
 
 The documentation can be found at [angular-fast-forms.codentury.com](https://angular-fast-forms.codentury.com)
+
+## Changelog
+
+See the [CHANGELOG.md](CHANGELOG.md) file for release information.
+
+## Contributing
+
+To contribute, please see the [CONTRIBUTING.md](CONTRIBUTING.md) file.
+
+## Release
+
+Run `npm run release` and follow the printed instructions.
+
+## License
+
+This project is released under the MIT license, which can be found in [LICENSE](LICENSE) file.
