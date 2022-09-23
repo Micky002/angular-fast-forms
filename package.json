@@ -16,7 +16,7 @@
     "lint:core": "nx lint core",
     "lint:material": "nx lint material",
     "lint:affected": "nx affected --target=lint --all",
-    "release": "standard-version && ./version.sh",
+    "release": "standard-version",
     "graph": "nx graph"
   },
   "private": true,
