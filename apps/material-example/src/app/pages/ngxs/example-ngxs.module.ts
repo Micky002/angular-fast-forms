@@ -8,7 +8,6 @@ import { FastFormsModule } from '@ngx-fast-forms/core';
 import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 
 @NgModule({
   declarations: [
@@ -23,10 +22,11 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
     NgxsModule.forFeature([
       ExampleFormState
     ]),
-    NgxsFormPluginModule.forRoot(),
+    NgxsFormPluginModule,
     FastFormsModule.forChild(),
     MaterialFastFormsModule,
     ReactiveFormsModule
   ]
 })
-export class ExampleNgxsModule {}
+export class ExampleNgxsModule {
+}

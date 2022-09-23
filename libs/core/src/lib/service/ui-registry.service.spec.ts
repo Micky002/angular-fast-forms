@@ -2,8 +2,10 @@ import { TestBed } from '@angular/core/testing';
 
 import { UiRegistryService } from './ui-registry.service';
 import { BaseFormControlComponent, DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from '@ngx-fast-forms/core';
+import { ControlRegistry } from '../internal/control/control-registry.service';
 
-class DummyControl extends BaseFormControlComponent {}
+class DummyControl extends BaseFormControlComponent {
+}
 
 describe('UiRegistryService', () => {
   let service: UiRegistryService;
@@ -27,7 +29,7 @@ describe('UiRegistryService', () => {
   });
 
   it('should throw error is duplicated type is registered', () => {
-    expect(() => new UiRegistryService([{
+    expect(() => new UiRegistryService(new ControlRegistry(), [{
       type: 'duplicate',
       component: DummyControl
     }, {

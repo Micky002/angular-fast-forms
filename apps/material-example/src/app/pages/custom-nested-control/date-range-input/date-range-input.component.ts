@@ -1,15 +1,19 @@
 import { Component } from '@angular/core';
-import { BaseFormGroupComponent, Question } from '@ngx-fast-forms/core';
+import { BaseFormControlComponent, Control, ControlFactory } from '@ngx-fast-forms/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
+@Control({
+  type: 'date-range'
+})
 @Component({
   selector: 'frontend-date-range-input',
   templateUrl: './date-range-input.component.html',
-  styleUrls: ['./date-range-input.component.scss'],
+  styleUrls: ['./date-range-input.component.scss']
 })
-export class DateRangeInputComponent extends BaseFormGroupComponent {
+export class DateRangeInputComponent extends BaseFormControlComponent<any, FormGroup> {
 
-  public static controlFactory(question: Question) {
+  @ControlFactory()
+  public static createFormGroup() {
     return new FormGroup({
       from: new FormControl(),
       until: new FormControl()

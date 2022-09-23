@@ -2,4 +2,4 @@
 
 Angular fast forms core library.
 
-See documentation at [https://github.com/Micky002/angular-fast-forms](https://github.com/Micky002/angular-fast-forms)
+See documentation at [angular-fast-forms.codentury.com/](https://angular-fast-forms.codentury.com)

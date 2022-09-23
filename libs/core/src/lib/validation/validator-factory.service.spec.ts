@@ -113,6 +113,7 @@ describe('ValidatorFactoryService', () => {
     expect(control.valid).toBeTruthy();
 
     control.setValue('asdf');
+    expect(control.status).toEqual('PENDING');
     expect(control.pending).toBeTruthy();
     httpMock.expectOne('/test').flush(false);
     expect(control.pending).toBeFalsy();
@@ -123,6 +124,15 @@ describe('ValidatorFactoryService', () => {
     httpMock.expectOne('/test').flush(true);
     expect(control.pending).toBeFalsy();
     expect(control.valid).toBeTruthy();
+  });
+
+  it('should print warning if validator id not registered', () => {
+    jest.spyOn(console, 'warn');
+    const validator = service.createValidators({
+      custom: 'not-registered'
+    });
+    expect(validator).toBeNull();
+    expect(console.warn).toBeCalledTimes(1);
   });
 
   describe('custom validators', () => {

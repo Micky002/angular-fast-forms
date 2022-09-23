@@ -1,14 +1,14 @@
-<div [formGroup]="formGroup" class="date-range">
+<div [formGroup]="control" class="date-range">
   <mat-form-field>
     <mat-label>From</mat-label>
-    <input formControlName="from" [matDatepicker]="pickerFrom" matInput>
+    <input [matDatepicker]="pickerFrom" formControlName="from" matInput>
     <mat-hint>DD.MM.YYYY</mat-hint>
     <mat-datepicker-toggle [for]="pickerFrom" matSuffix></mat-datepicker-toggle>
     <mat-datepicker #pickerFrom></mat-datepicker>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Until</mat-label>
-    <input formControlName="until" [matDatepicker]="pickerUntil" matInput>
+    <input [matDatepicker]="pickerUntil" formControlName="until" matInput>
     <mat-hint>DD.MM.YYYY</mat-hint>
     <mat-datepicker-toggle [for]="pickerUntil" matSuffix></mat-datepicker-toggle>
     <mat-datepicker #pickerUntil></mat-datepicker>

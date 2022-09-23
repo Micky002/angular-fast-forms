@@ -6,6 +6,7 @@ import { UiRegistryService } from './ui-registry.service';
 import { FastFormArray } from '../control/fast-form-array';
 import { FastFormControl } from '../control/fast-form-control';
 import { FastFormGroup } from '../control/fast-form-group';
+import { ControlRegistry } from '../internal/control/control-registry.service';
 
 @Injectable({
   providedIn: 'any'
@@ -14,7 +15,9 @@ export class ControlFactoryService {
 
   constructor(private validatorFactory: ValidatorFactoryService,
               private uiRegistry: UiRegistryService,
-              @Optional() @Inject(DYNAMIC_FORM_CONTROL) public componentRegistry?: Array<DynamicFormDefinition>) { }
+              private controlRegistry: ControlRegistry,
+              @Optional() @Inject(DYNAMIC_FORM_CONTROL) public componentRegistry?: Array<DynamicFormDefinition>) {
+  }
 
   public createFromQuestions(form: FormGroup, questions: Array<Question>) {
     for (const question of questions || []) {
@@ -37,7 +40,7 @@ export class ControlFactoryService {
             (question.children || []).forEach(cq => {
               const formControl = this.createControl(cq);
               form.addControl(cq.id, formControl);
-            })
+            });
           } else {
             const formControl = this.createControl(question);
             form.addControl(question.id, formControl);
@@ -49,8 +52,14 @@ export class ControlFactoryService {
     }
   }
 
+  public createRawControl(question: Question): AbstractControl {
+    return this.createControlFromDecoratedComponents(question) ??
+      this.createControlFromControlFactoryMethod(question) ??
+      this.createControlDefault(question);
+  }
+
   private createControl(question: Question): AbstractControl {
-    const control = this.createAngularFormControl(question);
+    const control = this.createRawControl(question);
     const validator = this.validatorFactory.createValidators(question.validation);
     const asyncValidator = this.validatorFactory.createAsyncValidators(question.validation);
     control.setValidators(validator);
@@ -58,20 +67,34 @@ export class ControlFactoryService {
     return control;
   }
 
-  public createAngularFormControl(question: Question): AbstractControl {
+  private createControlFromDecoratedComponents(question: Question): AbstractControl | undefined {
+    if (this.controlRegistry.hasControlFactory(question.type)) {
+      const def = this.controlRegistry.getDefinition(question.type);
+      if (def.controlFactory !== undefined) {
+        return def.controlFactory(question);
+      }
+    }
+    return undefined;
+  }
+
+  private createControlFromControlFactoryMethod(question: Question): AbstractControl | undefined {
     if (this.componentRegistry) {
       const formDefinition = this.componentRegistry.find(def => def.type === question.type);
       if (formDefinition && formDefinition.component && (formDefinition.component as any)['controlFactory']) {
         return (formDefinition.component as any)['controlFactory'](question);
       } else if (formDefinition && formDefinition.controlFactory) {
         return formDefinition.controlFactory(question);
-      } else if (question.type === 'group') {
-        return new FastFormGroup(question.children ?? [], this);
-      } else {
-        return new FastFormControl(question);
       }
-    } else {
-      return new FastFormControl(question);
     }
+    return undefined;
+  }
+
+  private createControlDefault(question: Question): AbstractControl {
+    if (this.componentRegistry) {
+      if (question.type === 'group') {
+        return new FastFormGroup(question.children ?? [], this);
+      }
+    }
+    return new FastFormControl(question, question.defaultValue);
   }
 }

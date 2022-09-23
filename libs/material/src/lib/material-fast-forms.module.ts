@@ -7,7 +7,6 @@ import { SelectComponent } from './ui/select/select.component';
 import { InputComponent } from './ui/input/input.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatLuxonDateModule } from '@angular/material-luxon-adapter';
 import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from '@ngx-fast-forms/core';
 
 @NgModule({
@@ -17,8 +16,7 @@ import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from '@ngx-fast-forms/cor
     ReactiveFormsModule,
     MatSelectModule,
     MatIconModule,
-    MatDatepickerModule,
-    MatLuxonDateModule
+    MatDatepickerModule
   ],
   declarations: [
     SelectComponent,

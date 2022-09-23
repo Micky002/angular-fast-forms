@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { DateRangeInputComponent } from './date-range-input/date-range-input.component';
 import { CustomNestedControlComponent } from './custom-nested-control.component';
 import { RouterModule } from '@angular/router';
-import { FastFormsModule, registerGroup } from '@ngx-fast-forms/core';
+import { FastFormsModule } from '@ngx-fast-forms/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -19,13 +20,15 @@ import { MatInputModule } from '@angular/material/input';
       path: '',
       component: CustomNestedControlComponent
     }]),
-    FastFormsModule,
+    FastFormsModule.forChild({
+      controls: [
+        DateRangeInputComponent
+      ]
+    }),
     ReactiveFormsModule,
     MatDatepickerModule,
-    MatInputModule
-  ],
-  providers: [
-    registerGroup('date-range', DateRangeInputComponent)
+    MatInputModule,
+    MatNativeDateModule
   ]
 })
 export class CustomNestedControlModule {}
