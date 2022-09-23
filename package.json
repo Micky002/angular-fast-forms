@@ -9,6 +9,7 @@
     "build:material": "nx run material:build",
     "build:all": "nx run-many --target=build --projects=core,material",
     "start:material-example": "nx serve material-example",
+    "start:storybook": "nx storybook material-example",
     "test:affected": "nx affected --target=test --all",
     "test:all": "nx run-many --target=test --runInBand --coverage --projects=core,material,material-example",
     "lint:all": "nx run-many --target=lint --projects=core,material",
