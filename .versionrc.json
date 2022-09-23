@@ -1,0 +1,20 @@
+{
+  "bumpFiles": [
+    {
+      "filename": "package.json",
+      "type": "json"
+    },
+    {
+      "filename": "libs/core/package.json",
+      "type": "json"
+    },
+    {
+      "filename": "libs/material/package.json",
+      "type": "json"
+    },
+    {
+      "filename": "libs/material-experimental/package.json",
+      "type": "json"
+    }
+  ]
+}
