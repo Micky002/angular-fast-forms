@@ -5,7 +5,9 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/material-example",
         "index": "apps/material-example/src/index.html",
@@ -88,40 +90,13 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/material-example"],
+      "outputs": [
+        "coverage/apps/material-example"
+      ],
       "options": {
         "jestConfig": "apps/material-example/jest.config.ts",
         "passWithNoTests": true,
         "runInBand": true
-      }
-    },
-    "storybook": {
-      "executor": "@storybook/angular:start-storybook",
-      "options": {
-        "port": 4400,
-        "configDir": "apps/material-example/.storybook",
-        "browserTarget": "material-example:build",
-        "compodoc": false
-      },
-      "configurations": {
-        "ci": {
-          "quiet": true
-        }
-      }
-    },
-    "build-storybook": {
-      "executor": "@storybook/angular:build-storybook",
-      "outputs": ["{options.outputDir}"],
-      "options": {
-        "outputDir": "dist/storybook/material-example",
-        "configDir": "apps/material-example/.storybook",
-        "browserTarget": "material-example:build",
-        "compodoc": false
-      },
-      "configurations": {
-        "ci": {
-          "quiet": true
-        }
       }
     }
   },
