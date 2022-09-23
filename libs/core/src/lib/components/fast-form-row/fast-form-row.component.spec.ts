@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { FastFormRowComponent } from './fast-form-row.component';
-import { FastFormGroup, FastFormsModule, Question } from '@ngx-fast-forms/core';
 import { ControlFactoryService } from '../../service/control-factory.service';
 import { By } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
-import { DummyInputComponent, dummyInputProvider } from '../../test/dummy-input.test-util';
+import { FastFormsModule } from '../../fast-forms.module';
+import { Question } from '../../model';
+import { FastFormGroup } from '../../control/fast-form-group';
+import { DummyInputModule } from '../../test/dummy-input.module.test-util';
 
 describe('FastFormRowComponent', () => {
   let component: FastFormRowComponent;
@@ -15,15 +15,8 @@ describe('FastFormRowComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        ReactiveFormsModule,
-        FastFormsModule.forRoot()
-      ],
-      declarations: [
-        FastFormRowComponent,
-        DummyInputComponent
-      ],
-      providers: [
-        dummyInputProvider()
+        FastFormsModule.forRoot(),
+        DummyInputModule
       ]
     }).compileComponents();
     fixture = TestBed.createComponent(FastFormRowComponent);

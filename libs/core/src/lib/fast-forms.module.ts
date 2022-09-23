@@ -4,7 +4,7 @@ import { FastFormGroupComponent } from './components/fast-form-group/fast-form-g
 import { VALIDATORS } from './internal/token';
 import { CommonModule } from '@angular/common';
 import { FastFormArrayComponent } from './components/fast-form-array/fast-form-array.component';
-import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from './model';
+import { AFF_CONTROL_COMPONENTS, DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from './model';
 import { FastFormRowComponent } from './components/fast-form-row/fast-form-row.component';
 import { FastFormControlComponent } from './components/fast-form-control/fast-form-control.component';
 
@@ -20,7 +20,8 @@ import { FastFormControlComponent } from './components/fast-form-control/fast-fo
     FastFormRowComponent
   ],
   exports: [
-    FastFormGroupComponent
+    FastFormGroupComponent,
+    FastFormRowComponent
   ],
   providers: [
     {
@@ -46,7 +47,8 @@ import { FastFormControlComponent } from './components/fast-form-control/fast-fo
 export class FastFormsModule {
 
   public static forRoot(options?: {
-    validators?: Array<any>
+    validators?: Array<any>,
+    controls?: Array<any>
   }): ModuleWithProviders<FastFormsModule> {
     return {
       ngModule: FastFormsModule,
@@ -56,13 +58,19 @@ export class FastFormsModule {
           provide: VALIDATORS,
           multi: true,
           useValue: (options?.validators ?? [])
+        },
+        {
+          provide: AFF_CONTROL_COMPONENTS,
+          multi: true,
+          useValue: (options?.controls ?? [])
         }
       ]
     };
   }
 
   public static forChild(options?: {
-    validators?: Array<any>
+    validators?: Array<any>,
+    controls?: Array<any>
   }): ModuleWithProviders<FastFormsModule> {
     return {
       ngModule: FastFormsModule,
@@ -72,6 +80,11 @@ export class FastFormsModule {
           provide: VALIDATORS,
           multi: true,
           useValue: (options?.validators ?? [])
+        },
+        {
+          provide: AFF_CONTROL_COMPONENTS,
+          multi: true,
+          useValue: (options?.controls ?? [])
         }
       ]
     };

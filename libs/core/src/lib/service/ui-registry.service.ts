@@ -6,6 +6,7 @@ import { BaseFormArrayComponent } from '../components/base/base-array.component'
 import { FastFormArray } from '../control/fast-form-array';
 import { BaseFormControlComponent } from '../components/base/base-control.component';
 import { BaseFormGroupComponent } from '../components/base/base-group.component';
+import { ControlRegistry } from '../internal/control/control-registry.service';
 
 @Injectable({
   providedIn: 'any'
@@ -14,7 +15,8 @@ export class UiRegistryService {
 
   private uiComponents: { [key: string]: DynamicFormDefinition } = {};
 
-  constructor(@Optional() @Inject(DYNAMIC_FORM_CONTROL) private controlDefinitions?: Array<DynamicFormDefinition>) {
+  constructor(private controlRegistry: ControlRegistry,
+              @Optional() @Inject(DYNAMIC_FORM_CONTROL) private controlDefinitions?: Array<DynamicFormDefinition>) {
     if (controlDefinitions) {
       controlDefinitions.forEach(cd => {
         if (this.uiComponents[cd.type]) {
@@ -27,10 +29,14 @@ export class UiRegistryService {
 
   find(type: string): DynamicFormDefinition | undefined {
     const uiComponent = this.uiComponents[type];
-    if (!uiComponent) {
-      console.warn(`No ui component registered with type [${type}].`);
+    if (uiComponent) {
+      return uiComponent;
     }
-    return uiComponent;
+    if (this.controlRegistry.hasItem(type)) {
+      return this.controlRegistry.getDefinition(type);
+    }
+    console.warn(`No ui component registered with type [${type}].`);
+    return;
   }
 
   render(viewContainerRef: ViewContainerRef, formGroup: FormGroup | FormArray | FormControl, question: Question, formDefinition: DynamicFormDefinition) {

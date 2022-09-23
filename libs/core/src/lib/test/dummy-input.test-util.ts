@@ -1,8 +1,11 @@
-import { Component, Provider } from '@angular/core';
+import { Component } from '@angular/core';
 import { BaseFormControlComponent } from '../components/base/base-control.component';
-import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from '../model';
 import { FormControl } from '@angular/forms';
+import { Control } from '@ngx-fast-forms/core';
 
+@Control({
+  type: 'dummy-input'
+})
 @Component({
   selector: 'aff-dummy-input',
   template: `
@@ -12,15 +15,4 @@ import { FormControl } from '@angular/forms';
   `
 })
 export class DummyInputComponent extends BaseFormControlComponent<any, FormControl> {
-}
-
-export function dummyInputProvider(): Provider {
-  return {
-    provide: DYNAMIC_FORM_CONTROL,
-    multi: true,
-    useValue: {
-      type: 'dummy-input',
-      component: DummyInputComponent
-    } as DynamicFormDefinition
-  };
 }

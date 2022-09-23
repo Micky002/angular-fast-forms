@@ -4,6 +4,9 @@ import { BaseFormControlComponent } from '../base/base-control.component';
 import { BaseFormGroupComponent } from '../base/base-group.component';
 import { FormGroup } from '@angular/forms';
 
+/**
+ * @deprecated Will be removed in 2.0.0
+ */
 export function registerControl(type: string, component: Type<BaseFormControlComponent<any, any>>): Provider {
   return {
     provide: DYNAMIC_FORM_CONTROL,
@@ -15,6 +18,9 @@ export function registerControl(type: string, component: Type<BaseFormControlCom
   };
 }
 
+/**
+ * @deprecated Will be removed in 2.0.0
+ */
 export function registerGroup(type: string, component: Type<BaseFormGroupComponent<any>>, options?: {
   groupFactory?: (question: Question) => FormGroup
 }): Provider {
