@@ -1,8 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { BaseFormControlComponent } from '@ngx-fast-forms/core';
+import { BaseFormControlComponent, Control } from '@ngx-fast-forms/core';
 import { InputFormat, InputProperties } from './input.models';
 
+@Control({
+  type: 'input,mat-input'
+})
 @Component({
   selector: 'aff-material-input',
   templateUrl: './input.component.html'
@@ -10,10 +13,6 @@ import { InputFormat, InputProperties } from './input.models';
 export class InputComponent extends BaseFormControlComponent<InputProperties, FormControl> implements OnInit {
 
   @ViewChild('inputElement', {static: true}) inputRef!: ElementRef<HTMLInputElement>;
-
-  constructor() {
-    super();
-  }
 
   public get type(): string {
     if (this.properties?.attributes && this.properties.attributes['type']) {

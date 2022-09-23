@@ -21,7 +21,7 @@ export class ValidatorFactoryService {
     this.registry = new ValidatorRegistry(injector, registeredValidators ?? []);
   }
 
-  public createValidators(options?: ValidationOptions): ValidatorFn | null {
+  public createValidators(options?: ValidationOptions): Array<ValidatorFn> | null {
     const validators: ValidatorFn[] = [];
     if (!options) {
       return null;
@@ -48,7 +48,7 @@ export class ValidatorFactoryService {
       validators.push(Validators.pattern(options.pattern));
     }
     validators.push(...this.createCustomValidators('sync', options));
-    return Validators.compose(validators);
+    return validators;
   }
 
   public createAsyncValidators(options?: ValidationOptions): Array<AsyncValidatorFn> {

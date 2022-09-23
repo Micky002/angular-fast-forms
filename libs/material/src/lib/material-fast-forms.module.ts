@@ -7,7 +7,7 @@ import { SelectComponent } from './ui/select/select.component';
 import { InputComponent } from './ui/input/input.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from '@ngx-fast-forms/core';
+import { AFF_CONTROL_COMPONENTS } from '@ngx-fast-forms/core';
 
 @NgModule({
   imports: [
@@ -24,20 +24,9 @@ import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from '@ngx-fast-forms/cor
   ],
   providers: [
     {
-      provide: DYNAMIC_FORM_CONTROL,
+      provide: AFF_CONTROL_COMPONENTS,
       multi: true,
-      useValue: {
-        type: 'select',
-        component: SelectComponent
-      }
-    },
-    {
-      provide: DYNAMIC_FORM_CONTROL,
-      multi: true,
-      useValue: {
-        type: 'input',
-        component: InputComponent
-      } as DynamicFormDefinition
+      useValue: [SelectComponent, InputComponent]
     }
   ]
 })

@@ -1,0 +1,11 @@
+<aff-form-group [formGroup]="form"></aff-form-group>
+
+<app-double-column leftTitle="Definition" rightTitle="Form state">
+  <pre left><p>{{form.questions | json}}</p></pre>
+  <div right>
+    <pre><p>{{form.value | json}}</p></pre>
+    <pre><p>valid: {{form.valid}}</p></pre>
+    <pre><p>dirty: {{form.dirty}}</p></pre>
+  </div>
+</app-double-column>
+

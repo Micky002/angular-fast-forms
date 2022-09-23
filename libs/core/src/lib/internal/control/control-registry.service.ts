@@ -17,8 +17,8 @@ export class ControlRegistry extends AbstractRegistry<InternalControlComponent> 
     super(controlsInModule);
   }
 
-  id(item: InternalControlComponent): string {
-    return item[META_COMPONENT_OPTIONS_KEY].type;
+  override ids(item: InternalControlComponent): string[] {
+    return item[META_COMPONENT_OPTIONS_KEY].type.split(',');
   }
 
   hasControlFactory(type: string): boolean {

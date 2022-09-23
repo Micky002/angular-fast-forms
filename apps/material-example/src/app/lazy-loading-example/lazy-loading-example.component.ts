@@ -1,5 +1,5 @@
-import { Component, Inject } from '@angular/core';
-import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition, FastFormGroup, FastFormsService } from '@ngx-fast-forms/core';
+import { Component } from '@angular/core';
+import { FastFormGroup, FastFormsService } from '@ngx-fast-forms/core';
 
 @Component({
   selector: 'frontend-lazy-loading-example',
@@ -10,8 +10,7 @@ export class LazyLoadingExampleComponent {
 
   form: FastFormGroup;
 
-  constructor(private fastFormService: FastFormsService,
-              @Inject(DYNAMIC_FORM_CONTROL) private asdf: Array<DynamicFormDefinition>) {
+  constructor(private fastFormService: FastFormsService) {
     this.form = this.fastFormService.createDynamicForm([{
       id: 'Example',
       type: 'lazy-input'

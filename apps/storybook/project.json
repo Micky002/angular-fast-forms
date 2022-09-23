@@ -5,7 +5,9 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/storybook",
         "index": "apps/storybook/src/index.html",
@@ -17,7 +19,10 @@
           "apps/storybook/src/favicon.ico",
           "apps/storybook/src/assets"
         ],
-        "styles": ["apps/storybook/src/styles.scss"],
+        "styles": [
+          "apps/storybook/src/styles.scss",
+          "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -82,7 +87,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/storybook"],
+      "outputs": [
+        "coverage/apps/storybook"
+      ],
       "options": {
         "jestConfig": "apps/storybook/jest.config.ts",
         "passWithNoTests": true
@@ -104,7 +111,9 @@
     },
     "build-storybook": {
       "executor": "@storybook/angular:build-storybook",
-      "outputs": ["{options.outputDir}"],
+      "outputs": [
+        "{options.outputDir}"
+      ],
       "options": {
         "outputDir": "dist/storybook/storybook",
         "configDir": "apps/storybook/.storybook",
