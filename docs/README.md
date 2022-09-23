@@ -5,6 +5,17 @@ when working with forms. You will not need to write any html anymore to create y
 simply define them via a well-structured config. It is extendable to use your own
 form components.
 
+**Example Project**
+
+The repository includes an [example project](https://github.com/Micky002/angular-fast-forms/tree/master/apps/material-example)
+which can be started with `npm run start:material-example`.
+
+**Storybook**
+
+The repository includes a [storybook](https://github.com/Micky002/angular-fast-forms/tree/master/apps/storybook)
+which can be started with `npm run start:storybook`.
+
+
 ## Core Features
 
 * Create forms without any html
