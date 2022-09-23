@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FastFormsModule } from '@ngx-fast-forms/core';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
     BrowserAnimationsModule,
     FastFormsModule.forRoot(),
     NgxsModule.forRoot(),
+    NgxsFormPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     MaterialFastFormsModule,
     HttpClientModule,

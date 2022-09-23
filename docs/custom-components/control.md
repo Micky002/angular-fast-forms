@@ -1,24 +1,25 @@
 # Custom control
 
-To add a custom control you have to create a new angular component via the angular 
-[CLI](https://angular.io/cli/generate#component) or manually. These component must extend the
-`BaseFormControlComponent<T = QuestionProperties, C = AbstractControl>` abstract class. If the control has custom
-properties then the type parameter `T` should declare this type. `C` should define either the angular `FormControl` 
-or a custom subtype of this. The last step is to register the control.
-
-
+To add a custom control you have to create a new angular component via the angular
+[CLI](https://angular.io/cli/generate#component) or manually. These component must
+extend the `BaseFormControlComponent<T = QuestionProperties, C = AbstractControl>`
+abstract class. If the control has custom properties then the type parameter `T`
+should declare this type. `C` should define either the angular `AbstractControl`
+(`FormControl` | `FormGroup` | ...) or a custom subtype of this. The last step is
+to register the control.
 
 ## Example
 
 In this example a basic input control is registered.
 
-
-
 ### Step 1 - Create component
 
 ```typescript
+@Control({
+  type: 'custom-input'
+})
 @Component({
-  selector: 'my-custom-input',
+  selector: 'custom-input',
   templateUrl: './input.component.html'
 })
 export class InputComponent extends BaseFormControlComponent<InputProperties, FormControl> {
@@ -47,6 +48,7 @@ interface InputProperties {
 ```
 
 ```html
+
 <mat-form-field>
   <mat-label *ngIf="question.label">{{question.label}}</mat-label>
   <input #inputElement [formControl]="control" [type]="type" matInput>
@@ -57,42 +59,27 @@ interface InputProperties {
 </mat-form-field>
 ```
 
-
-
 ### Step 2 - Registration
 
-It is possible to register the control via the helper method `registerControl(type, component)` or manually.
+The custom control component must be registered in the `FastFormsModule`. See
+the following example.
 
-
-#### Register via helper method
-
-```typescript
-@NgModule({
-  providers: [
-    registerControl('custom-input', InputComponent)
-  ]
-})
-export class CustomFormControlModule {
-}
-```
-
-
-#### Register manually
+**Root Module**
 
 ```typescript
-@NgModule({
-  providers: [
-    {
-      provide: DYNAMIC_FORM_CONTROL,
-      multi: true,
-      useValue: {
-        type: 'custom-input',
-        component: InputComponent
-      } as DynamicFormDefinition
-    }
+FastFormsModule.forRoot({
+  controls: [
+    InputComponent
   ]
 })
-export class CustomFormControlModule {
-}
 ```
 
+**Child Module**
+
+```typescript
+FastFormsModule.forChild({
+  controls: [
+    InputComponent
+  ]
+})
+```

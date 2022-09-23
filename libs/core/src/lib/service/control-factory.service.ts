@@ -53,26 +53,9 @@ export class ControlFactoryService {
   }
 
   public createRawControl(question: Question): AbstractControl {
-    if (this.controlRegistry.hasControlFactory(question.type)) {
-      const def = this.controlRegistry.getDefinition(question.type);
-      if (def.controlFactory !== undefined) {
-        return def.controlFactory(question);
-      }
-    }
-    if (this.componentRegistry) {
-      const formDefinition = this.componentRegistry.find(def => def.type === question.type);
-      if (formDefinition && formDefinition.component && (formDefinition.component as any)['controlFactory']) {
-        return (formDefinition.component as any)['controlFactory'](question);
-      } else if (formDefinition && formDefinition.controlFactory) {
-        return formDefinition.controlFactory(question);
-      } else if (question.type === 'group') {
-        return new FastFormGroup(question.children ?? [], this);
-      } else {
-        return new FastFormControl(question, question.defaultValue);
-      }
-    } else {
-      return new FastFormControl(question, question.defaultValue);
-    }
+    return this.createControlFromDecoratedComponents(question) ??
+      this.createControlFromControlFactoryMethod(question) ??
+      this.createControlDefault(question);
   }
 
   private createControl(question: Question): AbstractControl {
@@ -82,5 +65,39 @@ export class ControlFactoryService {
     control.setValidators(validator);
     control.setAsyncValidators(asyncValidator);
     return control;
+  }
+
+  private createControlFromDecoratedComponents(question: Question): AbstractControl | undefined {
+    if (this.controlRegistry.hasControlFactory(question.type)) {
+      const def = this.controlRegistry.getDefinition(question.type);
+      if (def.controlFactory !== undefined) {
+        return def.controlFactory(question);
+      }
+    }
+    return;
+  }
+
+  private createControlFromControlFactoryMethod(question: Question): AbstractControl | undefined {
+    if (this.componentRegistry) {
+      const formDefinition = this.componentRegistry.find(def => def.type === question.type);
+      if (formDefinition && formDefinition.component && (formDefinition.component as any)['controlFactory']) {
+        return (formDefinition.component as any)['controlFactory'](question);
+      } else if (formDefinition && formDefinition.controlFactory) {
+        return formDefinition.controlFactory(question);
+      }
+    }
+    return;
+  }
+
+  private createControlDefault(question: Question): AbstractControl {
+    if (this.componentRegistry) {
+      if (question.type === 'group') {
+        return new FastFormGroup(question.children ?? [], this);
+      } else {
+        return new FastFormControl(question, question.defaultValue);
+      }
+    } else {
+      return new FastFormControl(question, question.defaultValue);
+    }
   }
 }
