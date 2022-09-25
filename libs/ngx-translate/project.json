@@ -1,36 +1,36 @@
 {
   "projectType": "library",
-  "sourceRoot": "libs/material-experimental/src",
+  "sourceRoot": "libs/ngx-translate/src",
   "prefix": "angular-fast-forms",
   "targets": {
     "build": {
       "executor": "@nrwl/angular:package",
-      "outputs": ["dist/libs/material-experimental"],
+      "outputs": ["dist/libs/ngx-translate"],
       "options": {
-        "project": "libs/material-experimental/ng-package.json"
+        "project": "libs/ngx-translate/ng-package.json"
       },
       "configurations": {
         "production": {
-          "tsConfig": "libs/material-experimental/tsconfig.lib.prod.json"
+          "tsConfig": "libs/ngx-translate/tsconfig.lib.prod.json"
         },
         "development": {
-          "tsConfig": "libs/material-experimental/tsconfig.lib.json"
+          "tsConfig": "libs/ngx-translate/tsconfig.lib.json"
         }
       },
       "defaultConfiguration": "production"
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/material-experimental"],
+      "outputs": ["coverage/libs/ngx-translate"],
       "options": {
-        "jestConfig": "libs/material-experimental/jest.config.ts",
+        "jestConfig": "libs/ngx-translate/jest.config.ts",
         "passWithNoTests": true
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["libs/material-experimental/**/*.ts", "libs/material-experimental/**/*.html"]
+        "lintFilePatterns": ["libs/ngx-translate/**/*.ts", "libs/ngx-translate/**/*.html"]
       }
     }
   },

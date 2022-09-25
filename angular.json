@@ -7,6 +7,7 @@
     "material-example": "apps/material-example",
     "material-example-e2e": "apps/material-example-e2e",
     "material-experimental": "libs/material-experimental",
+    "ngx-translate": "libs/ngx-translate",
     "storybook": "apps/storybook",
     "storybook-e2e": "apps/storybook-e2e"
   }

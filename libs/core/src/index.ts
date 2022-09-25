@@ -8,6 +8,8 @@ export * from './lib/control/fast-form-group';
 export * from './lib/control/control.decorator';
 export * from './lib/control/control-factory.decorator';
 
+export * from './lib/ext/translate/translate.extension';
+
 export * from './lib/service/fast-forms.service';
 
 export * from './lib/validation/base-async-validator.service';

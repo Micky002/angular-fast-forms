@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="test:lib:core" type="JavaScriptTestRunnerJest">
-    <config-file value="$PROJECT_DIR$/libs/core/jest.config.ts" />
+  <configuration default="false" name="app:material-example" type="JavaScriptTestRunnerJest">
+    <config-file value="$PROJECT_DIR$/apps/material-example/jest.config.ts" />
     <node-interpreter value="project" />
     <node-options value="" />
     <jest-package value="$PROJECT_DIR$/node_modules/jest" />
