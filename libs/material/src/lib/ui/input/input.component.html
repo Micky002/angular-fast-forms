@@ -2,6 +2,7 @@
   <mat-label *ngIf="question.label">{{question.label}}</mat-label>
   <input #inputElement [formControl]="control" [type]="type" matInput>
   <mat-icon *ngIf="format === 'currency'" matSuffix>€</mat-icon>
+  <mat-error>{{control.errors | formError}}</mat-error>
   <mat-error *ngIf="control.hasError('required')">
     Value is required
   </mat-error>

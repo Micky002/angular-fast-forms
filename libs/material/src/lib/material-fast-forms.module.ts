@@ -8,6 +8,7 @@ import { InputComponent } from './ui/input/input.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { AFF_CONTROL_COMPONENTS } from '@ngx-fast-forms/core';
+import { FastFormsNgxTranslateModule } from "@ngx-fast-forms/ngx-translate-plugin";
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { AFF_CONTROL_COMPONENTS } from '@ngx-fast-forms/core';
     ReactiveFormsModule,
     MatSelectModule,
     MatIconModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    FastFormsNgxTranslateModule
   ],
   declarations: [
     SelectComponent,

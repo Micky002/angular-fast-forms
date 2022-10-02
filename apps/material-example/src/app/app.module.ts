@@ -14,6 +14,7 @@ import { FastFormsModule } from '@ngx-fast-forms/core';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
+import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { NgxsFormPluginModule } from '@ngxs/form-plugin';
     NgxsReduxDevtoolsPluginModule.forRoot(),
     MaterialFastFormsModule,
     HttpClientModule,
+    TranslateModule.forRoot(),
     RouterModule.forRoot([
       {
         path: 'home',

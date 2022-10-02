@@ -1,1 +1,1 @@
-export * from './lib/ngx-translate.module';
+export * from './lib/fast-forms-ngx-translate.module';
