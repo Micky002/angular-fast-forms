@@ -1,4 +1,4 @@
-import { Inject, Injectable, Optional, ViewContainerRef } from '@angular/core';
+import { ComponentRef, Inject, Injectable, Injector, Optional, ViewContainerRef } from '@angular/core';
 import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition, Question } from '../model';
 import { BaseFormInlineComponent } from '../components/base/base-inline.component';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
@@ -7,6 +7,8 @@ import { FastFormArray } from '../control/fast-form-array';
 import { BaseFormControlComponent } from '../components/base/base-control.component';
 import { BaseFormGroupComponent } from '../components/base/base-group.component';
 import { ControlRegistry } from '../internal/control/control-registry.service';
+import { CONTROL_ID, CONTROL_PROPERTIES } from '../components/util/inject-token';
+import { ActionService } from '../actions/action.service';
 
 @Injectable({
   providedIn: 'any'
@@ -16,6 +18,7 @@ export class UiRegistryService {
   private uiComponents: { [key: string]: DynamicFormDefinition } = {};
 
   constructor(private controlRegistry: ControlRegistry,
+              private injector: Injector,
               @Optional() @Inject(DYNAMIC_FORM_CONTROL) private controlDefinitions?: Array<DynamicFormDefinition>) {
     if (controlDefinitions) {
       controlDefinitions.forEach(cd => {
@@ -39,13 +42,45 @@ export class UiRegistryService {
     return;
   }
 
-  render(viewContainerRef: ViewContainerRef, formGroup: FormGroup | FormArray | FormControl, question: Question, formDefinition: DynamicFormDefinition) {
-    const dynamicFormControlRef = viewContainerRef.createComponent(formDefinition.component);
-    this.initializeComponent(formGroup, question, dynamicFormControlRef.instance);
+  render<T>(viewContainerRef: ViewContainerRef,
+            formGroup: FormGroup | FormArray | FormControl,
+            question: Question,
+            formDefinition: DynamicFormDefinition,
+            injector?: Injector,
+            actionService?: ActionService): ComponentRef<T> {
+    const controlComponentRef = viewContainerRef.createComponent(formDefinition.component, {
+      injector: Injector.create({
+        providers: [{
+          provide: CONTROL_PROPERTIES,
+          useValue: question.properties ?? {}
+        }, {
+          provide: CONTROL_ID,
+          useValue: question.id
+        }, {
+          provide: ActionService,
+          useValue: actionService
+        }],
+        parent: injector ? injector : this.injector
+      })
+    });
+    if (this.shouldInitialize(controlComponentRef.instance)) {
+      this.initializeComponent(formGroup, question, formDefinition.component.name, controlComponentRef.instance);
+    }
+    return controlComponentRef as any;
+  }
+
+  private shouldInitialize(component: unknown): boolean {
+    return component instanceof BaseFormArrayComponent ||
+        component instanceof BaseFormInlineComponent ||
+        component instanceof BaseFormControlComponent ||
+        component instanceof BaseFormGroupComponent;
   }
 
   // TODO better type check
-  private initializeComponent(control: FormGroup | FormArray | FormControl, question: Question, component: BaseFormArrayComponent | BaseFormInlineComponent | BaseFormControlComponent) {
+  private initializeComponent(control: FormGroup | FormArray | FormControl,
+                              question: Question,
+                              componentName: string,
+                              component: BaseFormArrayComponent | BaseFormInlineComponent | BaseFormControlComponent) {
     if (component instanceof BaseFormArrayComponent && control instanceof FormGroup) {
       this.initializeFormArrayComponent(control, question, component);
     } else if (component instanceof BaseFormInlineComponent && control instanceof FormGroup) {
@@ -55,7 +90,7 @@ export class UiRegistryService {
     } else if (component instanceof BaseFormGroupComponent && control instanceof FormGroup) {
       this.initializeFormGroupComponent(control, question, component);
     } else {
-      throw new Error(`Cannot create component of type [...] with control of type [...] for question with id [${question.id}]`);
+      throw new Error(`Cannot create component [${componentName}] for question with id [${question.id}]`);
     }
   }
 

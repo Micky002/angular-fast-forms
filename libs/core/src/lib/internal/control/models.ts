@@ -8,6 +8,7 @@ export interface InternalControlComponent {
 
 export interface ControlComponentMetaData {
   type: string;
+  internalType: 'action' | 'control';
   inline?: boolean;
   controlFactory?: (question: Question) => AbstractControl;
 }

@@ -29,7 +29,7 @@ describe('UiRegistryService', () => {
   });
 
   it('should throw error is duplicated type is registered', () => {
-    expect(() => new UiRegistryService(new ControlRegistry(), [{
+    expect(() => new UiRegistryService(new ControlRegistry(), null as any, [{
       type: 'duplicate',
       component: DummyControl
     }, {

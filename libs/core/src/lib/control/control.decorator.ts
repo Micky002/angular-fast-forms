@@ -11,6 +11,7 @@ export function Control(options: ControlOptions) {
     const controlComponent = target as InternalControlComponent;
     controlComponent[META_COMPONENT_OPTIONS_KEY] = {
       ...controlComponent[META_COMPONENT_OPTIONS_KEY],
+      internalType: 'control',
       type: options.type
     }
   }

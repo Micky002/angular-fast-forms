@@ -29,6 +29,14 @@ export class FastFormArray extends FormArray {
     super.patchValue(values, options);
   }
 
+  public addRow(index?: number) {
+    this.addControlsToArray(1);
+  }
+
+  public removeRow(index?: number) {
+    this.removeControlsFromArray(1);
+  }
+
   private updateControlCount(dataLength: number) {
     if (dataLength > this.controls.length) {
       this.addControlsToArray(dataLength - this.controls.length);

@@ -14,6 +14,7 @@ import { FastFormsModule } from '@ngx-fast-forms/core';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { NgxsFormPluginModule } from '@ngxs/form-plugin';
             .then((m) => m.ExampleNgxsModule)
       }
     ]),
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

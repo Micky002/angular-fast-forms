@@ -25,4 +25,8 @@ describe('FastFormsService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should create basic form group', () => {
+    service.createDynamicForm([])
+  });
 });
