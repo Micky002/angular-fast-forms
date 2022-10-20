@@ -7,6 +7,8 @@ import { FastFormsModule } from '@ngx-fast-forms/core';
 import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActionButtonsComponent } from './time-array/action-buttons/action-buttons.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [TimeArrayComponent, CustomArrayExampleComponent, ActionButtonsComponent],
@@ -16,13 +18,19 @@ import { ActionButtonsComponent } from './time-array/action-buttons/action-butto
     RouterModule.forChild([
       {
         path: '',
-        component: CustomArrayExampleComponent,
-      },
+        component: CustomArrayExampleComponent
+      }
     ]),
     FastFormsModule.forChild({
-      controls: [TimeArrayComponent],
+      controls: [
+        TimeArrayComponent,
+        ActionButtonsComponent
+      ]
     }),
     MaterialFastFormsModule,
-  ],
+    MatIconModule,
+    MatButtonModule
+  ]
 })
-export class CustomArrayModule {}
+export class CustomArrayModule {
+}

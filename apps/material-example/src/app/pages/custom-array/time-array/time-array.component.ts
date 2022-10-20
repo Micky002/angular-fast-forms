@@ -22,15 +22,15 @@ export class TimeArrayComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._actionSub = this.actionService.actions.subscribe(event => {
-      if (event.matchId.endsWith('time-add-action')) {
-        const index = event.args[event.args.length - 2] as number;
-        this.formArray.addRow(index + 1);
-      } else if (event.matchId.endsWith('time-copy-action')) {
-        const index = event.args[event.args.length - 2] as number;
-        this.formArray.copyRow(index + 1);
-      } else if (event.matchId.endsWith('time-delete-action')) {
-        const index = event.args[event.args.length - 2] as number;
-        this.formArray.removeRow(index);
+      if (event.matchId.includes('time-action-')) {
+        const index = event.args[event.args.length - 3] as number;
+        if (event.matchId.endsWith('time-action-add')) {
+          this.formArray.addRow(index + 1);
+        } else if (event.matchId.endsWith('time-action-copy')) {
+          this.formArray.copyRow(index + 1);
+        } else if (event.matchId.endsWith('time-action-delete')) {
+          this.formArray.removeRow(index);
+        }
       }
     });
   }

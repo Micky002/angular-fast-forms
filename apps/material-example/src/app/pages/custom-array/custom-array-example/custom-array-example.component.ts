@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FastFormGroup, FastFormsService } from '@ngx-fast-forms/core';
-import { ButtonProperties } from '@ngx-fast-forms/material';
 
 @Component({
   selector: 'frontend-custom-array-example',
@@ -23,28 +22,15 @@ export class CustomArrayExampleComponent implements OnInit {
           type: 'row',
           children: [{
             id: 'name',
-            type: 'mat-input'
+            type: 'mat-input',
+            label: 'Name'
           }, {
-            id: 'time-add-action',
-            type: 'mat-button',
-            properties: {
-              type: 'icon-button',
-              icon: 'add_circle_outline'
-            } as ButtonProperties
+            id: 'surname',
+            type: 'mat-input',
+            label: 'Surname'
           }, {
-            id: 'time-copy-action',
-            type: 'mat-button',
-            properties: {
-              type: 'icon-button',
-              icon: 'content_copy'
-            } as ButtonProperties
-          }, {
-            id: 'time-delete-action',
-            type: 'mat-button',
-            properties: {
-              type: 'icon-button',
-              icon: 'clear'
-            } as ButtonProperties
+            id: 'actions',
+            type: 'time-array-actions'
           }]
         }]
       }]
@@ -52,11 +38,12 @@ export class CustomArrayExampleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.form.setValue({
+    this.form.patchValue({
       'test-array': [{
         name: 'asdf'
       }, {
-        name: 'zwei'
+        name: 'zwei',
+        surname: 'Tom Turbo'
       }, {
         name: 'drei'
       }, {
