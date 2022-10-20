@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   Inject,
+  Injector,
   OnChanges,
   OnInit,
   Optional,
@@ -32,6 +33,7 @@ export class FastFormRowComponent extends BaseFormInlineComponent implements OnI
 
   constructor(private uiRegistry: UiRegistryService,
               private renderer: Renderer2,
+              private injector: Injector,
               @Inject(CONTROL_PROPERTIES) private properties: FastFormsRowProperties,
               @Optional() private actionService: ActionService) {
     super();
@@ -61,7 +63,7 @@ export class FastFormRowComponent extends BaseFormInlineComponent implements OnI
           this.formGroup,
           question,
           formDefinition,
-          null as any,
+          this.injector,
           this.actionService
       );
       const nativeElement = componentRef.location.nativeElement as HTMLElement;

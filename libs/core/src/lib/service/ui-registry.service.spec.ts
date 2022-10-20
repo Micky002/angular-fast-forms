@@ -1,8 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 
 import { UiRegistryService } from './ui-registry.service';
-import { BaseFormControlComponent, DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from '@ngx-fast-forms/core';
 import { ControlRegistry } from '../internal/control/control-registry.service';
+import { BaseFormControlComponent } from '../components/base/base-control.component';
+import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from '../model';
 
 class DummyControl extends BaseFormControlComponent {
 }
@@ -39,9 +40,9 @@ describe('UiRegistryService', () => {
   });
 
   it('should find type in registry', () => {
-    let definition = service.find('dummy');
-    expect(definition).toBeDefined();
-    definition = service.find('dummy-undefined');
-    expect(definition).toBeUndefined();
+    let definition = service.findControl('dummy');
+    expect(definition).not.toBeNull();
+    definition = service.findControl('dummy-undefined');
+    expect(definition).toBeNull();
   });
 });

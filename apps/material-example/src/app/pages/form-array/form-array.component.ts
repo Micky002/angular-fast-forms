@@ -110,7 +110,8 @@ export class FormArrayComponent implements OnInit {
   }
 
   actionEvent(event: ActionEvent) {
-    const arrayControl = this.formArrayWithGroup.get('test-array') as FastFormArray;
-    arrayControl.addRow();
+    const [arrayId, index] = event.args;
+    const arrayControl = this.formArrayWithGroup.get(arrayId as string) as FastFormArray;
+    arrayControl.addRow(index as number + 1);
   }
 }

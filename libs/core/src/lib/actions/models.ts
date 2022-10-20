@@ -1,3 +1,6 @@
 export interface ActionEvent {
-  id: string;
+  rawId: string;
+  matchId: string;
+  args: (string | number)[];
 }
+

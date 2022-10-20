@@ -25,37 +25,43 @@ export class ControlFactoryService {
     }
   }
 
-  public createFromQuestion(form: FormGroup | FormArray, question: Question) {
-    if (form instanceof FormGroup) {
+  public createFromQuestion(parent: FormGroup | FormArray, question: Question, index?: number) {
+    if (parent instanceof FormGroup) {
       if (question.type === 'group') {
         const subFormGroup = new FastFormGroup(question.children ?? [], this);
-        form.addControl(question.id, subFormGroup);
+        parent.addControl(question.id, subFormGroup);
       } else if (question.type === 'array') {
         // TODO length check and assertions
-        form.addControl(question.id, new FastFormArray((question.children ?? [])[0], this));
+        parent.addControl(question.id, new FastFormArray((question.children ?? [])[0], this));
       } else {
-        const ui = this.uiRegistry.find(question.type);
+        const ui = this.uiRegistry.findControl(question.type);
         if (ui) {
           if (ui.inline) {
-            (question.children || []).forEach(cq => {
-              const formControl = this.createControl(cq);
-              form.addControl(cq.id, formControl);
+            (question.children || []).forEach(childQuestion => {
+              if (this.uiRegistry.isControl(childQuestion.type)) {
+                const formControl = this.createControl(childQuestion);
+                parent.addControl(childQuestion.id, formControl);
+              }
             });
           } else {
             const formControl = this.createControl(question);
-            form.addControl(question.id, formControl);
+            parent.addControl(question.id, formControl);
           }
         }
       }
-    } else if (form instanceof FormArray) {
-      form.push(this.createControl(question));
+    } else if (parent instanceof FormArray) {
+      if (index !== undefined) {
+        parent.insert(index, this.createControl(question));
+      } else {
+        parent.push(this.createControl(question));
+      }
     }
   }
 
   public createRawControl(question: Question): AbstractControl {
     return this.createControlFromDecoratedComponents(question) ??
-      this.createControlFromControlFactoryMethod(question) ??
-      this.createControlDefault(question);
+        this.createControlFromControlFactoryMethod(question) ??
+        this.createControlDefault(question);
   }
 
   private createControl(question: Question): AbstractControl {

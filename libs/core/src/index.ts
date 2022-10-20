@@ -6,6 +6,7 @@ export * from './lib/control/fast-form-group';
 export * from './lib/control/fast-form-array';
 export * from './lib/control/control.decorator';
 export * from './lib/control/control-factory.decorator';
+export * from './lib/control/models';
 
 export * from './lib/service/fast-forms.service';
 

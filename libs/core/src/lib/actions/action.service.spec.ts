@@ -15,4 +15,16 @@ describe('ActionService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should emit event', (cb) => {
+    service.actions.subscribe({
+      next: value => {
+        expect(value.matchId).toEqual('group.action-id');
+        expect(value.rawId).toEqual('group.action-id');
+        expect(value.args).toEqual(['group', 'action-id']);
+        cb();
+      }
+    });
+    service.emitAction('group.action-id');
+  });
 });

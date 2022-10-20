@@ -30,7 +30,7 @@ export class FastFormArray extends FormArray {
   }
 
   public addRow(index?: number) {
-    this.addControlsToArray(1);
+    this.addControlsToArray(1, index);
   }
 
   public removeRow(index?: number) {
@@ -46,9 +46,9 @@ export class FastFormArray extends FormArray {
     }
   }
 
-  private addControlsToArray(amount: number) {
+  private addControlsToArray(amount: number, index?: number) {
     for (let i = 0; i < amount; i++) {
-      this.controlFactory.createFromQuestion(this, this.question);
+      this.controlFactory.createFromQuestion(this, this.question, index);
     }
   }
 

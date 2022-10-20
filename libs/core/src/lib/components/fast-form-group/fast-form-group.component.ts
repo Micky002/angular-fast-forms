@@ -20,6 +20,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActionService } from '../../actions/action.service';
 import { ActionEvent } from '../../actions/models';
 import { Subscription } from 'rxjs';
+import { ArrayIndexDirective } from '../../internal/action/array-index.directive';
 
 @Component({
   selector: 'aff-form-group',
@@ -38,6 +39,21 @@ export class FastFormGroupComponent implements OnChanges, OnInit, OnDestroy {
   private _actionService: ActionService;
   private _actionsSub!: Subscription;
 
+  constructor(private controlFactory: ControlFactoryService,
+              private validatorFactory: ValidatorFactoryService,
+              private uiRegistry: UiRegistryService,
+              private injector: Injector,
+              @Optional() actionService: ActionService,
+              @Optional() private indexDirective?: ArrayIndexDirective,
+              @Optional() private http?: HttpClient) {
+    this._formGroup = new FastFormGroup([], this.controlFactory);
+    if (actionService) {
+      this._actionService = actionService;
+    } else {
+      this._actionService = new ActionService();
+    }
+  }
+
   public _formGroup: FastFormGroup;
 
   @Input()
@@ -54,29 +70,13 @@ export class FastFormGroupComponent implements OnChanges, OnInit, OnDestroy {
     this._formGroup = formGroup;
   }
 
-  constructor(private controlFactory: ControlFactoryService,
-              private validatorFactory: ValidatorFactoryService,
-              private uiRegistry: UiRegistryService,
-              private injector: Injector,
-              @Optional() actionService: ActionService,
-              @Optional() private http?: HttpClient) {
-    this._formGroup = new FastFormGroup([], this.controlFactory);
-    if (actionService) {
-      this._actionService = actionService;
-    } else {
-      this._actionService = new ActionService();
-    }
-  }
-
   ngOnInit(): void {
     this._formGroup.questionChanges.subscribe(() => {
       this.render();
     });
     this._actionsSub = this._actionService.actions.subscribe({
-      next: value => {
-        this.action.emit({
-          id: value
-        });
+      next: event => {
+        this.action.emit(event);
       }
     });
   }
@@ -116,7 +116,8 @@ export class FastFormGroupComponent implements OnChanges, OnInit, OnDestroy {
           question,
           formDefinition,
           this.injector,
-          this._actionService
+          this._actionService,
+          this.indexDirective
       );
     }
   }

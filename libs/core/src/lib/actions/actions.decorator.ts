@@ -3,7 +3,6 @@ import { InternalControlComponent } from '../internal/control/models';
 
 export interface ActionControlOptions {
   type: string;
-  // type: ValidatorType;
 }
 
 export function ActionControl(options: ActionControlOptions) {

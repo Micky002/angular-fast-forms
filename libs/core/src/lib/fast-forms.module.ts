@@ -7,6 +7,7 @@ import { FastFormArrayComponent } from './components/fast-form-array/fast-form-a
 import { AFF_CONTROL_COMPONENTS, DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from './model';
 import { FastFormRowComponent } from './components/fast-form-row/fast-form-row.component';
 import { FastFormControlComponent } from './components/fast-form-control/fast-form-control.component';
+import { ArrayIndexDirective } from './internal/action/array-index.directive';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { FastFormControlComponent } from './components/fast-form-control/fast-fo
     FastFormGroupComponent,
     FastFormArrayComponent,
     FastFormControlComponent,
-    FastFormRowComponent
+    FastFormRowComponent,
+    ArrayIndexDirective
   ],
   exports: [
     FastFormGroupComponent,
@@ -37,7 +39,6 @@ import { FastFormControlComponent } from './components/fast-form-control/fast-fo
       provide: DYNAMIC_FORM_CONTROL,
       useValue: {
         type: 'array',
-        inline: true,
         component: FastFormArrayComponent
       } as DynamicFormDefinition,
       multi: true

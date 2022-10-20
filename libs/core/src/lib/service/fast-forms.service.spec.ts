@@ -4,6 +4,7 @@ import { FastFormsService } from './fast-forms.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ControlFactoryService } from './control-factory.service';
 import { ValidatorFactoryService } from '../validation/validator-factory.service';
+import { FastFormGroup } from '../control/fast-form-group';
 
 describe('FastFormsService', () => {
   let service: FastFormsService;
@@ -26,7 +27,9 @@ describe('FastFormsService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should create basic form group', () => {
-    service.createDynamicForm([])
+  it('should create empty form group', () => {
+    const formGroup = service.createDynamicForm([]);
+    expect(formGroup).toBeInstanceOf(FastFormGroup);
+    expect(formGroup.questions).toHaveLength(0);
   });
 });

@@ -5,7 +5,7 @@ import { ControlFactoryService } from './control-factory.service';
 import { ValidatorFactoryService } from '../validation/validator-factory.service';
 import { UiRegistryService } from './ui-registry.service';
 import { HttpClient } from '@angular/common/http';
-import { AbstractControlOptions } from "@angular/forms";
+import { AbstractControlOptions } from '@angular/forms';
 
 @Injectable({
   providedIn: 'any'
@@ -28,7 +28,7 @@ export class FastFormsService {
     }
     const formGroup = new FastFormGroup([], this.controlFactory);
     this.http.get<Array<Question>>(endpoint)
-      .subscribe(questions => formGroup.setQuestions(questions));
-    return formGroup
+        .subscribe(questions => formGroup.setQuestions(questions));
+    return formGroup;
   }
 }

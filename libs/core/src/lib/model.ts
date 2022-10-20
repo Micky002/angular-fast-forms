@@ -4,9 +4,10 @@ import { BaseFormControlComponent } from './components/base/base-control.compone
 import { BaseFormInlineComponent } from './components/base/base-inline.component';
 import { BaseFormArrayComponent } from './components/base/base-array.component';
 import { BaseFormGroupComponent } from './components/base/base-group.component';
+import { InternalControlComponent } from './internal/control/models';
 
 export const DYNAMIC_FORM_CONTROL = new InjectionToken<DynamicFormDefinition>('AFF_DYNAMIC_FORM_CONTROL');
-export const AFF_CONTROL_COMPONENTS = new InjectionToken<DynamicFormDefinition>('AFF_CONTROL_COMPONENTS');
+export const AFF_CONTROL_COMPONENTS = new InjectionToken<Array<Array<InternalControlComponent>>>('AFF_CONTROL_COMPONENTS');
 
 export interface DynamicFormDefinition {
   type: string;
@@ -47,3 +48,6 @@ export interface FastFormSubmitEvent {
   event: unknown;
   data: unknown;
 }
+
+export type FormControlType = 'group' | 'array' | 'control';
+export type ActionControlType = 'action';
