@@ -1,9 +1,11 @@
 import { META_COMPONENT_OPTIONS_KEY } from '../internal/symbols';
 import { InternalControlComponent } from '../internal/control/models';
+import { FormControlType } from '../model';
 
 export interface ControlOptions {
   type: string;
   inline?: boolean;
+  controlType?: FormControlType;
 }
 
 export function Control(options: ControlOptions) {
@@ -12,7 +14,7 @@ export function Control(options: ControlOptions) {
     const controlComponent = target as InternalControlComponent;
     controlComponent[META_COMPONENT_OPTIONS_KEY] = {
       ...controlComponent[META_COMPONENT_OPTIONS_KEY],
-      internalType: 'control',
+      internalType: options.controlType === undefined ? 'control' : options.controlType,
       type: options.type,
       inline: options.inline
     };

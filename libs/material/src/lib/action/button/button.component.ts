@@ -3,7 +3,7 @@ import { ActionControl, ActionService, CONTROL_ID, CONTROL_PROPERTIES, ControlId
 import { ButtonProperties } from './button.models';
 
 @ActionControl({
-  type: 'button'
+  type: 'mat-button'
 })
 @Component({
   selector: 'aff-material-button',

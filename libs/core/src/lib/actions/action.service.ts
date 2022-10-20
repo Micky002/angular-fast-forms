@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { filter, Observable, Subject } from 'rxjs';
 import { ActionEvent } from './models';
 import { ActionEventImpl } from '../internal/action/action-event-impl';
 
@@ -10,6 +10,12 @@ export class ActionService {
 
   public get actions(): Observable<ActionEvent> {
     return this._actions$.asObservable();
+  }
+
+  public actionEndWith(actionMatchId: string): Observable<ActionEvent> {
+    return this.actions.pipe(
+        filter(event => event.matchId.endsWith(actionMatchId))
+    );
   }
 
   emitAction(id: string) {

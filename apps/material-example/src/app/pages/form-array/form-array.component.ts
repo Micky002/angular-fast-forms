@@ -40,7 +40,7 @@ export class FormArrayComponent implements OnInit {
             label: 'Input Two'
           }, {
             id: 'add-button',
-            type: 'button',
+            type: 'mat-button',
             properties: {
               type: 'text-button',
               text: 'Add',

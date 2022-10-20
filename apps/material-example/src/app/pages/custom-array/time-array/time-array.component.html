@@ -1,0 +1,10 @@
+<form class="aff-form-array">
+  <ng-container *ngFor="let subForm of formArray.controls; let i = index">
+    <ng-container *ngIf="isControl(subForm)">
+      <aff-form-control [affArrayIndex]="i" [control]="$any(subForm)"></aff-form-control>
+    </ng-container>
+    <ng-container *ngIf="isGroup(subForm)">
+      <aff-form-group [affArrayIndex]="i" [formGroup]="$any(subForm)"></aff-form-group>
+    </ng-container>
+  </ng-container>
+</form>

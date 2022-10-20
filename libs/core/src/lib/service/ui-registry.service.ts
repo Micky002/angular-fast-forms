@@ -7,11 +7,11 @@ import { FastFormArray } from '../control/fast-form-array';
 import { BaseFormControlComponent } from '../components/base/base-control.component';
 import { BaseFormGroupComponent } from '../components/base/base-group.component';
 import { ControlRegistry } from '../internal/control/control-registry.service';
-import { CONTROL_ID, CONTROL_PROPERTIES } from '../components/util/inject-token';
+import { CONTROL_ID, CONTROL_PROPERTIES, FORM_CONTROL } from '../components/util/inject-token';
 import { ActionService } from '../actions/action.service';
 import { InternalControlDefinition, InternalControlType } from '../internal/models';
 import { ControlIdImpl } from '../internal/control/control-id-impl';
-import { ArrayIndexDirective } from '../internal/action/array-index.directive';
+import { ArrayIndexDirective } from '../actions/array-index.directive';
 import { FastFormControl } from '../control/fast-form-control';
 import { FastFormGroup } from '../control/fast-form-group';
 
@@ -39,6 +39,10 @@ export class UiRegistryService {
     return !!this.findControl(controlId);
   }
 
+  isArray(controlId: string): boolean {
+    return !!this._findControl(controlId, 'array');
+  }
+
   findControl(controlId: string): DynamicFormDefinition | null {
     return this.find(controlId, 'control') ?? null;
   }
@@ -54,7 +58,7 @@ export class UiRegistryService {
   }
 
   render<T>(viewContainerRef: ViewContainerRef,
-            formGroup: FormGroup | FormArray | FormControl,
+            parent: FormGroup | FormArray | FormControl,
             question: Question,
             formDefinition: DynamicFormDefinition,
             injector: Injector,
@@ -68,7 +72,10 @@ export class UiRegistryService {
           useValue: question.properties ?? {}
         }, {
           provide: CONTROL_ID,
-          useValue: this.createControlId(id, question.id, formGroup, indexDirective)
+          useValue: this.createControlId(id, question.id, parent, indexDirective)
+        }, {
+          provide: FORM_CONTROL,
+          useValue: parent.get(question.id)
         }, {
           provide: ActionService,
           useValue: actionService
@@ -77,7 +84,7 @@ export class UiRegistryService {
       })
     });
     if (this.shouldInitialize(controlComponentRef.instance)) {
-      this.initializeComponent(formGroup, question, formDefinition.component.name, controlComponentRef.instance);
+      this.initializeComponent(parent, question, formDefinition.component.name, controlComponentRef.instance);
     }
     return controlComponentRef as any;
   }
