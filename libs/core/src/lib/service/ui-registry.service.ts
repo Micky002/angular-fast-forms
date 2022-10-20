@@ -12,8 +12,8 @@ import { ActionService } from '../actions/action.service';
 import { InternalControlDefinition, InternalControlType } from '../internal/models';
 import { ControlIdImpl } from '../internal/control/control-id-impl';
 import { ArrayIndexDirective } from '../internal/action/array-index.directive';
-import { FastFormGroup } from '@ngx-fast-forms/core';
 import { FastFormControl } from '../control/fast-form-control';
+import { FastFormGroup } from '../control/fast-form-group';
 
 @Injectable({
   providedIn: 'any'

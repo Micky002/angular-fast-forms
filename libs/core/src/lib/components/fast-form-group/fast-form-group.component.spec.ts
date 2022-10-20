@@ -3,14 +3,13 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ControlFactoryService } from '../../service/control-factory.service';
 import { ValidatorFactoryService } from '../../validation/validator-factory.service';
 import { ReactiveFormsModule } from '@angular/forms';
-import {
-  DYNAMIC_FORM_CONTROL,
-  DynamicFormDefinition, BaseFormControlComponent,
-  FastFormGroupComponent,
-  FastFormsService
-} from '@ngx-fast-forms/core';
+import { BaseFormControlComponent } from '../base/base-control.component';
+import { FastFormGroupComponent } from './fast-form-group.component';
+import { FastFormsService } from '../../service/fast-forms.service';
+import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from '../../model';
 
-class DummyControl extends BaseFormControlComponent {}
+class DummyControl extends BaseFormControlComponent {
+}
 
 describe('FastFormGroupComponent', () => {
   let component: FastFormGroupComponent;
@@ -57,12 +56,12 @@ describe('FastFormGroupComponent', () => {
         required: true,
         minLength: 5
       }
-    }])
+    }]);
     jest.spyOn(component.submitEvent, 'next');
     component.processOnSubmit({id: 'meins'});
     expect(component.submitEvent.next).toHaveBeenCalledTimes(0);
 
-    component._formGroup.patchValue({test: 'Hallo'})
+    component._formGroup.patchValue({test: 'Hallo'});
     component.processOnSubmit({id: 'meins'});
     expect(component.submitEvent.next).toHaveBeenCalledTimes(1);
   });

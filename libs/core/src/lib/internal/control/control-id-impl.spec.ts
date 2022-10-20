@@ -9,8 +9,8 @@ describe('ControlIdImpl', () => {
 
   it('should not change parent when array', () => {
     const parent = new ControlIdImpl().addPart('test-array');
-    let firstProvider = {index: 0};
-    let secondProvider = {index: 1};
+    const firstProvider = {index: 0};
+    const secondProvider = {index: 1};
     const firstItem = parent.addIndex(firstProvider);
     const secondItem = parent.addIndex(secondProvider);
     expect(parent.getId()).toEqual('test-array');
