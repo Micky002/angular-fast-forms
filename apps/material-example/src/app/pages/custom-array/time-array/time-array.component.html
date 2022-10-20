@@ -7,4 +7,10 @@
       <aff-form-group [affArrayIndex]="i" [formGroup]="$any(subForm)"></aff-form-group>
     </ng-container>
   </ng-container>
+  <div *ngIf="formArray.controls.length === 0">
+    <button (click)="clickAddElement()" color="primary" id="empty-add-button" mat-icon-button>
+      <mat-icon>add_circle_outline</mat-icon>
+      <span>Add element</span>
+    </button>
+  </div>
 </form>

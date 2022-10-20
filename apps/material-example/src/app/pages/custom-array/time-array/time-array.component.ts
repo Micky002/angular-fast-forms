@@ -46,4 +46,8 @@ export class TimeArrayComponent implements OnInit, OnDestroy {
   public isGroup(data: unknown): boolean {
     return data instanceof FormGroup;
   }
+
+  clickAddElement() {
+    this.formArray.addRow(0);
+  }
 }
