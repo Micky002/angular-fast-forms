@@ -27,28 +27,7 @@ export class ControlFactoryService {
 
   public createFromQuestion(parent: FormGroup | FormArray, question: Question, index?: number) {
     if (parent instanceof FormGroup) {
-      if (question.type === 'group') {
-        const subFormGroup = new FastFormGroup(question.children ?? [], this);
-        parent.addControl(question.id, subFormGroup);
-      } else if (question.type === 'array') {
-        // TODO length check and assertions
-        parent.addControl(question.id, new FastFormArray((question.children ?? [])[0], this));
-      } else {
-        const ui = this.uiRegistry.findControl(question.type);
-        if (ui) {
-          if (ui.inline) {
-            (question.children || []).forEach(childQuestion => {
-              if (this.uiRegistry.isControl(childQuestion.type)) {
-                const formControl = this.createControl(childQuestion);
-                parent.addControl(childQuestion.id, formControl);
-              }
-            });
-          } else {
-            const formControl = this.createControl(question);
-            parent.addControl(question.id, formControl);
-          }
-        }
-      }
+      this.createFormControlForGroup(parent, question);
     } else if (parent instanceof FormArray) {
       if (index !== undefined) {
         parent.insert(index, this.createControl(question));
@@ -62,6 +41,31 @@ export class ControlFactoryService {
     return this.createControlFromDecoratedComponents(question) ??
         this.createControlFromControlFactoryMethod(question) ??
         this.createControlDefault(question);
+  }
+
+  private createFormControlForGroup(parent: FormGroup, question: Question) {
+    if (question.type === 'group') {
+      const subFormGroup = new FastFormGroup(question.children ?? [], this);
+      parent.addControl(question.id, subFormGroup);
+    } else if (question.type === 'array') {
+      // TODO length check and assertions
+      parent.addControl(question.id, new FastFormArray((question.children ?? [])[0], this));
+    } else {
+      const ui = this.uiRegistry.findControl(question.type);
+      if (ui) {
+        if (ui.inline) {
+          (question.children || []).forEach(childQuestion => {
+            if (this.uiRegistry.isControl(childQuestion.type)) {
+              const formControl = this.createControl(childQuestion);
+              parent.addControl(childQuestion.id, formControl);
+            }
+          });
+        } else {
+          const formControl = this.createControl(question);
+          parent.addControl(question.id, formControl);
+        }
+      }
+    }
   }
 
   private createControl(question: Question): AbstractControl {

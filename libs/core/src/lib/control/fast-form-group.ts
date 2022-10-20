@@ -15,7 +15,7 @@ export class FastFormGroup extends FormGroup {
               private controlFactory: ControlFactoryService,
               options?: AbstractControlOptions) {
     super({}, options);
-    validateQuestions(questions);
+    this.validateQuestions(questions);
     this.questionChanges = this._questionChanges$.asObservable();
     this._questions = questions;
     this.createFormControls();
@@ -38,14 +38,14 @@ export class FastFormGroup extends FormGroup {
   private createFormControls() {
     this.controlFactory.createFromQuestions(this, this._questions);
   }
-}
 
-function validateQuestions(questions: Question[]) {
-  const ids = new Set();
-  questions.forEach(q => {
-    if (ids.has(q.id)) {
-      throw new Error(`Duplicated form control id ${q.id} found.`);
-    }
-    ids.add(q.id);
-  });
+  private validateQuestions(questions: Question[]) {
+    const ids = new Set();
+    questions.forEach(q => {
+      if (ids.has(q.id)) {
+        throw new Error(`Duplicated form control id ${q.id} found.`);
+      }
+      ids.add(q.id);
+    });
+  }
 }

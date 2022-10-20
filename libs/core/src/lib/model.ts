@@ -48,6 +48,3 @@ export interface FastFormSubmitEvent {
   event: unknown;
   data: unknown;
 }
-
-export type FormControlType = 'group' | 'array' | 'control';
-export type ActionControlType = 'action';

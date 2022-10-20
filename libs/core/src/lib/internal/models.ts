@@ -4,9 +4,9 @@ import { BaseFormArrayComponent } from '../components/base/base-array.component'
 import { AbstractControl } from '@angular/forms';
 import { BaseFormControlComponent } from '../components/base/base-control.component';
 import { BaseFormGroupComponent } from '../components/base/base-group.component';
-import { ActionControlType, FormControlType, Question } from '../model';
+import { Question } from '../model';
 
-export type InternalControlType = FormControlType | ActionControlType;
+export type InternalControlType = 'control' | 'action';
 
 export interface InternalControlDefinition {
   type: string;
@@ -16,15 +16,3 @@ export interface InternalControlDefinition {
   controlFactory?: (question: Question) => AbstractControl;
   internalType: InternalControlType;
 }
-
-// export class QuestionImpl implements Question {
-//   children?: Array<Question>;
-//   defaultValue?: string | number;
-//   hidden?: boolean;
-//   id: string;
-//   label?: string;
-//   properties?: QuestionProperties;
-//   type: string;
-//   validation?: ValidationOptions;
-//
-// }

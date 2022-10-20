@@ -1,4 +1,3 @@
-export * from './base/base-action.component';
 export * from './base/base-control.component';
 export * from './base/base-group.component';
 export * from './fast-form-group/fast-form-group.component';

@@ -1,11 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  ActionEvent,
-  FastFormArray,
-  FastFormGroup,
-  FastFormsRowProperties,
-  FastFormsService
-} from '@ngx-fast-forms/core';
+import { ActionEvent, FastFormArray, FastFormGroup, FastFormsService } from '@ngx-fast-forms/core';
 import { ButtonProperties } from '@ngx-fast-forms/material';
 
 @Component({
@@ -36,19 +30,6 @@ export class FormArrayComponent implements OnInit {
         children: [{
           id: 'ignore',
           type: 'row',
-          properties: {
-            size: {
-              'first-input': {
-                percent: 60
-              },
-              'second-input': {
-                percent: 30
-              },
-              'add-button': {
-                percent: 10
-              }
-            }
-          } as FastFormsRowProperties,
           children: [{
             id: 'first-input',
             type: 'input',
