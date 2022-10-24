@@ -9,6 +9,8 @@ export * from './lib/control/control-factory.decorator';
 export * from './lib/control/models';
 
 export * from './lib/service/fast-forms.service';
+export * from './lib/service/control-factory.service';
+export * from './lib/test/index';
 
 export * from './lib/validation/base-async-validator.service';
 export * from './lib/validation/base-validator.service';
