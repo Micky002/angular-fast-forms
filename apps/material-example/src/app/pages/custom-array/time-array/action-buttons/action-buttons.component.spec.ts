@@ -2,8 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ActionButtonsComponent } from './action-buttons.component';
 import { Provider } from '@angular/core';
-import { ActionService, CONTROL_ID } from '@ngx-fast-forms/core';
-import { ControlIdImpl } from '../../../../../../../../libs/core/src/lib/internal/control/control-id-impl';
+import { ActionService, CONTROL_ID, ControlIdMock } from '@ngx-fast-forms/core';
 
 describe('ActionButtonsComponent', () => {
   let component: ActionButtonsComponent;
@@ -16,9 +15,7 @@ describe('ActionButtonsComponent', () => {
         ActionService,
         {
           provide: CONTROL_ID,
-          useValue: new ControlIdImpl([{
-            id: 'name'
-          }])
+          useValue: new ControlIdMock('name')
         } as Provider
       ]
     }).compileComponents();

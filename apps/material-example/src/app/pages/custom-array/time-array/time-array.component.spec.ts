@@ -1,9 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TimeArrayComponent } from './time-array.component';
-import { ActionService, FastFormArray, FORM_CONTROL } from '@ngx-fast-forms/core';
+import { ActionService, ControlFactoryService, FastFormArray, FORM_CONTROL } from '@ngx-fast-forms/core';
 import { Provider } from '@angular/core';
-import { ControlFactoryService } from '../../../../../../../libs/core/src/lib/service/control-factory.service';
 
 describe('TimeArrayComponent', () => {
   let component: TimeArrayComponent;
