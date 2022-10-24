@@ -40,7 +40,7 @@ describe('ControlRegistry', () => {
 
   it('should validate registered components', () => {
     expect(() => new ControlRegistry([[InvalidControlComponent as any]])).toThrowError();
-  })
+  });
 });
 
 class InvalidControlComponent {

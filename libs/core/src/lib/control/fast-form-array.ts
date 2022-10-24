@@ -59,7 +59,7 @@ export class FastFormArray extends FormArray {
 
   private removeControlsFromArray(amount: number, index?: number) {
     const lastControlIndex = this.controls.length - 1;
-    let startIndex = index !== undefined ? index : lastControlIndex;
+    const startIndex = index !== undefined ? index : lastControlIndex;
     for (let i = startIndex; i > startIndex - amount; i--) {
       this.removeAt(i);
     }

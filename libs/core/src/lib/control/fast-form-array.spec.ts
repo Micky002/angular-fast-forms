@@ -2,12 +2,16 @@ import { ControlFactoryService } from '../service/control-factory.service';
 import { ValidatorFactoryService } from '../validation/validator-factory.service';
 import { TestBed } from '@angular/core/testing';
 import { FastFormArray } from './fast-form-array';
+import { DummyInputModule } from '../test/dummy-input.module.test-util';
 
 describe('FastFormArray', () => {
   let controlFactory: ControlFactoryService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [
+        DummyInputModule
+      ],
       providers: [
         ControlFactoryService,
         ValidatorFactoryService
@@ -27,7 +31,7 @@ describe('FastFormArray', () => {
   it('should update control count on setValue and patchValue', () => {
     const formArray = new FastFormArray({
       id: 'test',
-      type: 'input'
+      type: 'dummy-input'
     }, controlFactory);
     expect(formArray.length).toEqual(0);
 

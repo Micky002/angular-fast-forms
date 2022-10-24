@@ -76,7 +76,6 @@ export class ControlFactoryService {
       return [new FastFormArray((question.children ?? [])[0], this)];
     } else {
       const def = this.uiRegistry.findControl(question.type);
-      console.log(def);
       if (def) {
         if (def.inline) {
           return (question.children || [])
@@ -89,7 +88,7 @@ export class ControlFactoryService {
         }
       }
     }
-    throw new Error(`No control of type [${question.type}].`);
+    throw new Error(`No control component registered for type [${question.type}].`);
   }
 
   private createControl(question: Question): AbstractControl {
