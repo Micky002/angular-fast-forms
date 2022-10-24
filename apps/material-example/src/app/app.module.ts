@@ -48,26 +48,32 @@ import { MatIconModule } from '@angular/material/icon';
       {
         path: 'lazy-loading-example',
         loadChildren: () =>
-          import('./lazy-loading-example/lazy-loading-example.module')
-            .then((m) => m.LazyLoadingExampleModule)
+            import('./lazy-loading-example/lazy-loading-example.module')
+                .then((m) => m.LazyLoadingExampleModule)
       },
       {
         path: 'validation',
         loadChildren: () =>
-          import('./pages/validation/validation.module')
-            .then((m) => m.ValidationModule)
+            import('./pages/validation/validation.module')
+                .then((m) => m.ValidationModule)
       },
       {
         path: 'nested-control',
         loadChildren: () =>
-          import('./pages/custom-nested-control/custom-nested-control.module')
-            .then((m) => m.CustomNestedControlModule)
+            import('./pages/custom-nested-control/custom-nested-control.module')
+                .then((m) => m.CustomNestedControlModule)
       },
       {
         path: 'ngxs',
         loadChildren: () =>
-          import('./pages/ngxs/example-ngxs.module')
-            .then((m) => m.ExampleNgxsModule)
+            import('./pages/ngxs/example-ngxs.module')
+                .then((m) => m.ExampleNgxsModule)
+      },
+      {
+        path: 'custom-array',
+        loadChildren: () =>
+            import('./pages/custom-array/custom-array.module')
+                .then((m) => m.CustomArrayModule)
       }
     ]),
     MatButtonModule,

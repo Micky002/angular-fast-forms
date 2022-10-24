@@ -29,10 +29,11 @@ export class ControlFactoryService {
     if (parent instanceof FormGroup) {
       this.createFormControlForGroup(parent, question);
     } else if (parent instanceof FormArray) {
+      const controls = this.createFormControlForArray(question);
       if (index !== undefined) {
-        parent.insert(index, this.createControl(question));
+        parent.insert(index, controls[0]);
       } else {
-        parent.push(this.createControl(question));
+        parent.push(controls[0]);
       }
     }
   }
@@ -47,13 +48,13 @@ export class ControlFactoryService {
     if (question.type === 'group') {
       const subFormGroup = new FastFormGroup(question.children ?? [], this);
       parent.addControl(question.id, subFormGroup);
-    } else if (question.type === 'array') {
+    } else if (question.type === 'array' || this.uiRegistry.isArray(question.type)) {
       // TODO length check and assertions
       parent.addControl(question.id, new FastFormArray((question.children ?? [])[0], this));
     } else {
-      const ui = this.uiRegistry.findControl(question.type);
-      if (ui) {
-        if (ui.inline) {
+      const def = this.uiRegistry.findControl(question.type);
+      if (def) {
+        if (def.inline) {
           (question.children || []).forEach(childQuestion => {
             if (this.uiRegistry.isControl(childQuestion.type)) {
               const formControl = this.createControl(childQuestion);
@@ -66,6 +67,28 @@ export class ControlFactoryService {
         }
       }
     }
+  }
+
+  private createFormControlForArray(question: Question): AbstractControl[] {
+    if (question.type === 'group') {
+      return [new FastFormGroup(question.children ?? [], this)];
+    } else if (question.type === 'array' || this.uiRegistry.isArray(question.type)) {
+      return [new FastFormArray((question.children ?? [])[0], this)];
+    } else {
+      const def = this.uiRegistry.findControl(question.type);
+      if (def) {
+        if (def.inline) {
+          return (question.children || [])
+              .filter(childQuestion => this.uiRegistry.isControl(childQuestion.type))
+              .map(childQuestion => {
+                return this.createControl(childQuestion);
+              });
+        } else {
+          return [this.createControl(question)];
+        }
+      }
+    }
+    throw new Error(`No control component registered for type [${question.type}].`);
   }
 
   private createControl(question: Question): AbstractControl {

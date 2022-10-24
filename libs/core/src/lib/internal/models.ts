@@ -4,9 +4,9 @@ import { BaseFormArrayComponent } from '../components/base/base-array.component'
 import { AbstractControl } from '@angular/forms';
 import { BaseFormControlComponent } from '../components/base/base-control.component';
 import { BaseFormGroupComponent } from '../components/base/base-group.component';
-import { Question } from '../model';
+import { FormActionType, FormControlType, Question } from '../model';
 
-export type InternalControlType = 'control' | 'action';
+export type InternalControlType = FormControlType | FormActionType;
 
 export interface InternalControlDefinition {
   type: string;

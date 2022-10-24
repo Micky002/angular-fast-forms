@@ -33,8 +33,13 @@ export class FastFormArray extends FormArray {
     this.addControlsToArray(1, index);
   }
 
-  public removeRow(index?: number) {
-    this.removeControlsFromArray(1);
+  public removeRow(index: number) {
+    this.removeControlsFromArray(1, index);
+  }
+
+  public copyRow(index: number) {
+    this.addControlsToArray(1, index);
+    this.controls[index].patchValue(this.controls[index - 1].value);
   }
 
   private updateControlCount(dataLength: number) {
@@ -52,9 +57,10 @@ export class FastFormArray extends FormArray {
     }
   }
 
-  private removeControlsFromArray(amount: number) {
+  private removeControlsFromArray(amount: number, index?: number) {
     const lastControlIndex = this.controls.length - 1;
-    for (let i = lastControlIndex; i > lastControlIndex - amount; i--) {
+    const startIndex = index !== undefined ? index : lastControlIndex;
+    for (let i = startIndex; i > startIndex - amount; i--) {
       this.removeAt(i);
     }
   }

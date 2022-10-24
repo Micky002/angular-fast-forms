@@ -20,7 +20,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActionService } from '../../actions/action.service';
 import { ActionEvent } from '../../actions/models';
 import { Subscription } from 'rxjs';
-import { ArrayIndexDirective } from '../../internal/action/array-index.directive';
+import { ArrayIndexDirective } from '../../actions/array-index.directive';
 
 @Component({
   selector: 'aff-form-group',

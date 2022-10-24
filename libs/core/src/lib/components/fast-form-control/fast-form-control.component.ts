@@ -3,7 +3,7 @@ import { UiRegistryService } from '../../service/ui-registry.service';
 import { FastFormControl } from '../../control/fast-form-control';
 import { Question } from '../../model';
 import { ActionService } from '../../actions/action.service';
-import { ArrayIndexDirective } from '../../internal/action/array-index.directive';
+import { ArrayIndexDirective } from '../../actions/array-index.directive';
 
 @Component({
   selector: 'aff-form-control',
