@@ -1,4 +1,4 @@
-import { Inject, Injectable, Optional, ViewContainerRef } from '@angular/core';
+import { ComponentRef, Inject, Injectable, Injector, Optional, ViewContainerRef } from '@angular/core';
 import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition, Question } from '../model';
 import { BaseFormInlineComponent } from '../components/base/base-inline.component';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
@@ -7,6 +7,13 @@ import { FastFormArray } from '../control/fast-form-array';
 import { BaseFormControlComponent } from '../components/base/base-control.component';
 import { BaseFormGroupComponent } from '../components/base/base-group.component';
 import { ControlRegistry } from '../internal/control/control-registry.service';
+import { CONTROL_ID, CONTROL_PROPERTIES } from '../components/util/inject-token';
+import { ActionService } from '../actions/action.service';
+import { InternalControlDefinition, InternalControlType } from '../internal/models';
+import { ControlIdImpl } from '../internal/control/control-id-impl';
+import { ArrayIndexDirective } from '../internal/action/array-index.directive';
+import { FastFormControl } from '../control/fast-form-control';
+import { FastFormGroup } from '../control/fast-form-group';
 
 @Injectable({
   providedIn: 'any'
@@ -16,6 +23,7 @@ export class UiRegistryService {
   private uiComponents: { [key: string]: DynamicFormDefinition } = {};
 
   constructor(private controlRegistry: ControlRegistry,
+              private injector: Injector,
               @Optional() @Inject(DYNAMIC_FORM_CONTROL) private controlDefinitions?: Array<DynamicFormDefinition>) {
     if (controlDefinitions) {
       controlDefinitions.forEach(cd => {
@@ -27,25 +35,91 @@ export class UiRegistryService {
     }
   }
 
-  find(type: string): DynamicFormDefinition | undefined {
-    const uiComponent = this.uiComponents[type];
-    if (uiComponent) {
-      return uiComponent;
-    }
-    if (this.controlRegistry.hasItem(type)) {
-      return this.controlRegistry.getDefinition(type);
-    }
-    console.warn(`No ui component registered with type [${type}].`);
-    return;
+  isControl(controlId: string): boolean {
+    return !!this.findControl(controlId);
   }
 
-  render(viewContainerRef: ViewContainerRef, formGroup: FormGroup | FormArray | FormControl, question: Question, formDefinition: DynamicFormDefinition) {
-    const dynamicFormControlRef = viewContainerRef.createComponent(formDefinition.component);
-    this.initializeComponent(formGroup, question, dynamicFormControlRef.instance);
+  findControl(controlId: string): DynamicFormDefinition | null {
+    return this.find(controlId, 'control') ?? null;
+  }
+
+  find(controlId: string, type?: InternalControlType): DynamicFormDefinition | null {
+    if (type === undefined) {
+      return this.findLegacyFormControl(controlId) ?? this._findControl(controlId);
+    } else if (type === 'control') {
+      return this.findLegacyFormControl(controlId) ?? this._findControl(controlId, 'control');
+    } else {
+      return this._findControl(controlId, type);
+    }
+  }
+
+  render<T>(viewContainerRef: ViewContainerRef,
+            formGroup: FormGroup | FormArray | FormControl,
+            question: Question,
+            formDefinition: DynamicFormDefinition,
+            injector: Injector,
+            actionService?: ActionService,
+            indexDirective?: ArrayIndexDirective): ComponentRef<T> {
+    const id = injector.get<ControlIdImpl>(CONTROL_ID, new ControlIdImpl());
+    const controlComponentRef = viewContainerRef.createComponent(formDefinition.component, {
+      injector: Injector.create({
+        providers: [{
+          provide: CONTROL_PROPERTIES,
+          useValue: question.properties ?? {}
+        }, {
+          provide: CONTROL_ID,
+          useValue: this.createControlId(id, question.id, formGroup, indexDirective)
+        }, {
+          provide: ActionService,
+          useValue: actionService
+        }],
+        parent: injector ? injector : this.injector
+      })
+    });
+    if (this.shouldInitialize(controlComponentRef.instance)) {
+      this.initializeComponent(formGroup, question, formDefinition.component.name, controlComponentRef.instance);
+    }
+    return controlComponentRef as any;
+  }
+
+  private createControlId(id: ControlIdImpl, questionId: string, control: FormGroup | FormArray | FormControl, indexDirective?: ArrayIndexDirective): ControlIdImpl {
+    if (indexDirective && (control instanceof FastFormGroup || control instanceof FastFormControl)) {
+      return id.addIndex(control);
+    } else if (control.get(questionId) instanceof FormArray) {
+      return id.addPart(questionId);
+    } else {
+      return id.addPart(questionId);
+    }
+  }
+
+  private _findControl(controlId: string, type?: InternalControlType): InternalControlDefinition | null {
+    if (this.controlRegistry.hasItem(controlId)) {
+      const definition = this.controlRegistry.getDefinition(controlId);
+      if (type) {
+        return type === definition.internalType ? definition : null;
+      } else {
+        return definition;
+      }
+    }
+    return null;
+  }
+
+  private findLegacyFormControl(controlId: string): DynamicFormDefinition | null {
+    return this.uiComponents[controlId] ?? null;
+  }
+
+  private shouldInitialize(component: unknown): boolean {
+    return component instanceof BaseFormArrayComponent ||
+        component instanceof BaseFormInlineComponent ||
+        component instanceof BaseFormControlComponent ||
+        component instanceof BaseFormGroupComponent;
   }
 
   // TODO better type check
-  private initializeComponent(control: FormGroup | FormArray | FormControl, question: Question, component: BaseFormArrayComponent | BaseFormInlineComponent | BaseFormControlComponent) {
+  private initializeComponent(control: FormGroup | FormArray | FormControl,
+                              question: Question,
+                              componentName: string,
+                              component: BaseFormArrayComponent | BaseFormInlineComponent | BaseFormControlComponent) {
     if (component instanceof BaseFormArrayComponent && control instanceof FormGroup) {
       this.initializeFormArrayComponent(control, question, component);
     } else if (component instanceof BaseFormInlineComponent && control instanceof FormGroup) {
@@ -55,7 +129,7 @@ export class UiRegistryService {
     } else if (component instanceof BaseFormGroupComponent && control instanceof FormGroup) {
       this.initializeFormGroupComponent(control, question, component);
     } else {
-      throw new Error(`Cannot create component of type [...] with control of type [...] for question with id [${question.id}]`);
+      throw new Error(`Cannot create component [${componentName}] for question with id [${question.id}]`);
     }
   }
 

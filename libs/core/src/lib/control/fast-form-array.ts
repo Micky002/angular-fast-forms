@@ -29,6 +29,14 @@ export class FastFormArray extends FormArray {
     super.patchValue(values, options);
   }
 
+  public addRow(index?: number) {
+    this.addControlsToArray(1, index);
+  }
+
+  public removeRow(index?: number) {
+    this.removeControlsFromArray(1);
+  }
+
   private updateControlCount(dataLength: number) {
     if (dataLength > this.controls.length) {
       this.addControlsToArray(dataLength - this.controls.length);
@@ -38,9 +46,9 @@ export class FastFormArray extends FormArray {
     }
   }
 
-  private addControlsToArray(amount: number) {
+  private addControlsToArray(amount: number, index?: number) {
     for (let i = 0; i < amount; i++) {
-      this.controlFactory.createFromQuestion(this, this.question);
+      this.controlFactory.createFromQuestion(this, this.question, index);
     }
   }
 

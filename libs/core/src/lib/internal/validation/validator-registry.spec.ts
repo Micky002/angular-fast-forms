@@ -1,6 +1,5 @@
 import { ValidatorRegistry } from './validator-registry';
 import { TestBed } from '@angular/core/testing';
-import { BaseAsyncValidator, BaseValidator, Validator } from '@ngx-fast-forms/core';
 import { AsyncValidatorFn, FormControl, ValidatorFn } from '@angular/forms';
 import { of } from 'rxjs';
 import { Injectable, Injector } from '@angular/core';
@@ -8,6 +7,9 @@ import { FastFormsModule } from '../../fast-forms.module';
 import { InternalValidator } from './models';
 import { VALIDATORS } from '../token';
 import { ValidatorDefinition } from './validator-definition.util';
+import { BaseAsyncValidator } from '../../validation/base-async-validator.service';
+import { Validator } from '../../validation/validation.decorator';
+import { BaseValidator } from '../../validation/base-validator.service';
 
 
 class DummyInvalidAsyncValidator implements BaseAsyncValidator {
@@ -101,7 +103,7 @@ describe('ValidatorRegistry', () => {
       expect(registry.hasSyncValidator('dummy-async')).toBeFalsy();
     });
 
-    it('getSyncValidator',() => {
+    it('getSyncValidator', () => {
       const validator = registry.getSyncValidator(new ValidatorDefinition('dummy-sync'));
       expect(validator).toBeDefined();
       const validationResult = validator(new FormControl()) as any;

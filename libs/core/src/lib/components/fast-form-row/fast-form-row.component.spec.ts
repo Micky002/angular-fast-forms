@@ -6,6 +6,7 @@ import { FastFormsModule } from '../../fast-forms.module';
 import { Question } from '../../model';
 import { FastFormGroup } from '../../control/fast-form-group';
 import { DummyInputModule } from '../../test/dummy-input.module.test-util';
+import { CONTROL_PROPERTIES } from '../util/inject-token';
 
 describe('FastFormRowComponent', () => {
   let component: FastFormRowComponent;
@@ -17,7 +18,11 @@ describe('FastFormRowComponent', () => {
       imports: [
         FastFormsModule.forRoot(),
         DummyInputModule
-      ]
+      ],
+      providers: [{
+        provide: CONTROL_PROPERTIES,
+        useValue: {}
+      }]
     }).compileComponents();
     fixture = TestBed.createComponent(FastFormRowComponent);
     controlFactory = TestBed.inject(ControlFactoryService);

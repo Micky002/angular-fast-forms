@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseFormControlComponent } from '../components/base/base-control.component';
 import { FormControl } from '@angular/forms';
-import { Control } from '@ngx-fast-forms/core';
+import { Control } from '../control/control.decorator';
 
 @Control({
   type: 'dummy-input'

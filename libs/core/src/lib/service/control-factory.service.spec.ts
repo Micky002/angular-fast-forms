@@ -5,8 +5,11 @@ import { Component, Provider } from '@angular/core';
 import { BaseFormControlComponent } from '../components/base/base-control.component';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ValidatorFactoryService } from '../validation/validator-factory.service';
-import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition, FastFormGroup } from '@ngx-fast-forms/core';
 import { FastFormArray } from '../control/fast-form-array';
+import { ActionControl } from '../actions/actions.decorator';
+import { Control } from '../control/control.decorator';
+import { AFF_CONTROL_COMPONENTS, DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from '../model';
+import { FastFormGroup } from '../control/fast-form-group';
 
 
 @Component({
@@ -17,6 +20,29 @@ class DummyFormComponent extends BaseFormControlComponent {
 
 }
 
+@ActionControl({
+  type: 'add-button'
+})
+@Component({
+  selector: 'aff-testing-action',
+  template: ''
+})
+class DummyActionComponent {
+
+}
+
+@Control({
+  type: 'test-row',
+  inline: true
+})
+@Component({
+  selector: 'aff-testing-row',
+  template: ''
+})
+class DummyRowComponent {
+
+}
+
 describe('ControlFactoryService', () => {
   let service: ControlFactoryService;
 
@@ -24,13 +50,22 @@ describe('ControlFactoryService', () => {
     TestBed.configureTestingModule({
       providers: [
         ControlFactoryService,
-        ValidatorFactoryService, {
+        ValidatorFactoryService,
+        {
           provide: DYNAMIC_FORM_CONTROL,
           multi: true,
           useValue: {
             type: 'test-input',
             component: DummyFormComponent
           } as DynamicFormDefinition
+        } as Provider,
+        {
+          provide: AFF_CONTROL_COMPONENTS,
+          multi: true,
+          useValue: [
+            DummyActionComponent,
+            DummyRowComponent
+          ]
         } as Provider
       ]
     });
@@ -131,5 +166,34 @@ describe('ControlFactoryService', () => {
 
     formArray.setValue(['as', 'df']);
     expect(formArray.length).toEqual(2);
+  });
+
+  describe('actions', () => {
+    it('should ignore action items', () => {
+      const formGroup = new FormGroup({});
+      service.createFromQuestion(formGroup, {
+        id: 'test-action',
+        type: 'add-button'
+      });
+      expect(formGroup.get('test-action')).toBeNull();
+    });
+
+    it('should ignore action in inline control', () => {
+      const formGroup = new FormGroup({});
+      service.createFromQuestion(formGroup, {
+        id: 'dummy-row',
+        type: 'test-row',
+        children: [{
+          id: 'first-input',
+          type: 'test-input'
+        }, {
+          id: 'test-action',
+          type: 'add-button'
+        }]
+      });
+      expect(formGroup.get('first-input')).toBeDefined();
+      expect(formGroup.get('first-input')).toBeInstanceOf(FormControl);
+      expect(formGroup.get('test-action')).toBeNull();
+    });
   });
 });

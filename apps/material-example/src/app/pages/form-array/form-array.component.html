@@ -1,6 +1,6 @@
 <div class="example-button-row">
-  <button mat-raised-button (click)="setValue()">Set value (3 items)</button>
-  <button mat-raised-button (click)="patchValue()">Patch value (4 items)</button>
+  <button (click)="setValue()" mat-raised-button>Set value (3 items)</button>
+  <button (click)="patchValue()" mat-raised-button>Patch value (4 items)</button>
 </div>
 
 <h2>Array with single control</h2>
@@ -9,4 +9,4 @@
 
 <h2>Array with group</h2>
 
-<aff-form-group [formGroup]="formArrayWithGroup"></aff-form-group>
+<aff-form-group (action)="actionEvent($event)" [formGroup]="formArrayWithGroup"></aff-form-group>

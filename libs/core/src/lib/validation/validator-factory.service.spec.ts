@@ -4,11 +4,13 @@ import { ValidatorFactoryService } from './validator-factory.service';
 import { AsyncValidatorFn, FormControl, ValidatorFn, Validators } from '@angular/forms';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { BaseValidator } from './base-validator.service';
-import { BaseAsyncValidator, ValidationOptions, Validator } from '@ngx-fast-forms/core';
 import { Injectable } from '@angular/core';
 import { FastFormsModule } from '../fast-forms.module';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
+import { Validator } from './validation.decorator';
+import { BaseAsyncValidator } from './base-async-validator.service';
+import { ValidationOptions } from '../model';
 
 @Validator({
   id: 'test-max-length',
@@ -157,7 +159,7 @@ describe('ValidatorFactoryService', () => {
       vals: [Validators.required, Validators.min(5)],
       tests: [
         {expect: {required: true}},
-        {value: 5, expect: null},
+        {value: 5, expect: null}
       ]
     }];
 
@@ -198,44 +200,44 @@ describe('ValidatorFactoryService', () => {
       vals: ['min:10'], tests: [
         {expect: null},
         {value: 5, expect: {min: {actual: 5, min: 10}}},
-        {value: 15, expect: null},
+        {value: 15, expect: null}
       ]
     }, {
       vals: ['max:10'], tests: [
         {expect: null},
         {value: 5, expect: null},
-        {value: 15, expect: {max: {actual: 15, max: 10}}},
+        {value: 15, expect: {max: {actual: 15, max: 10}}}
       ]
     }, {
       vals: ['minLength:5'], tests: [
         {expect: null},
         {value: 'not', expect: {minlength: {actualLength: 3, requiredLength: 5}}},
-        {value: 'this is valid', expect: null},
+        {value: 'this is valid', expect: null}
       ]
     }, {
       vals: ['maxLength:5'], tests: [
         {expect: null},
         {value: 'not', expect: null},
-        {value: 'this is valid', expect: {maxlength: {actualLength: 13, requiredLength: 5}}},
+        {value: 'this is valid', expect: {maxlength: {actualLength: 13, requiredLength: 5}}}
       ]
     }, {
       vals: ['email:true'], tests: [
         {expect: null},
         {value: 'not', expect: {email: true}},
-        {value: 'test@company.at', expect: null},
+        {value: 'test@company.at', expect: null}
       ]
     }, {
       vals: ['pattern:/test.*/'], tests: [
         {expect: null},
         {value: 'test-stuff', expect: null},
-        {value: 'asdf', expect: {pattern: {actualValue: 'asdf', requiredPattern: '/test.*/'}}},
+        {value: 'asdf', expect: {pattern: {actualValue: 'asdf', requiredPattern: '/test.*/'}}}
       ]
     }, {
       vals: ['required:true', 'min:5', 'max:20'], tests: [
         {expect: {required: true}},
         {value: 4, expect: {min: {actual: 4, min: 5}}},
         {value: 10, expect: null},
-        {value: 22, expect: {max: {actual: 22, max: 20}}},
+        {value: 22, expect: {max: {actual: 22, max: 20}}}
       ]
     }];
 

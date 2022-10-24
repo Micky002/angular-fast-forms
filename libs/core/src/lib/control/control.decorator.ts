@@ -3,6 +3,7 @@ import { InternalControlComponent } from '../internal/control/models';
 
 export interface ControlOptions {
   type: string;
+  inline?: boolean;
 }
 
 export function Control(options: ControlOptions) {
@@ -11,7 +12,9 @@ export function Control(options: ControlOptions) {
     const controlComponent = target as InternalControlComponent;
     controlComponent[META_COMPONENT_OPTIONS_KEY] = {
       ...controlComponent[META_COMPONENT_OPTIONS_KEY],
-      type: options.type
-    }
-  }
+      internalType: 'control',
+      type: options.type,
+      inline: options.inline
+    };
+  };
 }
