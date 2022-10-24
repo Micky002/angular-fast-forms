@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://github.com/Micky002/angular-fast-forms/compare/v1.4.0...v1.4.1) (2022-10-24)
+
+
+### Bug Fixes
+
+* export services, add mocks for easier testing ([#32](https://github.com/Micky002/angular-fast-forms/issues/32)) ([d3ef89c](https://github.com/Micky002/angular-fast-forms/commit/d3ef89c4d7b3ba78a3748c62919b0c2b836a0cb6))
+
 ## [1.4.0](https://github.com/Micky002/angular-fast-forms/compare/v1.3.0...v1.4.0) (2022-10-24)
 
 
