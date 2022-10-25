@@ -9,6 +9,10 @@ export class FastFormArray extends FormArray {
     super([]);
   }
 
+  private get getValue(): any[] {
+    return this.value;
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   override setValue(values: any, options?: { onlySelf?: boolean; emitEvent?: boolean }) {
     if (values instanceof Array) {
@@ -34,12 +38,15 @@ export class FastFormArray extends FormArray {
   }
 
   public removeRow(index: number) {
-    this.removeControlsFromArray(1, index);
+    const listValue = this.getValue;
+    listValue.splice(index, 1);
+    this.patchValue(listValue);
   }
 
   public copyRow(index: number) {
-    this.addControlsToArray(1, index);
-    this.controls[index].patchValue(this.controls[index - 1].value);
+    const listValue = this.getValue;
+    listValue.splice(index, 0, listValue[index]);
+    this.patchValue(listValue);
   }
 
   private updateControlCount(dataLength: number) {

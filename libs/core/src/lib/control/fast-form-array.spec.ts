@@ -41,4 +41,53 @@ describe('FastFormArray', () => {
     formArray.patchValue(['first']);
     expect(formArray.length).toEqual(1);
   });
+
+  it('should copy row at index', () => {
+    const formArray = new FastFormArray({
+      id: 'test',
+      type: 'dummy-input'
+    }, controlFactory);
+    expect(formArray.length).toEqual(0);
+
+    formArray.setValue(['first', 'second', 'third']);
+    expect(formArray.length).toEqual(3);
+
+    formArray.copyRow(1);
+    expect(formArray.length).toEqual(4);
+    expect(formArray.value).toEqual(['first', 'second', 'second', 'third']);
+  });
+
+  it('should remove row at index', () => {
+    const formArray = new FastFormArray({
+      id: 'test',
+      type: 'dummy-input'
+    }, controlFactory);
+    expect(formArray.length).toEqual(0);
+
+    formArray.setValue(['first', 'second', 'third']);
+    expect(formArray.length).toEqual(3);
+
+    formArray.removeRow(1);
+    expect(formArray.length).toEqual(2);
+    expect(formArray.value).toEqual(['first', 'third']);
+  });
+
+  it('should add row at index', () => {
+    const formArray = new FastFormArray({
+      id: 'test',
+      type: 'dummy-input'
+    }, controlFactory);
+    expect(formArray.length).toEqual(0);
+
+    formArray.setValue(['first', 'second']);
+    expect(formArray.length).toEqual(2);
+
+    formArray.addRow(0);
+    expect(formArray.length).toEqual(3);
+    expect(formArray.value).toEqual([null, 'first', 'second']);
+
+    formArray.addRow(2);
+    expect(formArray.length).toEqual(4);
+    expect(formArray.value).toEqual([null, 'first', null, 'second']);
+  });
 });
