@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.2](https://github.com/Micky002/angular-fast-forms/compare/v1.4.1...v1.4.2) (2022-10-25)
+
+
+### Bug Fixes
+
+* array remove and copy at index ([#33](https://github.com/Micky002/angular-fast-forms/issues/33)) ([65cfc97](https://github.com/Micky002/angular-fast-forms/commit/65cfc97a3ab5d4103b44d842967f6d051ac54c96))
+
 ### [1.4.1](https://github.com/Micky002/angular-fast-forms/compare/v1.4.0...v1.4.1) (2022-10-24)
 
 
