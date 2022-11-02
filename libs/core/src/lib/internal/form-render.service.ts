@@ -43,6 +43,10 @@ export class FormRenderService {
     return !!this._findControl(questionType, 'array');
   }
 
+  isAction(questionType: string): boolean {
+    return !!this._findControl(questionType, 'action');
+  }
+
   findControl(questionType: string): DynamicFormDefinition | null {
     return this.find(questionType, 'control') ?? null;
   }

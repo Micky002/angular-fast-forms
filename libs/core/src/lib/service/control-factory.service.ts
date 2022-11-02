@@ -7,6 +7,8 @@ import { FastFormArray } from '../control/fast-form-array';
 import { FastFormControl } from '../control/fast-form-control';
 import { FastFormGroup } from '../control/fast-form-group';
 import { ControlRegistry } from '../internal/control/control-registry.service';
+import { ControlWrapper } from '../internal/models';
+import { ActionControl } from '../control/action-control';
 
 @Injectable({
   providedIn: 'any'
@@ -19,9 +21,9 @@ export class ControlFactoryService {
               @Optional() @Inject(DYNAMIC_FORM_CONTROL) public componentRegistry?: Array<DynamicFormDefinition>) {
   }
 
-  public createFromQuestions(form: FormGroup, questions: Array<Question>) {
+  public createFromQuestions(parent: FormGroup, questions: Array<Question>) {
     for (const question of questions || []) {
-      this.createFromQuestion(form, question);
+      this.createFromQuestion(parent, question);
     }
   }
 
@@ -44,27 +46,38 @@ export class ControlFactoryService {
         this.createControlDefault(question);
   }
 
-  private createFormControlForGroup(parent: FormGroup, question: Question) {
+  private createFormControlForGroup(parent: FormGroup, question: Question): ControlWrapper[] {
     if (question.type === 'group') {
       const subFormGroup = new FastFormGroup(question.children ?? [], this);
-      parent.addControl(question.id, subFormGroup);
+      return [ControlWrapper.forFormControl(question.id, subFormGroup)];
+      // parent.addControl(question.id, subFormGroup);
     } else if (question.type === 'array' || this.uiRegistry.isArray(question.type)) {
       // TODO length check and assertions
-      parent.addControl(question.id, new FastFormArray((question.children ?? [])[0], this));
+      return [ControlWrapper.forFormArray(question.id, new FastFormArray((question.children ?? [])[0], this))];
+      // parent.addControl(question.id, );
     } else {
       const def = this.uiRegistry.findControl(question.type);
       if (def) {
         if (def.inline) {
-          (question.children || []).forEach(childQuestion => {
+          return (question.children || []).map(childQuestion => {
             if (this.uiRegistry.isControl(childQuestion.type)) {
               const formControl = this.createControl(childQuestion);
-              parent.addControl(childQuestion.id, formControl);
+              return ControlWrapper.forFormControl(question.id, formControl);
+              // parent.addControl(childQuestion.id, formControl);
+            } else if (this.uiRegistry.isAction(childQuestion.type)) {
+              return ControlWrapper.forAction(question.id, new ActionControl());
+            } else {
+              //TODO
+              throw new Error('TODO')
             }
           });
         } else {
           const formControl = this.createControl(question);
-          parent.addControl(question.id, formControl);
+          return [ControlWrapper.forFormControl(question.id, formControl)];
+          // parent.addControl(question.id, formControl);
         }
+      } else {
+        throw new Error('Control id not found.')
       }
     }
   }

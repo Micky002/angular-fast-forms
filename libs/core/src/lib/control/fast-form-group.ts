@@ -3,11 +3,15 @@ import { Question } from '../model';
 import { ControlFactoryService } from '../service/control-factory.service';
 import { Observable, Subject } from 'rxjs';
 import { ActionEvent } from '../actions/models';
+import { ActionControl } from './action-control';
 
 export class FastFormGroup extends FormGroup {
+
   public readonly questionChanges: Observable<Array<Question>>;
   public actionEvents: Observable<ActionEvent>;
   public index: number | null = null;
+  public actions: { [key: string]: ActionControl } = {};
+
   private _questionChanges$ = new Subject<Array<Question>>();
   private _actions$ = new Subject<ActionEvent>();
 
@@ -18,7 +22,7 @@ export class FastFormGroup extends FormGroup {
     this.validateQuestions(questions);
     this.questionChanges = this._questionChanges$.asObservable();
     this._questions = questions;
-    this.createFormControls();
+    this.createChildControls();
     this.actionEvents = this._actions$.asObservable();
   }
 
@@ -31,11 +35,11 @@ export class FastFormGroup extends FormGroup {
   setQuestions(questions: Array<Question>) {
     this._questions = questions;
     this.controls = {};
-    this.createFormControls();
+    this.createChildControls();
     this._questionChanges$.next(questions);
   }
 
-  private createFormControls() {
+  private createChildControls() {
     this.controlFactory.createFromQuestions(this, this._questions);
   }
 
