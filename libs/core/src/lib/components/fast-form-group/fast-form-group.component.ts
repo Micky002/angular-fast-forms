@@ -15,7 +15,7 @@ import { FastFormGroup } from '../../control/fast-form-group';
 import { FastFormSubmitEvent, Question } from '../../model';
 import { ControlFactoryService } from '../../service/control-factory.service';
 import { ValidatorFactoryService } from '../../validation/validator-factory.service';
-import { UiRegistryService } from '../../service/ui-registry.service';
+import { FormRenderService } from '../../internal/form-render.service';
 import { HttpClient } from '@angular/common/http';
 import { ActionService } from '../../actions/action.service';
 import { ActionEvent } from '../../actions/models';
@@ -41,7 +41,7 @@ export class FastFormGroupComponent implements OnChanges, OnInit, OnDestroy {
 
   constructor(private controlFactory: ControlFactoryService,
               private validatorFactory: ValidatorFactoryService,
-              private uiRegistry: UiRegistryService,
+              private uiRegistry: FormRenderService,
               private injector: Injector,
               @Optional() actionService: ActionService,
               @Optional() private indexDirective?: ArrayIndexDirective,

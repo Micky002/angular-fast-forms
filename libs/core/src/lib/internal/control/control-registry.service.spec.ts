@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { ControlRegistry } from './control-registry.service';
 import { DummyInputModule } from '../../test/dummy-input.module.test-util';
+import { Control } from '../../control/control.decorator';
 
 describe('ControlRegistry', () => {
   let registry: ControlRegistry;
@@ -21,8 +22,6 @@ describe('ControlRegistry', () => {
   it('should find registered control', () => {
     expect(registry.hasItem('dummy-input')).toBeTruthy();
     expect(registry.hasItem('not-registered')).toBeFalsy();
-    expect(registry.getItem('dummy-input')).toBeDefined();
-    expect(() => registry.getItem('not-registered')).toThrowError();
   });
 
   it('should map to form definition', () => {
@@ -31,6 +30,7 @@ describe('ControlRegistry', () => {
     expect(def.type).toEqual('dummy-input');
     expect(def.inline).toBeFalsy();
     expect(def.component).toBeDefined();
+    expect(def.internalType).toEqual('control');
   });
 
   it('should check if control has control factory', () => {
@@ -39,9 +39,16 @@ describe('ControlRegistry', () => {
   });
 
   it('should validate registered components', () => {
-    expect(() => new ControlRegistry([[InvalidControlComponent as any]])).toThrowError();
+    expect(() => new ControlRegistry([[InvalidControlComponent as any]]))
+        .toThrowError('Control component must be decorated with [@Control] decorator.');
   });
 });
 
 class InvalidControlComponent {
+}
+
+@Control({
+  type: 'dummy-control'
+})
+class DummyControlComponent {
 }

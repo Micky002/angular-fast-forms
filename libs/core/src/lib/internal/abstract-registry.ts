@@ -3,9 +3,16 @@ export abstract class AbstractRegistry<T> {
   private items: { [key: string]: T } = {};
 
   protected constructor(items?: Array<Array<T>>) {
+    const registeredIds = new Set<string>();
     for (const item of this.flattenItems(items)) {
       this.validate(item);
-      this.ids(item).forEach(id => this.items[id] = item);
+      this.ids(item).forEach(id => {
+        if (registeredIds.has(id)) {
+          throw new Error(`Id [${id}] already exist.`);
+        }
+        registeredIds.add(id);
+        this.items[id] = item;
+      });
     }
   }
 

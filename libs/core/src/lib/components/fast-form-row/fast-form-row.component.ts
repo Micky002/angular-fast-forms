@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 import { BaseFormInlineComponent } from '../base/base-inline.component';
 import { Question } from '../../model';
-import { UiRegistryService } from '../../service/ui-registry.service';
+import { FormRenderService } from '../../internal/form-render.service';
 import { CONTROL_PROPERTIES } from '../util/inject-token';
 import { FastFormsRowProperties } from './models';
 import { ActionService } from '../../actions/action.service';
@@ -31,7 +31,7 @@ export class FastFormRowComponent extends BaseFormInlineComponent implements OnI
 
   @Output() codeOnSubmit = new EventEmitter();
 
-  constructor(private uiRegistry: UiRegistryService,
+  constructor(private uiRegistry: FormRenderService,
               private renderer: Renderer2,
               private injector: Injector,
               @Inject(CONTROL_PROPERTIES) private properties: FastFormsRowProperties,

@@ -1,5 +1,5 @@
 import { Component, Injector, Input, OnInit, Optional, ViewChild, ViewContainerRef } from '@angular/core';
-import { UiRegistryService } from '../../service/ui-registry.service';
+import { FormRenderService } from '../../internal/form-render.service';
 import { FastFormControl } from '../../control/fast-form-control';
 import { Question } from '../../model';
 import { ActionService } from '../../actions/action.service';
@@ -18,7 +18,7 @@ export class FastFormControlComponent implements OnInit {
 
   @Input() control!: FastFormControl;
 
-  constructor(private uiRegistry: UiRegistryService,
+  constructor(private uiRegistry: FormRenderService,
               private injector: Injector,
               @Optional() private actionService?: ActionService,
               @Optional() private arrayIndex?: ArrayIndexDirective) {

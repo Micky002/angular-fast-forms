@@ -2,7 +2,7 @@ import { Inject, Injectable, Optional } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition, Question } from '../model';
 import { ValidatorFactoryService } from '../validation/validator-factory.service';
-import { UiRegistryService } from './ui-registry.service';
+import { FormRenderService } from '../internal/form-render.service';
 import { FastFormArray } from '../control/fast-form-array';
 import { FastFormControl } from '../control/fast-form-control';
 import { FastFormGroup } from '../control/fast-form-group';
@@ -14,7 +14,7 @@ import { ControlRegistry } from '../internal/control/control-registry.service';
 export class ControlFactoryService {
 
   constructor(private validatorFactory: ValidatorFactoryService,
-              private uiRegistry: UiRegistryService,
+              private uiRegistry: FormRenderService,
               private controlRegistry: ControlRegistry,
               @Optional() @Inject(DYNAMIC_FORM_CONTROL) public componentRegistry?: Array<DynamicFormDefinition>) {
   }

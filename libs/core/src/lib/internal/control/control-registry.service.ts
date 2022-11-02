@@ -14,8 +14,8 @@ import { InternalControlDefinition } from '../models';
 })
 export class ControlRegistry extends AbstractRegistry<InternalControlComponent> {
 
-  constructor(@Optional() @Inject(AFF_CONTROL_COMPONENTS) controlsInModule?: Array<Array<InternalControlComponent>>) {
-    super(controlsInModule);
+  constructor(@Optional() @Inject(AFF_CONTROL_COMPONENTS) controlComponentsPerModule?: Array<Array<InternalControlComponent>>) {
+    super(controlComponentsPerModule);
   }
 
   override ids(item: InternalControlComponent): string[] {

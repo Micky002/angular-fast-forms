@@ -6,11 +6,11 @@ import { BaseFormArrayComponent } from '../components/base/base-array.component'
 import { FastFormArray } from '../control/fast-form-array';
 import { BaseFormControlComponent } from '../components/base/base-control.component';
 import { BaseFormGroupComponent } from '../components/base/base-group.component';
-import { ControlRegistry } from '../internal/control/control-registry.service';
+import { ControlRegistry } from './control/control-registry.service';
 import { CONTROL_ID, CONTROL_PROPERTIES, FORM_CONTROL } from '../components/util/inject-token';
 import { ActionService } from '../actions/action.service';
-import { InternalControlDefinition, InternalControlType } from '../internal/models';
-import { ControlIdImpl } from '../internal/control/control-id-impl';
+import { InternalControlDefinition, InternalControlType } from './models';
+import { ControlIdImpl } from './control/control-id-impl';
 import { ArrayIndexDirective } from '../actions/array-index.directive';
 import { FastFormControl } from '../control/fast-form-control';
 import { FastFormGroup } from '../control/fast-form-group';
@@ -18,7 +18,7 @@ import { FastFormGroup } from '../control/fast-form-group';
 @Injectable({
   providedIn: 'any'
 })
-export class UiRegistryService {
+export class FormRenderService {
 
   private uiComponents: { [key: string]: DynamicFormDefinition } = {};
 
@@ -35,25 +35,25 @@ export class UiRegistryService {
     }
   }
 
-  isControl(controlId: string): boolean {
-    return !!this.findControl(controlId);
+  isControl(questionType: string): boolean {
+    return !!this.findControl(questionType);
   }
 
-  isArray(controlId: string): boolean {
-    return !!this._findControl(controlId, 'array');
+  isArray(questionType: string): boolean {
+    return !!this._findControl(questionType, 'array');
   }
 
-  findControl(controlId: string): DynamicFormDefinition | null {
-    return this.find(controlId, 'control') ?? null;
+  findControl(questionType: string): DynamicFormDefinition | null {
+    return this.find(questionType, 'control') ?? null;
   }
 
-  find(controlId: string, type?: InternalControlType): DynamicFormDefinition | null {
-    if (type === undefined) {
-      return this.findLegacyFormControl(controlId) ?? this._findControl(controlId);
-    } else if (type === 'control') {
-      return this.findLegacyFormControl(controlId) ?? this._findControl(controlId, 'control');
+  find(questionType: string, controlType?: InternalControlType): DynamicFormDefinition | null {
+    if (controlType === undefined) {
+      return this.findLegacyFormControl(questionType) ?? this._findControl(questionType);
+    } else if (controlType === 'control') {
+      return this.findLegacyFormControl(questionType) ?? this._findControl(questionType, 'control');
     } else {
-      return this._findControl(controlId, type);
+      return this._findControl(questionType, controlType);
     }
   }
 
