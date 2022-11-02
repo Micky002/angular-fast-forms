@@ -37,6 +37,9 @@ export class FastFormArray extends FormArray {
     this.addControlsToArray(1, index);
   }
 
+  /**
+   * @deprecated Will be removed in 2.0.0
+   */
   public removeRow(index: number) {
     const listValue = this.getValue;
     listValue.splice(index, 1);

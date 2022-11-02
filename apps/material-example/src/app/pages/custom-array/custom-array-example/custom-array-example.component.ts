@@ -29,6 +29,12 @@ export class CustomArrayExampleComponent implements OnInit {
             type: 'mat-input',
             label: 'Surname'
           }, {
+            id: 'dateRange',
+            type: 'date-range',
+            validation: {
+              required: true
+            }
+          }, {
             id: 'actions',
             type: 'time-array-actions'
           }]

@@ -9,6 +9,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ActionButtonsComponent } from './time-array/action-buttons/action-buttons.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { NgxsModule } from '@ngxs/store';
+import { CustomArrayState } from './custom-array.state';
+import { NgxsFormPluginModule } from '@ngxs/form-plugin';
+import { DateRangeInputModule } from '../custom-nested-control/date-range-input/date-range-input.module';
 
 @NgModule({
   declarations: [TimeArrayComponent, CustomArrayExampleComponent, ActionButtonsComponent],
@@ -29,7 +33,10 @@ import { MatButtonModule } from '@angular/material/button';
     }),
     MaterialFastFormsModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    NgxsModule.forFeature([CustomArrayState]),
+    NgxsFormPluginModule,
+    DateRangeInputModule
   ]
 })
 export class CustomArrayModule {
