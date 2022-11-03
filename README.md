@@ -6,8 +6,8 @@
 # Angular Fast Forms
 
 Angular Fast Forms (AFF) is an angular library which aims to improve development speed
-when working with forms. You will not need to write any html anymore to create your forms
-simply define them via a well structured config. It is extendable to use your own
+when working with forms. You will not need to write any html anymore to create your forms,
+simply define your forms via a well structured config. It is extendable to use your own
 form components.
 
 ## Core Features
