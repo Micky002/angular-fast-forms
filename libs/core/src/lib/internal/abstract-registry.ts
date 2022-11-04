@@ -1,10 +1,12 @@
+import { flattenArray } from "../util/list.util";
+
 export abstract class AbstractRegistry<T> {
 
   private items: { [key: string]: T } = {};
 
   protected constructor(items?: Array<Array<T>>) {
     const registeredIds = new Set<string>();
-    for (const item of this.flattenItems(items)) {
+    for (const item of flattenArray(items)) {
       this.validate(item);
       this.ids(item).forEach(id => {
         if (registeredIds.has(id)) {
@@ -32,13 +34,5 @@ export abstract class AbstractRegistry<T> {
 
   abstract ids(item: T): string[];
 
-  private flattenItems(itemsList?: Array<Array<T>>): Array<T> {
-    const flattenedList: Array<T> = [];
-    for (const itemList of itemsList ?? []) {
-      for (const item of itemList) {
-        flattenedList.push(item);
-      }
-    }
-    return flattenedList;
-  }
+
 }

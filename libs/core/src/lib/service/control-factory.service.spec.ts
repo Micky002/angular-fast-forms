@@ -10,6 +10,7 @@ import { ActionControl } from '../actions/actions.decorator';
 import { Control } from '../control/control.decorator';
 import { AFF_CONTROL_COMPONENTS, DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from '../model';
 import { FastFormGroup } from '../control/fast-form-group';
+import { FastFormArrayComponent } from '../components/fast-form-array/fast-form-array.component';
 
 
 @Component({
@@ -64,7 +65,8 @@ describe('ControlFactoryService', () => {
           multi: true,
           useValue: [
             DummyActionComponent,
-            DummyRowComponent
+            DummyRowComponent,
+            FastFormArrayComponent
           ]
         } as Provider
       ]
@@ -77,7 +79,7 @@ describe('ControlFactoryService', () => {
   });
 
   it('should create control if nothing is registered', () => {
-    const control = service.createRawControl({type: 'test-control', id: 'test'});
+    const control = service.createFormControl({type: 'test-control', id: 'test'});
     expect(control).toBeDefined();
   });
 
@@ -87,7 +89,7 @@ describe('ControlFactoryService', () => {
       component: DummyFormComponent,
       controlFactory: () => new FormControl('initial-state')
     }];
-    const control = service.createRawControl({type: 'test-control', id: 'test'});
+    const control = service.createFormControl({type: 'test-control', id: 'test'});
     expect(control).toBeDefined();
     expect(control.value).toEqual('initial-state');
   });
@@ -97,7 +99,7 @@ describe('ControlFactoryService', () => {
       type: 'test-control',
       component: DummyFormComponent
     }];
-    const control = service.createRawControl({
+    const control = service.createFormControl({
       type: 'test-control',
       id: 'test',
       defaultValue: 'my custom default'

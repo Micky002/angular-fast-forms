@@ -58,14 +58,14 @@ export class FormRenderService {
   }
 
   /**
-   * @deprecated Will be removed in 2.0.0
+   * @deprecated Will be removed in 2.0.0, use {@link ControlRegistry} instead
    */
   findControl(questionType: string): DynamicFormDefinition | null {
     return this.find(questionType, 'control') ?? null;
   }
 
   /**
-   * @deprecated Will be removed in 2.0.0, use ControlRegistry instead
+   * @deprecated Will be removed in 2.0.0, use {@link ControlRegistry} instead
    */
   find(questionType: string, controlType?: InternalControlType): DynamicFormDefinition | null {
     if (controlType === undefined) {

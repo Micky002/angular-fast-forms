@@ -38,11 +38,8 @@ import { ArrayIndexDirective } from './actions/array-index.directive';
       multi: true
     },
     {
-      provide: DYNAMIC_FORM_CONTROL,
-      useValue: {
-        type: 'array',
-        component: FastFormArrayComponent
-      } as DynamicFormDefinition,
+      provide: AFF_CONTROL_COMPONENTS,
+      useValue: [FastFormArrayComponent],
       multi: true
     }
   ]

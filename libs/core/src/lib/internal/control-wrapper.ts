@@ -1,4 +1,4 @@
-import { AbstractControl, FormArray, FormGroup } from "@angular/forms";
+import { AbstractControl, FormArray, FormGroup, FormRecord } from "@angular/forms";
 import { FromActionControlInternal } from "./action/action-control-internal";
 import { FastFormGroup } from "../control/fast-form-group";
 import { InternalControlType } from "./models";
@@ -32,7 +32,15 @@ export class ControlWrapper {
       return new ControlWrapper(id, actionControl, 'action');
     }
   
-    public addToParent(parent: FormGroup) {
+    public addToParent(parent: FormGroup | FormArray, index?: number) {
+      if (parent instanceof FormGroup) {
+        this.addToGroup(parent);
+      } else {
+        this.addToArray(parent, index);
+      }
+    }
+
+    private addToGroup(parent: FormGroup) {
       if (this.control !== null) {
         parent.addControl(this.id, this.control);
       } else if (this.action !== null) {
@@ -41,6 +49,20 @@ export class ControlWrapper {
         } else {
             console.warn('Cannot add action to standard reactive form.');
         }
+      } else {
+        throw new Error(`Cannot add control or action to parent.`);
+      }
+    }
+
+    private addToArray(parent: FormArray, index?: number) {
+      if (this.control !== null) {
+        if (index !== undefined) {
+          parent.insert(index, this.control);
+        } else {
+          parent.push(this.control);
+        }
+      } else if (this.action !== null) {
+        console.warn('Actions are not supported in form arrays.');
       } else {
         throw new Error(`Cannot add control or action to parent.`);
       }
