@@ -1,12 +1,10 @@
 import { Type } from '@angular/core';
-import { BaseFormInlineComponent } from '../components/base/base-inline.component';
+import { AbstractControl } from '@angular/forms';
 import { BaseFormArrayComponent } from '../components/base/base-array.component';
-import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { BaseFormControlComponent } from '../components/base/base-control.component';
 import { BaseFormGroupComponent } from '../components/base/base-group.component';
+import { BaseFormInlineComponent } from '../components/base/base-inline.component';
 import { FormActionType, FormControlType, Question } from '../model';
-import { FromActionControlInternal } from './action/action-control-internal';
-import { FastFormGroup } from '@ngx-fast-forms/core';
 
 export type InternalControlType = FormControlType | FormActionType;
 

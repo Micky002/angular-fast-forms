@@ -20,11 +20,11 @@ export class FromActionControlInternal extends AbstractControl {
     this._disabled = false;
   }
 
-  setValue(value: any, options?: Object | undefined): void {
+  setValue(): void {
     throw new Error('Method not supported on action.');
   }
 
-  patchValue(value: any, options?: Object | undefined): void {
+  patchValue(): void {
     throw new Error('Method not supported on action.');
   }
 
