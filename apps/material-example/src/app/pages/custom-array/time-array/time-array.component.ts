@@ -29,7 +29,7 @@ export class TimeArrayComponent implements OnInit, OnDestroy {
         } else if (event.matchId.endsWith('time-action-copy')) {
           this.formArray.copyRow(index);
         } else if (event.matchId.endsWith('time-action-delete')) {
-          this.formArray.removeRow(index);
+          this.formArray.removeAt(index);
         }
       }
     });

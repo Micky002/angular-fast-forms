@@ -195,5 +195,17 @@ describe('ControlFactoryService', () => {
       expect(formGroup.get('first-input')).toBeInstanceOf(FormControl);
       expect(formGroup.get('test-action')).toBeNull();
     });
+
+    it('should print warning if action is added to standard form', () => {
+      jest.spyOn(console, 'warn');
+      const formGroup = new FormGroup({});
+      service.createFromQuestion(formGroup, {
+        id: 'test-action',
+        type: 'add-button'
+      });
+      expect(formGroup.get('test-action')).toBeNull();
+      expect(console.warn).toBeCalledTimes(1);
+      expect(console.warn).lastCalledWith('Cannot add action to standard reactive form.');
+    });
   });
 });

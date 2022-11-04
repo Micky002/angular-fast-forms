@@ -2,11 +2,11 @@ export * from './lib/actions/index';
 
 export * from './lib/components/index';
 
+export * from './lib/control/index';
 export * from './lib/control/fast-form-group';
 export * from './lib/control/fast-form-array';
 export * from './lib/control/control.decorator';
 export * from './lib/control/control-factory.decorator';
-export * from './lib/control/models';
 
 export * from './lib/service/fast-forms.service';
 export * from './lib/service/control-factory.service';
