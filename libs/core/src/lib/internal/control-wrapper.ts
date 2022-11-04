@@ -1,6 +1,6 @@
-import { AbstractControl, FormArray, FormGroup, FormRecord } from "@angular/forms";
-import { FromActionControlInternal } from "./action/action-control-internal";
+import { AbstractControl, FormArray, FormGroup } from "@angular/forms";
 import { FastFormGroup } from "../control/fast-form-group";
+import { FromActionControlInternal } from "./action/action-control-internal";
 import { InternalControlType } from "./models";
 
 export class ControlWrapper {
@@ -8,7 +8,7 @@ export class ControlWrapper {
     private control: AbstractControl | null;
     private action: FromActionControlInternal | null;
   
-    constructor(private id: string, control: AbstractControl, private controlType: InternalControlType) {
+    constructor(private id: string, control: AbstractControl, controlType: InternalControlType) {
       if (controlType === 'action') {
         this.control = null;
         this.action = control as FromActionControlInternal;

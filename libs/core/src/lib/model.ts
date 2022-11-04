@@ -52,5 +52,5 @@ export interface FastFormSubmitEvent {
   data: unknown;
 }
 
-export type FormControlType = 'control' | 'array';
+export type FormControlType = 'control' | 'array' | 'group';
 export type FormActionType = 'action';

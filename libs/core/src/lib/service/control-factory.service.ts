@@ -48,26 +48,27 @@ export class ControlFactoryService {
   }
 
   private createControl(question: Question): ControlWrapper[] {
-    if (question.type === 'group') {
-      const subFormGroup = new FastFormGroup(question.children ?? [], this);
-      return [ControlWrapper.forFormControl(question.id, subFormGroup)];
-    } else {
-      if (this.renderService.findControl(question.type)) {
-        return [ControlWrapper.forFormControl(question.id, this.createAndInitFormControl(question))];
-      } else if (this.controlRegistry.hasItem(question.type)) {
-        const definition = this.controlRegistry.getDefinition(question.type);
-        if (definition.internalType === 'control') {
-          return [ControlWrapper.forFormControl(question.id, this.createAndInitFormControl(question))];
-        } else if (definition.internalType === 'action') {
-          return [ControlWrapper.forAction(question.id, this.createAndInitFormAction(question))];
-        } else if (definition.internalType === 'array') {
-          // TODO length check and assertions, create group automatically if more than one
-          return [ControlWrapper.forFormArray(question.id, new FastFormArray((question.children ?? [])[0], this))];
-        }
+    const wrappers: ControlWrapper[] = [];
+    if (this.renderService.findControl(question.type)) {
+      wrappers.push(ControlWrapper.forFormControl(question.id, this.createAndInitFormControl(question)));
+    } else if (this.controlRegistry.hasItem(question.type)) {
+      const definition = this.controlRegistry.getDefinition(question.type);
+      if (definition.internalType === 'control') {
+        wrappers.push(ControlWrapper.forFormControl(question.id, this.createAndInitFormControl(question)));
+      } else if (definition.internalType === 'action') {
+        wrappers.push(ControlWrapper.forAction(question.id, this.createAndInitFormAction(question)));
+      } else if (definition.internalType === 'array') {
+        // TODO length check and assertions, create group automatically if more than one
+        wrappers.push(ControlWrapper.forFormArray(question.id, new FastFormArray((question.children ?? [])[0], this)));
+      } else if (definition.internalType === 'group') {
+        const subFormGroup = new FastFormGroup(question.children ?? [], this);
+        wrappers.push(ControlWrapper.forFormControl(question.id, subFormGroup));    
       }
     }
-    console.error(`Form control with type [${question.type}] not found.`);
-    return [];
+    if (wrappers.length === 0) {
+      console.error(`Form control with type [${question.type}] not found.`);
+    }
+    return wrappers;
   }
 
   private createAndInitFormControl(question: Question): AbstractControl {

@@ -11,6 +11,7 @@ import { Control } from '../control/control.decorator';
 import { AFF_CONTROL_COMPONENTS, DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from '../model';
 import { FastFormGroup } from '../control/fast-form-group';
 import { FastFormArrayComponent } from '../components/fast-form-array/fast-form-array.component';
+import { FastFormGroupComponent } from '../components';
 
 
 @Component({
@@ -66,7 +67,8 @@ describe('ControlFactoryService', () => {
           useValue: [
             DummyActionComponent,
             DummyRowComponent,
-            FastFormArrayComponent
+            FastFormArrayComponent,
+            FastFormGroupComponent
           ]
         } as Provider
       ]

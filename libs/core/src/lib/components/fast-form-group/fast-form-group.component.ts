@@ -21,7 +21,12 @@ import { ActionService } from '../../actions/action.service';
 import { ActionEvent } from '../../actions/models';
 import { Subscription } from 'rxjs';
 import { ArrayIndexDirective } from '../../actions/array-index.directive';
+import { Control } from '../../control/control.decorator';
 
+@Control({
+  type: 'group',
+  controlType: 'group'
+})
 @Component({
   selector: 'aff-form-group',
   templateUrl: './fast-form-group.component.html'
