@@ -20,4 +20,8 @@ export class FormActionGroupInternal extends FormGroup {
   override enable() {
     this._disabled = false;
   }
+
+  override reset(): void {
+    this._disabled = false;
+  }
 }

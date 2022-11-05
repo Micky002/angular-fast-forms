@@ -27,15 +27,6 @@ describe('AbstractRegistry', () => {
   });
 });
 
-class InvalidControlComponent {
-}
-
-@Control({
-  type: 'dummy-control'
-})
-class DummyControlComponent {
-}
-
 class DummyRegistry extends AbstractRegistry<string> {
 
   constructor(items?: Array<Array<string>>) {

@@ -48,6 +48,7 @@ exclude_patterns:
   - "**/*-experimental/"
   - "**/*.d.ts"
   - "**/*.spec.ts"
+  - "**/*.mock.ts"
   - "**/*.test-util.ts"
   - "**/jest.config.ts"
   - "LICENSE"

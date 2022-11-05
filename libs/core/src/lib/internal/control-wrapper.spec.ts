@@ -1,6 +1,4 @@
 import { FormControl, FormGroup } from "@angular/forms";
-import { ActionControlFactory } from "../control";
-import { ControlFactory } from "../control/control-factory.decorator";
 import { FromActionControlInternal } from "./action/action-control-internal";
 import { ControlWrapper } from "./control-wrapper";
 
