@@ -1,6 +1,7 @@
 import { AbstractControl } from '@angular/forms';
+import { FormActionControl } from '../../actions';
 
-export class FromActionControlInternal extends AbstractControl {
+export class FromActionControlInternal extends AbstractControl implements FormActionControl {
 
   private _disabled = false;
 
