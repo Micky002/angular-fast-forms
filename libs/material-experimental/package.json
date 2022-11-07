@@ -1,6 +1,6 @@
 {
   "name": "@ngx-fast-forms/material-experimental",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "peerDependencies": {
     "@angular/common": "^14.0.0",
     "@angular/core": "^14.0.0",

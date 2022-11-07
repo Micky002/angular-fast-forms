@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.3](https://github.com/Micky002/angular-fast-forms/compare/v1.5.2...v1.5.3) (2022-11-07)
+
+
+### Bug Fixes
+
+* allow control id to have array index as first element ([#37](https://github.com/Micky002/angular-fast-forms/issues/37)) ([400f0ab](https://github.com/Micky002/angular-fast-forms/commit/400f0ab5636314e481e2322c616d477235dfb381))
+
 ### [1.5.2](https://github.com/Micky002/angular-fast-forms/compare/v1.5.1...v1.5.2) (2022-11-07)
 
 
