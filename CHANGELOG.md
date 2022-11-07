@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/Micky002/angular-fast-forms/compare/v1.4.2...v1.5.0) (2022-11-07)
+
+
+### Features
+
+* add action control and group for interacting with form-actions ([#35](https://github.com/Micky002/angular-fast-forms/issues/35)) ([76c53d6](https://github.com/Micky002/angular-fast-forms/commit/76c53d633432ff915cc6b732c5e32f34b7fb7b0e))
+
 ### [1.4.2](https://github.com/Micky002/angular-fast-forms/compare/v1.4.1...v1.4.2) (2022-10-25)
 
 
