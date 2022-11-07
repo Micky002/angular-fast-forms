@@ -7,7 +7,7 @@ import { FastFormControlComponent } from './components/fast-form-control/fast-fo
 import { FastFormGroupComponent } from './components/fast-form-group/fast-form-group.component';
 import { FastFormRowComponent } from './components/fast-form-row/fast-form-row.component';
 import { VALIDATORS } from './internal/token';
-import { AFF_CONTROL_COMPONENTS, DynamicFormDefinition, DYNAMIC_FORM_CONTROL } from './model';
+import { AFF_CONTROL_COMPONENTS } from './model';
 
 @NgModule({
   imports: [
@@ -29,17 +29,9 @@ import { AFF_CONTROL_COMPONENTS, DynamicFormDefinition, DYNAMIC_FORM_CONTROL } f
   ],
   providers: [
     {
-      provide: DYNAMIC_FORM_CONTROL,
-      useValue: {
-        type: 'row',
-        inline: true,
-        component: FastFormRowComponent
-      } as DynamicFormDefinition,
-      multi: true
-    },
-    {
       provide: AFF_CONTROL_COMPONENTS,
       useValue: [
+        FastFormRowComponent,
         FastFormArrayComponent,
         FastFormGroupComponent
       ],

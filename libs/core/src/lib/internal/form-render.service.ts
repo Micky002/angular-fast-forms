@@ -1,20 +1,20 @@
-import { ComponentRef, Inject, Injectable, Injector, Optional, Provider, StaticProvider, ViewContainerRef } from '@angular/core';
-import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition, Question } from '../model';
-import { BaseFormInlineComponent } from '../components/base/base-inline.component';
+import { ComponentRef, Inject, Injectable, Injector, Optional, StaticProvider, ViewContainerRef } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
+import { ActionService } from '../actions/action.service';
+import { ArrayIndexDirective } from '../actions/array-index.directive';
 import { BaseFormArrayComponent } from '../components/base/base-array.component';
-import { FastFormArray } from '../control/fast-form-array';
 import { BaseFormControlComponent } from '../components/base/base-control.component';
 import { BaseFormGroupComponent } from '../components/base/base-group.component';
-import { ControlRegistry } from './control/control-registry.service';
+import { BaseFormInlineComponent } from '../components/base/base-inline.component';
+import { QuestionDefinition } from '../components/question-definition';
 import { CONTROL_ID, CONTROL_PROPERTIES, FORM_CONTROL } from '../components/util/inject-token';
-import { ActionService } from '../actions/action.service';
-import { InternalControlDefinition, InternalControlType } from './models';
-import { ControlIdImpl } from './control/control-id-impl';
-import { ArrayIndexDirective } from '../actions/array-index.directive';
+import { FastFormArray } from '../control/fast-form-array';
 import { FastFormControl } from '../control/fast-form-control';
 import { FastFormGroup } from '../control/fast-form-group';
-import { QuestionDefinition } from '../components/question-definition';
+import { DynamicFormDefinition, DYNAMIC_FORM_CONTROL, Question } from '../model';
+import { ControlIdImpl } from './control/control-id-impl';
+import { ControlRegistry } from './control/control-registry.service';
+import { InternalControlDefinition, InternalControlType } from './models';
 
 @Injectable({
   providedIn: 'any',

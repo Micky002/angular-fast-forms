@@ -17,7 +17,12 @@ import { FormRenderService } from '../../internal/form-render.service';
 import { CONTROL_PROPERTIES } from '../util/inject-token';
 import { FastFormsRowProperties } from './models';
 import { ActionService } from '../../actions/action.service';
+import { Control } from '../../control/control.decorator';
 
+@Control({
+  type: 'row',
+  inline: true
+})
 @Component({
   selector: 'aff-form-row',
   templateUrl: './fast-form-row.component.html'
