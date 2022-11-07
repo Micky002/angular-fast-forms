@@ -25,9 +25,6 @@ export type QuestionProperties = { [key: string]: unknown };
 
 export interface Question extends BasicQuestion {
   type: string;
-  validation?: ValidationOptions;
-  properties?: QuestionProperties;
-  defaultValue?: string | number;
   children?: Array<Question>;
 }
 
