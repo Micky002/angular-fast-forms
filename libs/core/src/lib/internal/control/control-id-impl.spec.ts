@@ -25,4 +25,19 @@ describe('ControlIdImpl', () => {
     expect(firstItem.getId()).toEqual('test-array[5]');
     expect(secondItem.getId()).toEqual('test-array[10]');
   });
+
+  it('should add array index on first position', () => {
+    const id = new ControlIdImpl().addIndex({index: 0});
+    expect(id.getId()).toEqual('[0]');
+  });
+
+  it('should add array if last is also array', () => {
+    const provider1 = {index: 0};
+    const provider2 = {index: 4};
+    const id = new ControlIdImpl().addIndex(provider1).addIndex(provider2);
+    expect(id.getId()).toEqual('[0].[4]');
+    provider1.index = 5;
+    provider2.index = 19;
+    expect(id.getId()).toEqual('[5].[19]');
+  });
 });

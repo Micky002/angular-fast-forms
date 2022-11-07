@@ -18,19 +18,26 @@ export class ControlIdImpl implements ControlId {
   }
 
   addIndex(indexProvider: IndexProvider): ControlIdImpl {
-    const clonedId = new ControlIdImpl(this.parts);
+    let clonedId = new ControlIdImpl(this.parts);
     if (clonedId.parts.length > 0) {
       const lastPart = clonedId.parts[clonedId.parts.length - 1];
-      lastPart.indexProvider = indexProvider;
-      return clonedId;
+      if (lastPart.indexProvider === undefined) {
+        lastPart.indexProvider = indexProvider;
+      } else {
+        clonedId = new ControlIdImpl([...clonedId.parts, {indexProvider: indexProvider}]);
+      }
+    } else if (clonedId.parts.length === 0) {
+      clonedId = new ControlIdImpl([{indexProvider: indexProvider}]);
     }
     return clonedId;
   }
 
   getId(): string {
     return this.parts.map(part => {
-      if (part.indexProvider) {
+      if (part.id !== undefined && part.indexProvider !== undefined) {
         return `${part.id}[${part.indexProvider.index}]`;
+      } else if (part.indexProvider !== undefined) {
+        return `[${part.indexProvider.index}]`;
       } else {
         return part.id;
       }
@@ -39,7 +46,7 @@ export class ControlIdImpl implements ControlId {
 }
 
 interface IdPart {
-  id: string;
+  id?: string;
   indexProvider?: IndexProvider;
 }
 
