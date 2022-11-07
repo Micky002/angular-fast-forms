@@ -4,6 +4,8 @@ import { InputComponent } from './input.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from "@angular/material/input";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { CONTROL_PROPERTIES, FORM_CONTROL, QuestionDefinition, QuestionProperties } from '@ngx-fast-forms/core';
+import { InputProperties } from './input.models';
 
 describe('InputComponent', () => {
   let component: InputComponent;
@@ -19,16 +21,27 @@ describe('InputComponent', () => {
       declarations: [
         InputComponent
       ],
+      providers: [
+        {
+          provide: FORM_CONTROL,
+          useValue: new FormControl()
+        },
+        {
+          provide: QuestionDefinition,
+          useValue: new QuestionDefinition({
+            label: 'Test label'
+          })
+        },
+        {
+          provide: CONTROL_PROPERTIES,
+          useValue: {
+          } as InputProperties
+        }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(InputComponent);
     component = fixture.componentInstance;
-    component.question = {
-      type: 'input',
-      id: 'test-id'
-    };
-    component.control = new FormControl();
-    component.properties = {};
     fixture.detectChanges();
   });
 

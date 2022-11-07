@@ -1,15 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 
-import { UiRegistryService } from './ui-registry.service';
-import { ControlRegistry } from '../internal/control/control-registry.service';
+import { FormRenderService } from './form-render.service';
+import { ControlRegistry } from './control/control-registry.service';
 import { BaseFormControlComponent } from '../components/base/base-control.component';
 import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from '../model';
 
 class DummyControl extends BaseFormControlComponent {
 }
 
-describe('UiRegistryService', () => {
-  let service: UiRegistryService;
+describe('FormRenderService', () => {
+  let service: FormRenderService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -22,7 +22,7 @@ describe('UiRegistryService', () => {
         multi: true
       }]
     });
-    service = TestBed.inject(UiRegistryService);
+    service = TestBed.inject(FormRenderService);
   });
 
   it('should be created', () => {
@@ -30,7 +30,7 @@ describe('UiRegistryService', () => {
   });
 
   it('should throw error is duplicated type is registered', () => {
-    expect(() => new UiRegistryService(new ControlRegistry(), null as any, [{
+    expect(() => new FormRenderService(new ControlRegistry(), null as any, [{
       type: 'duplicate',
       component: DummyControl
     }, {

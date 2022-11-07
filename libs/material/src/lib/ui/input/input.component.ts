@@ -1,18 +1,22 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { BaseFormControlComponent, Control } from '@ngx-fast-forms/core';
+import { Control, CONTROL_PROPERTIES, FORM_CONTROL, QuestionDefinition } from '@ngx-fast-forms/core';
 import { InputFormat, InputProperties } from './input.models';
 
 @Control({
-  type: 'input,mat-input'
+  type: 'input,mat-input',
 })
 @Component({
   selector: 'aff-material-input',
-  templateUrl: './input.component.html'
+  templateUrl: './input.component.html',
 })
-export class InputComponent extends BaseFormControlComponent<InputProperties, FormControl> implements OnInit {
+export class InputComponent implements OnInit {
+  @ViewChild('inputElement', { static: true }) inputRef!: ElementRef<HTMLInputElement>;
 
-  @ViewChild('inputElement', {static: true}) inputRef!: ElementRef<HTMLInputElement>;
+  constructor(
+    @Inject(FORM_CONTROL) public control: FormControl,
+    public question: QuestionDefinition,
+    @Inject(CONTROL_PROPERTIES) private properties: InputProperties) {}
 
   public get type(): string {
     if (this.properties?.attributes && this.properties.attributes['type']) {
@@ -37,9 +41,9 @@ export class InputComponent extends BaseFormControlComponent<InputProperties, Fo
   ngOnInit(): void {
     const inputElement = this.inputRef.nativeElement;
     if (this.properties.attributes) {
-      Object.keys(this.properties.attributes).forEach(attribute => {
+      Object.keys(this.properties.attributes).forEach((attribute) => {
         const value = (this.properties.attributes || {})[attribute];
-        inputElement.setAttribute(attribute, value)
+        inputElement.setAttribute(attribute, value);
       });
     }
   }

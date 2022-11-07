@@ -10,6 +10,7 @@ export function ActionControl(options: ActionControlOptions) {
   return (target: unknown): void => {
     const actionClass: InternalControlComponent = target as InternalControlComponent;
     actionClass[META_COMPONENT_OPTIONS_KEY] = {
+      ...actionClass[META_COMPONENT_OPTIONS_KEY],
       type: options.type,
       internalType: 'action'
     };

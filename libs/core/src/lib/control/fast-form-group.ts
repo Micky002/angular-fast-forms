@@ -1,15 +1,26 @@
-import { AbstractControlOptions, FormGroup } from '@angular/forms';
+import { AbstractControl, AbstractControlOptions, FormGroup } from '@angular/forms';
 import { Question } from '../model';
 import { ControlFactoryService } from '../service/control-factory.service';
 import { Observable, Subject } from 'rxjs';
 import { ActionEvent } from '../actions/models';
+import { FromActionControlInternal } from '../internal/action/action-control-internal';
+import { FormActionGroupInternal } from '../internal/action/action-group-internal';
 
 export class FastFormGroup extends FormGroup {
+
   public readonly questionChanges: Observable<Array<Question>>;
   public actionEvents: Observable<ActionEvent>;
   public index: number | null = null;
+  public readonly actions: { [key: string]: FromActionControlInternal | FormActionGroupInternal } = {};
+
   private _questionChanges$ = new Subject<Array<Question>>();
   private _actions$ = new Subject<ActionEvent>();
+
+  private _questions: Array<Question>;
+
+  public get questions(): Array<Question> {
+    return this._questions || [];
+  }
 
   constructor(questions: Array<Question>,
               private controlFactory: ControlFactoryService,
@@ -18,24 +29,39 @@ export class FastFormGroup extends FormGroup {
     this.validateQuestions(questions);
     this.questionChanges = this._questionChanges$.asObservable();
     this._questions = questions;
-    this.createFormControls();
+    this.createChildControls();
     this.actionEvents = this._actions$.asObservable();
   }
 
-  private _questions: Array<Question>;
-
-  public get questions(): Array<Question> {
-    return this._questions || [];
+  override get(path: string): AbstractControl | null {
+    const pathParts = path.split('.');
+    const firstPath = pathParts.shift();
+    if (firstPath === undefined) {
+      return null;
+    }
+    if (pathParts.length === 0) {
+      return this.mergedControls[firstPath] ?? null;
+    } else {
+      return this.mergedControls[firstPath]?.get(pathParts.join('.')) ?? null;
+    }
   }
 
-  setQuestions(questions: Array<Question>) {
+  public setQuestions(questions: Array<Question>) {
     this._questions = questions;
     this.controls = {};
-    this.createFormControls();
+    this.createChildControls();
     this._questionChanges$.next(questions);
   }
 
-  private createFormControls() {
+  override addControl(name: string, control: AbstractControl, options?: { emitEvent?: boolean | undefined; } | undefined): void {
+    if (control instanceof FromActionControlInternal || control instanceof FormActionGroupInternal) {
+      this.actions[name] = control;
+    } else {
+      super.addControl(name, control, options);
+    }
+  }
+
+  private createChildControls() {
     this.controlFactory.createFromQuestions(this, this._questions);
   }
 
@@ -47,5 +73,12 @@ export class FastFormGroup extends FormGroup {
       }
       ids.add(q.id);
     });
+  }
+
+  private get mergedControls() {
+    return {
+      ...this.actions,
+      ...this.controls
+    }
   }
 }

@@ -8,6 +8,6 @@ export function ControlFactory() {
     controlComponent[META_COMPONENT_OPTIONS_KEY] = {
       ...controlComponent[META_COMPONENT_OPTIONS_KEY],
       controlFactory: descriptor.value
-    }
-  }
+    };
+  };
 }

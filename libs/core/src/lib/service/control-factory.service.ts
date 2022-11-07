@@ -2,11 +2,14 @@ import { Inject, Injectable, Optional } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition, Question } from '../model';
 import { ValidatorFactoryService } from '../validation/validator-factory.service';
-import { UiRegistryService } from './ui-registry.service';
+import { FormRenderService } from '../internal/form-render.service';
 import { FastFormArray } from '../control/fast-form-array';
 import { FastFormControl } from '../control/fast-form-control';
 import { FastFormGroup } from '../control/fast-form-group';
 import { ControlRegistry } from '../internal/control/control-registry.service';
+import { FromActionControlInternal } from '../internal/action/action-control-internal';
+import { ControlWrapper } from '../internal/control-wrapper';
+import { flattenArray } from '../util/list.util';
 
 @Injectable({
   providedIn: 'any'
@@ -14,85 +17,64 @@ import { ControlRegistry } from '../internal/control/control-registry.service';
 export class ControlFactoryService {
 
   constructor(private validatorFactory: ValidatorFactoryService,
-              private uiRegistry: UiRegistryService,
+              private renderService: FormRenderService,
               private controlRegistry: ControlRegistry,
               @Optional() @Inject(DYNAMIC_FORM_CONTROL) public componentRegistry?: Array<DynamicFormDefinition>) {
   }
 
-  public createFromQuestions(form: FormGroup, questions: Array<Question>) {
+  public createFromQuestions(parent: FormGroup, questions: Array<Question>) {
     for (const question of questions || []) {
-      this.createFromQuestion(form, question);
+      this.createFromQuestion(parent, question);
     }
   }
 
   public createFromQuestion(parent: FormGroup | FormArray, question: Question, index?: number) {
-    if (parent instanceof FormGroup) {
-      this.createFormControlForGroup(parent, question);
-    } else if (parent instanceof FormArray) {
-      const controls = this.createFormControlForArray(question);
-      if (index !== undefined) {
-        parent.insert(index, controls[0]);
-      } else {
-        parent.push(controls[0]);
-      }
+    const def = this.renderService.findControl(question.type);
+    let createdControls: ControlWrapper[];
+    if (def && def.inline) {
+      createdControls = flattenArray(
+        (question.children ?? []).map((childQuestion) => {
+          return this.createControl(childQuestion);
+        })
+      );
+    } else {
+      createdControls = this.createControl(question);
     }
+    createdControls.map((control) => control.addToParent(parent, index));
   }
 
-  public createRawControl(question: Question): AbstractControl {
+  public createFormControl(question: Question): AbstractControl {
     return this.createControlFromDecoratedComponents(question) ??
         this.createControlFromControlFactoryMethod(question) ??
         this.createControlDefault(question);
   }
 
-  private createFormControlForGroup(parent: FormGroup, question: Question) {
-    if (question.type === 'group') {
-      const subFormGroup = new FastFormGroup(question.children ?? [], this);
-      parent.addControl(question.id, subFormGroup);
-    } else if (question.type === 'array' || this.uiRegistry.isArray(question.type)) {
-      // TODO length check and assertions
-      parent.addControl(question.id, new FastFormArray((question.children ?? [])[0], this));
-    } else {
-      const def = this.uiRegistry.findControl(question.type);
-      if (def) {
-        if (def.inline) {
-          (question.children || []).forEach(childQuestion => {
-            if (this.uiRegistry.isControl(childQuestion.type)) {
-              const formControl = this.createControl(childQuestion);
-              parent.addControl(childQuestion.id, formControl);
-            }
-          });
-        } else {
-          const formControl = this.createControl(question);
-          parent.addControl(question.id, formControl);
-        }
+  private createControl(question: Question): ControlWrapper[] {
+    const wrappers: ControlWrapper[] = [];
+    if (this.renderService.findControl(question.type)) {
+      wrappers.push(ControlWrapper.forFormControl(question.id, this.createAndInitFormControl(question)));
+    } else if (this.controlRegistry.hasItem(question.type)) {
+      const definition = this.controlRegistry.getDefinition(question.type);
+      if (definition.internalType === 'control') {
+        wrappers.push(ControlWrapper.forFormControl(question.id, this.createAndInitFormControl(question)));
+      } else if (definition.internalType === 'action') {
+        wrappers.push(ControlWrapper.forAction(question.id, this.createAndInitFormAction(question)));
+      } else if (definition.internalType === 'array') {
+        // TODO length check and assertions, create group automatically if more than one
+        wrappers.push(ControlWrapper.forFormArray(question.id, new FastFormArray((question.children ?? [])[0], this)));
+      } else if (definition.internalType === 'group') {
+        const subFormGroup = new FastFormGroup(question.children ?? [], this);
+        wrappers.push(ControlWrapper.forFormControl(question.id, subFormGroup));    
       }
     }
-  }
-
-  private createFormControlForArray(question: Question): AbstractControl[] {
-    if (question.type === 'group') {
-      return [new FastFormGroup(question.children ?? [], this)];
-    } else if (question.type === 'array' || this.uiRegistry.isArray(question.type)) {
-      return [new FastFormArray((question.children ?? [])[0], this)];
-    } else {
-      const def = this.uiRegistry.findControl(question.type);
-      if (def) {
-        if (def.inline) {
-          return (question.children || [])
-              .filter(childQuestion => this.uiRegistry.isControl(childQuestion.type))
-              .map(childQuestion => {
-                return this.createControl(childQuestion);
-              });
-        } else {
-          return [this.createControl(question)];
-        }
-      }
+    if (wrappers.length === 0) {
+      console.error(`Form control with type [${question.type}] not found.`);
     }
-    throw new Error(`No control component registered for type [${question.type}].`);
+    return wrappers;
   }
 
-  private createControl(question: Question): AbstractControl {
-    const control = this.createRawControl(question);
+  private createAndInitFormControl(question: Question): AbstractControl {
+    const control = this.createFormControl(question);
     const validator = this.validatorFactory.createValidators(question.validation);
     const asyncValidator = this.validatorFactory.createAsyncValidators(question.validation);
     control.setValidators(validator);
@@ -129,5 +111,15 @@ export class ControlFactoryService {
       }
     }
     return new FastFormControl(question, question.defaultValue);
+  }
+
+  private createAndInitFormAction(question: Question): AbstractControl {
+    const definition = this.controlRegistry.getDefinition(question.type);
+    if (definition) {
+      if (definition.controlFactory) {
+        return definition.controlFactory(question);
+      }
+    }
+    return new FromActionControlInternal();
   }
 }

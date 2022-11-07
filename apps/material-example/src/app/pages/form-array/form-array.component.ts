@@ -18,7 +18,7 @@ export class FormArrayComponent implements OnInit {
       type: 'array',
       children: [{
         id: 'first-input',
-        type: 'input'
+        type: 'mat-input'
       }]
     }]);
     this.formArrayWithGroup = this.formService.createDynamicForm([{
@@ -32,11 +32,11 @@ export class FormArrayComponent implements OnInit {
           type: 'row',
           children: [{
             id: 'first-input',
-            type: 'input',
+            type: 'mat-input',
             label: 'Input one'
           }, {
             id: 'second-input',
-            type: 'input',
+            type: 'mat-input',
             label: 'Input Two'
           }, {
             id: 'add-button',

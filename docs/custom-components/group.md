@@ -1,8 +1,8 @@
-# Custom group
+# Form Group
 
-A custom control group with multiple controls is similar to a
-[custom control](control). To add multiple inputs to a control factory must
-be added to the component. See the following example for more information.
+A form control group with multiple controls is similar to a
+[custom control](control). To add multiple inputs to a form group it is required
+to add a control factory to the component. See the following example for more information.
 
 ## Example
 
@@ -10,38 +10,39 @@ be added to the component. See the following example for more information.
 
 ```typescript
 @Control({
-  type: 'date-range'
+  type: 'date-range',
 })
 @Component({
   selector: 'date-range-input',
   templateUrl: './date-range-input.component.html',
   styleUrls: ['./date-range-input.component.scss'],
 })
-export class DateRangeInputComponent extends BaseFormControlComponent<any, FormGroup> {
-
+export class DateRangeInputComponent {
+  
   @ControlFactory()
   public static controlFactory(question: Question) {
     return new FormGroup({
       from: new FormControl(),
-      until: new FormControl()
+      until: new FormControl(),
     });
   }
+
+  constructor(@Inject(FORM_CONTROL) public control: FormGroup) {}
 }
 ```
 
 ```html
-
 <div [formGroup]="control" class="date-range">
   <mat-form-field>
     <mat-label>From</mat-label>
-    <input [matDatepicker]="pickerFrom" formControlName="from" matInput>
+    <input [matDatepicker]="pickerFrom" formControlName="from" matInput />
     <mat-hint>DD.MM.YYYY</mat-hint>
     <mat-datepicker-toggle [for]="pickerFrom" matSuffix></mat-datepicker-toggle>
     <mat-datepicker #pickerFrom></mat-datepicker>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Until</mat-label>
-    <input [matDatepicker]="pickerUntil" formControlName="until" matInput>
+    <input [matDatepicker]="pickerUntil" formControlName="until" matInput />
     <mat-hint>DD.MM.YYYY</mat-hint>
     <mat-datepicker-toggle [for]="pickerUntil" matSuffix></mat-datepicker-toggle>
     <mat-datepicker #pickerUntil></mat-datepicker>
@@ -58,18 +59,14 @@ the following example.
 
 ```typescript
 FastFormsModule.forRoot({
-  controls: [
-    DateRangeInputComponent
-  ]
-})
+  controls: [DateRangeInputComponent],
+});
 ```
 
 **Child Module**
 
 ```typescript
 FastFormsModule.forChild({
-  controls: [
-    DateRangeInputComponent
-  ]
-})
+  controls: [DateRangeInputComponent],
+});
 ```

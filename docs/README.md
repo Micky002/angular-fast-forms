@@ -21,7 +21,6 @@ which can be started with `npm run start:storybook`.
 * Create forms without any html
 * Provide basic form components out of the box
 * Validation support
-* Custom form components and validators
 * Lazy loading support
 * Supports JSON form definitions (also fetching them via HTTP)
 * Small size

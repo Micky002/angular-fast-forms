@@ -85,6 +85,16 @@
         ]
       }
     },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "coverage/apps/storybook"
+      ],
+      "options": {
+        "jestConfig": "apps/storybook/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
     "storybook": {
       "executor": "@storybook/angular:start-storybook",
       "options": {

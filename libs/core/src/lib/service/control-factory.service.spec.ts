@@ -10,6 +10,8 @@ import { ActionControl } from '../actions/actions.decorator';
 import { Control } from '../control/control.decorator';
 import { AFF_CONTROL_COMPONENTS, DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from '../model';
 import { FastFormGroup } from '../control/fast-form-group';
+import { FastFormArrayComponent } from '../components/fast-form-array/fast-form-array.component';
+import { FastFormGroupComponent } from '../components';
 
 
 @Component({
@@ -64,7 +66,9 @@ describe('ControlFactoryService', () => {
           multi: true,
           useValue: [
             DummyActionComponent,
-            DummyRowComponent
+            DummyRowComponent,
+            FastFormArrayComponent,
+            FastFormGroupComponent
           ]
         } as Provider
       ]
@@ -77,7 +81,7 @@ describe('ControlFactoryService', () => {
   });
 
   it('should create control if nothing is registered', () => {
-    const control = service.createRawControl({type: 'test-control', id: 'test'});
+    const control = service.createFormControl({type: 'test-control', id: 'test'});
     expect(control).toBeDefined();
   });
 
@@ -87,7 +91,7 @@ describe('ControlFactoryService', () => {
       component: DummyFormComponent,
       controlFactory: () => new FormControl('initial-state')
     }];
-    const control = service.createRawControl({type: 'test-control', id: 'test'});
+    const control = service.createFormControl({type: 'test-control', id: 'test'});
     expect(control).toBeDefined();
     expect(control.value).toEqual('initial-state');
   });
@@ -97,7 +101,7 @@ describe('ControlFactoryService', () => {
       type: 'test-control',
       component: DummyFormComponent
     }];
-    const control = service.createRawControl({
+    const control = service.createFormControl({
       type: 'test-control',
       id: 'test',
       defaultValue: 'my custom default'
@@ -194,6 +198,18 @@ describe('ControlFactoryService', () => {
       expect(formGroup.get('first-input')).toBeDefined();
       expect(formGroup.get('first-input')).toBeInstanceOf(FormControl);
       expect(formGroup.get('test-action')).toBeNull();
+    });
+
+    it('should print warning if action is added to standard form', () => {
+      jest.spyOn(console, 'warn');
+      const formGroup = new FormGroup({});
+      service.createFromQuestion(formGroup, {
+        id: 'test-action',
+        type: 'add-button'
+      });
+      expect(formGroup.get('test-action')).toBeNull();
+      expect(console.warn).toBeCalledTimes(1);
+      expect(console.warn).lastCalledWith('Cannot add action to standard reactive form.');
     });
   });
 });

@@ -16,7 +16,7 @@ it ([or add your own form components](/core-features/custom-form-controls)):
 
 * `@ngx-fast-forms/material` (add `MaterialFastFormsModule` to your module imports)
 
-Create your first fast form:
+Create your first form:
 
 ```html
 

@@ -1,5 +1,15 @@
 import { Component, Inject } from '@angular/core';
-import { ActionControl, ActionService, CONTROL_ID, ControlId } from '@ngx-fast-forms/core';
+import {
+  ActionControl,
+  ActionService,
+  CONTROL_ID,
+  ControlFactory,
+  ControlId,
+  FORM_CONTROL,
+  FormActionGroup,
+  ActionGroupFactory,
+  ActionControlFactory
+} from '@ngx-fast-forms/core';
 
 @ActionControl({
   type: 'time-array-actions'
@@ -12,7 +22,17 @@ import { ActionControl, ActionService, CONTROL_ID, ControlId } from '@ngx-fast-f
 export class ActionButtonsComponent {
 
   constructor(@Inject(CONTROL_ID) public id: ControlId,
+              @Inject(FORM_CONTROL) public action: FormActionGroup,
               private actionService: ActionService) {
+  }
+
+  @ControlFactory()
+  public static createActions() {
+    return ActionGroupFactory.create({
+      add: ActionControlFactory.create(),
+      copy: ActionControlFactory.create(),
+      delete: ActionControlFactory.create()
+    });
   }
 
   clickAddButton() {
