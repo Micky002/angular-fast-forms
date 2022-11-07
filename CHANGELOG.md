@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.1](https://github.com/Micky002/angular-fast-forms/compare/v1.5.0...v1.5.1) (2022-11-07)
+
+
+### Bug Fixes
+
+* add id to injectable question definition ([98360af](https://github.com/Micky002/angular-fast-forms/commit/98360afdb40a58c9f313edc982d47597ab48e0d0))
+
 ## [1.5.0](https://github.com/Micky002/angular-fast-forms/compare/v1.4.2...v1.5.0) (2022-11-07)
 
 
