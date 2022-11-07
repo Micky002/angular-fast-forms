@@ -1,4 +1,4 @@
-import { ComponentRef, Inject, Injectable, Injector, Optional, ViewContainerRef } from '@angular/core';
+import { ComponentRef, Inject, Injectable, Injector, Optional, Provider, StaticProvider, ViewContainerRef } from '@angular/core';
 import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition, Question } from '../model';
 import { BaseFormInlineComponent } from '../components/base/base-inline.component';
 import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
@@ -87,6 +87,25 @@ export class FormRenderService {
     actionService?: ActionService,
     indexDirective?: ArrayIndexDirective
   ): ComponentRef<T> {
+    const controlComponentRef = viewContainerRef.createComponent(formDefinition.component, {
+      injector: Injector.create({
+        providers: this.createProviders(question, parent, injector, actionService, indexDirective),
+        parent: injector ? injector : this.injector,
+      }),
+    });
+    if (this.shouldInitialize(controlComponentRef.instance)) {
+      this.initializeComponent(parent, question, formDefinition.component.name, controlComponentRef.instance);
+    }
+    return controlComponentRef as any;
+  }
+
+  private createProviders(
+    question: Question, 
+    parent: AbstractControl,
+    injector: Injector,
+    actionService?: ActionService,
+    indexDirective?: ArrayIndexDirective
+  ): StaticProvider[] {
     const id = injector.get<ControlIdImpl>(CONTROL_ID, new ControlIdImpl());
     let control: AbstractControl | null = null;
     if (this.controlRegistry.hasItem(question.type)) {
@@ -97,38 +116,13 @@ export class FormRenderService {
         control = parent.get(question.id);
       }  
     }
-    
-    const controlComponentRef = viewContainerRef.createComponent(formDefinition.component, {
-      injector: Injector.create({
-        providers: [
-          {
-            provide: QuestionDefinition,
-            useValue: new QuestionDefinition(question),
-          },
-          {
-            provide: CONTROL_PROPERTIES,
-            useValue: question.properties ?? {},
-          },
-          {
-            provide: CONTROL_ID,
-            useValue: this.createControlId(id, question.id, parent, indexDirective),
-          },
-          {
-            provide: FORM_CONTROL,
-            useValue: control,
-          },
-          {
-            provide: ActionService,
-            useValue: actionService,
-          },
-        ],
-        parent: injector ? injector : this.injector,
-      }),
-    });
-    if (this.shouldInitialize(controlComponentRef.instance)) {
-      this.initializeComponent(parent, question, formDefinition.component.name, controlComponentRef.instance);
-    }
-    return controlComponentRef as any;
+    return [
+      { provide: QuestionDefinition, useValue: new QuestionDefinition(question) },
+      { provide: CONTROL_PROPERTIES, useValue: question.properties ?? {} },
+      { provide: CONTROL_ID, useValue: this.createControlId(id, question.id, parent, indexDirective) },
+      { provide: FORM_CONTROL, useValue: control },
+      { provide: ActionService, useValue: actionService },
+    ];
   }
 
   private createControlId(
