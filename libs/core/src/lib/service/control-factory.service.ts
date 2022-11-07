@@ -30,15 +30,17 @@ export class ControlFactoryService {
 
   public createFromQuestion(parent: FormGroup | FormArray, question: Question, index?: number) {
     const def = this.renderService.findControl(question.type);
+    let createdControls: ControlWrapper[];
     if (def && def.inline) {
-      flattenArray(
+      createdControls = flattenArray(
         (question.children ?? []).map((childQuestion) => {
           return this.createControl(childQuestion);
         })
-      ).map((control) => control.addToParent(parent, index));
+      );
     } else {
-      this.createControl(question).map((control) => control.addToParent(parent, index));
+      createdControls = this.createControl(question);
     }
+    createdControls.map((control) => control.addToParent(parent, index));
   }
 
   public createFormControl(question: Question): AbstractControl {

@@ -7,3 +7,4 @@ export * from './fast-form-row/fast-form-row.component';
 export * from './fast-form-row/models';
 export * from './util/inject-token';
 export * from './util/registration.util';
+export * from './question-definition';

@@ -1,7 +1,7 @@
 import { ComponentRef, Inject, Injectable, Injector, Optional, ViewContainerRef } from '@angular/core';
 import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition, Question } from '../model';
 import { BaseFormInlineComponent } from '../components/base/base-inline.component';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { BaseFormArrayComponent } from '../components/base/base-array.component';
 import { FastFormArray } from '../control/fast-form-array';
 import { BaseFormControlComponent } from '../components/base/base-control.component';
@@ -14,6 +14,7 @@ import { ControlIdImpl } from './control/control-id-impl';
 import { ArrayIndexDirective } from '../actions/array-index.directive';
 import { FastFormControl } from '../control/fast-form-control';
 import { FastFormGroup } from '../control/fast-form-group';
+import { QuestionDefinition } from '../components/question-definition';
 
 @Injectable({
   providedIn: 'any',
@@ -79,7 +80,7 @@ export class FormRenderService {
 
   render<T>(
     viewContainerRef: ViewContainerRef,
-    parent: FormGroup | FormArray | FormControl,
+    parent: AbstractControl,
     question: Question,
     formDefinition: DynamicFormDefinition,
     injector: Injector,
@@ -87,9 +88,23 @@ export class FormRenderService {
     indexDirective?: ArrayIndexDirective
   ): ComponentRef<T> {
     const id = injector.get<ControlIdImpl>(CONTROL_ID, new ControlIdImpl());
+    let control: AbstractControl | null = null;
+    if (this.controlRegistry.hasItem(question.type)) {
+      const def = this.controlRegistry.getDefinition(question.type);
+      if (def.internalType === 'control' && parent instanceof FormControl) {
+        control = parent;
+      } else {
+        control = parent.get(question.id);
+      }  
+    }
+    
     const controlComponentRef = viewContainerRef.createComponent(formDefinition.component, {
       injector: Injector.create({
         providers: [
+          {
+            provide: QuestionDefinition,
+            useValue: new QuestionDefinition(question),
+          },
           {
             provide: CONTROL_PROPERTIES,
             useValue: question.properties ?? {},
@@ -100,7 +115,7 @@ export class FormRenderService {
           },
           {
             provide: FORM_CONTROL,
-            useValue: parent.get(question.id),
+            useValue: control,
           },
           {
             provide: ActionService,
@@ -119,7 +134,7 @@ export class FormRenderService {
   private createControlId(
     id: ControlIdImpl,
     questionId: string,
-    control: FormGroup | FormArray | FormControl,
+    control: AbstractControl,
     indexDirective?: ArrayIndexDirective
   ): ControlIdImpl {
     if (indexDirective && (control instanceof FastFormGroup || control instanceof FastFormControl)) {
@@ -158,7 +173,7 @@ export class FormRenderService {
 
   // TODO better type check
   private initializeComponent(
-    control: FormGroup | FormArray | FormControl,
+    control: AbstractControl,
     question: Question,
     componentName: string,
     component: BaseFormArrayComponent | BaseFormInlineComponent | BaseFormControlComponent

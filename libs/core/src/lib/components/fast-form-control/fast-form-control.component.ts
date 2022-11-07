@@ -30,7 +30,7 @@ export class FastFormControlComponent implements OnInit {
 
   private createComponent(question: Question) {
     const formDefinition = this.uiRegistry.findControl(question.type);
-    if (formDefinition) {
+    if (formDefinition && this.control.parent) {
       this.uiRegistry.render(
           this.componentViewContainerRef,
           this.control,

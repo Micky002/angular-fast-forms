@@ -1,12 +1,8 @@
-# Custom control
+# Form Control
 
-To add a custom control you have to create a new angular component via the angular
-[CLI](https://angular.io/cli/generate#component) or manually. These component must
-extend the `BaseFormControlComponent<T = QuestionProperties, C = AbstractControl>`
-abstract class. If the control has custom properties then the type parameter `T`
-should declare this type. `C` should define either the angular `AbstractControl`
-(`FormControl` | `FormGroup` | ...) or a custom subtype of this. The last step is
-to register the control.
+To add a form control you have to create a new angular component via the angular
+[CLI](https://angular.io/cli/generate#component) or manually. It must be annotated with `@Control` and a type must be given.
+See the following example for more information.
 
 ## Example
 
@@ -16,13 +12,19 @@ In this example a basic input control is registered.
 
 ```typescript
 @Control({
-  type: 'custom-input'
+  type: 'my-input',
 })
 @Component({
   selector: 'custom-input',
-  templateUrl: './input.component.html'
+  templateUrl: './input.component.html',
 })
-export class InputComponent extends BaseFormControlComponent<InputProperties, FormControl> {
+export class InputComponent {
+  
+  constructor(
+    @Inject(FORM_CONTROL) public control: FormControl,
+    public question: QuestionDefinition,
+    @Inject(CONTROL_PROPERTIES) private properties: InputProperties
+  ) {}
 
   public get type(): string {
     switch (this.format) {
@@ -48,14 +50,11 @@ interface InputProperties {
 ```
 
 ```html
-
 <mat-form-field>
   <mat-label *ngIf="question.label">{{question.label}}</mat-label>
-  <input #inputElement [formControl]="control" [type]="type" matInput>
+  <input #inputElement [formControl]="control" [type]="type" matInput />
   <mat-icon *ngIf="format === 'currency'" matSuffix>€</mat-icon>
-  <mat-error *ngIf="control.hasError('required')">
-    Value is required
-  </mat-error>
+  <mat-error *ngIf="control.hasError('required')"> Value is required </mat-error>
 </mat-form-field>
 ```
 
@@ -68,18 +67,14 @@ the following example.
 
 ```typescript
 FastFormsModule.forRoot({
-  controls: [
-    InputComponent
-  ]
-})
+  controls: [InputComponent],
+});
 ```
 
 **Child Module**
 
 ```typescript
 FastFormsModule.forChild({
-  controls: [
-    InputComponent
-  ]
-})
+  controls: [InputComponent],
+});
 ```

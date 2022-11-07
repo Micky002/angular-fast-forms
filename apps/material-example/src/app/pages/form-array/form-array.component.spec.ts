@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormArrayComponent } from './form-array.component';
-import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FastFormsModule } from '@ngx-fast-forms/core';
+import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
+import { FormArrayComponent } from './form-array.component';
 
 describe('FormArrayComponent', () => {
   let component: FormArrayComponent;
