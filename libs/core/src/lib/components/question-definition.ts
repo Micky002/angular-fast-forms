@@ -1,4 +1,4 @@
-import { QuestionProperties, ValidationOptions } from '../model';
+import { BasicQuestion, QuestionProperties, ValidationOptions } from '../model';
 
 export class QuestionDefinition {
   public readonly id: string;
@@ -18,11 +18,3 @@ export class QuestionDefinition {
   }
 }
 
-export interface BasicQuestion {
-  id: string;
-  label?: string;
-  hidden?: boolean;
-  validation?: ValidationOptions;
-  properties?: QuestionProperties;
-  defaultValue?: string | number;
-}

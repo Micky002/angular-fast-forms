@@ -5,7 +5,6 @@ import { BaseFormInlineComponent } from './components/base/base-inline.component
 import { BaseFormArrayComponent } from './components/base/base-array.component';
 import { BaseFormGroupComponent } from './components/base/base-group.component';
 import { InternalControlComponent } from './internal/control/models';
-import { BasicQuestion } from './components';
 
 /**
  * @deprecated
@@ -22,6 +21,15 @@ export interface DynamicFormDefinition {
 }
 
 export type QuestionProperties = { [key: string]: unknown };
+
+export interface BasicQuestion {
+  id: string;
+  label?: string;
+  hidden?: boolean;
+  validation?: ValidationOptions;
+  properties?: QuestionProperties;
+  defaultValue?: string | number;
+}
 
 export interface Question extends BasicQuestion {
   type: string;

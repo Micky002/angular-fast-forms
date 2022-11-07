@@ -107,6 +107,10 @@ export class FormRenderService {
     indexDirective?: ArrayIndexDirective
   ): StaticProvider[] {
     const id = injector.get<ControlIdImpl>(CONTROL_ID, new ControlIdImpl());
+    console.log(question.id, question.type);
+    
+    // console.log(id);
+    
     let control: AbstractControl | null = null;
     if (this.controlRegistry.hasItem(question.type)) {
       const def = this.controlRegistry.getDefinition(question.type);

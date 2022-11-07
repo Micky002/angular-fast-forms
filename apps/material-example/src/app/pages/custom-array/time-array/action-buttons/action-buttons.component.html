@@ -1,5 +1,9 @@
 <div class="button-container">
-  <button (click)="clickAddButton()" [disabled]="action.get('add')?.disabled" mat-icon-button type="button">
+  <button (click)="clickAddButton()"
+          [disabled]="action.get('add')?.disabled"
+          data-test-id="add-action"
+          mat-icon-button
+          type="button">
     <mat-icon>add_circle_outline</mat-icon>
   </button>
   <button (click)="clickCopyButton()" [disabled]="action.get('copy')?.disabled" mat-icon-button type="button">

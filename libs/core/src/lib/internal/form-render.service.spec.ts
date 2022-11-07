@@ -1,10 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FormRenderService } from './form-render.service';
-import { ControlRegistry } from './control/control-registry.service';
 import { BaseFormControlComponent } from '../components/base/base-control.component';
-import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from '../model';
+import { Control } from '../control/control.decorator';
+import { AFF_CONTROL_COMPONENTS } from '../model';
+import { ControlRegistry } from './control/control-registry.service';
+import { FormRenderService } from './form-render.service';
 
+@Control({
+  type: 'dummy'
+})
 class DummyControl extends BaseFormControlComponent {
 }
 
@@ -14,11 +18,8 @@ describe('FormRenderService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [{
-        provide: DYNAMIC_FORM_CONTROL,
-        useValue: {
-          type: 'dummy',
-          component: DummyControl
-        } as DynamicFormDefinition,
+        provide: AFF_CONTROL_COMPONENTS,
+        useValue: [DummyControl],
         multi: true
       }]
     });
