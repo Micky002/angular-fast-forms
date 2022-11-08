@@ -11,12 +11,12 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { ActionService } from '../../actions/action.service';
 import { Control } from '../../control/control.decorator';
 import { FormRenderService } from '../../internal/form-render.service';
 import { Question } from '../../model';
-import { CONTROL_CHILDREN, CONTROL_PROPERTIES } from '../util/inject-token';
+import { CONTROL_CHILDREN, CONTROL_PROPERTIES, FORM_CONTROL } from '../util/inject-token';
 import { FastFormRowProperties } from './fast-form-row.properties';
 
 
@@ -42,7 +42,7 @@ export class FastFormRowComponent implements OnInit, OnChanges {
               private renderer: Renderer2,
               private injector: Injector,
               @Inject(CONTROL_CHILDREN) public questions: Question[],
-              @Inject(FormControl) public formGroup: FormGroup,
+              @Inject(FORM_CONTROL) public formGroup: FormGroup,
               @Inject(CONTROL_PROPERTIES) private properties: FastFormRowProperties,
               @Optional() private actionService?: ActionService) {
   }

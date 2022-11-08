@@ -6,6 +6,8 @@
     "PATH": "node_modules/.bin:${env:PATH}"
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "jest.showTerminalOnLaunch": true,
+  "jest.autoRun": "off",
   "jest.jestCommandLine": "node_modules/.bin/jest --runInBand"
 }
 

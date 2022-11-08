@@ -6,12 +6,11 @@ import { FastFormsModule } from '../../fast-forms.module';
 import { Question } from '../../model';
 import { FastFormGroup } from '../../control/fast-form-group';
 import { DummyInputModule } from '../../test/dummy-input.module.test-util';
-import { CONTROL_CHILDREN, CONTROL_PROPERTIES } from '../util/inject-token';
+import { CONTROL_CHILDREN, CONTROL_PROPERTIES, FORM_CONTROL } from '../util/inject-token';
 
 describe('FastFormRowComponent', () => {
   let component: FastFormRowComponent;
   let fixture: ComponentFixture<FastFormRowComponent>;
-  let controlFactory: ControlFactoryService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -23,12 +22,25 @@ describe('FastFormRowComponent', () => {
         },
         {
           provide: CONTROL_CHILDREN,
-          useValue: 
+          useValue: [{
+            id: 'name',
+            type: 'dummy-input',
+            defaultValue: 'meins'
+          }, {
+            id: 'surname',
+            type: 'dummy-input'
+          }]
+        },
+        {
+          provide: FORM_CONTROL,
+          deps: [ControlFactoryService, CONTROL_CHILDREN],
+          useFactory: (cf: ControlFactoryService, children: Question[]) => {
+            return new FastFormGroup(children, cf);
+          }
         }
       ],
     }).compileComponents();
     fixture = TestBed.createComponent(FastFormRowComponent);
-    controlFactory = TestBed.inject(ControlFactoryService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -38,16 +50,6 @@ describe('FastFormRowComponent', () => {
   });
 
   it('should render two input fields', async () => {
-    const questions: Array<Question> = [{
-      id: 'name',
-      type: 'dummy-input',
-      defaultValue: 'meins'
-    }, {
-      id: 'surname',
-      type: 'dummy-input'
-    }];
-    component.formGroup = new FastFormGroup(questions, controlFactory);
-    component.questions = questions;
     component.ngOnChanges();
     fixture.detectChanges();
     const nameInput = fixture.debugElement.query(By.css('input#name')).nativeElement as HTMLInputElement;
