@@ -1,11 +1,29 @@
 <div class="button-container">
-  <button (click)="clickAddButton()" [disabled]="action.get('add')?.disabled" mat-icon-button type="button">
+  <button
+    (click)="clickAddButton()"
+    [disabled]="action.get('add')?.disabled"
+    mat-icon-button
+    type="button"
+    data-test-id="add-action"
+  >
     <mat-icon>add_circle_outline</mat-icon>
   </button>
-  <button (click)="clickCopyButton()" [disabled]="action.get('copy')?.disabled" mat-icon-button type="button">
+  <button
+    (click)="clickCopyButton()"
+    [disabled]="action.get('copy')?.disabled"
+    mat-icon-button
+    type="button"
+    data-test-id="copy-action"
+  >
     <mat-icon>content_copy</mat-icon>
   </button>
-  <button (click)="clickDeleteButton()" [disabled]="action.get('delete')?.disabled" mat-icon-button type="button">
+  <button
+    (click)="clickDeleteButton()"
+    [disabled]="action.get('delete')?.disabled"
+    mat-icon-button
+    type="button"
+    data-test-id="delete-action"
+  >
     <mat-icon>clear</mat-icon>
   </button>
 </div>

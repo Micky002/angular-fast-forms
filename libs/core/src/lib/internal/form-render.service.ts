@@ -132,9 +132,7 @@ export class FormRenderService {
     indexDirective?: ArrayIndexDirective
   ): ControlIdImpl {
     if (indexDirective && (control instanceof FastFormGroup || control instanceof FastFormControl)) {
-      return id.addIndex(control);
-    } else if (control.get(questionId) instanceof FormArray) {
-      return id.addPart(questionId);
+      return id.addIndex(questionId, control);
     } else {
       return id.addPart(questionId);
     }

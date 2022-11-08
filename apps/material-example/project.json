@@ -98,6 +98,15 @@
         "passWithNoTests": true,
         "runInBand": true
       }
+    },
+    "component-test": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/material-example/cypress.config.ts",
+        "testingType": "component",
+        "skipServe": true,
+        "devServerTarget": "material-example:build"
+      }
     }
   },
   "tags": []
