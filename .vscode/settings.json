@@ -1,0 +1,13 @@
+{
+  "terminal.integrated.env.linux": {
+    "PATH": "node_modules/.bin:${env:PATH}"
+  },  
+  "terminal.integrated.env.osx": {
+    "PATH": "node_modules/.bin:${env:PATH}"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "jest.showTerminalOnLaunch": true,
+  "jest.autoRun": "off",
+  "jest.jestCommandLine": "node_modules/.bin/jest --runInBand"
+}
+
