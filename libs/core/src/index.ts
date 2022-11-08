@@ -19,3 +19,4 @@ export * from './lib/validation/validation.decorator';
 
 export * from './lib/fast-forms.module';
 export * from './lib/model';
+export * from './lib/question.properties';

@@ -1,8 +1,9 @@
 import { Provider, Type } from '@angular/core';
-import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition, Question } from '../../model';
+import { DynamicFormDefinition, Question } from '../../model';
 import { BaseFormControlComponent } from '../base/base-control.component';
 import { BaseFormGroupComponent } from '../base/base-group.component';
 import { FormGroup } from '@angular/forms';
+import { DYNAMIC_FORM_CONTROL } from './inject-token';
 
 /**
  * @deprecated Will be removed in 2.0.0

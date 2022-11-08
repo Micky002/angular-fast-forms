@@ -1,6 +1,6 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
-import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition, Question } from '../model';
+import { DynamicFormDefinition, Question } from '../model';
 import { ValidatorFactoryService } from '../validation/validator-factory.service';
 import { FormRenderService } from '../internal/form-render.service';
 import { FastFormArray } from '../control/fast-form-array';
@@ -10,6 +10,7 @@ import { ControlRegistry } from '../internal/control/control-registry.service';
 import { FromActionControlInternal } from '../internal/action/action-control-internal';
 import { ControlWrapper } from '../internal/control-wrapper';
 import { flattenArray } from '../util/list.util';
+import { DYNAMIC_FORM_CONTROL } from '../components/util/inject-token';
 
 @Injectable({
   providedIn: 'any'

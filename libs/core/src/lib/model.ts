@@ -5,12 +5,8 @@ import { BaseFormInlineComponent } from './components/base/base-inline.component
 import { BaseFormArrayComponent } from './components/base/base-array.component';
 import { BaseFormGroupComponent } from './components/base/base-group.component';
 import { InternalControlComponent } from './internal/control/models';
+import { QuestionProperties } from './question.properties';
 
-/**
- * @deprecated
- */
-export const DYNAMIC_FORM_CONTROL = new InjectionToken<DynamicFormDefinition>('AFF_DYNAMIC_FORM_CONTROL');
-export const AFF_CONTROL_COMPONENTS = new InjectionToken<Array<Array<InternalControlComponent>>>('AFF_CONTROL_COMPONENTS');
 
 export interface DynamicFormDefinition {
   type: string;
@@ -19,8 +15,6 @@ export interface DynamicFormDefinition {
   component: Type<BaseFormControlComponent<any, any> | BaseFormInlineComponent | BaseFormArrayComponent<any> | BaseFormGroupComponent>;
   controlFactory?: (question: Question) => AbstractControl;
 }
-
-export type QuestionProperties = { [key: string]: unknown };
 
 export interface BasicQuestion {
   id: string;

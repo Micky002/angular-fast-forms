@@ -4,10 +4,10 @@ import { Inject, Injectable, Optional, Type } from '@angular/core';
 import { BaseFormInlineComponent } from '../../components/base/base-inline.component';
 import { BaseFormArrayComponent } from '../../components/base/base-array.component';
 import { AbstractRegistry } from '../abstract-registry';
-import { AFF_CONTROL_COMPONENTS } from '../../model';
 import { BaseFormControlComponent } from '../../components/base/base-control.component';
 import { BaseFormGroupComponent } from '../../components/base/base-group.component';
 import { InternalControlDefinition } from '../models';
+import { AFF_CONTROL_COMPONENTS } from '../../components/util/inject-token';
 
 @Injectable({
   providedIn: 'any'

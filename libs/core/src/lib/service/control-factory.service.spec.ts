@@ -8,10 +8,11 @@ import { ValidatorFactoryService } from '../validation/validator-factory.service
 import { FastFormArray } from '../control/fast-form-array';
 import { ActionControl } from '../actions/actions.decorator';
 import { Control } from '../control/control.decorator';
-import { AFF_CONTROL_COMPONENTS, DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from '../model';
+import { DynamicFormDefinition } from '../model';
 import { FastFormGroup } from '../control/fast-form-group';
 import { FastFormArrayComponent } from '../components/fast-form-array/fast-form-array.component';
-import { FastFormGroupComponent } from '../components';
+import { FastFormGroupComponent } from '../components/fast-form-group/fast-form-group.component';
+import { AFF_CONTROL_COMPONENTS, DYNAMIC_FORM_CONTROL } from '../components/util/inject-token';
 
 
 @Component({

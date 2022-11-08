@@ -11,13 +11,15 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import { BaseFormInlineComponent } from '../base/base-inline.component';
-import { Question } from '../../model';
-import { FormRenderService } from '../../internal/form-render.service';
-import { CONTROL_PROPERTIES } from '../util/inject-token';
-import { FastFormsRowProperties } from './models';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActionService } from '../../actions/action.service';
 import { Control } from '../../control/control.decorator';
+import { FormRenderService } from '../../internal/form-render.service';
+import { Question } from '../../model';
+import { CONTROL_CHILDREN, CONTROL_PROPERTIES } from '../util/inject-token';
+import { FastFormRowProperties } from './fast-form-row.properties';
+
+
 
 @Control({
   type: 'row',
@@ -27,7 +29,7 @@ import { Control } from '../../control/control.decorator';
   selector: 'aff-form-row',
   templateUrl: './fast-form-row.component.html'
 })
-export class FastFormRowComponent extends BaseFormInlineComponent implements OnInit, OnChanges {
+export class FastFormRowComponent implements OnInit, OnChanges {
 
   @ViewChild('componentViewContainer', {
     read: ViewContainerRef,
@@ -39,9 +41,10 @@ export class FastFormRowComponent extends BaseFormInlineComponent implements OnI
   constructor(private uiRegistry: FormRenderService,
               private renderer: Renderer2,
               private injector: Injector,
-              @Inject(CONTROL_PROPERTIES) private properties: FastFormsRowProperties,
-              @Optional() private actionService: ActionService) {
-    super();
+              @Inject(CONTROL_CHILDREN) public questions: Question[],
+              @Inject(FormControl) public formGroup: FormGroup,
+              @Inject(CONTROL_PROPERTIES) private properties: FastFormRowProperties,
+              @Optional() private actionService?: ActionService) {
   }
 
   ngOnInit(): void {

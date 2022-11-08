@@ -1,4 +1,5 @@
-import { BasicQuestion, QuestionProperties, ValidationOptions } from '../model';
+import { BasicQuestion, ValidationOptions } from '../model';
+import { QuestionProperties } from '../question.properties';
 
 export class QuestionDefinition {
   public readonly id: string;

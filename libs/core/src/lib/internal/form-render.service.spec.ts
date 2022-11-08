@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
 import { BaseFormControlComponent } from '../components/base/base-control.component';
+import { AFF_CONTROL_COMPONENTS } from '../components/util/inject-token';
 import { Control } from '../control/control.decorator';
-import { AFF_CONTROL_COMPONENTS } from '../model';
 import { ControlRegistry } from './control/control-registry.service';
 import { FormRenderService } from './form-render.service';
 

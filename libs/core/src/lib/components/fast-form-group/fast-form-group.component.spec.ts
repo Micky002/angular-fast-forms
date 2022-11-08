@@ -6,7 +6,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BaseFormControlComponent } from '../base/base-control.component';
 import { FastFormGroupComponent } from './fast-form-group.component';
 import { FastFormsService } from '../../service/fast-forms.service';
-import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from '../../model';
+import { DynamicFormDefinition } from '../../model';
+import { DYNAMIC_FORM_CONTROL } from '../util/inject-token';
 
 class DummyControl extends BaseFormControlComponent {
 }

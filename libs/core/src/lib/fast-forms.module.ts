@@ -6,8 +6,8 @@ import { FastFormArrayComponent } from './components/fast-form-array/fast-form-a
 import { FastFormControlComponent } from './components/fast-form-control/fast-form-control.component';
 import { FastFormGroupComponent } from './components/fast-form-group/fast-form-group.component';
 import { FastFormRowComponent } from './components/fast-form-row/fast-form-row.component';
+import { AFF_CONTROL_COMPONENTS } from './components/util/inject-token';
 import { VALIDATORS } from './internal/token';
-import { AFF_CONTROL_COMPONENTS } from './model';
 
 @NgModule({
   imports: [

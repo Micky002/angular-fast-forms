@@ -1,6 +1,6 @@
-import { Validator } from "./validation.decorator";
 import { META_VALIDATOR_OPTIONS_KEY } from '../internal/symbols';
-import { InternalValidator, ValidatorMetaData } from '../internal/validation/models';
+import { ValidatorMetaData } from '../internal/validation/models';
+import { Validator } from "./validation.decorator";
 
 
 class DummyClass {}

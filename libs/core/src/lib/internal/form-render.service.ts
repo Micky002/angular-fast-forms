@@ -7,11 +7,11 @@ import { BaseFormControlComponent } from '../components/base/base-control.compon
 import { BaseFormGroupComponent } from '../components/base/base-group.component';
 import { BaseFormInlineComponent } from '../components/base/base-inline.component';
 import { QuestionDefinition } from '../components/question-definition';
-import { CONTROL_ID, CONTROL_PROPERTIES, FORM_CONTROL } from '../components/util/inject-token';
+import { CONTROL_CHILDREN, CONTROL_ID, CONTROL_PROPERTIES, DYNAMIC_FORM_CONTROL, FORM_CONTROL } from '../components/util/inject-token';
 import { FastFormArray } from '../control/fast-form-array';
 import { FastFormControl } from '../control/fast-form-control';
 import { FastFormGroup } from '../control/fast-form-group';
-import { DynamicFormDefinition, DYNAMIC_FORM_CONTROL, Question } from '../model';
+import { DynamicFormDefinition, Question } from '../model';
 import { ControlIdImpl } from './control/control-id-impl';
 import { ControlRegistry } from './control/control-registry.service';
 import { InternalControlDefinition, InternalControlType } from './models';
@@ -110,7 +110,12 @@ export class FormRenderService {
     console.log(question.id, question.type);
     
     // console.log(id);
-    
+    const injects: StaticProvider[] = [
+      { provide: QuestionDefinition, useValue: new QuestionDefinition(question) },
+      { provide: CONTROL_PROPERTIES, useValue: question.properties ?? {} },
+      { provide: CONTROL_ID, useValue: this.createControlId(id, question.id, parent, indexDirective) },
+      { provide: ActionService, useValue: actionService },
+    ];
     let control: AbstractControl | null = null;
     if (this.controlRegistry.hasItem(question.type)) {
       const def = this.controlRegistry.getDefinition(question.type);
@@ -118,15 +123,13 @@ export class FormRenderService {
         control = parent;
       } else {
         control = parent.get(question.id);
-      }  
+      }
+      if (def.inline === true) {
+        injects.push({ provide: CONTROL_CHILDREN, useValue: question.children ?? [] });
+      }
     }
-    return [
-      { provide: QuestionDefinition, useValue: new QuestionDefinition(question) },
-      { provide: CONTROL_PROPERTIES, useValue: question.properties ?? {} },
-      { provide: CONTROL_ID, useValue: this.createControlId(id, question.id, parent, indexDirective) },
-      { provide: FORM_CONTROL, useValue: control },
-      { provide: ActionService, useValue: actionService },
-    ];
+    injects.push({ provide: FORM_CONTROL, useValue: control })
+    return injects;
   }
 
   private createControlId(
