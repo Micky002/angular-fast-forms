@@ -11,6 +11,8 @@
     "start:material-example": "nx serve material-example",
     "start:storybook": "nx storybook storybook",
     "test:all": "nx affected --all --target=test --runInBand --coverage",
+    "test-component:all": "nx affected --all --target=component-test",
+    "test-component:material-example:watch": "nx run material-example:component-test --watch",
     "lint:all": "nx affected --all --target=lint --exclude=storybook,storybook-e2e,material-example-e2e",
     "release": "standard-version",
     "graph": "nx graph"

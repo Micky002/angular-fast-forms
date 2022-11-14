@@ -51,11 +51,11 @@ describe(TimeArrayComponent.name, () => {
   });
 
   it('should show new element button and add element', () => {
-    cy.get('[data-test-id=entry-1] [data-test-id=name]')
-      .should('not.be.visible')
+    cy.get('[data-test-id=entry-0] [data-test-id=name]')
+      .should('not.exist')
       .get('[data-test-id=new-item]')
       .click()
-      .get('[data-test-id=entry-1] [data-test-id=name]')
+      .get('[data-test-id=entry-0] [data-test-id=name]')
       .should('be.visible');
   });
 
