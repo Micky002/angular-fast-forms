@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.4](https://github.com/Micky002/angular-fast-forms/compare/v1.5.3...v1.5.4) (2022-11-14)
+
+
+### Bug Fixes
+
+* control id generation, add cypress component tests ([#39](https://github.com/Micky002/angular-fast-forms/issues/39)) ([427b3c9](https://github.com/Micky002/angular-fast-forms/commit/427b3c9d11b45edaf0793ad65fc31078cf051b49))
+
 ### [1.5.3](https://github.com/Micky002/angular-fast-forms/compare/v1.5.2...v1.5.3) (2022-11-07)
 
 
