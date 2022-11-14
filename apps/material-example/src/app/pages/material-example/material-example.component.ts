@@ -51,8 +51,4 @@ export class MaterialExampleComponent implements OnInit {
   ngOnInit(): void {
     this.httpForm = this.fastFormService.createHttpForm('assets/example-form.json');
   }
-
-  submitEvent(data: any) {
-    console.log(data);
-  }
 }
