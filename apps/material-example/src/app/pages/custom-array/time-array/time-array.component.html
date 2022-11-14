@@ -1,14 +1,22 @@
 <form class="aff-form-array">
   <ng-container *ngFor="let subForm of formArray.controls; let i = index">
     <ng-container *ngIf="isControl(subForm)">
-      <aff-form-control [affArrayIndex]="i" [control]="$any(subForm)"></aff-form-control>
+      <aff-form-control
+        [affArrayIndex]="i"
+        [control]="$any(subForm)"
+        [attr.data-test-id]="'entry-' + i"
+      ></aff-form-control>
     </ng-container>
     <ng-container *ngIf="isGroup(subForm)">
-      <aff-form-group [affArrayIndex]="i" [formGroup]="$any(subForm)"></aff-form-group>
+      <aff-form-group
+        [affArrayIndex]="i"
+        [formGroup]="$any(subForm)"
+        [attr.data-test-id]="'entry-' + i"
+      ></aff-form-group>
     </ng-container>
   </ng-container>
   <div *ngIf="formArray.controls.length === 0">
-    <button (click)="clickAddElement()" color="primary" id="empty-add-button" mat-icon-button>
+    <button (click)="clickAddElement()" color="primary" id="empty-add-button" mat-icon-button data-test-id="new-item">
       <mat-icon>add_circle_outline</mat-icon>
       <span>Add element</span>
     </button>

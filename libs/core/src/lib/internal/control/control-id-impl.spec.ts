@@ -11,8 +11,8 @@ describe('ControlIdImpl', () => {
     const parent = new ControlIdImpl().addPart('test-array');
     const firstProvider = {index: 0};
     const secondProvider = {index: 1};
-    const firstItem = parent.addIndex(firstProvider);
-    const secondItem = parent.addIndex(secondProvider);
+    const firstItem = parent.addIndex(undefined, firstProvider);
+    const secondItem = parent.addIndex(undefined, secondProvider);
     expect(parent.getId()).toEqual('test-array');
     expect(firstItem.getId()).toEqual('test-array[0]');
     expect(secondItem.getId()).toEqual('test-array[1]');
@@ -27,14 +27,19 @@ describe('ControlIdImpl', () => {
   });
 
   it('should add array index on first position', () => {
-    const id = new ControlIdImpl().addIndex({index: 0});
+    const id = new ControlIdImpl().addIndex(undefined, {index: 0});
     expect(id.getId()).toEqual('[0]');
+  });
+
+  it('should add array index with part on first position', () => {
+    const id = new ControlIdImpl().addIndex('test', {index: 0});
+    expect(id.getId()).toEqual('[0].test');
   });
 
   it('should add array if last is also array', () => {
     const provider1 = {index: 0};
     const provider2 = {index: 4};
-    const id = new ControlIdImpl().addIndex(provider1).addIndex(provider2);
+    const id = new ControlIdImpl().addIndex(undefined, provider1).addIndex(undefined, provider2);
     expect(id.getId()).toEqual('[0].[4]');
     provider1.index = 5;
     provider2.index = 19;

@@ -1,27 +1,28 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActionService, Control, FastFormArray, FORM_CONTROL } from '@ngx-fast-forms/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 @Control({
   type: 'custom-array',
-  controlType: 'array'
+  controlType: 'array',
 })
 @Component({
   selector: 'frontend-time-array',
   templateUrl: './time-array.component.html',
-  styleUrls: ['./time-array.component.scss']
+  styleUrls: ['./time-array.component.scss'],
 })
 export class TimeArrayComponent implements OnInit, OnDestroy {
-
   private _actionSub!: Subscription;
 
-  constructor(private actionService: ActionService,
-              @Inject(FORM_CONTROL) public formArray: FastFormArray) {
-  }
+  constructor(
+    private actionService: ActionService,
+    private changeRef: ChangeDetectorRef,
+    @Inject(FORM_CONTROL) public formArray: FastFormArray
+  ) {}
 
   ngOnInit(): void {
-    this._actionSub = this.actionService.actions.subscribe(event => {
+    this._actionSub = this.actionService.actions.subscribe((event) => {
       if (event.matchId.includes('time-action-')) {
         const index = event.args[event.args.length - 3] as number;
         if (event.matchId.endsWith('time-action-add')) {
@@ -32,6 +33,9 @@ export class TimeArrayComponent implements OnInit, OnDestroy {
           this.formArray.removeAt(index);
         }
       }
+    });
+    this.formArray.valueChanges.subscribe((value) => {
+      this.changeRef.detectChanges();
     });
   }
 

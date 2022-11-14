@@ -5,7 +5,7 @@ import { BaseFormInlineComponent } from './components/base/base-inline.component
 import { BaseFormArrayComponent } from './components/base/base-array.component';
 import { BaseFormGroupComponent } from './components/base/base-group.component';
 import { InternalControlComponent } from './internal/control/models';
-import { BasicQuestion } from './components';
+import { BasicQuestion } from './components/question-definition';
 
 /**
  * @deprecated

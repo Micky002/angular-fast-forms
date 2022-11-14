@@ -12,11 +12,13 @@ import { InputFormat, InputProperties } from './input.models';
 })
 export class InputComponent implements OnInit {
   @ViewChild('inputElement', { static: true }) inputRef!: ElementRef<HTMLInputElement>;
+  private properties?: InputProperties;
 
   constructor(
     @Inject(FORM_CONTROL) public control: FormControl,
-    public question: QuestionDefinition,
-    @Inject(CONTROL_PROPERTIES) private properties: InputProperties) {}
+    public question: QuestionDefinition) {
+      this.properties = question.properties
+    }
 
   public get type(): string {
     if (this.properties?.attributes && this.properties.attributes['type']) {
@@ -35,14 +37,14 @@ export class InputComponent implements OnInit {
   }
 
   public get format(): InputFormat {
-    return this.properties.format || 'text';
+    return this.properties?.format || 'text';
   }
 
   ngOnInit(): void {
     const inputElement = this.inputRef.nativeElement;
-    if (this.properties.attributes) {
-      Object.keys(this.properties.attributes).forEach((attribute) => {
-        const value = (this.properties.attributes || {})[attribute];
+    if (this.properties?.attributes) {
+      Object.keys(this.properties?.attributes).forEach((attribute) => {
+        const value = (this.properties?.attributes || {})[attribute];
         inputElement.setAttribute(attribute, value);
       });
     }
