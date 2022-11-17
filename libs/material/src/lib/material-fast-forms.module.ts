@@ -10,6 +10,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { AFF_CONTROL_COMPONENTS } from '@ngx-fast-forms/core';
 import { ButtonComponent } from './action/button/button.component';
 import { MatButtonModule } from "@angular/material/button";
+import { InputFormatDirective } from './ui/input/input-format.directive';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { MatButtonModule } from "@angular/material/button";
   declarations: [
     SelectComponent,
     InputComponent,
-    ButtonComponent
+    ButtonComponent,
+    InputFormatDirective
   ],
   providers: [
     {

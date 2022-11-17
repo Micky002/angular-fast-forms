@@ -18,6 +18,10 @@ export class InputComponent implements OnInit {
     @Inject(FORM_CONTROL) public control: FormControl,
     public question: QuestionDefinition) {
       this.properties = question.properties
+      this.control.valueChanges.subscribe(value => {
+        console.log('valueChange:', value);
+        
+      });
     }
 
   public get type(): string {

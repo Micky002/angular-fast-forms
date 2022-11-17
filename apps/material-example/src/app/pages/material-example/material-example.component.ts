@@ -15,29 +15,32 @@ export class MaterialExampleComponent implements OnInit {
     id: 'test-input',
     type: 'input',
     label: 'Example input'
-  }, {
-    id: 'test-another-input',
-    type: 'input'
-  }, {
-    id: 'form-row',
-    type: 'row',
-    children: [{
-      id: 'row-input-1',
-      type: 'input',
-      label: 'Row 1'
-    }, {
-      id: 'row-input-2',
-      type: 'input',
-      label: 'Row 2',
-      validation: {
-        minLength: 5
-      }
-    }, {
-      id: 'row-input-3',
-      type: 'date-input',
-      label: 'Date input'
-    }]
-  }]
+  }, 
+  // {
+  //   id: 'test-another-input',
+  //   type: 'input'
+  // }, {
+  //   id: 'form-row',
+  //   type: 'row',
+  //   children: [{
+  //     id: 'row-input-1',
+  //     type: 'input',
+  //     label: 'Row 1'
+  //   }, {
+  //     id: 'row-input-2',
+  //     type: 'input',
+  //     label: 'Row 2',
+  //     validation: {
+  //       minLength: 5
+  //     }
+  //   }, {
+  //     id: 'row-input-3',
+  //     type: 'date-input',
+  //     label: 'Date input'
+  //   }]
+  // }
+
+]
 
   set def(value: Array<Question>) {
     this.definition = value;
@@ -46,6 +49,7 @@ export class MaterialExampleComponent implements OnInit {
 
   constructor(private fastFormService: FastFormsService) {
     this.form = fastFormService.createDynamicForm(this.definition);
+    this.form.get('test-input')?.setValue(10055.23)
   }
 
   ngOnInit(): void {
