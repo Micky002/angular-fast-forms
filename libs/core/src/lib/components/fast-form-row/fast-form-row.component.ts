@@ -53,14 +53,14 @@ export class FastFormRowComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.componentViewContainerRef.clear();
-    this.children.filter(question => !question.hidden)
-        .forEach(question => {
-          this.createComponent(question);
-        });
+    this.render();
   }
 
   ngOnChanges(): void {
+    this.render();
+  }
+
+  private render() {
     this.componentViewContainerRef.clear();
     this.children.filter(question => !question.hidden)
         .forEach(question => {
