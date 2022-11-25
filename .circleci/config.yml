@@ -4,6 +4,11 @@ orbs:
   node: circleci/node@5.0.2
   cypress: cypress-io/cypress@2.2.0
 
+executors:
+  browser-executor:
+    docker:
+      - image: 'cypress/browsers:node16.18.0-chrome107-ff106-edge'
+
 jobs:
   test_and_build_job:
     docker:
@@ -59,6 +64,8 @@ workflows:
   development:
     jobs:
       - cypress/run:
+          name: Component Tests
+          executor: browser-executor
           verify-command: nx affected --all --target=component-test --parallel=1
           filters:
             tags:
