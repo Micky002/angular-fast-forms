@@ -64,7 +64,7 @@ workflows:
   development:
     jobs:
       - cypress/run:
-          name: Component Tests
+          name: "Component Tests"
           executor: browser-executor
           verify-command: nx affected --all --target=component-test --parallel=1
           filters:
@@ -77,7 +77,7 @@ workflows:
       - publish_job:
           requires:
             - test_and_build_job
-            - cypress/run
+            - "Component Tests"
           filters:
             tags:
               only: /v.*/
