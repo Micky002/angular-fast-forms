@@ -1,11 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 
 import { BaseFormControlComponent } from '../components/base/base-control.component';
-import { DynamicFormDefinition, DYNAMIC_FORM_CONTROL } from '../model';
-import { ControlFactoryService } from '../service/control-factory.service';
-import { ControlRegistry } from './control/control-registry.service';
+import { AFF_CONTROL_COMPONENTS } from '../model';
 import { FormRenderService } from './form-render.service';
+import { Control } from '@ngx-fast-forms/core';
+import { Provider } from '@angular/core';
 
+@Control({
+  type: 'dummy'
+})
 class DummyControl extends BaseFormControlComponent {
 }
 
@@ -16,36 +19,18 @@ describe('FormRenderService', () => {
     TestBed.configureTestingModule({
       providers: [
         {
-        provide: DYNAMIC_FORM_CONTROL,
-        useValue: {
-          type: 'dummy',
-          component: DummyControl
-        } as DynamicFormDefinition,
-        multi: true
-      }
-    ]
+          provide: AFF_CONTROL_COMPONENTS,
+          useValue: [
+            DummyControl
+          ],
+          multi: true
+        } as Provider
+      ]
     });
     service = TestBed.inject(FormRenderService);
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
-  });
-
-  it('should throw error is duplicated type is registered', () => {
-    expect(() => new FormRenderService(new ControlRegistry(), null as any, [{
-      type: 'duplicate',
-      component: DummyControl
-    }, {
-      type: 'duplicate',
-      component: DummyControl
-    }])).toThrowError();
-  });
-
-  it('should find type in registry', () => {
-    let definition = service.findControl('dummy');
-    expect(definition).not.toBeNull();
-    definition = service.findControl('dummy-undefined');
-    expect(definition).toBeNull();
   });
 });

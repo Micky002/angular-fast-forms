@@ -67,7 +67,7 @@ describe('FastFormArray', () => {
     formArray.setValue(['first', 'second', 'third']);
     expect(formArray.length).toEqual(3);
 
-    formArray.removeRow(1);
+    formArray.removeAt(1);
     expect(formArray.length).toEqual(2);
     expect(formArray.value).toEqual(['first', 'third']);
   });

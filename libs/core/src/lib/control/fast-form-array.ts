@@ -4,13 +4,13 @@ import { ControlFactoryService } from '../service/control-factory.service';
 
 export class FastFormArray extends FormArray {
 
+  private get getValue(): any[] {
+    return this.value;
+  }
+
   constructor(private question: Question,
               private controlFactory: ControlFactoryService) {
     super([]);
-  }
-
-  private get getValue(): any[] {
-    return this.value;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -35,15 +35,6 @@ export class FastFormArray extends FormArray {
 
   public addRow(index?: number) {
     this.addControlsToArray(1, index);
-  }
-
-  /**
-   * @deprecated Will be removed in 2.0.0
-   */
-  public removeRow(index: number) {
-    const listValue = this.getValue;
-    listValue.splice(index, 1);
-    this.patchValue(listValue);
   }
 
   public copyRow(index: number) {

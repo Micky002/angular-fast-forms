@@ -6,9 +6,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatLuxonDateModule } from '@angular/material-luxon-adapter';
-import { DYNAMIC_FORM_CONTROL } from '@ngx-fast-forms/core';
+import { AFF_CONTROL_COMPONENTS } from '@ngx-fast-forms/core';
 import { DateInputComponent } from './ui/date-input/date-input.component';
-import { DateFormControl } from './ui/date-input/date-form-control';
 
 @NgModule({
   imports: [
@@ -25,15 +24,12 @@ import { DateFormControl } from './ui/date-input/date-form-control';
   ],
   providers: [
     {
-      provide: DYNAMIC_FORM_CONTROL,
-      multi: true,
-      useValue: {
-        type: 'date-input',
-        component: DateInputComponent,
-        controlFactory: () => new DateFormControl()
-      }
+      provide: AFF_CONTROL_COMPONENTS,
+      useValue: [DateInputComponent],
+      multi: true
     }
   ]
 })
 
-export class MaterialExperimentalFastFormsModule {}
+export class MaterialExperimentalFastFormsModule {
+}

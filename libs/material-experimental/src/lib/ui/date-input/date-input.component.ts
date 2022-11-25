@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
-import { DateInputProperties } from './date-input.properties';
+import { Component, Inject } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
 import { FormControl } from '@angular/forms';
 import { CodenturyLuxonDateAdapter } from './codentury-luxon-date-adapter';
-import { BaseFormControlComponent } from '@ngx-fast-forms/core';
+import { Control, ControlFactory, FORM_CONTROL, QuestionDefinition } from '@ngx-fast-forms/core';
+import { DateFormControl } from './date-form-control';
 
+@Control({
+  type: 'date-input'
+})
 @Component({
   selector: 'aff-material-experimental-date-input',
   templateUrl: './date-input.component.html',
@@ -13,5 +16,14 @@ import { BaseFormControlComponent } from '@ngx-fast-forms/core';
     useClass: CodenturyLuxonDateAdapter
   }]
 })
-export class DateInputComponent extends BaseFormControlComponent<DateInputProperties, FormControl> {
+export class DateInputComponent {
+
+  constructor(public definition: QuestionDefinition,
+              @Inject(FORM_CONTROL) public control: FormControl) {
+  }
+
+  @ControlFactory()
+  public static createControl() {
+    return new DateFormControl();
+  }
 }

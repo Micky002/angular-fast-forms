@@ -1,6 +1,6 @@
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
-import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition, Question } from '../model';
+import { Question } from '../model';
 import { ValidatorFactoryService } from '../validation/validator-factory.service';
 import { FormRenderService } from '../internal/form-render.service';
 import { FastFormArray } from '../control/fast-form-array';
@@ -18,8 +18,7 @@ export class ControlFactoryService {
 
   constructor(private validatorFactory: ValidatorFactoryService,
               private renderService: FormRenderService,
-              private controlRegistry: ControlRegistry,
-              @Optional() @Inject(DYNAMIC_FORM_CONTROL) public componentRegistry?: Array<DynamicFormDefinition>) {
+              private controlRegistry: ControlRegistry) {
   }
 
   public createFromQuestions(parent: FormGroup, questions: Array<Question>) {
@@ -29,14 +28,18 @@ export class ControlFactoryService {
   }
 
   public createFromQuestion(parent: FormGroup | FormArray, question: Question, index?: number) {
-    const def = this.renderService.findControl(question.type);
     let createdControls: ControlWrapper[];
-    if (def && def.inline) {
-      createdControls = flattenArray(
-        (question.children ?? []).map((childQuestion) => {
-          return this.createControl(childQuestion);
-        })
-      );
+    if (this.controlRegistry.hasItem(question.type)) {
+      const def = this.controlRegistry.getDefinition(question.type);
+      if (def.inline) {
+        createdControls = flattenArray(
+            (question.children ?? []).map((childQuestion) => {
+              return this.createControl(childQuestion);
+            })
+        );
+      } else {
+        createdControls = this.createControl(question);
+      }
     } else {
       createdControls = this.createControl(question);
     }
@@ -51,9 +54,7 @@ export class ControlFactoryService {
 
   private createControl(question: Question): ControlWrapper[] {
     const wrappers: ControlWrapper[] = [];
-    if (this.renderService.findControl(question.type)) {
-      wrappers.push(ControlWrapper.forFormControl(question.id, this.createAndInitFormControl(question)));
-    } else if (this.controlRegistry.hasItem(question.type)) {
+    if (this.controlRegistry.hasItem(question.type)) {
       const definition = this.controlRegistry.getDefinition(question.type);
       if (definition.internalType === 'control') {
         wrappers.push(ControlWrapper.forFormControl(question.id, this.createAndInitFormControl(question)));
@@ -64,7 +65,7 @@ export class ControlFactoryService {
         wrappers.push(ControlWrapper.forFormArray(question.id, new FastFormArray((question.children ?? [])[0], this)));
       } else if (definition.internalType === 'group') {
         const subFormGroup = new FastFormGroup(question.children ?? [], this);
-        wrappers.push(ControlWrapper.forFormControl(question.id, subFormGroup));    
+        wrappers.push(ControlWrapper.forFormControl(question.id, subFormGroup));
       }
     }
     if (wrappers.length === 0) {
@@ -93,23 +94,18 @@ export class ControlFactoryService {
   }
 
   private createControlFromControlFactoryMethod(question: Question): AbstractControl | undefined {
-    if (this.componentRegistry) {
-      const formDefinition = this.componentRegistry.find(def => def.type === question.type);
-      if (formDefinition && formDefinition.component && (formDefinition.component as any)['controlFactory']) {
-        return (formDefinition.component as any)['controlFactory'](question);
-      } else if (formDefinition && formDefinition.controlFactory) {
-        return formDefinition.controlFactory(question);
-      }
-    }
+    // if (this.componentRegistry) {
+    //   const formDefinition = this.componentRegistry.find(def => def.type === question.type);
+    //   if (formDefinition && formDefinition.component && (formDefinition.component as any)['controlFactory']) {
+    //     return (formDefinition.component as any)['controlFactory'](question);
+    //   } else if (formDefinition && formDefinition.controlFactory) {
+    //     return formDefinition.controlFactory(question);
+    //   }
+    // }
     return undefined;
   }
 
   private createControlDefault(question: Question): AbstractControl {
-    if (this.componentRegistry) {
-      if (question.type === 'group') {
-        return new FastFormGroup(question.children ?? [], this);
-      }
-    }
     return new FastFormControl(question, question.defaultValue);
   }
 
