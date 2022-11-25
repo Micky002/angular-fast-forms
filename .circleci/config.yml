@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   node: circleci/node@5.0.2
+  cypress: cypress-io/cypress@2.2.0
 
 jobs:
   test_and_build_job:
@@ -57,6 +58,11 @@ jobs:
 workflows:
   development:
     jobs:
+      - cypress/run:
+          verify-command: nx affected --all --target=component-test --parallel=1
+          filters:
+            tags:
+              only: /v.*/
       - test_and_build_job:
           filters:
             tags:
@@ -64,6 +70,7 @@ workflows:
       - publish_job:
           requires:
             - test_and_build_job
+            - cypress/run
           filters:
             tags:
               only: /v.*/
