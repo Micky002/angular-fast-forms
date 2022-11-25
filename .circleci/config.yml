@@ -66,17 +66,19 @@ workflows:
       - cypress/run:
           name: "Component Tests"
           executor: browser-executor
-          verify-command: nx affected --all --target=component-test --parallel=1
+          verify-command: npm run test-component:all
           filters:
             tags:
               only: /v.*/
       - test_and_build_job:
+          name: "Test and build"
           filters:
             tags:
               only: /v.*/
       - publish_job:
+          name: "Publish to npmjs"
           requires:
-            - test_and_build_job
+            - "Test and build"
             - "Component Tests"
           filters:
             tags:
