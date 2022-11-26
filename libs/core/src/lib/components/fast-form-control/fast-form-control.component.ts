@@ -20,7 +20,7 @@ export class FastFormControlComponent implements OnInit {
   @Input() control!: FastFormControl;
 
   constructor(private renderService: FormRenderService,
-              private uiRegistryV2: ControlRegistry,
+              private controlRegistry: ControlRegistry,
               private injector: Injector,
               @Optional() private actionService?: ActionService,
               @Optional() private arrayIndex?: ArrayIndexDirective) {
@@ -31,11 +31,11 @@ export class FastFormControlComponent implements OnInit {
   }
 
   private createComponent(question: Question) {
-    if (this.uiRegistryV2.hasItem(question.type)) {
+    if (this.controlRegistry.hasItem(question.type)) {
       this.renderService.render(this.componentViewContainerRef,
           this.control,
           question,
-          this.uiRegistryV2.getDefinition(question.type),
+          this.controlRegistry.getDefinition(question.type),
           this.injector,
           this.actionService);
     }

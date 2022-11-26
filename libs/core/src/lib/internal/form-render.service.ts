@@ -9,7 +9,6 @@ import { BaseFormGroupComponent } from '../components/base/base-group.component'
 import { ControlRegistry } from './control/control-registry.service';
 import { CONTROL_ID, CONTROL_PROPERTIES, FORM_CONTROL } from '../components/util/inject-token';
 import { ActionService } from '../actions/action.service';
-import { InternalControlDefinition, InternalControlType } from './models';
 import { ControlIdImpl } from './control/control-id-impl';
 import { ArrayIndexDirective } from '../actions/array-index.directive';
 import { FastFormControl } from '../control/fast-form-control';
@@ -86,18 +85,6 @@ export class FormRenderService {
     } else {
       return id.addPart(questionId);
     }
-  }
-
-  private _findControl(controlId: string, type?: InternalControlType): InternalControlDefinition | null {
-    if (this.controlRegistry.hasItem(controlId)) {
-      const definition = this.controlRegistry.getDefinition(controlId);
-      if (type) {
-        return type === definition.internalType ? definition : null;
-      } else {
-        return definition;
-      }
-    }
-    return null;
   }
 
   private shouldInitialize(component: unknown): boolean {
