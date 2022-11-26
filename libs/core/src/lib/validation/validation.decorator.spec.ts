@@ -1,9 +1,9 @@
-import { Validator } from "./validation.decorator";
+import { Validator } from './validation.decorator';
 import { META_VALIDATOR_OPTIONS_KEY } from '../internal/symbols';
-import { InternalValidator, ValidatorMetaData } from '../internal/validation/models';
 
 
-class DummyClass {}
+class DummyClass {
+}
 
 describe('@Validator', () => {
 
@@ -13,7 +13,7 @@ describe('@Validator', () => {
       type: 'sync'
     })(DummyClass);
     expect(DummyClass).toHaveProperty(META_VALIDATOR_OPTIONS_KEY);
-    const validatorDecorated = (DummyClass as any)[META_VALIDATOR_OPTIONS_KEY] as ValidatorMetaData;
+    const validatorDecorated = (DummyClass as any)[META_VALIDATOR_OPTIONS_KEY];
     expect(validatorDecorated.id).toEqual('test-id');
     expect(validatorDecorated.type).toEqual('sync');
   });

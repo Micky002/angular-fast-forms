@@ -12,7 +12,7 @@ import { By } from '@angular/platform-browser';
 @Component({
   template: '<p data-test-id="dummy-test">Hallo</p>'
 })
-class DummyControl {
+class DummyControlComponent {
 }
 
 describe('FormRenderService', () => {
@@ -33,7 +33,7 @@ describe('FormRenderService', () => {
         {
           provide: AFF_CONTROL_COMPONENTS,
           useValue: [
-            DummyControl
+            DummyControlComponent
           ],
           multi: true
         } as Provider

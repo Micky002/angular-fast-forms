@@ -48,7 +48,6 @@ export class ControlFactoryService {
 
   public createFormControl(question: Question): AbstractControl {
     return this.createControlFromDecoratedComponents(question) ??
-        this.createControlFromControlFactoryMethod(question) ??
         this.createControlDefault(question);
   }
 
@@ -90,18 +89,6 @@ export class ControlFactoryService {
         return def.controlFactory(question);
       }
     }
-    return undefined;
-  }
-
-  private createControlFromControlFactoryMethod(question: Question): AbstractControl | undefined {
-    // if (this.componentRegistry) {
-    //   const formDefinition = this.componentRegistry.find(def => def.type === question.type);
-    //   if (formDefinition && formDefinition.component && (formDefinition.component as any)['controlFactory']) {
-    //     return (formDefinition.component as any)['controlFactory'](question);
-    //   } else if (formDefinition && formDefinition.controlFactory) {
-    //     return formDefinition.controlFactory(question);
-    //   }
-    // }
     return undefined;
   }
 

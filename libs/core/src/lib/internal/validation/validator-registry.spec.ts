@@ -13,8 +13,8 @@ import { BaseValidator } from '../../validation/base-validator.service';
 
 
 class DummyInvalidAsyncValidator implements BaseAsyncValidator {
-  createValidator(args: string[]): AsyncValidatorFn {
-    return control => of(null);
+  createValidator(): AsyncValidatorFn {
+    return () => of(null);
   }
 }
 
@@ -24,8 +24,8 @@ class DummyInvalidAsyncValidator implements BaseAsyncValidator {
 })
 @Injectable()
 class DummyAsyncValidator implements BaseAsyncValidator {
-  createValidator(args: string[]): AsyncValidatorFn {
-    return control => {
+  createValidator(): AsyncValidatorFn {
+    return () => {
       return new Promise(resolve => {
         resolve({
           required: true
@@ -42,8 +42,8 @@ class DummyAsyncValidator implements BaseAsyncValidator {
 @Injectable()
 class DummySyncValidator implements BaseValidator {
 
-  createValidator(args: string[]): ValidatorFn {
-    return control => {
+  createValidator(): ValidatorFn {
+    return () => {
       return {
         required: true
       };

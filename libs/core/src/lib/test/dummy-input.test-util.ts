@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { BaseFormControlComponent } from '../components/base/base-control.component';
+import { Component, Inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Control } from '../control/control.decorator';
+import { FORM_CONTROL, QuestionDefinition } from '@ngx-fast-forms/core';
 
 @Control({
   type: 'dummy-input'
@@ -14,5 +14,9 @@ import { Control } from '../control/control.decorator';
     </div>
   `
 })
-export class DummyInputComponent extends BaseFormControlComponent<any, FormControl> {
+export class DummyInputComponent {
+
+  constructor(@Inject(FORM_CONTROL) public control: FormControl,
+              public question: QuestionDefinition) {
+  }
 }

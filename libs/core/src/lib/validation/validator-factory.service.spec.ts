@@ -44,7 +44,7 @@ class CustomAsyncValidator implements BaseAsyncValidator {
   constructor(private http: HttpClient) {
   }
 
-  createValidator(args: string[]): AsyncValidatorFn {
+  createValidator(): AsyncValidatorFn {
     return () => this.http.get('/test').pipe(map(value => value ? null : {asyncRequired: true}));
   }
 }
@@ -143,7 +143,7 @@ describe('ValidatorFactoryService', () => {
       vals: ValidatorFn | Array<ValidatorFn>;
       tests: Array<{
         value?: string | number;
-        expect: any;
+        expect: unknown;
       }>;
     }
 
@@ -187,7 +187,7 @@ describe('ValidatorFactoryService', () => {
       vals: Array<string>;
       tests: Array<{
         value?: string | number;
-        expect: any;
+        expect: unknown;
       }>;
     }
 
@@ -243,7 +243,7 @@ describe('ValidatorFactoryService', () => {
 
     testData.forEach(data => {
       it(`should create validator [${data.vals}]`, () => {
-        const options: any = {};
+        const options: { [key: string]: unknown } = {};
         data.vals.forEach(val => {
           const [id, value] = val.split(':');
           if (value === 'true') {
