@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/Micky002/angular-fast-forms/compare/v1.5.4...v2.0.0) (2022-11-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove all deprecated methods
+
+### Features
+
+* add possibility to create and render a single control, add cypr… ([#40](https://github.com/Micky002/angular-fast-forms/issues/40)) ([564e2ce](https://github.com/Micky002/angular-fast-forms/commit/564e2ce65e69f14a50c2931654140938e883e538))
+
 ### [1.5.4](https://github.com/Micky002/angular-fast-forms/compare/v1.5.3...v1.5.4) (2022-11-14)
 
 
