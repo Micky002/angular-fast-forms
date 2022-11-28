@@ -18,7 +18,7 @@ export class ActionService {
     );
   }
 
-  emitAction(id: string) {
-    this._actions$.next(new ActionEventImpl(id));
+  emitAction(id: string, data?: unknown) {
+    this._actions$.next(new ActionEventImpl(id, data));
   }
 }

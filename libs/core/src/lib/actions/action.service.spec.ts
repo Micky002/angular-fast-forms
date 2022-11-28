@@ -18,25 +18,44 @@ describe('ActionService', () => {
 
   it('should emit event', (cb) => {
     service.actions.subscribe({
-      next: value => {
-        expect(value.matchId).toEqual('group.action-id');
-        expect(value.rawId).toEqual('group.action-id');
-        expect(value.args).toEqual(['group', 'action-id']);
+      next: event => {
+        expect(event.matchId).toEqual('group.action-id');
+        expect(event.rawId).toEqual('group.action-id');
+        expect(event.args).toEqual(['group', 'action-id']);
         cb();
       }
     });
     service.emitAction('group.action-id');
   });
 
-  it('should subscribe to action ending', (cb) => {
-    service.actionEndWith('end-custom').subscribe({
-      next: value => {
-        expect(value.matchId).toEqual('group.action-end-custom');
-        expect(value.rawId).toEqual('group.action-end-custom');
-        expect(value.args).toEqual(['group', 'action-end-custom']);
+  it('should match with end of action name', (cb) => {
+    const eventName = 'this-is-an-action.with-a-custom-end';
+    service.actionEndWith('custom-end')
+        .subscribe({
+          next: event => {
+            expect(event.matchId).toEqual(eventName);
+            expect(event.rawId).toEqual(eventName);
+            expect(event.args).toEqual(['this-is-an-action', 'with-a-custom-end']);
+            cb();
+          }
+        });
+    service.emitAction(eventName);
+  });
+
+  it('should emit action with data payload', (cb) => {
+    service.actions.subscribe({
+      next: event => {
+        expect(event.args).toEqual(['test', 'id']);
+        expect(event.data).toEqual({
+          oldValue: 'Donald',
+          newValue: 'Duck'
+        });
         cb();
       }
     });
-    service.emitAction('group.action-end-custom');
+    service.emitAction('test.id', {
+      oldValue: 'Donald',
+      newValue: 'Duck'
+    });
   });
 });
