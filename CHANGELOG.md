@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/Micky002/angular-fast-forms/compare/v2.0.0...v2.1.0) (2022-11-28)
+
+
+### Features
+
+* add possibility to add data payload to action ([#41](https://github.com/Micky002/angular-fast-forms/issues/41)) ([46c23cb](https://github.com/Micky002/angular-fast-forms/commit/46c23cbe616b79ec60dd874b341ae8338d4f68fd))
+
 ## [2.0.0](https://github.com/Micky002/angular-fast-forms/compare/v1.5.4...v2.0.0) (2022-11-28)
 
 
