@@ -74,6 +74,12 @@ import { MatIconModule } from '@angular/material/icon';
         loadChildren: () =>
             import('./pages/custom-array/custom-array.module')
                 .then((m) => m.CustomArrayModule)
+      },
+      {
+        path: 'single-control',
+        loadChildren: () =>
+            import('./pages/single-control/single-control.module')
+                .then((m) => m.SingleControlModule)
       }
     ]),
     MatButtonModule,

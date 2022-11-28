@@ -1,13 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ControlFactoryService } from '../../service/control-factory.service';
-import { ValidatorFactoryService } from '../../validation/validator-factory.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BaseFormControlComponent } from '../base/base-control.component';
 import { FastFormGroupComponent } from './fast-form-group.component';
+import { Control } from '../../control/control.decorator';
 import { FastFormsService } from '../../service/fast-forms.service';
-import { DYNAMIC_FORM_CONTROL, DynamicFormDefinition } from '../../model';
+import { ControlFactoryService } from '../../service/control-factory.service';
+import { ValidatorFactoryService } from '../../validation/validator-factory.service';
+import { Provider } from '@angular/core';
+import { AFF_CONTROL_COMPONENTS } from '@ngx-fast-forms/core';
 
+@Control({
+  type: 'input'
+})
 class DummyControl extends BaseFormControlComponent {
 }
 
@@ -27,15 +32,13 @@ describe('FastFormGroupComponent', () => {
       providers: [
         FastFormsService,
         ControlFactoryService,
-        ValidatorFactoryService,
-        {
-          provide: DYNAMIC_FORM_CONTROL,
-          useValue: {
-            type: 'input',
-            component: DummyControl
-          } as DynamicFormDefinition,
+        ValidatorFactoryService, {
+          provide: AFF_CONTROL_COMPONENTS,
+          useValue: [
+            DummyControl
+          ],
           multi: true
-        }
+        } as Provider
       ]
     }).compileComponents();
 

@@ -105,7 +105,13 @@
         "cypressConfig": "apps/material-example/cypress.config.ts",
         "testingType": "component",
         "skipServe": true,
+        "browser": "chrome",
         "devServerTarget": "material-example:build"
+      },
+      "configurations": {
+        "watch": {
+          "watch": true
+        }
       }
     }
   },

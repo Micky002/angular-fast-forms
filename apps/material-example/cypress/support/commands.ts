@@ -9,26 +9,16 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 
+import Chainable = Cypress.Chainable;
+
 // eslint-disable-next-line @typescript-eslint/no-namespace
-  declare namespace Cypress {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    interface Chainable<Subject> {
-      login(email: string, password: string): void;
-    }
+declare namespace Cypress {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface Chainable<Subject> {
+    testId(...id: string[]): Chainable<JQuery>;
   }
-//
-// -- This is a parent command --
-    Cypress.Commands.add('login', (email, password) => {
-      console.warn('Custom command example: Login', email, password);
-    });
-//
-// -- This is a child command --
-// Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+}
+
+Cypress.Commands.add('testId', (...ids: string[]): Chainable<JQuery> => {
+  return cy.get(`${ids.map(id => (`[data-test-id=${id}]`)).join(' ')}`);
+});

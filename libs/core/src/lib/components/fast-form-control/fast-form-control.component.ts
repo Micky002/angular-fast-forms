@@ -4,6 +4,7 @@ import { FastFormControl } from '../../control/fast-form-control';
 import { Question } from '../../model';
 import { ActionService } from '../../actions/action.service';
 import { ArrayIndexDirective } from '../../actions/array-index.directive';
+import { ControlRegistry } from '../../internal/control/control-registry.service';
 
 @Component({
   selector: 'aff-form-control',
@@ -18,7 +19,8 @@ export class FastFormControlComponent implements OnInit {
 
   @Input() control!: FastFormControl;
 
-  constructor(private uiRegistry: FormRenderService,
+  constructor(private renderService: FormRenderService,
+              private controlRegistry: ControlRegistry,
               private injector: Injector,
               @Optional() private actionService?: ActionService,
               @Optional() private arrayIndex?: ArrayIndexDirective) {
@@ -29,16 +31,13 @@ export class FastFormControlComponent implements OnInit {
   }
 
   private createComponent(question: Question) {
-    const formDefinition = this.uiRegistry.findControl(question.type);
-    if (formDefinition && this.control.parent) {
-      this.uiRegistry.render(
-          this.componentViewContainerRef,
+    if (this.controlRegistry.hasItem(question.type)) {
+      this.renderService.render(this.componentViewContainerRef,
           this.control,
           question,
-          formDefinition,
+          this.controlRegistry.getDefinition(question.type),
           this.injector,
-          this.actionService
-      );
+          this.actionService);
     }
   }
 }

@@ -6,6 +6,7 @@ import { ValidatorFactoryService } from '../validation/validator-factory.service
 import { FormRenderService } from '../internal/form-render.service';
 import { HttpClient } from '@angular/common/http';
 import { AbstractControlOptions } from '@angular/forms';
+import { FastFormControl } from '../control';
 
 @Injectable({
   providedIn: 'any'
@@ -16,6 +17,10 @@ export class FastFormsService {
               private validatorFactory: ValidatorFactoryService,
               private uiRegistry: FormRenderService,
               @Optional() private http?: HttpClient) {
+  }
+
+  public createSingleControl(question: Question): FastFormControl {
+    return new FastFormControl(question, question.defaultValue);
   }
 
   public createDynamicForm(questions: Array<Question>, options?: AbstractControlOptions): FastFormGroup {

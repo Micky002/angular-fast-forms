@@ -7,10 +7,6 @@ import { BaseFormGroupComponent } from './components/base/base-group.component';
 import { InternalControlComponent } from './internal/control/models';
 import { BasicQuestion } from './components/question-definition';
 
-/**
- * @deprecated
- */
-export const DYNAMIC_FORM_CONTROL = new InjectionToken<DynamicFormDefinition>('AFF_DYNAMIC_FORM_CONTROL');
 export const AFF_CONTROL_COMPONENTS = new InjectionToken<Array<Array<InternalControlComponent>>>('AFF_CONTROL_COMPONENTS');
 
 export interface DynamicFormDefinition {
@@ -25,7 +21,6 @@ export type QuestionProperties = { [key: string]: unknown };
 
 export interface Question extends BasicQuestion {
   type: string;
-  children?: Array<Question>;
 }
 
 export interface ValidationOptions {

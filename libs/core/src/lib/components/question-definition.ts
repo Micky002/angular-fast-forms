@@ -1,4 +1,4 @@
-import { QuestionProperties, ValidationOptions } from '../model';
+import { Question, QuestionProperties, ValidationOptions } from '../model';
 
 export class QuestionDefinition {
   public readonly id: string;
@@ -7,6 +7,7 @@ export class QuestionDefinition {
   public readonly validation?: ValidationOptions;
   public readonly properties?: QuestionProperties;
   public readonly defaultValue?: string | number;
+  public readonly children?: Question[];
 
   constructor(question: BasicQuestion) {
     this.id = question.id;
@@ -15,6 +16,7 @@ export class QuestionDefinition {
     this.validation = question.validation;
     this.properties = question.properties;
     this.defaultValue = question.defaultValue;
+    this.children = question.children;
   }
 }
 
@@ -25,4 +27,5 @@ export interface BasicQuestion {
   validation?: ValidationOptions;
   properties?: QuestionProperties;
   defaultValue?: string | number;
+  children?: Question[];
 }

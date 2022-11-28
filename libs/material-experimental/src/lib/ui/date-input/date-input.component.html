@@ -1,5 +1,5 @@
 <mat-form-field>
-  <mat-label *ngIf="question.label">{{question.label}}</mat-label>
+  <mat-label *ngIf="definition.label">{{definition.label}}</mat-label>
   <input [formControl]="control" [matDatepicker]="picker" matInput>
   <mat-hint>DD.MM.YYYY</mat-hint>
   <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>

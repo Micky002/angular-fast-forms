@@ -22,6 +22,13 @@ export class FastFormGroup extends FormGroup {
     return this._questions || [];
   }
 
+  private get mergedControls() {
+    return {
+      ...this.actions,
+      ...this.controls
+    };
+  }
+
   constructor(questions: Array<Question>,
               private controlFactory: ControlFactoryService,
               options?: AbstractControlOptions) {
@@ -73,12 +80,5 @@ export class FastFormGroup extends FormGroup {
       }
       ids.add(q.id);
     });
-  }
-
-  private get mergedControls() {
-    return {
-      ...this.actions,
-      ...this.controls
-    }
   }
 }

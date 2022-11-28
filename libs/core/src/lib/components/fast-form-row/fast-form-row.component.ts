@@ -11,18 +11,25 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import { BaseFormInlineComponent } from '../base/base-inline.component';
 import { Question } from '../../model';
 import { FormRenderService } from '../../internal/form-render.service';
-import { CONTROL_PROPERTIES } from '../util/inject-token';
+import { CONTROL_PROPERTIES, FORM_CONTROL } from '../util/inject-token';
 import { FastFormsRowProperties } from './models';
 import { ActionService } from '../../actions/action.service';
+import { Control } from '../../control';
+import { QuestionDefinition } from '../question-definition';
+import { AbstractControl } from '@angular/forms';
+import { ControlRegistry } from '../../internal/control/control-registry.service';
 
+@Control({
+  type: 'row',
+  inline: true
+})
 @Component({
   selector: 'aff-form-row',
   templateUrl: './fast-form-row.component.html'
 })
-export class FastFormRowComponent extends BaseFormInlineComponent implements OnInit, OnChanges {
+export class FastFormRowComponent implements OnInit, OnChanges {
 
   @ViewChild('componentViewContainer', {
     read: ViewContainerRef,
@@ -31,36 +38,42 @@ export class FastFormRowComponent extends BaseFormInlineComponent implements OnI
 
   @Output() codeOnSubmit = new EventEmitter();
 
+  private get children(): Question[] {
+    return this.definition.children ?? [];
+  }
+
   constructor(private uiRegistry: FormRenderService,
               private renderer: Renderer2,
               private injector: Injector,
+              private definition: QuestionDefinition,
+              private controlRegistry: ControlRegistry,
+              @Inject(FORM_CONTROL) private control: AbstractControl,
               @Inject(CONTROL_PROPERTIES) private properties: FastFormsRowProperties,
               @Optional() private actionService: ActionService) {
-    super();
   }
 
   ngOnInit(): void {
-    this.componentViewContainerRef.clear();
-    this.questions?.filter(question => !question.hidden)
-        .forEach(question => {
-          this.createComponent(question);
-        });
+    this.render();
   }
 
   ngOnChanges(): void {
+    this.render();
+  }
+
+  private render() {
     this.componentViewContainerRef.clear();
-    this.questions.filter(question => !question.hidden)
+    this.children.filter(question => !question.hidden)
         .forEach(question => {
           this.createComponent(question);
         });
   }
 
   private createComponent(question: Question) {
-    const formDefinition = this.uiRegistry.find(question.type);
-    if (formDefinition) {
+    if (this.controlRegistry.hasItem(question.type)) {
+      const formDefinition = this.controlRegistry.getDefinition(question.type);
       const componentRef = this.uiRegistry.render(
           this.componentViewContainerRef,
-          this.formGroup,
+          this.control,
           question,
           formDefinition,
           this.injector,

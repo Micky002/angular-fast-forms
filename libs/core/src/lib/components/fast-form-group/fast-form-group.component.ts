@@ -22,6 +22,7 @@ import { ActionEvent } from '../../actions/models';
 import { Subscription } from 'rxjs';
 import { ArrayIndexDirective } from '../../actions/array-index.directive';
 import { Control } from '../../control/control.decorator';
+import { ControlRegistry } from '../../internal/control/control-registry.service';
 
 @Control({
   type: 'group',
@@ -44,10 +45,18 @@ export class FastFormGroupComponent implements OnChanges, OnInit, OnDestroy {
   private _actionService: ActionService;
   private _actionsSub!: Subscription;
 
+  public _formGroup: FastFormGroup;
+
+  @Input()
+  public set formGroup(formGroup: FastFormGroup) {
+    this._formGroup = formGroup;
+  }
+
   constructor(private controlFactory: ControlFactoryService,
               private validatorFactory: ValidatorFactoryService,
-              private uiRegistry: FormRenderService,
+              private formRenderService: FormRenderService,
               private injector: Injector,
+              private controlRegistry: ControlRegistry,
               @Optional() actionService: ActionService,
               @Optional() private indexDirective?: ArrayIndexDirective,
               @Optional() private http?: HttpClient) {
@@ -57,22 +66,6 @@ export class FastFormGroupComponent implements OnChanges, OnInit, OnDestroy {
     } else {
       this._actionService = new ActionService();
     }
-  }
-
-  public _formGroup: FastFormGroup;
-
-  @Input()
-  public set formGroup(formGroup: FastFormGroup) {
-    this._formGroup = formGroup;
-  }
-
-  /**
-   * @deprecated Will be removed in 2.0.0. Use [formGroup] instead.
-   */
-  @Input()
-  public set form(formGroup: FastFormGroup) {
-    console.warn('The @Input() [form] of <aff-form-group> is deprecated and will be removed in version 2.0.0');
-    this._formGroup = formGroup;
   }
 
   ngOnInit(): void {
@@ -113,13 +106,13 @@ export class FastFormGroupComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   private createComponent(question: Question) {
-    const formDefinition = this.uiRegistry.find(question.type);
-    if (formDefinition) {
-      this.uiRegistry.render(
+    if (this.controlRegistry.hasItem(question.type)) {
+      const controlDefinition = this.controlRegistry.getDefinition(question.type);
+      this.formRenderService.render(
           this.componentViewContainerRef,
           this._formGroup,
           question,
-          formDefinition,
+          controlDefinition,
           this.injector,
           this._actionService,
           this.indexDirective
