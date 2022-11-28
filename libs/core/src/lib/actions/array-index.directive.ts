@@ -8,7 +8,7 @@ import { FastFormControl } from '../control/fast-form-control';
 })
 export class ArrayIndexDirective implements OnChanges {
 
-  public index!: number;
+  private index!: number;
 
   @Input() set affArrayIndex(index: number) {
     this.index = index;

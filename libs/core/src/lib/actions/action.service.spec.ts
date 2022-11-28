@@ -27,4 +27,16 @@ describe('ActionService', () => {
     });
     service.emitAction('group.action-id');
   });
+
+  it('should subscribe to action ending', (cb) => {
+    service.actionEndWith('end-custom').subscribe({
+      next: value => {
+        expect(value.matchId).toEqual('group.action-end-custom');
+        expect(value.rawId).toEqual('group.action-end-custom');
+        expect(value.args).toEqual(['group', 'action-end-custom']);
+        cb();
+      }
+    });
+    service.emitAction('group.action-end-custom');
+  });
 });
