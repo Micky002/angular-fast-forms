@@ -12,6 +12,7 @@ import { AFF_CONTROL_COMPONENTS } from '../model';
 import { FastFormGroup } from '../control/fast-form-group';
 import { FastFormArrayComponent } from '../components/fast-form-array/fast-form-array.component';
 import { FastFormGroupComponent } from '../components';
+import { FastFormControl } from '../control';
 
 
 @Control({
@@ -167,6 +168,48 @@ describe('ControlFactoryService', () => {
 
     formArray.setValue(['as', 'df']);
     expect(formArray.length).toEqual(2);
+  });
+
+  it('should disable single control', () => {
+    const formGroup = new FormGroup({});
+    service.createFromQuestions(formGroup, [{
+      id: 'disabled-input',
+      type: 'test-input',
+      disabled: true
+    }, {
+      id: 'enabled-input',
+      type: 'test-input'
+    }]);
+
+    const enabledInput = formGroup.get('enabled-input');
+    const disabledInput = formGroup.get('disabled-input');
+    expect(enabledInput?.disabled).toBe(false);
+    expect(disabledInput?.disabled).toBe(true);
+  });
+
+  it('should disable all controls on disabled form group', () => {
+    const formGroup = new FormGroup({});
+    service.createFromQuestions(formGroup, [{
+      id: 'test-disabled-group',
+      type: 'group',
+      disabled: true,
+      children: [{
+        id: 'disabled-input-1',
+        type: 'test-input'
+      }, {
+        id: 'disabled-input-2',
+        type: 'test-input'
+      }]
+    }]);
+
+    const group = formGroup.get('test-disabled-group');
+    expect(group?.disabled).toEqual(true);
+    expect(group).toBeInstanceOf(FastFormGroup);
+
+    const control1 = group?.get('disabled-input-1');
+    const control2 = group?.get('disabled-input-2');
+    expect(control1?.disabled).toEqual(true);
+    expect(control2?.disabled).toEqual(true);
   });
 
   describe('actions', () => {
