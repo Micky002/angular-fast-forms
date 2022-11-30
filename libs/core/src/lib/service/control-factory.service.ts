@@ -63,7 +63,8 @@ export class ControlFactoryService {
         // TODO length check and assertions, create group automatically if more than one
         wrappers.push(ControlWrapper.forFormArray(question.id, new FastFormArray((question.children ?? [])[0], this)));
       } else if (definition.internalType === 'group') {
-        wrappers.push(ControlWrapper.forFormControl(question.id, this.createAndInitFormGroup(question)));
+        const subFormGroup = new FastFormGroup(question.children ?? [], this);
+        wrappers.push(ControlWrapper.forFormControl(question.id, subFormGroup));
       }
     }
     if (wrappers.length === 0) {
@@ -78,9 +79,6 @@ export class ControlFactoryService {
     const asyncValidator = this.validatorFactory.createAsyncValidators(question.validation);
     control.setValidators(validator);
     control.setAsyncValidators(asyncValidator);
-    if (question.disabled) {
-      control.disable({ emitEvent: false });
-    }
     return control;
   }
 
@@ -106,13 +104,5 @@ export class ControlFactoryService {
       }
     }
     return new FromActionControlInternal();
-  }
-
-  private createAndInitFormGroup(question: Question): AbstractControl {
-    const subFormGroup = new FastFormGroup(question.children ?? [], this);
-    if (question.disabled) {
-      subFormGroup.disable({ emitEvent: false });
-    }
-    return subFormGroup;
   }
 }
