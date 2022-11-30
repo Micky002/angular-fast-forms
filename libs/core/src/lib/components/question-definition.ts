@@ -4,7 +4,6 @@ export class QuestionDefinition {
   public readonly id: string;
   public readonly label?: string;
   public readonly hidden?: boolean;
-  public readonly disabled?: boolean;
   public readonly validation?: ValidationOptions;
   public readonly properties?: QuestionProperties;
   public readonly defaultValue?: string | number;
@@ -14,7 +13,6 @@ export class QuestionDefinition {
     this.id = question.id;
     this.label = question.label;
     this.hidden = question.hidden;
-    this.disabled = question.disabled;
     this.validation = question.validation;
     this.properties = question.properties;
     this.defaultValue = question.defaultValue;
@@ -26,7 +24,6 @@ export interface BasicQuestion {
   id: string;
   label?: string;
   hidden?: boolean;
-  disabled?: boolean;
   validation?: ValidationOptions;
   properties?: QuestionProperties;
   defaultValue?: string | number;
