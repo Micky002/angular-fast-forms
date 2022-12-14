@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.0](https://github.com/Micky002/angular-fast-forms/compare/v2.1.0...v2.3.0) (2022-12-14)
+
+
+### Features
+
+* added possibility to create disabled form controls ([#44](https://github.com/Micky002/angular-fast-forms/issues/44)) ([a1422ec](https://github.com/Micky002/angular-fast-forms/commit/a1422ec928c259149eb36bebc7d01a1e9a6e014b))
+
+
+### Bug Fixes
+
+* update peer dependencies ([#45](https://github.com/Micky002/angular-fast-forms/issues/45)) ([d3d00fd](https://github.com/Micky002/angular-fast-forms/commit/d3d00fd6102b0694b964ae65a5e2c6062cacfff0))
+
 ## [2.2.0](https://github.com/Micky002/angular-fast-forms/compare/v2.1.0...v2.2.0) (2022-11-30)
 
 
