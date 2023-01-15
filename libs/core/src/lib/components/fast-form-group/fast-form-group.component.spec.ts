@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BaseFormControlComponent } from '../base/base-control.component';
 import { FastFormGroupComponent } from './fast-form-group.component';
 import { Control } from '../../control/control.decorator';
 import { FastFormsService } from '../../service/fast-forms.service';
@@ -13,7 +12,7 @@ import { AFF_CONTROL_COMPONENTS } from '@ngx-fast-forms/core';
 @Control({
   type: 'input'
 })
-class DummyControl extends BaseFormControlComponent {
+class DummyControl {
 }
 
 describe('FastFormGroupComponent', () => {

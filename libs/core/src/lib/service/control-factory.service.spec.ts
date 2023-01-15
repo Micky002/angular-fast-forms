@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 
 import { ControlFactoryService } from './control-factory.service';
 import { Component, Provider } from '@angular/core';
-import { BaseFormControlComponent } from '../components/base/base-control.component';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ValidatorFactoryService } from '../validation/validator-factory.service';
 import { FastFormArray } from '../control/fast-form-array';
@@ -12,7 +11,6 @@ import { AFF_CONTROL_COMPONENTS } from '../model';
 import { FastFormGroup } from '../control/fast-form-group';
 import { FastFormArrayComponent } from '../components/fast-form-array/fast-form-array.component';
 import { FastFormGroupComponent } from '../components';
-import { FastFormControl } from '../control';
 
 
 @Control({
@@ -22,7 +20,7 @@ import { FastFormControl } from '../control';
   selector: 'aff-testing-control',
   template: ''
 })
-class DummyControlComponent extends BaseFormControlComponent {
+class DummyControlComponent {
 
 }
 

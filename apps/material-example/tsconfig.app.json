@@ -12,6 +12,7 @@
     "src/**/*.d.ts"
   ],
   "exclude": [
+    "src/test-setup.ts",
     "**/*.test.ts",
     "**/*.spec.ts",
     "jest.config.ts",

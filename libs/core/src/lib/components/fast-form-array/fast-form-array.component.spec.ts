@@ -4,6 +4,8 @@ import { FastFormArrayComponent } from './fast-form-array.component';
 import { FastFormArray } from '../../control/fast-form-array';
 import { ControlFactoryService } from '../../service/control-factory.service';
 import { ValidatorFactoryService } from '../../validation/validator-factory.service';
+import { FormArray } from '@angular/forms';
+import { FORM_CONTROL } from '../util/inject-token';
 
 describe('FastFormArrayComponent', () => {
   let component: FastFormArrayComponent;
@@ -16,7 +18,11 @@ describe('FastFormArrayComponent', () => {
       ],
       providers: [
         ControlFactoryService,
-        ValidatorFactoryService
+        ValidatorFactoryService,
+        {
+          provide: FORM_CONTROL,
+          useValue: new FormArray([])
+        }
       ]
     }).compileComponents();
 

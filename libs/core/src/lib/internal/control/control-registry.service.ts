@@ -1,12 +1,8 @@
 import { ControlComponentMetaData, InternalControlComponent } from './models';
 import { META_COMPONENT_OPTIONS_KEY } from '../symbols';
 import { Inject, Injectable, Optional, Type } from '@angular/core';
-import { BaseFormInlineComponent } from '../../components/base/base-inline.component';
-import { BaseFormArrayComponent } from '../../components/base/base-array.component';
 import { AbstractRegistry } from '../abstract-registry';
 import { AFF_CONTROL_COMPONENTS } from '../../model';
-import { BaseFormControlComponent } from '../../components/base/base-control.component';
-import { BaseFormGroupComponent } from '../../components/base/base-group.component';
 import { InternalControlDefinition } from '../models';
 
 @Injectable({
@@ -44,7 +40,7 @@ export class ControlRegistry extends AbstractRegistry<InternalControlComponent> 
       type: type,
       inline: componentMetaData.inline,
       controlFactory: componentMetaData.controlFactory,
-      component: component as any as Type<BaseFormControlComponent<any, any> | BaseFormInlineComponent | BaseFormArrayComponent<any> | BaseFormGroupComponent>,
+      component: component as any as Type<unknown>,
       internalType: componentMetaData.internalType
     };
   }

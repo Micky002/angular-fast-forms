@@ -8,6 +8,7 @@ import { FastFormGroupComponent } from './components/fast-form-group/fast-form-g
 import { FastFormRowComponent } from './components/fast-form-row/fast-form-row.component';
 import { VALIDATORS } from './internal/token';
 import { AFF_CONTROL_COMPONENTS } from './model';
+import { ControlDirective, ControlNameDirective } from './directive/control.directive';
 
 @NgModule({
   imports: [
@@ -19,13 +20,17 @@ import { AFF_CONTROL_COMPONENTS } from './model';
     FastFormArrayComponent,
     FastFormControlComponent,
     FastFormRowComponent,
-    ArrayIndexDirective
+    ArrayIndexDirective,
+    ControlDirective,
+    ControlNameDirective
   ],
   exports: [
     FastFormGroupComponent,
     FastFormControlComponent,
     FastFormRowComponent,
-    ArrayIndexDirective
+    ArrayIndexDirective,
+    ControlDirective,
+    ControlNameDirective
   ],
   providers: [
     {

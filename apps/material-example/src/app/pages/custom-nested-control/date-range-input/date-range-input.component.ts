@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { BaseFormControlComponent, Control, ControlFactory, FORM_CONTROL, Question } from '@ngx-fast-forms/core';
+import { Control, ControlFactory, FORM_CONTROL, Question } from '@ngx-fast-forms/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Control({
@@ -12,7 +12,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class DateRangeInputComponent {
 
-  constructor(@Inject(FORM_CONTROL) public control: FormGroup) {}
+  constructor(@Inject(FORM_CONTROL) public control: FormGroup) {
+  }
 
   @ControlFactory()
   public static createFormGroup(question: Question) {

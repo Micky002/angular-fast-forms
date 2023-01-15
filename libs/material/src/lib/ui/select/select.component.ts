@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, of } from 'rxjs';
-import { BaseFormControlComponent, Control } from '@ngx-fast-forms/core';
+import { Control, FORM_CONTROL, QuestionDefinition } from '@ngx-fast-forms/core';
 import { FormControl } from '@angular/forms';
 import { SelectOption, SelectProperties } from './select.models';
 
@@ -12,12 +12,16 @@ import { SelectOption, SelectProperties } from './select.models';
   selector: 'aff-material-select',
   templateUrl: './select.component.html'
 })
-export class SelectComponent extends BaseFormControlComponent<SelectProperties, FormControl> implements OnInit {
+export class SelectComponent implements OnInit {
 
   public selectOptions: Array<SelectOption> = [];
 
-  constructor(private http: HttpClient) {
-    super();
+  private properties: SelectProperties
+
+  constructor(@Inject(FORM_CONTROL) public control: FormControl,
+              public question: QuestionDefinition,
+              private http: HttpClient) {
+    this.properties = question.properties as SelectProperties;
   }
 
   ngOnInit(): void {
@@ -29,12 +33,12 @@ export class SelectComponent extends BaseFormControlComponent<SelectProperties, 
       this.http.get<Array<SelectOption>>(this.properties.optionsEndpoint, {
         observe: 'response'
       }).pipe(
-        map(response => {
-          return response.body || [];
-        }),
-        catchError(() => {
-          return of([] as Array<SelectOption>);
-        })
+          map(response => {
+            return response.body || [];
+          }),
+          catchError(() => {
+            return of([] as Array<SelectOption>);
+          })
       ).subscribe(options => {
         const constantOptions: Array<SelectOption> = this.properties.options || [];
         this.selectOptions = this.addEmptyOption(constantOptions.concat(options));

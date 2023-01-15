@@ -19,37 +19,42 @@ describe('FastFormRowComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FastFormsModule.forRoot(),
+        FastFormsModule,
         DummyInputModule
       ],
-      providers: [{
-        provide: QuestionDefinition,
-        useValue: new QuestionDefinition({
-          id: 'row',
-          children: [{
+      providers: [
+        {
+          provide: QuestionDefinition,
+          useValue: new QuestionDefinition({
+            id: 'row',
+            type: 'row',
+            children: [{
+              id: 'name',
+              type: 'dummy-input',
+              defaultValue: 'meins'
+            }, {
+              id: 'surname',
+              type: 'dummy-input'
+            }]
+          })
+        } as Provider,
+        {
+          provide: CONTROL_PROPERTIES,
+          useValue: {}
+        } as Provider,
+        {
+          provide: FORM_CONTROL,
+          deps: [ControlFactoryService],
+          useFactory: (cf: ControlFactoryService) => new FastFormGroup([{
             id: 'name',
             type: 'dummy-input',
             defaultValue: 'meins'
           }, {
             id: 'surname',
             type: 'dummy-input'
-          }]
-        })
-      } as Provider, {
-        provide: CONTROL_PROPERTIES,
-        useValue: {}
-      } as Provider, {
-        provide: FORM_CONTROL,
-        deps: [ControlFactoryService],
-        useFactory: (cf: ControlFactoryService) => new FastFormGroup([{
-          id: 'name',
-          type: 'dummy-input',
-          defaultValue: 'meins'
-        }, {
-          id: 'surname',
-          type: 'dummy-input'
-        }], cf)
-      } as Provider]
+          }], cf)
+        } as Provider
+      ]
     }).compileComponents();
     fixture = TestBed.createComponent(FastFormRowComponent);
     controlFactory = TestBed.inject(ControlFactoryService);

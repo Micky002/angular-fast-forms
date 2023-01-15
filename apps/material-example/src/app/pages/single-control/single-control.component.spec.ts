@@ -8,7 +8,7 @@ describe('SingleControlComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SingleControlComponent],
+      declarations: [SingleControlComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(SingleControlComponent);

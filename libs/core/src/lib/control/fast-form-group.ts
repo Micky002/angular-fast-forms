@@ -15,6 +15,18 @@ export class FastFormGroup extends FormGroup {
 
   private _questionChanges$ = new Subject<Array<Question>>();
   private _actions$ = new Subject<ActionEvent>();
+  private _question: Question;
+
+  constructor(questions: Array<Question>,
+              private controlFactory: ControlFactoryService,
+              options?: AbstractControlOptions) {
+    super({}, options);
+    this.validateQuestions(questions);
+    this.questionChanges = this._questionChanges$.asObservable();
+    this._questions = questions;
+    this.createChildControls();
+    this.actionEvents = this._actions$.asObservable();
+  }
 
   private _questions: Array<Question>;
 
@@ -27,17 +39,6 @@ export class FastFormGroup extends FormGroup {
       ...this.actions,
       ...this.controls
     };
-  }
-
-  constructor(questions: Array<Question>,
-              private controlFactory: ControlFactoryService,
-              options?: AbstractControlOptions) {
-    super({}, options);
-    this.validateQuestions(questions);
-    this.questionChanges = this._questionChanges$.asObservable();
-    this._questions = questions;
-    this.createChildControls();
-    this.actionEvents = this._actions$.asObservable();
   }
 
   override get(path: string): AbstractControl | null {

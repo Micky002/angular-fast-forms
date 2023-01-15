@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { BaseFormControlComponent, Control } from '@ngx-fast-forms/core';
+import { Component, Inject } from '@angular/core';
+import { Control, FORM_CONTROL } from '@ngx-fast-forms/core';
 import { FormControl } from '@angular/forms';
 
 
@@ -11,6 +11,8 @@ import { FormControl } from '@angular/forms';
   templateUrl: './lazy-input.component.html',
   styleUrls: ['./lazy-input.component.scss'],
 })
-export class LazyInputComponent extends BaseFormControlComponent<any, FormControl> {
+export class LazyInputComponent {
 
+  constructor(@Inject(FORM_CONTROL) public control: FormControl) {
+  }
 }

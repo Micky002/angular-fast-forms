@@ -1,4 +1,4 @@
-import { Question, QuestionProperties, ValidationOptions } from '../model';
+import { Question, QuestionProperties, SingleQuestion, ValidationOptions } from '../model';
 
 export class QuestionDefinition {
   public readonly id: string;
@@ -10,20 +10,19 @@ export class QuestionDefinition {
   public readonly defaultValue?: string | number;
   public readonly children?: Question[];
 
-  constructor(question: BasicQuestion) {
-    this.id = question.id;
+  constructor(question: SingleQuestion | Question) {
+    this.id = (question as any).id;
     this.label = question.label;
     this.hidden = question.hidden;
     this.disabled = question.disabled;
     this.validation = question.validation;
-    this.properties = question.properties;
+    this.properties = question.properties ?? {};
     this.defaultValue = question.defaultValue;
     this.children = question.children;
   }
 }
 
 export interface BasicQuestion {
-  id: string;
   label?: string;
   hidden?: boolean;
   disabled?: boolean;

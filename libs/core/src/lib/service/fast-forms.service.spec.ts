@@ -43,7 +43,6 @@ describe('FastFormsService', () => {
 
   it('should create single control', () => {
     const control = service.createSingleControl({
-      id: 'meins',
       type: 'dummy-input'
     });
     expect(control).toBeInstanceOf(FastFormControl);

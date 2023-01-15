@@ -1,5 +1,5 @@
 import { Injectable, Optional } from '@angular/core';
-import { Question } from '../model';
+import { Question, SingleQuestion } from '../model';
 import { FastFormGroup } from '../control/fast-form-group';
 import { ControlFactoryService } from './control-factory.service';
 import { ValidatorFactoryService } from '../validation/validator-factory.service';
@@ -19,7 +19,7 @@ export class FastFormsService {
               @Optional() private http?: HttpClient) {
   }
 
-  public createSingleControl(question: Question): FastFormControl {
+  public createSingleControl(question: SingleQuestion): FastFormControl {
     return new FastFormControl(question, question.defaultValue);
   }
 

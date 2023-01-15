@@ -30,6 +30,7 @@ describe('InputComponent', () => {
           provide: QuestionDefinition,
           useValue: new QuestionDefinition({
             id: 'testValue',
+            type: 'mat-input',
             label: 'Test label'
           })
         },

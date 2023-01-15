@@ -80,6 +80,12 @@ import { MatIconModule } from '@angular/material/icon';
         loadChildren: () =>
             import('./pages/single-control/single-control.module')
                 .then((m) => m.SingleControlModule)
+      },
+      {
+        path: 'standard-form',
+        loadChildren: () =>
+            import('./standard-form/standard-form.module')
+                .then((m) => m.StandardFormModule)
       }
     ]),
     MatButtonModule,

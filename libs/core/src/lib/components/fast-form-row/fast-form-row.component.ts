@@ -38,11 +38,7 @@ export class FastFormRowComponent implements OnInit, OnChanges {
 
   @Output() codeOnSubmit = new EventEmitter();
 
-  private get children(): Question[] {
-    return this.definition.children ?? [];
-  }
-
-  constructor(private uiRegistry: FormRenderService,
+  constructor(private formRenderService: FormRenderService,
               private renderer: Renderer2,
               private injector: Injector,
               private definition: QuestionDefinition,
@@ -50,6 +46,10 @@ export class FastFormRowComponent implements OnInit, OnChanges {
               @Inject(FORM_CONTROL) private control: AbstractControl,
               @Inject(CONTROL_PROPERTIES) private properties: FastFormsRowProperties,
               @Optional() private actionService: ActionService) {
+  }
+
+  private get children(): Question[] {
+    return this.definition.children ?? [];
   }
 
   ngOnInit(): void {
@@ -71,7 +71,7 @@ export class FastFormRowComponent implements OnInit, OnChanges {
   private createComponent(question: Question) {
     if (this.controlRegistry.hasItem(question.type)) {
       const formDefinition = this.controlRegistry.getDefinition(question.type);
-      const componentRef = this.uiRegistry.render(
+      const componentRef = this.formRenderService.render(
           this.componentViewContainerRef,
           this.control,
           question,
