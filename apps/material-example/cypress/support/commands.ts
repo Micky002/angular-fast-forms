@@ -15,7 +15,7 @@ import Chainable = Cypress.Chainable;
 declare namespace Cypress {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface Chainable<Subject> {
-    testId(...id: string[]): Chainable<JQuery>;
+    testId(...ids: string[]): Chainable<JQuery>;
   }
 }
 
