@@ -1,11 +1,4 @@
 <form (ngSubmit)="processOnSubmit($event)" [formGroup]="_formGroup" class="aff-form-group">
   <ng-container #componentViewContainer></ng-container>
-
-  <ng-container *ngFor="let question of _formGroup.questions">
-    <ng-container *ngIf="question.type === 'group'">
-      <aff-form-group [formGroup]="$any(_formGroup.get(question.id))"></aff-form-group>
-    </ng-container>
-  </ng-container>
-
   <button style="display: none" type="submit">hidden submit</button>
 </form>

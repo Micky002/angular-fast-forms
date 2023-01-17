@@ -17,21 +17,20 @@ export class FastFormGroup extends FormGroup {
   private _actions$ = new Subject<ActionEvent>();
   private _question: Question;
 
-  constructor(questions: Array<Question>,
+  constructor(question: Question | null,
               private controlFactory: ControlFactoryService,
               options?: AbstractControlOptions) {
     super({}, options);
-    this.validateQuestions(questions);
+    this._question = question ?? {id: 'group-parent', type: 'group', children: []};
+    this.validateQuestions(question?.children ?? []);
     this.questionChanges = this._questionChanges$.asObservable();
-    this._questions = questions;
     this.createChildControls();
     this.actionEvents = this._actions$.asObservable();
   }
 
-  private _questions: Array<Question>;
 
   public get questions(): Array<Question> {
-    return this._questions || [];
+    return this._question.children || [];
   }
 
   private get mergedControls() {
@@ -55,7 +54,7 @@ export class FastFormGroup extends FormGroup {
   }
 
   public setQuestions(questions: Array<Question>) {
-    this._questions = questions;
+    this._question.children = questions;
     this.controls = {};
     this.createChildControls();
     this._questionChanges$.next(questions);
@@ -70,7 +69,7 @@ export class FastFormGroup extends FormGroup {
   }
 
   private createChildControls() {
-    this.controlFactory.createFromQuestions(this, this._questions);
+    this.controlFactory.createFromQuestions(this, this.questions);
   }
 
   private validateQuestions(questions: Question[]) {

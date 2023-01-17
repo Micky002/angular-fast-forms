@@ -18,6 +18,11 @@
     "**/*.d.ts"
   ],
   "exclude": [
-    "./cypress/**"
+    "./cypress/**",
+    "./cypress.config.ts",
+    "**/*.cy.ts",
+    "**/*.cy.js",
+    "**/*.cy.tsx",
+    "**/*.cy.jsx"
   ]
 }

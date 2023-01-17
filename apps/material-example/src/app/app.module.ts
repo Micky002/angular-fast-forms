@@ -86,6 +86,12 @@ import { MatIconModule } from '@angular/material/icon';
         loadChildren: () =>
             import('./standard-form/standard-form.module')
                 .then((m) => m.StandardFormModule)
+      },
+      {
+        path: 'form-group',
+        loadChildren: () =>
+            import('./pages/form-group/form-group.module')
+                .then((m) => m.FormGroupModule)
       }
     ]),
     MatButtonModule,

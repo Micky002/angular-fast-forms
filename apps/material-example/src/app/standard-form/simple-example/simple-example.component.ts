@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FastFormControl, FastFormGroup, FastFormsModule, FastFormsService } from '@ngx-fast-forms/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
@@ -14,12 +14,12 @@ import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
   ],
   styleUrls: ['./simple-example.component.scss']
 })
-export class SimpleExampleComponent implements OnInit {
+export class SimpleExampleComponent {
 
   public form: FastFormGroup;
 
   public nameControl: FastFormControl;
-  
+
   constructor(private formService: FastFormsService) {
     this.nameControl = this.formService.createSingleControl({
       type: 'mat-input',
@@ -30,8 +30,5 @@ export class SimpleExampleComponent implements OnInit {
       type: 'mat-input',
       label: 'Standard input'
     }]);
-  }
-
-  ngOnInit(): void {
   }
 }

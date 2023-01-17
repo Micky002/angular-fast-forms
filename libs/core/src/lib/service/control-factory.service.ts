@@ -109,7 +109,7 @@ export class ControlFactoryService {
   }
 
   private createAndInitFormGroup(question: Question): AbstractControl {
-    const subFormGroup = new FastFormGroup(question.children ?? [], this);
+    const subFormGroup = new FastFormGroup(question, this);
     if (question.disabled) {
       subFormGroup.disable({ emitEvent: false });
     }

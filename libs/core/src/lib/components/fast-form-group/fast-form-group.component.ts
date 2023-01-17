@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  Inject,
   Injector,
   Input,
   OnChanges,
@@ -11,18 +12,19 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ActionService } from '../../actions/action.service';
+import { ArrayIndexDirective } from '../../actions/array-index.directive';
+import { ActionEvent } from '../../actions/models';
+import { Control } from '../../control/control.decorator';
 import { FastFormGroup } from '../../control/fast-form-group';
+import { ControlRegistry } from '../../internal/control/control-registry.service';
+import { FormRenderService } from '../../internal/form-render.service';
 import { FastFormSubmitEvent, Question } from '../../model';
 import { ControlFactoryService } from '../../service/control-factory.service';
-import { ValidatorFactoryService } from '../../validation/validator-factory.service';
-import { FormRenderService } from '../../internal/form-render.service';
-import { HttpClient } from '@angular/common/http';
-import { ActionService } from '../../actions/action.service';
-import { ActionEvent } from '../../actions/models';
-import { Subscription } from 'rxjs';
-import { ArrayIndexDirective } from '../../actions/array-index.directive';
-import { Control } from '../../control/control.decorator';
-import { ControlRegistry } from '../../internal/control/control-registry.service';
+import { FastFormsService } from '../../service/fast-forms.service';
+import { QuestionDefinition } from '../question-definition';
+import { FORM_CONTROL } from '../util/inject-token';
 
 @Control({
   type: 'group',
@@ -33,17 +35,47 @@ import { ControlRegistry } from '../../internal/control/control-registry.service
   templateUrl: './fast-form-group.component.html'
 })
 export class FastFormGroupComponent implements OnChanges, OnInit, OnDestroy {
-
   @Input() public endpoint!: string;
   @ViewChild('componentViewContainer', {
     read: ViewContainerRef,
     static: true
-  }) componentViewContainerRef!: ViewContainerRef;
+  })
+  componentViewContainerRef!: ViewContainerRef;
   @Output() public action = new EventEmitter<ActionEvent>();
   @Output() public submitEvent = new EventEmitter<FastFormSubmitEvent>();
 
+  private _dynRendered = false;
   private _actionService: ActionService;
   private _actionsSub!: Subscription;
+
+  constructor(
+      private controlFactory: ControlFactoryService,
+      private formRenderService: FormRenderService,
+      private injector: Injector,
+      private controlRegistry: ControlRegistry,
+      @Optional() actionService: ActionService,
+      @Optional() private indexDirective?: ArrayIndexDirective,
+      @Optional() questionDefinition?: QuestionDefinition,
+      @Optional() @Inject(FORM_CONTROL) formGroup?: FastFormGroup
+  ) {
+    if (formGroup) {
+      this._formGroup = formGroup;
+      this._dynRendered = true;
+    } else {
+      this._formGroup = new FastFormGroup(
+          {
+            id: FastFormsService.ROOT_GROUP_ID,
+            type: 'group'
+          },
+          this.controlFactory
+      );
+    }
+    if (actionService) {
+      this._actionService = actionService;
+    } else {
+      this._actionService = new ActionService();
+    }
+  }
 
   public _formGroup: FastFormGroup;
 
@@ -52,34 +84,21 @@ export class FastFormGroupComponent implements OnChanges, OnInit, OnDestroy {
     this._formGroup = formGroup;
   }
 
-  constructor(private controlFactory: ControlFactoryService,
-              private validatorFactory: ValidatorFactoryService,
-              private formRenderService: FormRenderService,
-              private injector: Injector,
-              private controlRegistry: ControlRegistry,
-              @Optional() actionService: ActionService,
-              @Optional() private indexDirective?: ArrayIndexDirective,
-              @Optional() private http?: HttpClient) {
-    this._formGroup = new FastFormGroup([], this.controlFactory);
-    if (actionService) {
-      this._actionService = actionService;
-    } else {
-      this._actionService = new ActionService();
-    }
-  }
-
   ngOnInit(): void {
     this._formGroup.questionChanges.subscribe(() => {
       this.render();
     });
     this._actionsSub = this._actionService.actions.subscribe({
-      next: event => {
+      next: (event) => {
         this.action.emit(event);
       }
     });
+    if (this._dynRendered) {
+      this.render();
+    }
   }
 
-  ngOnChanges(): void {
+  ngOnChanges(changes: any): void {
     this.render();
   }
 
@@ -99,8 +118,9 @@ export class FastFormGroupComponent implements OnChanges, OnInit, OnDestroy {
 
   private render() {
     this.componentViewContainerRef.clear();
-    this._formGroup.questions.filter(question => !question.hidden)
-        .forEach(question => {
+    this._formGroup.questions
+        .filter((question) => !question.hidden)
+        .forEach((question) => {
           this.createComponent(question);
         });
   }

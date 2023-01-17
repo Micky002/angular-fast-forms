@@ -1,7 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Control } from '../../control/control.decorator';
-import { FastFormArray, FORM_CONTROL } from '@ngx-fast-forms/core';
+import { FastFormArray } from '../../control/fast-form-array';
+import { FORM_CONTROL } from '../util/inject-token';
 
 @Control({
   type: 'array',

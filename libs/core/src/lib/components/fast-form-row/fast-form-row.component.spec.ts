@@ -45,14 +45,16 @@ describe('FastFormRowComponent', () => {
         {
           provide: FORM_CONTROL,
           deps: [ControlFactoryService],
-          useFactory: (cf: ControlFactoryService) => new FastFormGroup([{
-            id: 'name',
-            type: 'dummy-input',
-            defaultValue: 'meins'
-          }, {
-            id: 'surname',
-            type: 'dummy-input'
-          }], cf)
+          useFactory: (cf: ControlFactoryService) => new FastFormGroup({
+            id: 'root-group', type: 'group', children: [{
+              id: 'name',
+              type: 'dummy-input',
+              defaultValue: 'meins'
+            }, {
+              id: 'surname',
+              type: 'dummy-input'
+            }]
+          }, cf)
         } as Provider
       ]
     }).compileComponents();

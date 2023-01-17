@@ -30,6 +30,7 @@ export class ViewContainerRefMock extends ViewContainerRef {
     throw new Error('Not implemented in mock');
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   clear(): void {
   }
 
@@ -69,6 +70,8 @@ export class ViewContainerRefMock extends ViewContainerRef {
     throw new Error('Not implemented in mock');
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   remove(index?: number): void {
+
   }
 }

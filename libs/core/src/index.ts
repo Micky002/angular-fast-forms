@@ -3,6 +3,7 @@ export * from './lib/actions/index';
 export * from './lib/components/index';
 
 export * from './lib/control/index';
+export * from './lib/directive/index';
 
 export * from './lib/service/fast-forms.service';
 export * from './lib/service/control-factory.service';

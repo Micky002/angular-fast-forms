@@ -1,4 +1,4 @@
-import { AbstractControl, AsyncValidatorFn, ValidatorFn } from '@angular/forms';
+import { AbstractControl, AbstractControlOptions, AsyncValidatorFn, ValidatorFn } from '@angular/forms';
 import { InjectionToken, Type } from '@angular/core';
 import { InternalControlComponent } from './internal/control/models';
 import { BasicQuestion } from './components/question-definition';
@@ -41,6 +41,10 @@ export interface ValidationOptions {
 export interface FastFormSubmitEvent {
   event: unknown;
   data: unknown;
+}
+
+export interface GroupOptions extends AbstractControlOptions {
+  type?: string;
 }
 
 export type FormControlType = 'control' | 'array' | 'group';

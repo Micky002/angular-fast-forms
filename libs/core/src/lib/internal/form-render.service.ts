@@ -26,9 +26,6 @@ import { QuestionDefinition } from '../components/question-definition';
 
 export abstract class FormRenderService {
 
-  constructor() {
-  }
-
   abstract renderControl(
       viewContainerRef: ViewContainerRef,
       control: FastFormControl,
@@ -70,7 +67,7 @@ export class FormRenderServiceImpl extends FormRenderService {
   ): ComponentRef<unknown> {
     const question = control.question;
     const definition = this.controlRegistry.getDefinition(question.type);
-    let providers = this.createProviders(
+    const providers = this.createProviders(
         question,
         null,
         injectOptions.injector,
@@ -147,8 +144,9 @@ export class FormRenderServiceImpl extends FormRenderService {
     if (control instanceof FastFormControl) {
       providers.push({provide: QuestionDefinition, useValue: new QuestionDefinition(control.question)});
     } else if (control instanceof FastFormGroup) {
-      providers.push({provide: QuestionDefinition, useValue: new QuestionDefinition(control.question)});
+      // providers.push({provide: QuestionDefinition, useValue: new QuestionDefinition(control.question)});
     }
+    return providers;
   }
 
   private createControlProvider(control: AbstractControl): StaticProvider {
