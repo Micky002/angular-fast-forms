@@ -21,7 +21,7 @@ export class FastFormsService {
               @Optional() private http?: HttpClient) {
   }
 
-  public createSingleControl(question: SingleQuestion): FastFormControl {
+  public createControl(question: SingleQuestion): FastFormControl {
     return new FastFormControl(question, question.defaultValue);
   }
 

@@ -16,5 +16,10 @@
     "**/*.test.ts",
     "**/*.spec.ts",
     "**/*.d.ts"
+  ],
+  "exclude": [
+    "cypress/**/*",
+    "cypress.config.ts",
+    "**/*.cy.ts"
   ]
 }

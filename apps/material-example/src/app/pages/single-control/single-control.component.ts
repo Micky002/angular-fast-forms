@@ -3,15 +3,16 @@ import { FastFormControl, FastFormsService } from '@ngx-fast-forms/core';
 
 @Component({
   selector: 'frontend-single-control',
-  templateUrl: './single-control.component.html',
-  styleUrls: ['./single-control.component.scss']
+  template: `
+    <aff-form-control [control]="control"></aff-form-control>
+  `
 })
 export class SingleControlComponent {
 
   public control: FastFormControl;
 
   constructor(private formService: FastFormsService) {
-    this.control = formService.createSingleControl({
+    this.control = formService.createControl({
       type: 'mat-input',
       label: 'Test Name',
       defaultValue: 'One'

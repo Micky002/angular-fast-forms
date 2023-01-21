@@ -23,6 +23,6 @@ describe(SingleControlComponent.name, () => {
   });
 
   it('should render single control', () => {
-    cy.testId('test').should('be.visible');
+    cy.get('input').should('be.visible');
   });
 });

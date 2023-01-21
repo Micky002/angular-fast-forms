@@ -18,22 +18,23 @@ describe(InputComponent.name, () => {
           provide: QuestionDefinition,
           useValue: new QuestionDefinition({
             id: 'cypressTest',
-            label: 'Test label',
-          }),
+            type: 'mat-input',
+            label: 'Test label'
+          })
         } as Provider,
         {
           provide: FORM_CONTROL,
           useFactory: () => {
             control = new FormControl();
             return control;
-          },
-        } as Provider,
-      ],
+          }
+        } as Provider
+      ]
     });
   });
 
   it('should show form input with label', () => {
     cy.get('[data-test-id=cypressTest]').should('be.visible')
-      .get('mat-label').should('have.text', 'Test label');
+        .get('mat-label').should('have.text', 'Test label');
   });
 });

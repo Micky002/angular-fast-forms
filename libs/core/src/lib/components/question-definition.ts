@@ -11,7 +11,11 @@ export class QuestionDefinition {
   public readonly children?: Question[];
 
   constructor(question: SingleQuestion | Question) {
-    this.id = (question as any).id;
+    if ('id' in question) {
+      this.id = question.id;
+    } else {
+      this.id = '';
+    }
     this.label = question.label;
     this.hidden = question.hidden;
     this.disabled = question.disabled;
