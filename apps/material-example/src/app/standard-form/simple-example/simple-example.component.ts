@@ -22,6 +22,7 @@ export class SimpleExampleComponent {
 
   constructor(private formService: FastFormsService) {
     this.nameControl = this.formService.createControl({
+      id: 'simple-input',
       type: 'mat-input',
       label: 'Name'
     });

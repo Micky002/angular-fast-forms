@@ -13,6 +13,7 @@ export class SingleControlComponent {
 
   constructor(private formService: FastFormsService) {
     this.control = formService.createControl({
+      id: 'meins',
       type: 'mat-input',
       label: 'Test Name',
       defaultValue: 'One'

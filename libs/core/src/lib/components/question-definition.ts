@@ -22,7 +22,11 @@ export class QuestionDefinition {
     this.validation = question.validation;
     this.properties = question.properties ?? {};
     this.defaultValue = question.defaultValue;
-    this.children = question.children;
+    if ('children' in question) {
+      this.children = question.children;
+    } else {
+      this.children = [];
+    }
   }
 }
 
@@ -33,5 +37,4 @@ export interface BasicQuestion {
   validation?: ValidationOptions;
   properties?: QuestionProperties;
   defaultValue?: string | number;
-  children?: Question[];
 }

@@ -18,9 +18,11 @@ export type QuestionProperties = { [key: string]: unknown };
 export interface Question extends BasicQuestion {
   id: string;
   type: string;
+  children?: Question[];
 }
 
 export interface SingleQuestion extends BasicQuestion {
+  id: string;
   type: string;
 }
 
