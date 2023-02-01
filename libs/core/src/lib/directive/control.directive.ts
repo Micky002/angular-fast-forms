@@ -1,7 +1,7 @@
 import { Directive, Injector, Input, OnInit, ViewContainerRef } from '@angular/core';
 import { FormGroupDirective } from '@angular/forms';
 import { FastFormControl } from '../control/fast-form-control';
-import { FormRenderService } from '../internal/form-render.service';
+import { FormRenderService } from '../internal/base-form-renderer.service';
 
 @Directive({
   selector: '[fastFormControlName]'

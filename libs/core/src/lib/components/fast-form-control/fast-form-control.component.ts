@@ -1,10 +1,10 @@
 import { Component, Injector, Input, OnInit, Optional, ViewChild, ViewContainerRef } from '@angular/core';
-import { FormRenderService } from '../../internal/form-render.service';
 import { FastFormControl } from '../../control/fast-form-control';
 import { Question, SingleQuestion } from '../../model';
 import { ActionService } from '../../actions/action.service';
 import { ArrayIndexDirective } from '../../actions/array-index.directive';
 import { ControlRegistry } from '../../internal/control/control-registry.service';
+import { FormRenderService } from '../../internal/base-form-renderer.service';
 
 @Component({
   selector: 'aff-form-control',
@@ -38,8 +38,10 @@ export class FastFormControlComponent implements OnInit {
           this.control,
           question,
           this.controlRegistry.getDefinition(question.type),
-          this.injector,
-          this.actionService);
+          {
+            injector: this.injector, actionService:
+            this.actionService
+          });
     }
   }
 }

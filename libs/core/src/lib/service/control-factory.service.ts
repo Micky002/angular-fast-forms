@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { Question } from '../model';
 import { ValidatorFactoryService } from '../validation/validator-factory.service';
-import { FormRenderService } from '../internal/form-render.service';
 import { FastFormArray } from '../control/fast-form-array';
 import { FastFormControl } from '../control/fast-form-control';
 import { FastFormGroup } from '../control/fast-form-group';
@@ -17,7 +16,6 @@ import { flattenArray } from '../util/list.util';
 export class ControlFactoryService {
 
   constructor(private validatorFactory: ValidatorFactoryService,
-              private renderService: FormRenderService,
               private controlRegistry: ControlRegistry) {
   }
 

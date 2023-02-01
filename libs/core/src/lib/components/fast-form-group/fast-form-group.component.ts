@@ -18,8 +18,8 @@ import { ArrayIndexDirective } from '../../actions/array-index.directive';
 import { ActionEvent } from '../../actions/models';
 import { Control } from '../../control/control.decorator';
 import { FastFormGroup } from '../../control/fast-form-group';
+import { FormRenderService } from '../../internal/base-form-renderer.service';
 import { ControlRegistry } from '../../internal/control/control-registry.service';
-import { FormRenderService } from '../../internal/form-render.service';
 import { FastFormSubmitEvent, Question } from '../../model';
 import { ControlFactoryService } from '../../service/control-factory.service';
 import { FastFormsService } from '../../service/fast-forms.service';
@@ -40,7 +40,7 @@ export class FastFormGroupComponent implements OnChanges, OnInit, OnDestroy {
     read: ViewContainerRef,
     static: true
   })
-  componentViewContainerRef!: ViewContainerRef;
+  viewContainer!: ViewContainerRef;
   @Output() public action = new EventEmitter<ActionEvent>();
   @Output() public submitEvent = new EventEmitter<FastFormSubmitEvent>();
 
@@ -117,7 +117,7 @@ export class FastFormGroupComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   private render() {
-    this.componentViewContainerRef.clear();
+    this.viewContainer.clear();
     this._formGroup.questions
         .filter((question) => !question.hidden)
         .forEach((question) => {
@@ -129,13 +129,14 @@ export class FastFormGroupComponent implements OnChanges, OnInit, OnDestroy {
     if (this.controlRegistry.hasItem(question.type)) {
       const controlDefinition = this.controlRegistry.getDefinition(question.type);
       this.formRenderService.render(
-          this.componentViewContainerRef,
+          this.viewContainer,
           this._formGroup,
           question,
           controlDefinition,
-          this.injector,
-          this._actionService,
-          this.indexDirective
+          {
+            injector: this.injector, actionService: this._actionService, indexDirective:
+            this.indexDirective
+          }
       );
     }
   }

@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AFF_CONTROL_COMPONENTS, Question } from '../model';
-import { FormRenderService } from './form-render.service';
 import { Component, Injector, Provider, ViewChild, ViewContainerRef } from '@angular/core';
 import { ControlRegistry } from './control/control-registry.service';
 import { By } from '@angular/platform-browser';
 import { Control } from '../control/control.decorator';
 import { ControlFactoryService } from '../service/control-factory.service';
 import { FastFormControl } from '../control/fast-form-control';
+import { FormRenderService } from './base-form-renderer.service';
 
 @Control({
   type: 'dummy'
@@ -59,9 +59,9 @@ describe('FormRenderService', () => {
         new FastFormControl(question),
         question,
         controlRegistry.getDefinition('dummy'),
-        Injector.create({
-          providers: []
-        })
+        {
+          injector: Injector.create({providers: []})
+        }
     );
     const element = fixture.debugElement.query(By.css('[data-test-id="dummy-test"]')).nativeElement as HTMLParagraphElement;
     expect(element).toBeDefined();

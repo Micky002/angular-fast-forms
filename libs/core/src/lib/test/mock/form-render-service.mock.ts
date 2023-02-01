@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { FormRenderService } from '../../internal/form-render.service';
+import { FormRenderService } from '../../internal/form-renderer.service';
 import { ComponentRef, Injector, ViewContainerRef } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { DynamicFormDefinition, Question, SingleQuestion } from '../../model';

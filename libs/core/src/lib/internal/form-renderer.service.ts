@@ -1,4 +1,4 @@
-import { ComponentRef, forwardRef, Injectable, Injector, StaticProvider, ViewContainerRef } from '@angular/core';
+import { ComponentRef, Injectable, Injector, StaticProvider, ViewContainerRef } from '@angular/core';
 import { DynamicFormDefinition, Question, SingleQuestion } from '../model';
 import { AbstractControl, FormControl } from '@angular/forms';
 import { ControlRegistry } from './control/control-registry.service';
@@ -9,35 +9,8 @@ import { ArrayIndexDirective } from '../actions/array-index.directive';
 import { FastFormControl } from '../control/fast-form-control';
 import { FastFormGroup } from '../control/fast-form-group';
 import { QuestionDefinition } from '../components/question-definition';
+import { FormRenderService } from './base-form-renderer.service';
 
-
-@Injectable({
-  providedIn: 'any',
-  useClass: forwardRef(() => FormRenderServiceImpl)
-})
-
-export abstract class FormRenderService {
-
-  abstract renderControl(
-      viewContainerRef: ViewContainerRef,
-      control: FastFormControl,
-      injectOptions: {
-        injector: Injector,
-        actionService?: ActionService,
-        indexDirective?: ArrayIndexDirective
-      }
-  ): ComponentRef<unknown>;
-
-  abstract render<T>(
-      viewContainerRef: ViewContainerRef,
-      parent: AbstractControl,
-      question: SingleQuestion | Question,
-      formDefinition: DynamicFormDefinition,
-      injector: Injector,
-      actionService?: ActionService,
-      indexDirective?: ArrayIndexDirective
-  ): ComponentRef<T>;
-}
 
 @Injectable()
 export class FormRenderServiceImpl extends FormRenderService {
@@ -50,13 +23,16 @@ export class FormRenderServiceImpl extends FormRenderService {
 
   override renderControl(
       viewContainerRef: ViewContainerRef,
-      control: FastFormControl,
+      control: AbstractControl,
       injectOptions: {
         injector: Injector,
         actionService?: ActionService,
         indexDirective?: ArrayIndexDirective
       }
   ): ComponentRef<unknown> {
+    if (!(control instanceof FastFormControl)) {
+      throw new Error(`Control is not a subtype of [${FastFormControl.name}].`);
+    }
     if (!control.question) {
       throw new Error(`Control cannot be rendered because 'question' property is not set.`);
     }
@@ -81,18 +57,20 @@ export class FormRenderServiceImpl extends FormRenderService {
   }
 
   override render<T>(
-      viewContainerRef: ViewContainerRef,
+      viewContainer: ViewContainerRef,
       parent: AbstractControl,
       question: SingleQuestion | Question,
       formDefinition: DynamicFormDefinition,
-      injector: Injector,
-      actionService?: ActionService,
-      indexDirective?: ArrayIndexDirective
+      opts: {
+        injector: Injector,
+        actionService?: ActionService,
+        indexDirective?: ArrayIndexDirective
+      }
   ): ComponentRef<T> {
-    const controlComponentRef = viewContainerRef.createComponent(formDefinition.component, {
+    const controlComponentRef = viewContainer.createComponent(formDefinition.component, {
       injector: Injector.create({
-        providers: this.createProviders(question, parent, injector, actionService, indexDirective),
-        parent: injector ? injector : this.injector
+        providers: this.createProviders(question, parent, opts.injector, opts.actionService, opts.indexDirective),
+        parent: opts.injector ? opts.injector : this.injector
       })
     });
     return controlComponentRef as any;
@@ -105,6 +83,9 @@ export class FormRenderServiceImpl extends FormRenderService {
       actionService?: ActionService,
       indexDirective?: ArrayIndexDirective
   ): StaticProvider[] {
+    // console.log(parent);
+    // console.log(question);
+    // console.log('');
     const id = injector.get<ControlIdImpl>(CONTROL_ID, new ControlIdImpl());
     let control: AbstractControl | null = null;
 
@@ -153,11 +134,12 @@ export class FormRenderServiceImpl extends FormRenderService {
 
   private createControlId(id: ControlIdImpl,
                           questionId: string,
-                          control: AbstractControl,
+                          parent: AbstractControl,
                           indexDirective?: ArrayIndexDirective
   ): ControlIdImpl {
-    if (indexDirective && (control instanceof FastFormGroup || control instanceof FastFormControl)) {
-      return id.addIndex(questionId, control);
+    if (indexDirective && (parent instanceof FastFormGroup || parent instanceof FastFormControl)) {
+      console.log('index provider');
+      return id.addIndex(questionId, parent);
     } else {
       return id.addPart(questionId);
     }

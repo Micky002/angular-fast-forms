@@ -6,7 +6,7 @@ export class ControlIdImpl implements ControlId {
   constructor(private parentParts: IdPart[] = []) {
     this.parts = parentParts.map((part) => ({
       id: part.id,
-      indexProvider: part.indexProvider,
+      indexProvider: part.indexProvider
     }));
   }
 
@@ -14,25 +14,28 @@ export class ControlIdImpl implements ControlId {
     return new ControlIdImpl([
       ...this.parts,
       {
-        id: part,
-      },
+        id: part
+      }
     ]);
   }
 
   addIndex(part: string | undefined, indexProvider: IndexProvider): ControlIdImpl {
+    console.log(part);
+    console.log(indexProvider);
+    console.log();
     let clonedId = new ControlIdImpl(this.parts);
     if (clonedId.parts.length > 0) {
       const lastPart = clonedId.parts[clonedId.parts.length - 1];
       if (lastPart.indexProvider === undefined) {
         lastPart.indexProvider = indexProvider;
       } else {
-        clonedId = new ControlIdImpl([...clonedId.parts, { indexProvider: indexProvider }]);
+        clonedId = new ControlIdImpl([...clonedId.parts, {indexProvider: indexProvider}]);
       }
     } else if (clonedId.parts.length === 0) {
       if (part === undefined) {
-        clonedId = new ControlIdImpl([{ indexProvider: indexProvider }]);
+        clonedId = new ControlIdImpl([{indexProvider: indexProvider}]);
       } else {
-        clonedId = new ControlIdImpl([{ indexProvider: indexProvider }, { id: part }]);
+        clonedId = new ControlIdImpl([{indexProvider: indexProvider}, {id: part}]);
       }
     }
     return clonedId;
@@ -40,16 +43,16 @@ export class ControlIdImpl implements ControlId {
 
   getId(): string {
     return this.parts
-      .map((part) => {
-        if (part.id !== undefined && part.indexProvider !== undefined) {
-          return `${part.id}[${part.indexProvider.index}]`;
-        } else if (part.indexProvider !== undefined) {
-          return `[${part.indexProvider.index}]`;
-        } else {
-          return part.id;
-        }
-      })
-      .join('.');
+        .map((part) => {
+          if (part.id !== undefined && part.indexProvider !== undefined) {
+            return `${part.id}[${part.indexProvider.index}]`;
+          } else if (part.indexProvider !== undefined) {
+            return `[${part.indexProvider.index}]`;
+          } else {
+            return part.id;
+          }
+        })
+        .join('.');
   }
 }
 

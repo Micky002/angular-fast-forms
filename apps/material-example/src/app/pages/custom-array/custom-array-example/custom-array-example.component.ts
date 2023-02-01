@@ -11,7 +11,7 @@ export class CustomArrayExampleComponent implements OnInit {
   public form: FastFormGroup;
 
   constructor(private formService: FastFormsService) {
-    this.form = this.formService.createDynamicForm([{
+    this.form = this.formService.group([{
       id: 'test-array',
       type: 'custom-array',
       children: [{

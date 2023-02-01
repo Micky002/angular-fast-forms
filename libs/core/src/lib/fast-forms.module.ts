@@ -9,6 +9,8 @@ import { FastFormRowComponent } from './components/fast-form-row/fast-form-row.c
 import { VALIDATORS } from './internal/token';
 import { AFF_CONTROL_COMPONENTS } from './model';
 import { ControlDirective, ControlNameDirective } from './directive/control.directive';
+import { FormRenderService } from './internal/base-form-renderer.service';
+import { FormRenderServiceImpl } from './internal/form-renderer.service';
 
 @NgModule({
   imports: [
@@ -33,6 +35,10 @@ import { ControlDirective, ControlNameDirective } from './directive/control.dire
     ControlNameDirective
   ],
   providers: [
+    {
+      provide: FormRenderService,
+      useClass: FormRenderServiceImpl
+    },
     {
       provide: AFF_CONTROL_COMPONENTS,
       useValue: [
