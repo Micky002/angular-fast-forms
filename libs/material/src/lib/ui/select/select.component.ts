@@ -16,7 +16,7 @@ export class SelectComponent implements OnInit {
 
   public selectOptions: Array<SelectOption> = [];
 
-  private properties: SelectProperties
+  private properties?: SelectProperties;
 
   constructor(@Inject(FORM_CONTROL) public control: FormControl,
               public question: QuestionDefinition,
@@ -29,7 +29,7 @@ export class SelectComponent implements OnInit {
   }
 
   private refreshSelectOptions() {
-    if (this.properties.optionsEndpoint) {
+    if (this.properties?.optionsEndpoint) {
       this.http.get<Array<SelectOption>>(this.properties.optionsEndpoint, {
         observe: 'response'
       }).pipe(
@@ -40,16 +40,16 @@ export class SelectComponent implements OnInit {
             return of([] as Array<SelectOption>);
           })
       ).subscribe(options => {
-        const constantOptions: Array<SelectOption> = this.properties.options || [];
+        const constantOptions: Array<SelectOption> = this.properties?.options ?? [];
         this.selectOptions = this.addEmptyOption(constantOptions.concat(options));
       });
     } else {
-      this.selectOptions = this.addEmptyOption(this.properties.options || []);
+      this.selectOptions = this.addEmptyOption(this.properties?.options ?? []);
     }
   }
 
   private addEmptyOption(options: Array<SelectOption>): Array<SelectOption> {
-    if (this.properties.emptyOptionName) {
+    if (this.properties?.emptyOptionName) {
       return [{value: this.properties.emptyOptionValue || '', name: this.properties.emptyOptionName}, ...options];
     } else {
       return options;

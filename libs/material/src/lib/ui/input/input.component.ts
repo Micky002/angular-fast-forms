@@ -1,24 +1,24 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Control, CONTROL_PROPERTIES, FORM_CONTROL, QuestionDefinition } from '@ngx-fast-forms/core';
+import { Control, FORM_CONTROL, QuestionDefinition } from '@ngx-fast-forms/core';
 import { InputFormat, InputProperties } from './input.models';
 
 @Control({
-  type: 'input,mat-input',
+  type: 'input,mat-input'
 })
 @Component({
   selector: 'aff-material-input',
-  templateUrl: './input.component.html',
+  templateUrl: './input.component.html'
 })
 export class InputComponent implements OnInit {
-  @ViewChild('inputElement', { static: true }) inputRef!: ElementRef<HTMLInputElement>;
+  @ViewChild('inputElement', {static: true}) inputRef!: ElementRef<HTMLInputElement>;
   private properties?: InputProperties;
 
   constructor(
-    @Inject(FORM_CONTROL) public control: FormControl,
-    public question: QuestionDefinition) {
-      this.properties = question.properties
-    }
+      @Inject(FORM_CONTROL) public control: FormControl,
+      public question: QuestionDefinition<InputProperties>) {
+    this.properties = question.properties;
+  }
 
   public get type(): string {
     if (this.properties?.attributes && this.properties.attributes['type']) {

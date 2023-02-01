@@ -55,6 +55,9 @@ export class ControlFactoryService {
     const wrappers: ControlWrapper[] = [];
     if (this.controlRegistry.hasItem(question.type)) {
       const definition = this.controlRegistry.getDefinition(question.type);
+      // if (!question.id) {
+      //   throw new Error(`Cannot add control without [id].`);
+      // }
       if (definition.internalType === 'control') {
         wrappers.push(ControlWrapper.forFormControl(question.id, this.createAndInitFormControl(question)));
       } else if (definition.internalType === 'action') {

@@ -26,6 +26,12 @@ export interface SingleQuestion extends BasicQuestion {
   type: string;
 }
 
+export interface GroupQuestion extends BasicQuestion {
+  // id: string;
+  type: string;
+  children?: Question[];
+}
+
 export interface ValidationOptions {
   required?: boolean;
   min?: number;
@@ -47,6 +53,9 @@ export interface FastFormSubmitEvent {
 
 export interface GroupOptions extends AbstractControlOptions {
   type?: string;
+  disabled?: boolean;
+  validation?: ValidationOptions;
+  properties?: unknown;
 }
 
 export type FormControlType = 'control' | 'array' | 'group';

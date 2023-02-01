@@ -29,7 +29,10 @@ export class FastFormsService {
     const groupQuestion: Question = {
       id: FastFormsService.ROOT_GROUP_ID,
       type: options?.type ?? 'group',
-      children: questions ?? []
+      children: questions ?? [],
+      properties: options?.properties,
+      disabled: options?.disabled,
+      validation: options?.validation
     };
     return new FastFormGroup(groupQuestion, this.controlFactory, {
       validators: options?.validators,
@@ -38,6 +41,9 @@ export class FastFormsService {
     });
   }
 
+  /**
+   * @deprecated use {@link group} or {@link control}
+   */
   public createDynamicForm(questions: Array<Question>, options?: AbstractControlOptions): FastFormGroup {
     return new FastFormGroup({
       id: FastFormsService.ROOT_GROUP_ID,

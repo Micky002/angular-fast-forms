@@ -1,12 +1,12 @@
 import { Question, QuestionProperties, SingleQuestion, ValidationOptions } from '../model';
 
-export class QuestionDefinition {
-  public readonly id: string;
+export class QuestionDefinition<T = QuestionProperties> {
+  public readonly id: string | null;
   public readonly label?: string;
   public readonly hidden?: boolean;
   public readonly disabled?: boolean;
   public readonly validation?: ValidationOptions;
-  public readonly properties?: QuestionProperties;
+  public readonly properties?: T;
   public readonly defaultValue?: string | number;
   public readonly children?: Question[];
 
@@ -20,7 +20,7 @@ export class QuestionDefinition {
     this.hidden = question.hidden;
     this.disabled = question.disabled;
     this.validation = question.validation;
-    this.properties = question.properties ?? {};
+    this.properties = question.properties as T;
     this.defaultValue = question.defaultValue;
     if ('children' in question) {
       this.children = question.children;
@@ -35,6 +35,6 @@ export interface BasicQuestion {
   hidden?: boolean;
   disabled?: boolean;
   validation?: ValidationOptions;
-  properties?: QuestionProperties;
+  properties?: unknown;
   defaultValue?: string | number;
 }
