@@ -1,7 +1,9 @@
-import { QuestionProperties } from "@ngx-fast-forms/core";
+import { QuestionProperties } from '@ngx-fast-forms/core';
+
+export type ButtonType = 'icon-button' | 'text-button'
 
 export interface ButtonProperties extends QuestionProperties {
-  type: 'icon-button' | 'text-button'
+  type: ButtonType;
   text?: string;
   icon?: string;
 }

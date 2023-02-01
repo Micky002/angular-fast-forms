@@ -1,12 +1,4 @@
-import {
-  ComponentRef,
-  forwardRef,
-  Injectable,
-  Injector,
-  Provider,
-  StaticProvider,
-  ViewContainerRef
-} from '@angular/core';
+import { ComponentRef, forwardRef, Injectable, Injector, StaticProvider, ViewContainerRef } from '@angular/core';
 import { DynamicFormDefinition, Question, SingleQuestion } from '../model';
 import { AbstractControl, FormControl } from '@angular/forms';
 import { ControlRegistry } from './control/control-registry.service';
@@ -65,6 +57,9 @@ export class FormRenderServiceImpl extends FormRenderService {
         indexDirective?: ArrayIndexDirective
       }
   ): ComponentRef<unknown> {
+    if (!control.question) {
+      throw new Error(`Control cannot be rendered because 'question' property is not set.`);
+    }
     const question = control.question;
     const definition = this.controlRegistry.getDefinition(question.type);
     const providers = this.createProviders(
@@ -141,7 +136,7 @@ export class FormRenderServiceImpl extends FormRenderService {
 
   private createDefaultProviders(control: AbstractControl): StaticProvider[] {
     const providers: StaticProvider[] = [];
-    if (control instanceof FastFormControl) {
+    if (control instanceof FastFormControl && control.question) {
       providers.push({provide: QuestionDefinition, useValue: new QuestionDefinition(control.question)});
     } else if (control instanceof FastFormGroup) {
       // providers.push({provide: QuestionDefinition, useValue: new QuestionDefinition(control.question)});

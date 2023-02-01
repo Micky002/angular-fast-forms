@@ -1,9 +1,9 @@
-<button (click)="clickButton()" *ngIf="properties.type === 'text-button'" mat-button>
+<button (click)="clickButton()" *ngIf="type === 'text-button'" mat-button>
   <mat-icon *ngIf="properties.icon">{{properties.icon}}</mat-icon>
   <span>{{properties.text}}</span>
 </button>
 
-<button (click)="clickButton()" *ngIf="properties.type === 'icon-button'" mat-icon-button>
+<button (click)="clickButton()" *ngIf="type === 'icon-button'" mat-icon-button>
   <mat-icon>{{properties.icon}}</mat-icon>
 </button>
 

@@ -5,21 +5,22 @@ import { Subscription } from 'rxjs';
 
 @Control({
   type: 'custom-array',
-  controlType: 'array',
+  controlType: 'array'
 })
 @Component({
   selector: 'frontend-time-array',
   templateUrl: './time-array.component.html',
-  styleUrls: ['./time-array.component.scss'],
+  styleUrls: ['./time-array.component.scss']
 })
 export class TimeArrayComponent implements OnInit, OnDestroy {
   private _actionSub!: Subscription;
 
   constructor(
-    private actionService: ActionService,
-    private changeRef: ChangeDetectorRef,
-    @Inject(FORM_CONTROL) public formArray: FastFormArray
-  ) {}
+      private actionService: ActionService,
+      private changeRef: ChangeDetectorRef,
+      @Inject(FORM_CONTROL) public formArray: FastFormArray
+  ) {
+  }
 
   ngOnInit(): void {
     this._actionSub = this.actionService.actions.subscribe((event) => {
@@ -34,7 +35,7 @@ export class TimeArrayComponent implements OnInit, OnDestroy {
         }
       }
     });
-    this.formArray.valueChanges.subscribe((value) => {
+    this.formArray.valueChanges.subscribe(() => {
       this.changeRef.detectChanges();
     });
   }

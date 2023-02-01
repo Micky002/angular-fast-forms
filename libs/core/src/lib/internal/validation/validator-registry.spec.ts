@@ -87,7 +87,7 @@ describe('ValidatorRegistry', () => {
     it('getAsyncValidator', async () => {
       const validator = registry.getAsyncValidator(new ValidatorDefinition('dummy-async'));
       expect(validator).toBeDefined();
-      const validationResult = await (validator(new FormControl()) as Promise<any>);
+      const validationResult = await (validator(new FormControl()) as Promise<{ required: boolean }>);
       expect(validationResult).toBeDefined();
       expect(validationResult).toHaveProperty('required');
       expect(validationResult['required']).toBeTruthy();
@@ -106,7 +106,7 @@ describe('ValidatorRegistry', () => {
     it('getSyncValidator', () => {
       const validator = registry.getSyncValidator(new ValidatorDefinition('dummy-sync'));
       expect(validator).toBeDefined();
-      const validationResult = validator(new FormControl()) as any;
+      const validationResult = validator(new FormControl()) as { required: boolean };
       expect(validationResult).toBeDefined();
       expect(validationResult).toHaveProperty('required');
       expect(validationResult['required']).toBeTruthy();

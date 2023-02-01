@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ButtonComponent } from './button.component';
-import { ActionService, CONTROL_ID, CONTROL_PROPERTIES } from '@ngx-fast-forms/core';
+import { ActionService, CONTROL_ID, CONTROL_PROPERTIES, QuestionDefinition } from '@ngx-fast-forms/core';
 
 describe('ButtonComponent', () => {
   let component: ButtonComponent;
@@ -20,7 +20,13 @@ describe('ButtonComponent', () => {
         }, {
           provide: CONTROL_ID,
           useValue: 'test-button-id'
-        }]
+        }, {
+          provide: QuestionDefinition,
+          useValue: new QuestionDefinition({
+            type: ''
+          })
+        }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ButtonComponent);

@@ -8,9 +8,6 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { DateRangeInputComponent } from './date-range-input.component';
 
 @NgModule({
-  declarations: [
-    DateRangeInputComponent
-  ],
   imports: [
     CommonModule,
     FastFormsModule.forChild({

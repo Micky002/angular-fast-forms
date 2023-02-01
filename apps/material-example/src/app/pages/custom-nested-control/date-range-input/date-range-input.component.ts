@@ -1,11 +1,21 @@
 import { Component, Inject } from '@angular/core';
 import { Control, ControlFactory, FORM_CONTROL, Question } from '@ngx-fast-forms/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { CommonModule } from '@angular/common';
 
 @Control({
   type: 'date-range'
 })
 @Component({
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatInputModule
+  ],
   selector: 'frontend-date-range-input',
   templateUrl: './date-range-input.component.html',
   styleUrls: ['./date-range-input.component.scss']

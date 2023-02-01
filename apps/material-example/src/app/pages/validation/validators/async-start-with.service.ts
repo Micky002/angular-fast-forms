@@ -10,11 +10,12 @@ import { HttpClient } from '@angular/common/http';
 @Injectable()
 export class AsyncStartWithService implements BaseAsyncValidator {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  createValidator(args: string[]): AsyncValidatorFn {
-    return control => {
+  createValidator(): AsyncValidatorFn {
+    return () => {
       return this.http.get('assets/validation/async-start-with.json');
-    }
+    };
   }
 }

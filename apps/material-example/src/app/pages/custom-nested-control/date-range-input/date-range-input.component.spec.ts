@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FORM_CONTROL } from '@ngx-fast-forms/core';
 
 import { DateRangeInputComponent } from './date-range-input.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('DateRangeInputComponent', () => {
   let component: DateRangeInputComponent;
@@ -9,8 +11,9 @@ describe('DateRangeInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        DateRangeInputComponent
+      imports: [
+        NoopAnimationsModule,
+        MatNativeDateModule
       ],
       providers: [
         {

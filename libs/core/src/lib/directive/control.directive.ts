@@ -18,7 +18,7 @@ export class ControlNameDirective implements OnInit {
 
   ngOnInit(): void {
     const formGroup = this.groupDirective.control;
-    if (formGroup.contains(this.fastFormControlName)) {
+    if (this.fastFormControlName in formGroup.controls) {
       const subControl = formGroup.get(this.fastFormControlName);
       if (subControl instanceof FastFormControl) {
         this.formRenderer.renderControl(

@@ -79,7 +79,7 @@ export class ControlFactoryService {
     control.setValidators(validator);
     control.setAsyncValidators(asyncValidator);
     if (question.disabled) {
-      control.disable({ emitEvent: false });
+      control.disable({emitEvent: false});
     }
     return control;
   }
@@ -95,7 +95,7 @@ export class ControlFactoryService {
   }
 
   private createControlDefault(question: Question): AbstractControl {
-    return new FastFormControl(question, question.defaultValue);
+    return new FastFormControl(question.defaultValue, {question});
   }
 
   private createAndInitFormAction(question: Question): AbstractControl {
@@ -111,7 +111,7 @@ export class ControlFactoryService {
   private createAndInitFormGroup(question: Question): AbstractControl {
     const subFormGroup = new FastFormGroup(question, this);
     if (question.disabled) {
-      subFormGroup.disable({ emitEvent: false });
+      subFormGroup.disable({emitEvent: false});
     }
     return subFormGroup;
   }

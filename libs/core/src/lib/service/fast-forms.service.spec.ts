@@ -42,8 +42,7 @@ describe('FastFormsService', () => {
   });
 
   it('should create single control', () => {
-    const control = service.createControl({
-      id: 'test-field',
+    const control = service.control({
       type: 'dummy-input'
     });
     expect(control).toBeInstanceOf(FastFormControl);

@@ -14,16 +14,16 @@ describe('ArrayIndexDirective', () => {
         [],
         [{
           // eslint-disable-next-line @typescript-eslint/no-empty-function
-          registerOnChange(fn: unknown) {
+          registerOnChange() {
           },
           // eslint-disable-next-line @typescript-eslint/no-empty-function
-          writeValue(obj: unknown) {
+          writeValue() {
           },
           // eslint-disable-next-line @typescript-eslint/no-empty-function
-          setDisabledState(isDisabled: boolean) {
+          setDisabledState() {
           },
           // eslint-disable-next-line @typescript-eslint/no-empty-function
-          registerOnTouched(fn: unknown) {
+          registerOnTouched() {
           }
         }],
         null

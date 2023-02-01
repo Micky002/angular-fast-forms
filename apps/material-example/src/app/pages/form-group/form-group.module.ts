@@ -12,13 +12,16 @@ import { FormGroupComponent } from './form-group.component';
     RouterModule.forChild([
       {
         path: '',
-        component: FormGroupComponent
-      },
-      {
-        path: 'nested-group',
-        component: NestedComponent
+        component: FormGroupComponent,
+        children: [
+          {
+            path: 'nested-group',
+            component: NestedComponent
+          }
+        ]
       }
     ])
   ]
 })
-export class FormGroupModule { }
+export class FormGroupModule {
+}

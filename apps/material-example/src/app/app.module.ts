@@ -38,8 +38,12 @@ import { MatIconModule } from '@angular/material/icon';
         component: MaterialExampleComponent
       },
       {
+        path: 'control',
+        loadChildren: () => import('./control/control.module').then(m => m.ControlModule)
+      },
+      {
         path: 'form-array',
-        component: FormArrayComponent
+        loadChildren: () => import('./pages/form-array/form-array.module').then((m) => m.SingleControlModule)
       },
       {
         path: 'github-example',
@@ -48,50 +52,36 @@ import { MatIconModule } from '@angular/material/icon';
       {
         path: 'lazy-loading-example',
         loadChildren: () =>
-            import('./lazy-loading-example/lazy-loading-example.module')
-                .then((m) => m.LazyLoadingExampleModule)
+            import('./lazy-loading-example/lazy-loading-example.module').then((m) => m.LazyLoadingExampleModule)
       },
       {
         path: 'validation',
-        loadChildren: () =>
-            import('./pages/validation/validation.module')
-                .then((m) => m.ValidationModule)
+        loadChildren: () => import('./pages/validation/validation.module').then((m) => m.ValidationModule)
       },
       {
         path: 'nested-control',
         loadChildren: () =>
-            import('./pages/custom-nested-control/custom-nested-control.module')
-                .then((m) => m.CustomNestedControlModule)
+            import('./pages/custom-nested-control/custom-nested-control.module').then((m) => m.CustomNestedControlModule)
       },
       {
         path: 'ngxs',
-        loadChildren: () =>
-            import('./pages/ngxs/example-ngxs.module')
-                .then((m) => m.ExampleNgxsModule)
+        loadChildren: () => import('./pages/ngxs/example-ngxs.module').then((m) => m.ExampleNgxsModule)
       },
       {
         path: 'custom-array',
-        loadChildren: () =>
-            import('./pages/custom-array/custom-array.module')
-                .then((m) => m.CustomArrayModule)
+        loadChildren: () => import('./pages/custom-array/custom-array.module').then((m) => m.CustomArrayModule)
       },
       {
         path: 'single-control',
-        loadChildren: () =>
-            import('./pages/single-control/single-control.module')
-                .then((m) => m.SingleControlModule)
+        loadChildren: () => import('./pages/single-control/single-control.module').then((m) => m.SingleControlModule)
       },
       {
         path: 'standard-form',
-        loadChildren: () =>
-            import('./standard-form/standard-form.module')
-                .then((m) => m.StandardFormModule)
+        loadChildren: () => import('./standard-form/standard-form.module').then((m) => m.StandardFormModule)
       },
       {
         path: 'form-group',
-        loadChildren: () =>
-            import('./pages/form-group/form-group.module')
-                .then((m) => m.FormGroupModule)
+        loadChildren: () => import('./pages/form-group/form-group.module').then((m) => m.FormGroupModule)
       }
     ]),
     MatButtonModule,

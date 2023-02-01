@@ -4,8 +4,7 @@ import { ButtonProperties } from '@ngx-fast-forms/material';
 
 @Component({
   selector: 'frontend-form-array',
-  templateUrl: './form-array.component.html',
-  styleUrls: ['./form-array.component.scss']
+  templateUrl: './form-array.component.html'
 })
 export class FormArrayComponent implements OnInit {
 

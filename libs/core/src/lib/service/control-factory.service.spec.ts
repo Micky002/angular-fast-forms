@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { ControlFactoryService } from './control-factory.service';
 import { Component, Provider } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, FormRecord } from '@angular/forms';
 import { ValidatorFactoryService } from '../validation/validator-factory.service';
 import { FastFormArray } from '../control/fast-form-array';
 import { ActionControl } from '../actions/actions.decorator';
@@ -144,7 +144,7 @@ describe('ControlFactoryService', () => {
   });
 
   it('should create array with controls', () => {
-    const formGroup = new FormGroup({});
+    const formGroup = new FormRecord({});
     service.createFromQuestions(formGroup, [{
       id: 'test-array',
       type: 'array',
@@ -160,7 +160,7 @@ describe('ControlFactoryService', () => {
     expect(formGroup.get('test-array')).not.toBeNull();
     expect(formGroup.get('test-array')).toBeInstanceOf(FormArray);
 
-    const formArray: FastFormArray = formGroup.get('test-array') as any;
+    const formArray = formGroup.get('test-array') as FastFormArray;
     expect(formArray).toBeInstanceOf(FastFormArray);
     expect(formArray.length).toEqual(0);
 

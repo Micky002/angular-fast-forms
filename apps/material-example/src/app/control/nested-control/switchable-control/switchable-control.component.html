@@ -1,0 +1,6 @@
+<div [formGroup]="formGroup" class="switch-input">
+  <button (click)="toggleDisabled()" mat-icon-button>
+    <mat-icon>{{disabled ? 'do_not_disturb_off' : 'do_not_disturb_on'}}</mat-icon>
+  </button>
+  <ng-container fastFormControlName="value"></ng-container>
+</div>

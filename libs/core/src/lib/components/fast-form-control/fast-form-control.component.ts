@@ -27,7 +27,9 @@ export class FastFormControlComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.createComponent(this.control.question);
+    if (this.control.question) {
+      this.createComponent(this.control.question);
+    }
   }
 
   private createComponent(question: SingleQuestion | Question) {

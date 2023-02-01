@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { FastFormControl, FastFormGroup, FastFormsModule, FastFormsService } from '@ngx-fast-forms/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FastFormControl, FastFormsModule, FastFormsService } from '@ngx-fast-forms/core';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
 
 @Component({
@@ -16,20 +16,21 @@ import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
 })
 export class SimpleExampleComponent {
 
-  public form: FastFormGroup;
+  public form: FormGroup;
 
   public nameControl: FastFormControl;
 
   constructor(private formService: FastFormsService) {
-    this.nameControl = this.formService.createControl({
-      id: 'simple-input',
+    this.form = new FormGroup({
+      test: this.formService.control({
+        type: 'mat-input',
+        label: 'Standard input'
+      })
+    });
+
+    this.nameControl = this.formService.control({
       type: 'mat-input',
       label: 'Name'
     });
-    this.form = this.formService.createDynamicForm([{
-      id: 'test',
-      type: 'mat-input',
-      label: 'Standard input'
-    }]);
   }
 }

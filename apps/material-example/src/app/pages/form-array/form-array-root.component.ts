@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'frontend-form-group',
+  selector: 'frontend-form-array-root',
   standalone: true,
   imports: [
     CommonModule,
@@ -13,11 +13,12 @@ import { RouterModule } from '@angular/router';
   ],
   template: `
     <div class="example-button-row">
-      <a mat-raised-button routerLink="nested-group" color="primary">Nested</a>
+      <a mat-raised-button routerLink="general" color="primary">General</a>
+      <a mat-raised-button routerLink="nested" color="primary">Nested</a>
     </div>
     <router-outlet></router-outlet>
   `,
   styles: []
 })
-export class FormGroupComponent {
+export class FormArrayRootComponent {
 }

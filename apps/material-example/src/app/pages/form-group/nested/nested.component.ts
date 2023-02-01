@@ -22,7 +22,7 @@ export class NestedComponent {
   nestedGroup: FastFormGroup;
 
   constructor(private formService: FastFormsService) {
-    this.nestedGroup = this.formService.createGroup([
+    this.nestedGroup = this.formService.group([
       {
         id: 'name',
         type: 'mat-input',
