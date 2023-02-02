@@ -20,9 +20,6 @@ export class ControlIdImpl implements ControlId {
   }
 
   addIndex(part: string | undefined, indexProvider: IndexProvider): ControlIdImpl {
-    console.log(part);
-    console.log(indexProvider);
-    console.log();
     let clonedId = new ControlIdImpl(this.parts);
     if (clonedId.parts.length > 0) {
       const lastPart = clonedId.parts[clonedId.parts.length - 1];

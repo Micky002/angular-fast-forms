@@ -12,6 +12,7 @@ import {
   ViewContainerRef,
   ViewRef
 } from '@angular/core';
+import { ComponetRefMock } from './componet-ref.mock';
 
 export class ViewContainerRefMock extends ViewContainerRef {
 
@@ -40,7 +41,12 @@ export class ViewContainerRefMock extends ViewContainerRef {
   createComponent<C>(componentFactory: ComponentFactory<C>, index?: number, injector?: Injector, projectableNodes?: any[][], environmentInjector?: EnvironmentInjector | NgModuleRef<any>): ComponentRef<C>;
 
   createComponent(componentType: unknown, options?: { index?: number; injector?: Injector; ngModuleRef?: NgModuleRef<unknown>; environmentInjector?: EnvironmentInjector | NgModuleRef<unknown>; projectableNodes?: Node[][] } | number, injector?: Injector, projectableNodes?: any[][], environmentInjector?: EnvironmentInjector | NgModuleRef<any>): ComponentRef<unknown> {
-    throw new Error('Not implemented in mock');
+    if (componentType instanceof Type && typeof options === 'object' && options.injector) {
+      // throw new Error('Not implemented in mock');
+      return new ComponetRefMock(options?.injector, componentType.constructor());
+    } else {
+      throw new Error('Not implemented in mock');
+    }
   }
 
   createEmbeddedView<C>(templateRef: TemplateRef<C>, context?: C, options?: { index?: number; injector?: Injector }): EmbeddedViewRef<C>;

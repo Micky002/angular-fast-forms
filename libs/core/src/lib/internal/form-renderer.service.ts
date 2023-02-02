@@ -1,5 +1,5 @@
 import { ComponentRef, Injectable, Injector, StaticProvider, ViewContainerRef } from '@angular/core';
-import { DynamicFormDefinition, Question, SingleQuestion } from '../model';
+import { Question, SingleQuestion } from '../model';
 import { AbstractControl, FormControl } from '@angular/forms';
 import { ControlRegistry } from './control/control-registry.service';
 import { CONTROL_ID, CONTROL_PROPERTIES, FORM_CONTROL } from '../components/util/inject-token';
@@ -24,8 +24,8 @@ export class FormRenderServiceImpl extends FormRenderService {
   override renderControl(
       viewContainerRef: ViewContainerRef,
       control: AbstractControl,
-      injectOptions: {
-        injector: Injector,
+      opts?: {
+        injector?: Injector,
         actionService?: ActionService,
         indexDirective?: ArrayIndexDirective
       }
@@ -41,9 +41,9 @@ export class FormRenderServiceImpl extends FormRenderService {
     const providers = this.createProviders(
         question,
         null,
-        injectOptions.injector,
-        injectOptions.actionService,
-        injectOptions.indexDirective
+        opts?.injector,
+        opts?.actionService,
+        opts?.indexDirective
     );
     return viewContainerRef.createComponent(definition.component, {
       injector: Injector.create({
@@ -51,42 +51,42 @@ export class FormRenderServiceImpl extends FormRenderService {
           ...providers,
           {provide: FORM_CONTROL, useValue: control}
         ],
-        parent: injectOptions.injector ? injectOptions.injector : this.injector
+        parent: opts?.injector ? opts?.injector : this.injector
       })
     });
   }
 
-  override render<T>(
+  override render(
       viewContainer: ViewContainerRef,
       parent: AbstractControl,
       question: SingleQuestion | Question,
-      formDefinition: DynamicFormDefinition,
-      opts: {
-        injector: Injector,
+      opts?: {
+        injector?: Injector,
         actionService?: ActionService,
         indexDirective?: ArrayIndexDirective
       }
-  ): ComponentRef<T> {
-    const controlComponentRef = viewContainer.createComponent(formDefinition.component, {
+  ): ComponentRef<unknown> {
+    if (parent instanceof FormControl) {
+      console.log('render invalid control');
+    }
+    const controlDefinition = this.controlRegistry.getDefinition(question.type);
+    const componentRef = viewContainer.createComponent(controlDefinition.component, {
       injector: Injector.create({
-        providers: this.createProviders(question, parent, opts.injector, opts.actionService, opts.indexDirective),
-        parent: opts.injector ? opts.injector : this.injector
+        providers: this.createProviders(question, parent, opts?.injector, opts?.actionService, opts?.indexDirective),
+        parent: opts?.injector ? opts?.injector : this.injector
       })
     });
-    return controlComponentRef as any;
+    return componentRef;
   }
 
   private createProviders(
       question: SingleQuestion | Question,
       parent: AbstractControl | null,
-      injector: Injector,
+      injector?: Injector,
       actionService?: ActionService,
       indexDirective?: ArrayIndexDirective
   ): StaticProvider[] {
-    // console.log(parent);
-    // console.log(question);
-    // console.log('');
-    const id = injector.get<ControlIdImpl>(CONTROL_ID, new ControlIdImpl());
+    const id = injector?.get<ControlIdImpl>(CONTROL_ID, new ControlIdImpl()) ?? new ControlIdImpl();
     let control: AbstractControl | null = null;
 
     let providers: StaticProvider[] = [
@@ -138,7 +138,6 @@ export class FormRenderServiceImpl extends FormRenderService {
                           indexDirective?: ArrayIndexDirective
   ): ControlIdImpl {
     if (indexDirective && (parent instanceof FastFormGroup || parent instanceof FastFormControl)) {
-      console.log('index provider');
       return id.addIndex(questionId, parent);
     } else {
       return id.addPart(questionId);

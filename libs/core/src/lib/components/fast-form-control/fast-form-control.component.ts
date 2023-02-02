@@ -34,10 +34,8 @@ export class FastFormControlComponent implements OnInit {
 
   private createComponent(question: SingleQuestion | Question) {
     if (this.controlRegistry.hasItem(question.type)) {
-      this.renderService.render(this.componentViewContainerRef,
+      this.renderService.renderControl(this.componentViewContainerRef,
           this.control,
-          question,
-          this.controlRegistry.getDefinition(question.type),
           {
             injector: this.injector, actionService:
             this.actionService

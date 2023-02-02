@@ -70,12 +70,10 @@ export class FastFormRowComponent implements OnInit, OnChanges {
 
   private createComponent(question: Question) {
     if (this.controlRegistry.hasItem(question.type)) {
-      const formDefinition = this.controlRegistry.getDefinition(question.type);
       const componentRef = this.formRenderService.render(
           this.componentViewContainerRef,
           this.control,
           question,
-          formDefinition,
           {injector: this.injector, actionService: this.actionService}
       );
       const nativeElement = componentRef.location.nativeElement as HTMLElement;

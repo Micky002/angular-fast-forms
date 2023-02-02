@@ -1,11 +1,11 @@
 /* eslint-disable */
-import { FormRenderService } from '../../internal/form-renderer.service';
 import { ComponentRef, Injector, ViewContainerRef } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { DynamicFormDefinition, Question, SingleQuestion } from '../../model';
 import { ActionService } from '../../actions/action.service';
 import { ArrayIndexDirective } from '../../actions/array-index.directive';
 import { FastFormControl } from '../../control/fast-form-control';
+import { FormRenderService } from '../../internal/base-form-renderer.service';
 
 export class FormRenderServiceMock extends FormRenderService {
   render<T>(
@@ -13,19 +13,16 @@ export class FormRenderServiceMock extends FormRenderService {
       parent: AbstractControl,
       question: SingleQuestion | Question,
       formDefinition: DynamicFormDefinition,
-      injector: Injector,
-      actionService?: ActionService,
-      indexDirective?: ArrayIndexDirective
-  ): ComponentRef<T> {
+      opts?: { injector: Injector; actionService?: ActionService; indexDirective?: ArrayIndexDirective }): ComponentRef<T> {
     throw new Error('Not implemented in mock');
   }
 
   renderControl(
       viewContainerRef: ViewContainerRef,
       control: FastFormControl,
-      injectOptions: {
-        injector: Injector;
-        actionService?: ActionService;
+      opts?: {
+        injector?: Injector,
+        actionService?: ActionService,
         indexDirective?: ArrayIndexDirective
       }
   ): ComponentRef<unknown> {

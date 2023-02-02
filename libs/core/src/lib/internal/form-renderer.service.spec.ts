@@ -7,6 +7,9 @@ import { Control } from '../control/control.decorator';
 import { ControlFactoryService } from '../service/control-factory.service';
 import { FastFormControl } from '../control/fast-form-control';
 import { FormRenderService } from './base-form-renderer.service';
+import { ViewContainerRefMock } from '../test/mock/view-container-ref.mock';
+import { FormRenderServiceImpl } from './form-renderer.service';
+import { CONTROL_ID, FORM_CONTROL, QuestionDefinition } from '@ngx-fast-forms/core';
 
 @Control({
   type: 'dummy'
@@ -30,6 +33,10 @@ describe('FormRenderService', () => {
         DummyRenderComponent
       ],
       providers: [
+        {
+          provide: FormRenderService,
+          useClass: FormRenderServiceImpl
+        },
         ControlRegistry,
         ControlFactoryService,
         {
@@ -54,11 +61,9 @@ describe('FormRenderService', () => {
 
   it('should render single control', () => {
     const question: Question = {id: 'test', type: 'dummy'};
-    service.render(
+    service.renderControl(
         component.componentViewContainerRef,
         new FastFormControl(question),
-        question,
-        controlRegistry.getDefinition('dummy'),
         {
           injector: Injector.create({providers: []})
         }
@@ -66,6 +71,19 @@ describe('FormRenderService', () => {
     const element = fixture.debugElement.query(By.css('[data-test-id="dummy-test"]')).nativeElement as HTMLParagraphElement;
     expect(element).toBeDefined();
     expect(element.textContent).toEqual('Hallo');
+  });
+
+  it('should inject only the single control dependencies', () => {
+    const viewContainer = new ViewContainerRefMock();
+    const control = new FastFormControl(null, {
+      question: {
+        type: 'dummy'
+      }
+    });
+    const component = service.renderControl(viewContainer, control);
+    expect(component.injector.get(FORM_CONTROL)).toEqual(control);
+    expect(component.injector.get(QuestionDefinition)).toEqual(new QuestionDefinition({type: 'dummy'}));
+    expect(component.injector.get(CONTROL_ID, null)).toBeNull();
   });
 });
 

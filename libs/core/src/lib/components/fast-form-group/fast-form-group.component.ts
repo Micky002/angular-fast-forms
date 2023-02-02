@@ -127,12 +127,10 @@ export class FastFormGroupComponent implements OnChanges, OnInit, OnDestroy {
 
   private createComponent(question: Question) {
     if (this.controlRegistry.hasItem(question.type)) {
-      const controlDefinition = this.controlRegistry.getDefinition(question.type);
       this.formRenderService.render(
           this.viewContainer,
           this._formGroup,
           question,
-          controlDefinition,
           {
             injector: this.injector, actionService: this._actionService, indexDirective:
             this.indexDirective
