@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SwitchableControlComponent } from './switchable-control.component';
-import { FORM_CONTROL } from '@ngx-fast-forms/core';
+import { ControlFactoryService, FastFormsModule, FORM_CONTROL } from '@ngx-fast-forms/core';
 import { SwitchableControlModule } from './switchable-control.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -12,6 +12,7 @@ describe('SwitchableControlComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        FastFormsModule,
         NoopAnimationsModule,
         SwitchableControlComponent,
         SwitchableControlModule
@@ -19,7 +20,8 @@ describe('SwitchableControlComponent', () => {
       providers: [
         {
           provide: FORM_CONTROL,
-          useValue: SwitchableControlComponent.createGroup({})
+          deps: [ControlFactoryService],
+          useFactory: (cf: ControlFactoryService) => SwitchableControlComponent.createGroup({}, cf)
         }
       ]
     }).compileComponents();

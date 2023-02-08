@@ -4,7 +4,7 @@ import {
   BasicQuestion,
   Control,
   ControlFactory,
-  FastFormControl,
+  ControlFactoryService,
   FastFormsModule,
   FORM_CONTROL
 } from '@ngx-fast-forms/core';
@@ -46,14 +46,12 @@ export class SwitchableControlComponent implements OnInit {
   }
 
   @ControlFactory()
-  static createGroup(question: BasicQuestion) {
+  static createGroup(question: BasicQuestion, cf: ControlFactoryService) {
     return new FormGroup({
       disabled: new FormControl(true),
-      value: new FastFormControl(null, {
-        question: {
-          label: question.label,
-          type: 'mat-input'
-        }
+      value: cf.control({
+        type: 'mat-input',
+        label: question.label
       })
     });
   }

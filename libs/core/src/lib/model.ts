@@ -20,7 +20,6 @@ export interface Question extends BasicQuestion {
 }
 
 export interface SingleQuestion extends BasicQuestion {
-  // id: string;
   type: string;
 }
 

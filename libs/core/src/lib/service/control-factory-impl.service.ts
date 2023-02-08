@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
-import { Question } from '../model';
+import { Question, SingleQuestion } from '../model';
 import { ValidatorFactoryService } from '../validation/validator-factory.service';
 import { FastFormArray } from '../control/fast-form-array';
 import { FastFormControl } from '../control/fast-form-control';
@@ -49,6 +49,16 @@ export class ControlFactoryServiceImpl extends ControlFactoryService {
         this.createControlDefault(question);
   }
 
+  control(question: SingleQuestion): AbstractControl {
+    return this.createControlFromDecoratedComponents(question as any) ??
+        this.createControlDefault(question as any);
+    // const control = this.createControlFromDecoratedComponents(question as any);
+    // if (!control) {
+    //   throw new Error(`Control with type [${question.type}] not registered.`);
+    // }
+    // return control;
+  }
+
   private createControl(question: Question): ControlWrapper[] {
     const wrappers: ControlWrapper[] = [];
     if (this.controlRegistry.hasItem(question.type)) {
@@ -89,7 +99,7 @@ export class ControlFactoryServiceImpl extends ControlFactoryService {
     if (this.controlRegistry.hasControlFactory(question.type)) {
       const def = this.controlRegistry.getDefinition(question.type);
       if (def.controlFactory !== undefined) {
-        return def.controlFactory(question);
+        return def.controlFactory(question, this);
       }
     }
     return undefined;
@@ -103,7 +113,7 @@ export class ControlFactoryServiceImpl extends ControlFactoryService {
     const definition = this.controlRegistry.getDefinition(question.type);
     if (definition) {
       if (definition.controlFactory) {
-        return definition.controlFactory(question);
+        return definition.controlFactory(question, this);
       }
     }
     return new FromActionControlInternal();
