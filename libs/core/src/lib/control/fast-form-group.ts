@@ -1,21 +1,19 @@
-import { AbstractControl, AbstractControlOptions, FormGroup } from '@angular/forms';
+import { AbstractControl, AbstractControlOptions, FormRecord } from '@angular/forms';
+import { Observable, Subject } from 'rxjs';
 import { Question } from '../model';
 import { ControlFactoryService } from '../service/control-factory.service';
-import { Observable, Subject } from 'rxjs';
 import { ActionEvent } from '../actions/models';
-import { FromActionControlInternal } from '../internal/action/action-control-internal';
-import { FormActionGroupInternal } from '../internal/action/action-group-internal';
+import { isAction } from '../internal/action/action.util';
 
-export class FastFormGroup extends FormGroup {
+export class FastFormGroup extends FormRecord {
 
   public readonly questionChanges: Observable<Array<Question>>;
   public actionEvents: Observable<ActionEvent>;
   public index: number | null = null;
-  public readonly actions: { [key: string]: FromActionControlInternal | FormActionGroupInternal } = {};
+  public readonly actions: { [key: string]: AbstractControl } = {};
 
   private _questionChanges$ = new Subject<Array<Question>>();
   private _actions$ = new Subject<ActionEvent>();
-  private _question: Question;
 
   constructor(question: Question | null,
               private controlFactory: ControlFactoryService,
@@ -28,6 +26,11 @@ export class FastFormGroup extends FormGroup {
     this.actionEvents = this._actions$.asObservable();
   }
 
+  private _question: Question;
+
+  public get question(): Question {
+    return this._question;
+  }
 
   public get questions(): Array<Question> {
     return this._question.children || [];
@@ -61,7 +64,7 @@ export class FastFormGroup extends FormGroup {
   }
 
   override addControl(name: string, control: AbstractControl, options?: { emitEvent?: boolean | undefined; } | undefined): void {
-    if (control instanceof FromActionControlInternal || control instanceof FormActionGroupInternal) {
+    if (isAction(control)) {
       this.actions[name] = control;
     } else {
       super.addControl(name, control, options);

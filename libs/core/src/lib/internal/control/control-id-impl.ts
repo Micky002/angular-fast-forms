@@ -1,4 +1,5 @@
 import { ControlId } from '../../control/models';
+import { IndexProvider } from './index-provider';
 
 export class ControlIdImpl implements ControlId {
   private readonly parts: IdPart[];
@@ -56,8 +57,4 @@ export class ControlIdImpl implements ControlId {
 interface IdPart {
   id?: string;
   indexProvider?: IndexProvider;
-}
-
-interface IndexProvider {
-  index: number | null;
 }

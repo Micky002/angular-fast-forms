@@ -7,10 +7,12 @@ import { FastFormControlComponent } from './components/fast-form-control/fast-fo
 import { FastFormGroupComponent } from './components/fast-form-group/fast-form-group.component';
 import { FastFormRowComponent } from './components/fast-form-row/fast-form-row.component';
 import { VALIDATORS } from './internal/token';
-import { AFF_CONTROL_COMPONENTS } from './model';
 import { ControlDirective, ControlNameDirective } from './directive/control.directive';
 import { FormRenderService } from './internal/base-form-renderer.service';
 import { FormRenderServiceImpl } from './internal/form-renderer.service';
+import { ControlFactoryService } from './service/control-factory.service';
+import { ControlFactoryServiceImpl } from './service/control-factory-impl.service';
+import { AFF_CONTROL_COMPONENTS } from './components/util/inject-token';
 
 @NgModule({
   imports: [
@@ -38,6 +40,10 @@ import { FormRenderServiceImpl } from './internal/form-renderer.service';
     {
       provide: FormRenderService,
       useClass: FormRenderServiceImpl
+    },
+    {
+      provide: ControlFactoryService,
+      useClass: ControlFactoryServiceImpl
     },
     {
       provide: AFF_CONTROL_COMPONENTS,

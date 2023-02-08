@@ -132,8 +132,9 @@ export class FastFormGroupComponent implements OnChanges, OnInit, OnDestroy {
           this._formGroup,
           question,
           {
-            injector: this.injector, actionService: this._actionService, indexDirective:
-            this.indexDirective
+            injector: this.injector,
+            actionService: this._actionService,
+            indexDirective: this.indexDirective
           }
       );
     }

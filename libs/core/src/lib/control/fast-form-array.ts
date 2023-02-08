@@ -4,13 +4,17 @@ import { ControlFactoryService } from '../service/control-factory.service';
 
 export class FastFormArray extends FormArray {
 
-  private get getValue(): any[] {
-    return this.value;
-  }
-
-  constructor(private question: Question,
+  constructor(private _question: Question,
               private controlFactory: ControlFactoryService) {
     super([]);
+  }
+
+  public get question(): Question {
+    return this._question;
+  }
+
+  private get getValue(): any[] {
+    return this.value;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SingleControlComponent } from './single-control.component';
+import { FastFormsModule } from '@ngx-fast-forms/core';
 
 describe('SingleControlComponent', () => {
   let component: SingleControlComponent;
@@ -8,6 +9,7 @@ describe('SingleControlComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [FastFormsModule],
       declarations: [SingleControlComponent]
     }).compileComponents();
 

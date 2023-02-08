@@ -1,9 +1,7 @@
 import { AbstractControl, AbstractControlOptions, AsyncValidatorFn, ValidatorFn } from '@angular/forms';
-import { InjectionToken, Type } from '@angular/core';
-import { InternalControlComponent } from './internal/control/models';
+import { Type } from '@angular/core';
 import { BasicQuestion } from './components/question-definition';
 
-export const AFF_CONTROL_COMPONENTS = new InjectionToken<Array<Array<InternalControlComponent>>>('AFF_CONTROL_COMPONENTS');
 
 export interface DynamicFormDefinition {
   type: string;

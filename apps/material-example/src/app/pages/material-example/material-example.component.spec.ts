@@ -4,6 +4,7 @@ import { MaterialExampleComponent } from './material-example.component';
 import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FastFormsModule } from '@ngx-fast-forms/core';
 
 describe('MaterialExampleComponent', () => {
   let component: MaterialExampleComponent;
@@ -13,6 +14,7 @@ describe('MaterialExampleComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule,
+        FastFormsModule,
         MaterialFastFormsModule,
         HttpClientTestingModule
       ],

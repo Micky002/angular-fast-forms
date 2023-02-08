@@ -7,7 +7,10 @@ import { FastFormsService } from '../../service/fast-forms.service';
 import { ControlFactoryService } from '../../service/control-factory.service';
 import { ValidatorFactoryService } from '../../validation/validator-factory.service';
 import { Provider } from '@angular/core';
-import { AFF_CONTROL_COMPONENTS } from '../../model';
+import { AFF_CONTROL_COMPONENTS } from '../util/inject-token';
+import { ControlFactoryServiceImpl } from '../../service/control-factory-impl.service';
+import { FormRenderService } from '../../internal/base-form-renderer.service';
+import { FormRenderServiceImpl } from '../../internal/form-renderer.service';
 
 @Control({
   type: 'input'
@@ -30,7 +33,14 @@ describe('FastFormGroupComponent', () => {
       ],
       providers: [
         FastFormsService,
-        ControlFactoryService,
+        {
+          provide: FormRenderService,
+          useClass: FormRenderServiceImpl
+        },
+        {
+          provide: ControlFactoryService,
+          useClass: ControlFactoryServiceImpl
+        },
         ValidatorFactoryService, {
           provide: AFF_CONTROL_COMPONENTS,
           useValue: [

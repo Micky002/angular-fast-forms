@@ -4,6 +4,7 @@ import { TestBed } from '@angular/core/testing';
 import { FastFormGroup } from './fast-form-group';
 import { FromActionControlInternal as FormActionControlInternal } from '../internal/action/action-control-internal';
 import { FormControl } from '@angular/forms';
+import { ControlFactoryServiceImpl } from '../service/control-factory-impl.service';
 
 describe('FastFormGroup', () => {
   let controlFactory: ControlFactoryService;
@@ -11,7 +12,10 @@ describe('FastFormGroup', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        ControlFactoryService,
+        {
+          provide: ControlFactoryService,
+          useClass: ControlFactoryServiceImpl
+        },
         ValidatorFactoryService
       ]
     });

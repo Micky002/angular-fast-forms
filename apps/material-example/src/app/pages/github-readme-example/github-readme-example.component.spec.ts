@@ -16,7 +16,7 @@ describe('GithubReadmeExampleComponent', () => {
       ],
       declarations: [
         GithubReadmeExampleComponent
-      ],
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(GithubReadmeExampleComponent);

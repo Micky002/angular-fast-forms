@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AFF_CONTROL_COMPONENTS, Question } from '../model';
+import { Question } from '../model';
 import { Component, Injector, Provider, ViewChild, ViewContainerRef } from '@angular/core';
 import { ControlRegistry } from './control/control-registry.service';
 import { By } from '@angular/platform-browser';
@@ -9,7 +9,8 @@ import { FastFormControl } from '../control/fast-form-control';
 import { FormRenderService } from './base-form-renderer.service';
 import { ViewContainerRefMock } from '../test/mock/view-container-ref.mock';
 import { FormRenderServiceImpl } from './form-renderer.service';
-import { CONTROL_ID, FORM_CONTROL, QuestionDefinition } from '@ngx-fast-forms/core';
+import { AFF_CONTROL_COMPONENTS, CONTROL_ID, FORM_CONTROL } from '../components/util/inject-token';
+import { QuestionDefinition } from '../components/question-definition';
 
 @Control({
   type: 'dummy'
@@ -63,7 +64,7 @@ describe('FormRenderService', () => {
     const question: Question = {id: 'test', type: 'dummy'};
     service.renderControl(
         component.componentViewContainerRef,
-        new FastFormControl(question),
+        new FastFormControl(null, {question}),
         {
           injector: Injector.create({providers: []})
         }

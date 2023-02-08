@@ -1,9 +1,9 @@
+import { Inject, Injectable, Optional, Type } from '@angular/core';
 import { ControlComponentMetaData, InternalControlComponent } from './models';
 import { META_COMPONENT_OPTIONS_KEY } from '../symbols';
-import { Inject, Injectable, Optional, Type } from '@angular/core';
 import { AbstractRegistry } from '../abstract-registry';
-import { AFF_CONTROL_COMPONENTS } from '../../model';
 import { InternalControlDefinition } from '../models';
+import { AFF_CONTROL_COMPONENTS } from '../../components/util/inject-token';
 
 @Injectable({
   providedIn: 'any'

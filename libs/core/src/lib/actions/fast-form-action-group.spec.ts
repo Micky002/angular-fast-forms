@@ -1,5 +1,4 @@
-import { ActionControlFactory } from "./fast-form-action";
-import { ActionGroupFactory } from "./fast-form-action-group";
+import { ActionControlFactory, ActionGroupFactory } from './action-factory';
 
 describe('FormActionGroup', () => {
 

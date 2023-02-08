@@ -1,5 +1,4 @@
-import { FormActionGroupInternal } from "../internal/action/action-group-internal";
-import { FormActionControl } from "./fast-form-action";
+import { FormActionControl } from './fast-form-action';
 
 export interface FormActionGroup {
 
@@ -10,11 +9,4 @@ export interface FormActionGroup {
   disable(): void;
 
   enable(): void;
-}
-
-export class ActionGroupFactory {
-
-  public static create(children: {[key: string]: FormActionControl | FormActionGroup}): FormActionGroup {
-    return new FormActionGroupInternal(children as any);
-  }
 }

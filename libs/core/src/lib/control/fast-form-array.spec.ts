@@ -3,6 +3,7 @@ import { ValidatorFactoryService } from '../validation/validator-factory.service
 import { TestBed } from '@angular/core/testing';
 import { FastFormArray } from './fast-form-array';
 import { DummyInputModule } from '../test/dummy-input.module.test-util';
+import { ControlFactoryServiceImpl } from '../service/control-factory-impl.service';
 
 describe('FastFormArray', () => {
   let controlFactory: ControlFactoryService;
@@ -13,7 +14,10 @@ describe('FastFormArray', () => {
         DummyInputModule
       ],
       providers: [
-        ControlFactoryService,
+        {
+          provide: ControlFactoryService,
+          useClass: ControlFactoryServiceImpl
+        },
         ValidatorFactoryService
       ]
     });

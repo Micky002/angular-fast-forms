@@ -15,11 +15,11 @@ import { Question } from '../../model';
 import { CONTROL_PROPERTIES, FORM_CONTROL } from '../util/inject-token';
 import { FastFormsRowProperties } from './models';
 import { ActionService } from '../../actions/action.service';
-import { Control } from '../../control';
 import { QuestionDefinition } from '../question-definition';
 import { AbstractControl } from '@angular/forms';
 import { ControlRegistry } from '../../internal/control/control-registry.service';
 import { FormRenderService } from '../../internal/base-form-renderer.service';
+import { Control } from '../../control/control.decorator';
 
 @Control({
   type: 'row',
@@ -45,7 +45,7 @@ export class FastFormRowComponent implements OnInit, OnChanges {
               private controlRegistry: ControlRegistry,
               @Inject(FORM_CONTROL) private control: AbstractControl,
               @Inject(CONTROL_PROPERTIES) private properties: FastFormsRowProperties,
-              @Optional() private actionService: ActionService) {
+              @Optional() private actionService?: ActionService) {
   }
 
   private get children(): Question[] {
@@ -74,7 +74,10 @@ export class FastFormRowComponent implements OnInit, OnChanges {
           this.componentViewContainerRef,
           this.control,
           question,
-          {injector: this.injector, actionService: this.actionService}
+          {
+            injector: this.injector,
+            actionService: this.actionService
+          }
       );
       const nativeElement = componentRef.location.nativeElement as HTMLElement;
       if (this.properties.size) {

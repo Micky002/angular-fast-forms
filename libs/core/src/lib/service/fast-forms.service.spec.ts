@@ -8,6 +8,7 @@ import { FastFormGroup } from '../control/fast-form-group';
 import { ControlRegistry } from '../internal/control/control-registry.service';
 import { FastFormControl } from '../control/fast-form-control';
 import { DummyInputModule } from '../test/dummy-input.module.test-util';
+import { ControlFactoryServiceImpl } from './control-factory-impl.service';
 
 
 describe('FastFormsService', () => {
@@ -22,7 +23,10 @@ describe('FastFormsService', () => {
       ],
       providers: [
         FastFormsService,
-        ControlFactoryService,
+        {
+          provide: ControlFactoryService,
+          useClass: ControlFactoryServiceImpl
+        },
         ValidatorFactoryService,
         ControlRegistry
       ]

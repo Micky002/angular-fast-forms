@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FastFormControlComponent } from './fast-form-control.component';
 import { FastFormControl } from '../../control/fast-form-control';
+import { FormRenderService } from '../../internal/base-form-renderer.service';
+import { FormRenderServiceImpl } from '../../internal/form-renderer.service';
 
 
 describe('FastFormControlComponent', () => {
@@ -10,7 +12,11 @@ describe('FastFormControlComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FastFormControlComponent],
+      providers: [{
+        provide: FormRenderService,
+        useClass: FormRenderServiceImpl
+      }],
+      declarations: [FastFormControlComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(FastFormControlComponent);

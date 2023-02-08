@@ -1,3 +1,5 @@
 <h2>Nested control</h2>
 
 <aff-form-group [formGroup]="nestedForm"></aff-form-group>
+
+<pre>{{nestedForm.getRawValue() | json}}</pre>

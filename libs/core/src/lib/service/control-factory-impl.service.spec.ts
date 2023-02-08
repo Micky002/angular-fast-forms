@@ -7,10 +7,11 @@ import { ValidatorFactoryService } from '../validation/validator-factory.service
 import { FastFormArray } from '../control/fast-form-array';
 import { ActionControl } from '../actions/actions.decorator';
 import { Control } from '../control/control.decorator';
-import { AFF_CONTROL_COMPONENTS } from '../model';
 import { FastFormGroup } from '../control/fast-form-group';
 import { FastFormArrayComponent } from '../components/fast-form-array/fast-form-array.component';
-import { FastFormGroupComponent } from '../components';
+import { ControlFactoryServiceImpl } from './control-factory-impl.service';
+import { FastFormGroupComponent } from '../components/fast-form-group/fast-form-group.component';
+import { AFF_CONTROL_COMPONENTS } from '../components/util/inject-token';
 
 
 @Control({
@@ -47,13 +48,16 @@ class DummyRowComponent {
 
 }
 
-describe('ControlFactoryService', () => {
+describe('ControlFactoryServiceImpl', () => {
   let service: ControlFactoryService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        ControlFactoryService,
+        {
+          provide: ControlFactoryService,
+          useClass: ControlFactoryServiceImpl
+        },
         ValidatorFactoryService,
         {
           provide: AFF_CONTROL_COMPONENTS,
