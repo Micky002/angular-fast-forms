@@ -9,8 +9,17 @@ export class ArrayIndexDirective implements OnChanges {
 
   private index!: number;
 
-  constructor(@Optional() private group?: FormGroupDirective,
-              @Optional() private control?: FormControlDirective) {
+  private formProvider: { form: unknown }
+
+  constructor(@Optional() group?: FormGroupDirective,
+              @Optional() control?: FormControlDirective) {
+    if (group) {
+      this.formProvider = group;
+    } else if (control) {
+      this.formProvider = control
+    } else {
+      throw new Error('No form provider found.');
+    }
   }
 
   @Input() set affArrayIndex(index: number) {
@@ -19,11 +28,8 @@ export class ArrayIndexDirective implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['affArrayIndex']) {
-      if (this.group?.form && isIndexProvider(this.group.form)) {
-        this.group.form.index = this.index;
-      }
-      if (this.control?.form && isIndexProvider(this.control.form)) {
-        this.control.form.index = this.index;
+      if (isIndexProvider(this.formProvider.form)) {
+        this.formProvider.form.index = this.index;
       }
     }
   }

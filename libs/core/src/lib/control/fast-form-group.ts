@@ -10,6 +10,7 @@ export class FastFormGroup extends FormRecord {
   public readonly questionChanges: Observable<Array<Question>>;
   public actionEvents: Observable<ActionEvent>;
   public index: number | null = null;
+  public question: Question;
   public readonly actions: { [key: string]: AbstractControl } = {};
 
   private _questionChanges$ = new Subject<Array<Question>>();
@@ -19,21 +20,16 @@ export class FastFormGroup extends FormRecord {
               private controlFactory: ControlFactoryService,
               options?: AbstractControlOptions) {
     super({}, options);
-    this._question = question ?? {id: 'group-parent', type: 'group', children: []};
+    this.question = question ?? {id: 'group-parent', type: 'group', children: []};
     this.validateQuestions(question?.children ?? []);
     this.questionChanges = this._questionChanges$.asObservable();
     this.createChildControls();
     this.actionEvents = this._actions$.asObservable();
   }
 
-  private _question: Question;
-
-  public get question(): Question {
-    return this._question;
-  }
 
   public get questions(): Array<Question> {
-    return this._question.children || [];
+    return this.question.children || [];
   }
 
   private get mergedControls() {
@@ -57,7 +53,7 @@ export class FastFormGroup extends FormRecord {
   }
 
   public setQuestions(questions: Array<Question>) {
-    this._question.children = questions;
+    this.question.children = questions;
     this.controls = {};
     this.createChildControls();
     this._questionChanges$.next(questions);

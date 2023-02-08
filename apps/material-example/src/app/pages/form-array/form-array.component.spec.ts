@@ -4,6 +4,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FastFormsModule } from '@ngx-fast-forms/core';
 import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
 import { FormArrayComponent } from './form-array.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('FormArrayComponent', () => {
   let component: FormArrayComponent;
@@ -13,12 +14,13 @@ describe('FormArrayComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule,
+        ReactiveFormsModule,
         FastFormsModule,
         MaterialFastFormsModule
       ],
       declarations: [
         FormArrayComponent
-      ],
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(FormArrayComponent);
