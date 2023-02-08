@@ -1,5 +1,5 @@
-import { Inject, Injectable, Optional, Type } from '@angular/core';
-import { ControlComponentMetaData, InternalControlComponent } from './models';
+import { Inject, Injectable, Optional } from '@angular/core';
+import { ControlComponentMetaData, InternalControlComponent, InternalControlComponentType } from './models';
 import { META_COMPONENT_OPTIONS_KEY } from '../symbols';
 import { AbstractRegistry } from '../abstract-registry';
 import { InternalControlDefinition } from '../models';
@@ -8,9 +8,9 @@ import { AFF_CONTROL_COMPONENTS } from '../../components/util/inject-token';
 @Injectable({
   providedIn: 'any'
 })
-export class ControlRegistry extends AbstractRegistry<InternalControlComponent> {
+export class ControlRegistry extends AbstractRegistry<InternalControlComponentType> {
 
-  constructor(@Optional() @Inject(AFF_CONTROL_COMPONENTS) controlComponentsPerModule?: Array<Array<InternalControlComponent>>) {
+  constructor(@Optional() @Inject(AFF_CONTROL_COMPONENTS) controlComponentsPerModule?: Array<Array<InternalControlComponentType>>) {
     super(controlComponentsPerModule);
   }
 
@@ -40,7 +40,7 @@ export class ControlRegistry extends AbstractRegistry<InternalControlComponent> 
       type: type,
       inline: componentMetaData.inline,
       controlFactory: componentMetaData.controlFactory,
-      component: component as any as Type<unknown>,
+      component: component,
       internalType: componentMetaData.internalType
     };
   }

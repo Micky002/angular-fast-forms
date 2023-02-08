@@ -23,8 +23,8 @@ class DummyControlComponent {
 
 describe('FormRenderService', () => {
   let service: FormRenderService;
-  let controlFactory: ControlFactoryService;
-  let controlRegistry: ControlRegistry;
+  // let controlFactory: ControlFactoryService;
+  // let controlRegistry: ControlRegistry;
   let fixture: ComponentFixture<DummyRenderComponent>;
   let component: DummyRenderComponent;
 
@@ -52,8 +52,8 @@ describe('FormRenderService', () => {
     fixture = TestBed.createComponent(DummyRenderComponent);
     component = fixture.componentInstance;
     service = TestBed.inject(FormRenderService);
-    controlRegistry = TestBed.inject(ControlRegistry);
-    controlFactory = TestBed.inject(ControlFactoryService);
+    // controlRegistry = TestBed.inject(ControlRegistry);
+    // controlFactory = TestBed.inject(ControlFactoryService);
   });
 
   it('should be created', () => {

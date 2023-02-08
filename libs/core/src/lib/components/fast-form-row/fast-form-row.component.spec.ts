@@ -13,7 +13,6 @@ import { QuestionDefinition } from '../question-definition';
 describe('FastFormRowComponent', () => {
   let component: FastFormRowComponent;
   let fixture: ComponentFixture<FastFormRowComponent>;
-  let controlFactory: ControlFactoryService;
   let formGroup: FormGroup;
 
   beforeEach(async () => {
@@ -59,7 +58,6 @@ describe('FastFormRowComponent', () => {
       ]
     }).compileComponents();
     fixture = TestBed.createComponent(FastFormRowComponent);
-    controlFactory = TestBed.inject(ControlFactoryService);
     formGroup = TestBed.inject<FormGroup>(FORM_CONTROL);
     component = fixture.componentInstance;
     fixture.detectChanges();

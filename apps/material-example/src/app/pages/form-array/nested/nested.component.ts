@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActionEvent, FastFormGroup, FastFormsService } from '@ngx-fast-forms/core';
+import { Component } from '@angular/core';
+import { FastFormGroup, FastFormsService } from '@ngx-fast-forms/core';
 import { ButtonProperties } from '@ngx-fast-forms/material';
 
 @Component({
@@ -7,7 +7,7 @@ import { ButtonProperties } from '@ngx-fast-forms/material';
   templateUrl: './nested.component.html',
   styleUrls: ['./nested.component.scss']
 })
-export class NestedComponent implements OnInit {
+export class NestedComponent {
 
   public nestedArray: FastFormGroup;
 
@@ -69,18 +69,5 @@ export class NestedComponent implements OnInit {
         }]
       }]
     });
-  }
-
-  ngOnInit(): void {
-    this.nestedArray.valueChanges.subscribe(value => {
-      // console.log(value);
-    });
-  }
-
-  doAction(event: ActionEvent) {
-    if (event.args.length === 2) {
-
-    }
-    // console.log(event);
   }
 }

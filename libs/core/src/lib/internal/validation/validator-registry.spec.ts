@@ -119,6 +119,7 @@ describe('ValidatorRegistry', () => {
 
   describe('invalid validators', () => {
     it('validator with no @Validator decorator', () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect(() => new ValidatorRegistry(injector, [[DummyInvalidAsyncValidator as any]])).toThrowError();
     });
   });

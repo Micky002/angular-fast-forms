@@ -6,14 +6,14 @@ import { Inject, Injectable } from '@angular/core';
 export function setToJson(dateTime: DateTime): DateTime {
   dateTime.toJSON = () => {
     return dateTime.toISODate();
-  }
+  };
   return dateTime;
 }
 
 @Injectable()
 export class CodenturyLuxonDateAdapter extends DateAdapter<DateTime> {
 
-  private readonly INVALID_DATE = 'invalid date'
+  private readonly INVALID_DATE = 'invalid date';
 
   constructor(@Inject(MAT_DATE_LOCALE) locale: string) {
     super();
@@ -45,7 +45,7 @@ export class CodenturyLuxonDateAdapter extends DateAdapter<DateTime> {
     return setToJson(createdDate);
   }
 
-  format(date: DateTime, displayFormat: any): string {
+  format(date: DateTime, displayFormat: string): string {
     return date.toFormat(displayFormat, {locale: this.locale});
   }
 
@@ -98,22 +98,24 @@ export class CodenturyLuxonDateAdapter extends DateAdapter<DateTime> {
     return DateTime.invalid(this.INVALID_DATE);
   }
 
-  isDateInstance(obj: any): boolean {
+  isDateInstance(obj: unknown): boolean {
     return typeof obj === 'string' ||
-      obj instanceof String ||
-      obj instanceof DateTime;
+        obj instanceof String ||
+        obj instanceof DateTime;
   }
 
   isValid(date: DateTime): boolean {
     return date.isValid;
   }
 
-  parse(value: any, parseFormat: any): DateTime | null {
+  parse(value: unknown, parseFormat: string): DateTime | null {
     let dateTime: DateTime;
     if (value instanceof DateTime) {
       dateTime = value.startOf('day');
-    } else {
+    } else if (typeof value === 'string') {
       dateTime = DateTime.fromFormat(value, parseFormat, {locale: this.locale}).startOf('day');
+    } else {
+      throw new Error('Date type not supported.');
     }
 
     return setToJson(dateTime);

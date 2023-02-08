@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { ControlRegistry } from './control-registry.service';
 import { DummyInputModule } from '../../test/dummy-input.module.test-util';
-import { Control } from '../../control/control.decorator';
 
 describe('ControlRegistry', () => {
   let registry: ControlRegistry;
@@ -39,16 +38,11 @@ describe('ControlRegistry', () => {
   });
 
   it('should validate registered components', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect(() => new ControlRegistry([[InvalidControlComponent as any]]))
         .toThrowError('Control component must be decorated with [@Control] decorator.');
   });
 });
 
 class InvalidControlComponent {
-}
-
-@Control({
-  type: 'dummy-control'
-})
-class DummyControlComponent {
 }

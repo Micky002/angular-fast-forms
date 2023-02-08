@@ -98,7 +98,7 @@ export class FastFormGroupComponent implements OnChanges, OnInit, OnDestroy {
     }
   }
 
-  ngOnChanges(changes: any): void {
+  ngOnChanges(): void {
     this.render();
   }
 

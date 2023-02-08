@@ -13,7 +13,7 @@ export class FastFormArray extends FormArray {
     return this._question;
   }
 
-  private get getValue(): any[] {
+  private get getValue(): unknown[] {
     return this.value;
   }
 

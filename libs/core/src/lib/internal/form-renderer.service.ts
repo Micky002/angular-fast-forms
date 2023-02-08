@@ -68,10 +68,15 @@ export class FormRenderServiceImpl extends FormRenderService {
     if (controlDefinition.inline) {
       control = parent;
     } else {
-      control = parent.get((question as any).id) as any;
+      const foundControl = parent.get(question.id);
+      if (foundControl) {
+        control = foundControl;
+      } else {
+        throw new Error(`Child question not found.`);
+      }
     }
 
-    const componentRef = viewContainer.createComponent(controlDefinition.component, {
+    return viewContainer.createComponent(controlDefinition.component, {
       injector: Injector.create({
         providers: [
           ...createDefaultProviders(control, question),
@@ -81,13 +86,12 @@ export class FormRenderServiceImpl extends FormRenderService {
               [] :
               [{
                 provide: CONTROL_ID,
-                useValue: this.createControlId(id, (question as any).id, parent, opts?.indexDirective)
+                useValue: this.createControlId(id, question.id, parent, opts?.indexDirective)
               }]
         ],
         parent: opts?.injector ? opts?.injector : this.injector
       })
     });
-    return componentRef;
   }
 
   private createControlId(id: ControlIdImpl,

@@ -20,12 +20,14 @@ export class DateFormControl extends FormControl {
     super.patchValue(this.normalizeDate(value), options);
   }
 
-  private normalizeDate(value: any): DateTime {
+  private normalizeDate(value: unknown): DateTime {
     let dateTime: DateTime;
     if (value instanceof DateTime) {
       dateTime = value.startOf('day');
-    } else {
+    } else if (typeof value === 'string') {
       dateTime = DateTime.fromFormat(value, 'yyyy-LL-dd').startOf('day');
+    } else {
+      throw new Error('Date type not supported.');
     }
 
     return setToJson(dateTime);
