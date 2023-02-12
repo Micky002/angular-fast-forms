@@ -1,5 +1,5 @@
 import { AbstractControlOptions, FormControlOptions, FormControlState } from '@angular/forms';
-import { BasicQuestionV2 } from '../service/fast-form-builder';
+import { BasicQuestionV2, WrapperProvider } from '../service/fast-form-builder';
 import { FormControlType } from '@ngx-fast-forms/core';
 
 export class ControlWrapperV2 {
@@ -10,7 +10,7 @@ export class ControlWrapperV2 {
       private _initialState: FormControlState<any> | any,
       private _question: BasicQuestionV2 & FormControlOptions,
       private _arrayQuestion: BasicQuestionV2 & FormControlOptions | null,
-      private _groupDef?: { [key: string]: any }
+      private _groupDef?: { [key: string]: WrapperProvider }
   ) {
   }
 
@@ -34,8 +34,8 @@ export class ControlWrapperV2 {
     }
   }
 
-  get groupDef(): any {
-    return this._groupDef;
+  get groupDef(): { [key: string]: WrapperProvider } {
+    return this._groupDef ?? {};
   }
 
   public static fromControl(initialState: FormControlState<any> | any, question: BasicQuestionV2 & FormControlOptions): ControlWrapperV2 {
