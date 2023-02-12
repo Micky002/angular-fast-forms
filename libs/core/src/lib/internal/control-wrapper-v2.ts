@@ -1,5 +1,5 @@
 import { AbstractControlOptions, FormControlOptions, FormControlState } from '@angular/forms';
-import { BasicQuestionV2, WrapperProvider } from '../service/fast-form-builder';
+import { AnyQuestion, ArrayQuestion, BasicQuestionV2, QuestionV2, WrapperProvider } from '../service/fast-form-builder';
 import { FormControlType } from '@ngx-fast-forms/core';
 
 export class ControlWrapperV2 {
@@ -9,8 +9,9 @@ export class ControlWrapperV2 {
       private _controlType: FormControlType,
       private _initialState: FormControlState<any> | any,
       private _question: BasicQuestionV2 & FormControlOptions,
-      private _arrayQuestion: BasicQuestionV2 & FormControlOptions | null,
-      private _groupDef?: { [key: string]: WrapperProvider }
+      private _arrayQuestion: QuestionV2 | null,
+      private _groupQuestions: { [key: string]: AnyQuestion } | null,
+      private _groupControls?: { [key: string]: WrapperProvider }
   ) {
   }
 
@@ -26,7 +27,7 @@ export class ControlWrapperV2 {
     return this._question as any;
   }
 
-  get arrayQuestion(): BasicQuestionV2 & FormControlOptions {
+  get arrayQuestion(): QuestionV2 {
     if (this._arrayQuestion) {
       return this._arrayQuestion;
     } else {
@@ -34,8 +35,16 @@ export class ControlWrapperV2 {
     }
   }
 
-  get groupDef(): { [key: string]: WrapperProvider } {
-    return this._groupDef ?? {};
+  get groupQuestion(): BasicQuestionV2 & FormControlOptions {
+    if (this._groupQuestions) {
+      return this._groupQuestions;
+    } else {
+      throw new Error('No array question defined.');
+    }
+  }
+
+  get groupControls(): { [key: string]: WrapperProvider } {
+    return this._groupControls ?? {};
   }
 
   public static fromControl(initialState: FormControlState<any> | any, question: BasicQuestionV2 & FormControlOptions): ControlWrapperV2 {
@@ -43,29 +52,31 @@ export class ControlWrapperV2 {
         'control',
         initialState,
         question,
+        null,
         null
     );
   }
 
-  public static fromGroup(question: BasicQuestionV2 & AbstractControlOptions, groupDef?: { [key: string]: any }): ControlWrapperV2 {
+  public static fromGroup(question: BasicQuestionV2 & AbstractControlOptions, groupQuestions: { [key: string]: AnyQuestion }, groupDef?: { [key: string]: any }): ControlWrapperV2 {
     return new ControlWrapperV2(
         'group',
         null,
         question,
         null,
+        groupQuestions,
         groupDef
     );
   }
 
   public static fromArray(
-      initialState: FormControlState<any> | any,
-      arrayQuestion: BasicQuestionV2 & FormControlOptions,
-      question: BasicQuestionV2 & FormControlOptions): ControlWrapperV2 {
+      question: ArrayQuestion,
+      arrayQuestion: QuestionV2): ControlWrapperV2 {
     return new ControlWrapperV2(
         'array',
         null,
         question,
-        arrayQuestion
+        arrayQuestion,
+        null
     );
   }
 }

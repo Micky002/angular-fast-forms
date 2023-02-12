@@ -14,7 +14,7 @@ import { ArrayIndexDirective } from '../actions/array-index.directive';
 import { FastFormControl } from '../control/fast-form-control';
 import { FastFormGroup } from '../control/fast-form-group';
 import { QuestionDefinition } from '../components/question-definition';
-import { BasicQuestionV2, QuestionKey, QuestionWrapper } from '../service/fast-form-builder';
+import { QuestionWrapper } from '../service/fast-form-builder';
 import { ControlWrapperV2 } from './control-wrapper-v2';
 
 @Injectable({
@@ -35,7 +35,7 @@ export class FormRenderService {
       }
   ): ComponentRef<T> {
     // console.log(parent);
-    let question = parent[QuestionKey] as BasicQuestionV2;
+    let question = (parent[QuestionWrapper] as ControlWrapperV2).question;
     console.log(question);
     console.log((parent[QuestionWrapper] as ControlWrapperV2).question);
     let def = this.controlRegistry.getDefinition(question.type as any);

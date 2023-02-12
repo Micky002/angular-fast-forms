@@ -38,9 +38,6 @@ describe('FormBuilderService', () => {
     const definition = cb.deriveDefinition(cb.array({},
         cb.control(null, {type: 'mat-input', label: 'Name'})
     ));
-    expect(definition).toEqual({
-      name: {type: 'mat-input', label: 'Name'},
-      description: {type: 'mat-input', label: 'Description'}
-    });
+    expect(definition).toEqual([{type: 'array'}, {label: 'Name', type: 'mat-input'}]);
   });
 });

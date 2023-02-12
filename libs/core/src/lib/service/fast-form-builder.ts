@@ -15,7 +15,7 @@ import { ControlFactoryV2 } from './control-factory-v2.service';
 
 
 export type GroupQuestion = BasicQuestionV2 & AbstractControlOptions;
-export type ControlQuestion = BasicQuestionV2 & FormControlOptions;
+export type ControlQuestion = GeneralQuestion & FormControlOptions & { type: string };
 export type ArrayQuestion = BasicQuestionV2 & AbstractControlOptions;
 export type AnyQuestion = ControlQuestion | GroupQuestion | ArrayQuestion;
 
@@ -26,43 +26,74 @@ export class FastFormBuilder {
               private cf: ControlFactoryV2) {
   }
 
-  public group(question: GroupQuestion, groupDef?: { [key: string]: AbstractControl }): FormGroup {
-    const wrapper = ControlWrapperV2.fromGroup({
-      ...question,
-      type: question.type ?? 'group'
-    }, groupDef);
-    return this.cf.create(wrapper) as FormGroup;
-  }
-
   public control(state: FormControlState<any> | any, question: ControlQuestion): FormControl {
     const wrapper = ControlWrapperV2.fromControl(state, question);
     return this.cf.create(wrapper) as FormControl;
   }
 
-  array(arrayQuestion: ArrayQuestion, question: AbstractControl): FormArray {
-    if (hasControlWrapper(question)) {
-      const array = new FormArray<any>([question], arrayQuestion) as AffFormArray;
-      array[QuestionKey] = {
-        ...arrayQuestion,
-        type: arrayQuestion.type ?? 'array'
-      };
-      array[ArrayQuestionKey] = {
-        ...arrayQuestion,
-        type: arrayQuestion.type ?? 'array'
-      };
+  public group(question: GroupQuestion, groupDef?: { [key: string]: AbstractControl }): FormGroup {
+    const groupQuestions: { [key: string]: AnyQuestion } = {};
+    Object.keys(groupDef ?? {}).forEach(key => {
+      groupQuestions[key] = this.deriveDefinition((groupDef ?? {})[key] as WrapperProvider) as AnyQuestion;
+    });
+    const wrapper = ControlWrapperV2.fromGroup({
+      ...question,
+      type: question.type ?? 'group'
+    }, groupQuestions, groupDef);
+    return this.cf.create(wrapper) as FormGroup;
+  }
 
-      array[QuestionWrapper] = question[QuestionWrapper];
-      return array;
+  array(question: ArrayQuestion, arrayQuestion: AbstractControl): FormArray {
+    if (hasControlWrapper(arrayQuestion)) {
+      // const array = new FormArray<any>([arrayQuestion], question) as AffFormArray;
+      // array[QuestionKey] = {
+      //   ...question,
+      //   type: question.type ?? 'array'
+      // };
+      // array[ArrayQuestionKey] = {
+      //   ...question,
+      //   type: question.type ?? 'array'
+      // };
+      //
+      // // array[QuestionWrapper] = arrayQuestion[QuestionWrapper];
+      // array[QuestionWrapper] = ControlWrapperV2.fromArray({
+      //   ...question,
+      //   type: question.type ?? 'array'
+      // }, this.deriveDefinition(arrayQuestion) as AnyQuestion);
+      // return array;
+      const wrapper = ControlWrapperV2.fromArray({
+        ...question,
+        type: question.type ?? 'array'
+      }, this.deriveDefinition(arrayQuestion) as QuestionV2);
+      const formArray = this.cf.create(wrapper) as FormArray;
+      formArray.push(arrayQuestion);
+      return formArray;
     } else {
       throw new Error(`Control is not created with [${FastFormBuilder.name}].`);
     }
   }
 
   newArrayEntry(array: WrapperProvider): AbstractControl {
+    const wrapper = array[QuestionWrapper];
+    console.log(wrapper);
+    if (wrapper.controlType !== 'array') {
+      throw new Error(`Cannot create array entry for component type [${wrapper.controlType}].`);
+    }
+    // const def = this.cr.getDefinition(wrapper.arrayQuestion.type);
+    // if (this.controlRegistry.hasControlFactory(question.type)) {
+    //   const def = this.controlRegistry.getDefinition(question.type);
+    //   if (def.controlFactory !== undefined) {
+    //     return def.controlFactory(question);
+    //   }
+    // }
+    // return undefined;
+
+
     if (hasControlWrapper(array)) {
       const question = array[QuestionWrapper].question;
 
     }
+    // return this.cf.;
     return null as any;
   }
 
@@ -74,13 +105,13 @@ export class FastFormBuilder {
     if (wrapper.controlType === 'control') {
       return wrapper.question;
     } else if (wrapper.controlType === 'group') {
-      const asdf: { [key: string]: AnyQuestion } = {};
-      Object.keys(wrapper.groupDef).forEach(key => {
-        asdf[key] = this.deriveDefinition(wrapper.groupDef[key] as WrapperProvider) as AnyQuestion;
-      });
-      return asdf;
+      // const asdf: { [key: string]: AnyQuestion } = {};
+      // Object.keys(wrapper.groupDef).forEach(key => {
+      //   asdf[key] = this.deriveDefinition(wrapper.groupDef[key] as WrapperProvider) as AnyQuestion;
+      // });
+      return [wrapper.question, wrapper.groupQuestion];
     } else if (wrapper.controlType === 'array') {
-      return [wrapper.arrayQuestion];
+      return [wrapper.question, wrapper.arrayQuestion];
     } else {
       throw new Error('asdf');
     }
@@ -88,22 +119,7 @@ export class FastFormBuilder {
 }
 
 
-export const QuestionKey = 'affque';
 export const QuestionWrapper = 'aff_wrapper';
-export const ArrayQuestionKey = 'affaque';
-
-export type AffFormControl = FormControl & WrapperProvider & {
-  [QuestionKey]: BasicQuestionV2;
-}
-
-export type AffFormGroup = FormGroup & WrapperProvider & {
-  [QuestionKey]: BasicQuestionV2;
-}
-
-export type AffFormArray = FormArray & WrapperProvider & {
-  [QuestionKey]: BasicQuestionV2;
-  [ArrayQuestionKey]: BasicQuestionV2;
-}
 
 export type WrapperProvider = AbstractControl & {
   [QuestionWrapper]: ControlWrapperV2;
@@ -115,6 +131,23 @@ export function hasControlWrapper(control: any): control is WrapperProvider {
 
 export interface BasicQuestionV2 {
   type?: string;
+  label?: string;
+  hidden?: boolean;
+  disabled?: boolean;
+  validation?: ValidationOptions;
+  properties?: QuestionProperties;
+}
+
+export interface GeneralQuestion {
+  label?: string;
+  hidden?: boolean;
+  disabled?: boolean;
+  validation?: ValidationOptions;
+  properties?: QuestionProperties;
+}
+
+export interface QuestionV2 {
+  type: string;
   label?: string;
   hidden?: boolean;
   disabled?: boolean;

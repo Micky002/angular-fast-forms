@@ -3,7 +3,7 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Control } from '../../control/control.decorator';
 import { BaseFormArrayComponent } from '../base/base-array.component';
 import { FORM_CONTROL } from '@ngx-fast-forms/core';
-import { FastFormBuilder, hasControlWrapper, QuestionWrapper } from '../../service/fast-form-builder';
+import { FastFormBuilder, hasControlWrapper } from '../../service/fast-form-builder';
 
 @Control({
   type: 'array',
@@ -30,10 +30,8 @@ export class FastFormArrayComponent extends BaseFormArrayComponent {
   }
 
   addRow(i?: number) {
-    console.log(`add row [${i}]`);
     if (this.array && hasControlWrapper(this.array)) {
       if (i !== undefined) {
-        console.log('insert: ', this.array[QuestionWrapper]);
         // this.array.insert(i + 1, this.cf.create(this.array[QuestionWrapper]));
         this.array.insert(i + 1, this.cb.newArrayEntry(this.array));
       } else {
@@ -41,11 +39,9 @@ export class FastFormArrayComponent extends BaseFormArrayComponent {
         this.array.push(this.cb.newArrayEntry(this.array));
       }
     }
-    console.log(this.array?.getRawValue());
   }
 
   deleteRow(i?: number) {
-    console.log(`delete row [${i}]`);
     if (i !== undefined) {
       this.array?.removeAt(i);
     }

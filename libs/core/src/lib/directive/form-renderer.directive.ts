@@ -15,8 +15,8 @@ export class FormRendererDirective implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.viewContainerRef);
-    console.log(this.group);
+    // console.log(this.viewContainerRef);
+    // console.log(this.group);
     this.renderService.renderOnly(this.viewContainerRef, this.group?.control, {injector: this.injector});
   }
 
