@@ -4,6 +4,8 @@ export * from './lib/components/index';
 
 export * from './lib/control/index';
 
+export * from './lib/directive/form-renderer.directive';
+
 export * from './lib/service/fast-forms.service';
 export * from './lib/service/control-factory.service';
 export * from './lib/test/index';

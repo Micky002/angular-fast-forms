@@ -1,10 +1,31 @@
-<form class="aff-form-array">
-  <ng-container *ngFor="let subForm of formArray.controls; let i = index">
-    <ng-container *ngIf="isControl(subForm)">
-      <aff-form-control [affArrayIndex]="i" [control]="$any(subForm)"></aff-form-control>
-    </ng-container>
-    <ng-container *ngIf="isGroup(subForm)">
-      <aff-form-group [affArrayIndex]="i" [formGroup]="$any(subForm)"></aff-form-group>
+<div class="aff-form-array">
+  <ng-container *ngIf="formArray">
+    <ng-container *ngFor="let subForm of formArray.controls; let i = index">
+      <ng-container *ngIf="isControl(subForm)">
+        <aff-form-control [affArrayIndex]="i" [control]="$any(subForm)"></aff-form-control>
+      </ng-container>
+      <ng-container *ngIf="isGroup(subForm)">
+        <aff-form-group [affArrayIndex]="i" [formGroup]="$any(subForm)"></aff-form-group>
+      </ng-container>
     </ng-container>
   </ng-container>
-</form>
+  <ng-container *ngIf="array">
+    <div *ngFor="let subForm of array.controls; let i = index" class="aff-array-entry">
+      <div class="array-container">
+        <ng-container [formGroup]="$any(subForm)" affRenderer></ng-container>
+      </div>
+      <div class="array-actions">
+        <button (click)="addRow(i)" mat-icon-button>
+          <mat-icon>add</mat-icon>
+        </button>
+        <button (click)="deleteRow(i)" mat-icon-button>
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+    <button (click)="addRow()" *ngIf="array.controls.length === 0" mat-icon-button>
+      <span>Add</span>
+      <mat-icon>add</mat-icon>
+    </button>
+  </ng-container>
+</div>

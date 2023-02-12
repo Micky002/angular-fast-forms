@@ -1,0 +1,11 @@
+.menu-container {
+  display: flex;
+}
+
+.side-container {
+  width: 200px;
+
+  mat-nav-list {
+    padding-top: 0;
+  }
+}

@@ -14,6 +14,8 @@ import { ArrayIndexDirective } from '../actions/array-index.directive';
 import { FastFormControl } from '../control/fast-form-control';
 import { FastFormGroup } from '../control/fast-form-group';
 import { QuestionDefinition } from '../components/question-definition';
+import { BasicQuestionV2, QuestionKey, QuestionWrapper } from '../service/fast-form-builder';
+import { ControlWrapperV2 } from './control-wrapper-v2';
 
 @Injectable({
   providedIn: 'any'
@@ -23,6 +25,51 @@ export class FormRenderService {
   constructor(
       private controlRegistry: ControlRegistry,
       private injector: Injector) {
+  }
+
+  renderOnly<T>(
+      viewContainerRef: ViewContainerRef,
+      parent: any,
+      opts: {
+        injector: Injector
+      }
+  ): ComponentRef<T> {
+    // console.log(parent);
+    let question = parent[QuestionKey] as BasicQuestionV2;
+    console.log(question);
+    console.log((parent[QuestionWrapper] as ControlWrapperV2).question);
+    let def = this.controlRegistry.getDefinition(question.type as any);
+    const providers: StaticProvider[] = [
+      {provide: FORM_CONTROL, useValue: parent},
+      {provide: QuestionDefinition, useValue: new QuestionDefinition(question as any)}
+    ];
+    if (question.properties) {
+      providers.push({provide: CONTROL_PROPERTIES, useValue: question.properties});
+    }
+    const controlComponentRef = viewContainerRef.createComponent(def.component, {
+      injector: Injector.create({
+        providers,
+        parent: opts.injector ? opts.injector : this.injector
+      })
+    });
+
+    if (parent instanceof FormGroup) {
+      // Object.keys(parent.controls).forEach(key => {
+      //   const controlComponentRef = viewContainerRef.createComponent(def.component, {
+      //     injector: Injector.create({
+      //       providers: [
+      //         {provide: FORM_CONTROL, useValue: parent}
+      //       ]
+      //       // parent: injector ? injector : this.injector
+      //     })
+      //   });
+      //
+      // })
+    }
+    // if (this.shouldInitialize(controlComponentRef.instance)) {
+    //   this.initializeComponent(parent, question, formDefinition.component.name, controlComponentRef.instance);
+    // }
+    return controlComponentRef as any;
   }
 
   render<T>(

@@ -6,8 +6,10 @@
 @import "../../../libs/core/src/styles/styles";
 @import "../../../libs/material/src/styles/styles";
 
-body {
+html, body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  height: 100%;
+  margin: 0;
 }
 
 .example-button-row {

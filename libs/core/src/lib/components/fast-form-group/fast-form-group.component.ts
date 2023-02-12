@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  Inject,
   Injector,
   Input,
   OnChanges,
@@ -23,6 +24,8 @@ import { Subscription } from 'rxjs';
 import { ArrayIndexDirective } from '../../actions/array-index.directive';
 import { Control } from '../../control/control.decorator';
 import { ControlRegistry } from '../../internal/control/control-registry.service';
+import { FORM_CONTROL } from '../util/inject-token';
+import { FormGroup } from '@angular/forms';
 
 @Control({
   type: 'group',
@@ -45,13 +48,6 @@ export class FastFormGroupComponent implements OnChanges, OnInit, OnDestroy {
   private _actionService: ActionService;
   private _actionsSub!: Subscription;
 
-  public _formGroup: FastFormGroup;
-
-  @Input()
-  public set formGroup(formGroup: FastFormGroup) {
-    this._formGroup = formGroup;
-  }
-
   constructor(private controlFactory: ControlFactoryService,
               private validatorFactory: ValidatorFactoryService,
               private formRenderService: FormRenderService,
@@ -59,7 +55,9 @@ export class FastFormGroupComponent implements OnChanges, OnInit, OnDestroy {
               private controlRegistry: ControlRegistry,
               @Optional() actionService: ActionService,
               @Optional() private indexDirective?: ArrayIndexDirective,
-              @Optional() private http?: HttpClient) {
+              @Optional() private http?: HttpClient,
+              @Inject(FORM_CONTROL) @Optional() private group?: FormGroup) {
+    // console.log(group);
     this._formGroup = new FastFormGroup([], this.controlFactory);
     if (actionService) {
       this._actionService = actionService;
@@ -68,7 +66,18 @@ export class FastFormGroupComponent implements OnChanges, OnInit, OnDestroy {
     }
   }
 
+  public _formGroup: FastFormGroup;
+
+  @Input()
+  public set formGroup(formGroup: FastFormGroup) {
+    this._formGroup = formGroup;
+  }
+
   ngOnInit(): void {
+    Object.keys(this.group?.controls ?? {}).forEach(key => {
+      this.formRenderService.renderOnly(this.componentViewContainerRef, this.group?.controls[key], {injector: this.injector});
+    });
+
     this._formGroup.questionChanges.subscribe(() => {
       this.render();
     });
