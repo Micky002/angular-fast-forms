@@ -1,4 +1,4 @@
-import { Directive, Injector, OnInit, Optional, ViewContainerRef } from '@angular/core';
+import { Directive, Injector, OnInit, Optional, Renderer2, ViewContainerRef } from '@angular/core';
 import { FormGroupDirective } from '@angular/forms';
 import { FormRenderService } from '../internal/form-render.service';
 
@@ -9,15 +9,14 @@ export class FormRendererDirective implements OnInit {
 
   constructor(
       private viewContainerRef: ViewContainerRef,
+      private renderer: Renderer2,
       private renderService: FormRenderService,
       private injector: Injector,
       @Optional() private group?: FormGroupDirective) {
   }
 
   ngOnInit(): void {
-    // console.log(this.viewContainerRef);
-    // console.log(this.group);
-    this.renderService.renderOnly(this.viewContainerRef, this.group?.control, {injector: this.injector});
+    let componentRef = this.renderService.renderOnly(this.viewContainerRef, this.group?.control, {injector: this.injector});
+    this.renderer.appendChild(this.viewContainerRef.element.nativeElement, componentRef.location.nativeElement);
   }
-
 }

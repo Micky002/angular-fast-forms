@@ -12,7 +12,7 @@
   <ng-container *ngIf="array">
     <div *ngFor="let subForm of array.controls; let i = index" class="aff-array-entry">
       <div class="array-container">
-        <ng-container [formGroup]="$any(subForm)" affRenderer></ng-container>
+        <div [formGroup]="$any(subForm)" affRenderer></div>
       </div>
       <div class="array-actions">
         <button (click)="addRow(i)" mat-icon-button>

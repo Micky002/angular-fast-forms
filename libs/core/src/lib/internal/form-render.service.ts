@@ -53,6 +53,7 @@ export class FormRenderService {
       })
     });
 
+    // this.renderer.appendChild(viewContainerRef.element.nativeElement, ComponentRef);
     if (parent instanceof FormGroup) {
       // Object.keys(parent.controls).forEach(key => {
       //   const controlComponentRef = viewContainerRef.createComponent(def.component, {
