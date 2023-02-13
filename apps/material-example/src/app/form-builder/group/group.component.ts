@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FastFormBuilder } from '../../../../../../libs/core/src/lib/service/fast-form-builder';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -19,18 +19,15 @@ import { MaterialFastFormsModule, SelectProperties } from '@ngx-fast-forms/mater
   `,
   styles: []
 })
-export class GroupComponent implements OnInit {
+export class GroupComponent {
 
   public formGroup: FormGroup;
 
   constructor(private fb: FastFormBuilder) {
     this.formGroup = fb.group({}, {
-      name: fb.control(null, {type: 'mat-input', label: 'Meins'}),
+      name: fb.control('Michael Weisgrab', {type: 'mat-input', label: 'Name'}),
       hans: fb.control(null, {type: 'mat-input', label: 'Hans'}),
-      // test: fb.array({}, {
-      //   type: 'mat-input'
-      // }),
-      arrayControl: fb.array({}, fb.control(null, {type: 'mat-input', label: 'fb array'})),
+      arrayControl: fb.array({}, fb.control('Init value', {type: 'mat-input', label: 'fb array'})),
       arrayGroup: fb.array({}, fb.group({}, {
         first: fb.control(2, {
           type: 'mat-select',
@@ -40,9 +37,5 @@ export class GroupComponent implements OnInit {
         second: fb.control(null, {type: 'mat-input', label: 'Second input'})
       }))
     });
-    console.log(this.formGroup);
-  }
-
-  ngOnInit(): void {
   }
 }

@@ -5,11 +5,17 @@ import {
   AbstractControlOptions,
   FormArray,
   FormControl,
-  FormControlOptions,
   FormControlState,
   FormGroup
 } from '@angular/forms';
-import { BasicQuestionV2, QuestionWrapper, WrapperProvider } from './fast-form-builder';
+import {
+  BasicQuestionV2,
+  ControlQuestion,
+  GroupQuestion,
+  hasControlWrapper,
+  QuestionWrapper,
+  WrapperProvider
+} from './fast-form-builder';
 import { ControlWrapperV2 } from '../internal/control-wrapper-v2';
 
 @Injectable({
@@ -21,45 +27,71 @@ export class ControlFactoryV2 {
   }
 
   create(wrapper: ControlWrapperV2): AbstractControl {
-    let control: AbstractControl;
     switch (wrapper.controlType) {
       case 'control':
-        control = this.control(wrapper.initialState, wrapper.question);
-        break;
+        return this.control(wrapper.initialState, wrapper.question);
       case 'group':
-        control = this.group(wrapper.question, wrapper.groupControls);
-        break;
+        const groupDef: { [key: string]: AbstractControl } = {};
+        Object.keys(wrapper.groupQuestion).forEach(key => {
+          groupDef[key] = this.create(wrapper.groupQuestion[key]);
+        });
+        return this.group(wrapper.question, groupDef);
       case 'array':
-        control = this.array(wrapper.question, wrapper.arrayQuestion);
-        break;
+        return this.array(wrapper.question, this.create(wrapper.arrayQuestion));
     }
-    (control as WrapperProvider)[QuestionWrapper] = wrapper;
-    return control;
   }
 
-  public group(question: BasicQuestionV2 & AbstractControlOptions, groupDef?: { [key: string]: any }): FormGroup {
-    return new FormGroup<any>(groupDef, {
-      validators: question.validators,
-      asyncValidators: question.asyncValidators,
-      updateOn: question.updateOn
-    });
-  }
-
-  public control(state: FormControlState<any> | any, question: BasicQuestionV2 & FormControlOptions): FormControl {
-    return new FormControl<any>(state, {
+  public control(state: FormControlState<any> | any, question: ControlQuestion): FormControl {
+    const control = new FormControl<any>(state, {
       validators: question.validators,
       asyncValidators: question.asyncValidators,
       updateOn: question.updateOn,
       nonNullable: question.nonNullable
     });
+    (control as WrapperProvider)[QuestionWrapper] = ControlWrapperV2.fromControl(state, question);
+    return control;
   }
 
-  public array(question: BasicQuestionV2 & AbstractControlOptions, arrayQuestion: BasicQuestionV2 & FormControlOptions): FormArray {
-    // this.cr.g;
-    return new FormArray<any>([], {
+  public group(question: GroupQuestion, groupControls?: { [key: string]: AbstractControl }): FormGroup {
+    const group = new FormGroup<any>(groupControls, {
       validators: question.validators,
       asyncValidators: question.asyncValidators,
       updateOn: question.updateOn
     });
+
+    const groupQuestions: { [key: string]: ControlWrapperV2 } = {};
+    Object.keys(groupControls ?? {}).forEach(key => {
+      groupQuestions[key] = this.deriveDefinition((groupControls ?? {})[key]);
+    });
+    (group as WrapperProvider)[QuestionWrapper] = ControlWrapperV2.fromGroup(question, groupQuestions);
+    return group;
+  }
+
+  public array(question: BasicQuestionV2 & AbstractControlOptions, arrayQuestion: AbstractControl): FormArray {
+    // this.cr.g;
+    const array = new FormArray<any>([], {
+      validators: question.validators,
+      asyncValidators: question.asyncValidators,
+      updateOn: question.updateOn
+    });
+    (array as WrapperProvider)[QuestionWrapper] = ControlWrapperV2.fromArray(question, this.deriveDefinition(arrayQuestion));
+    return array;
+  }
+
+
+  public deriveDefinition(control: AbstractControl): ControlWrapperV2 {
+    if (!hasControlWrapper(control)) {
+      throw new Error('asdf');
+    }
+    const wrapper = control[QuestionWrapper];
+    if (wrapper.controlType === 'control') {
+      return wrapper;
+    } else if (wrapper.controlType === 'group') {
+      return wrapper;
+    } else if (wrapper.controlType === 'array') {
+      return wrapper;
+    } else {
+      throw new Error('asdf');
+    }
   }
 }
