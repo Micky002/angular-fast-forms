@@ -75,7 +75,7 @@ export class FastFormGroupComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnInit(): void {
     Object.keys(this.group?.controls ?? {}).forEach(key => {
-      this.formRenderService.renderOnly(this.componentViewContainerRef, this.group?.controls[key], {injector: this.injector});
+      this.formRenderService.renderOnly(this.componentViewContainerRef, this.group?.controls[key]!, {injector: this.injector});
     });
 
     this._formGroup.questionChanges.subscribe(() => {

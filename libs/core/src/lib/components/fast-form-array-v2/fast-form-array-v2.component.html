@@ -1,0 +1,17 @@
+<div *ngFor="let subForm of array.controls; let i = index" class="aff-array-entry">
+  <div class="array-container">
+    <div [renderControl]="subForm"></div>
+  </div>
+  <div class="array-actions">
+    <button (click)="addRow(i)" mat-icon-button>
+      <mat-icon>add</mat-icon>
+    </button>
+    <button (click)="deleteRow(i)" mat-icon-button>
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>
+<button (click)="addRow()" *ngIf="array.controls.length === 0" mat-icon-button>
+  <mat-icon>add</mat-icon>
+  <span>New entry</span>
+</button>

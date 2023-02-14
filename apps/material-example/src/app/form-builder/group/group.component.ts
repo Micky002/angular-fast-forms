@@ -37,5 +37,8 @@ export class GroupComponent {
         second: fb.control(null, {type: 'mat-input', label: 'Second input'})
       }))
     });
+    this.formGroup.valueChanges.subscribe(value => {
+      console.log(value);
+    });
   }
 }

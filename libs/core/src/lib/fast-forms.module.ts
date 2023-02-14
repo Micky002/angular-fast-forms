@@ -12,25 +12,26 @@ import { FastFormBuilder } from './service/fast-form-builder';
 import { FormRendererDirective } from './directive/form-renderer.directive';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { FastFormGroupV2Component } from './components/fast-form-group-v2/fast-form-group-v2.component';
+import { FastFormArrayV2Component } from './components/fast-form-array-v2/fast-form-array-v2.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatIconModule
-  ],
+  imports: [CommonModule, ReactiveFormsModule, MatButtonModule, MatIconModule],
   declarations: [
     FastFormGroupComponent,
+    FastFormGroupV2Component,
     FastFormArrayComponent,
     FastFormControlComponent,
     FastFormRowComponent,
     ArrayIndexDirective,
-    FormRendererDirective
+    FormRendererDirective,
+    FastFormArrayV2Component
   ],
   exports: [
-    FastFormGroupComponent,
     FastFormControlComponent,
+    FastFormGroupComponent,
+    FastFormGroupV2Component,
+    FastFormArrayV2Component,
     FastFormRowComponent,
     ArrayIndexDirective,
     FormRendererDirective
@@ -40,19 +41,19 @@ import { MatIconModule } from '@angular/material/icon';
     {
       provide: AFF_CONTROL_COMPONENTS,
       useValue: [
-        FastFormArrayComponent,
         FastFormGroupComponent,
-        FastFormRowComponent
-      ],
+        FastFormGroupV2Component,
+        FastFormArrayComponent,
+        FastFormArrayV2Component,
+        FastFormRowComponent],
       multi: true
     }
   ]
 })
 export class FastFormsModule {
-
   public static forRoot(options?: {
-    validators?: Array<any>,
-    controls?: Array<any>
+    validators?: Array<any>;
+    controls?: Array<any>;
   }): ModuleWithProviders<FastFormsModule> {
     return {
       ngModule: FastFormsModule,
@@ -61,20 +62,20 @@ export class FastFormsModule {
         {
           provide: VALIDATORS,
           multi: true,
-          useValue: (options?.validators ?? [])
+          useValue: options?.validators ?? []
         },
         {
           provide: AFF_CONTROL_COMPONENTS,
           multi: true,
-          useValue: (options?.controls ?? [])
+          useValue: options?.controls ?? []
         }
       ]
     };
   }
 
   public static forChild(options?: {
-    validators?: Array<any>,
-    controls?: Array<any>
+    validators?: Array<any>;
+    controls?: Array<any>;
   }): ModuleWithProviders<FastFormsModule> {
     return {
       ngModule: FastFormsModule,
@@ -83,12 +84,12 @@ export class FastFormsModule {
         {
           provide: VALIDATORS,
           multi: true,
-          useValue: (options?.validators ?? [])
+          useValue: options?.validators ?? []
         },
         {
           provide: AFF_CONTROL_COMPONENTS,
           multi: true,
-          useValue: (options?.controls ?? [])
+          useValue: options?.controls ?? []
         }
       ]
     };

@@ -33,14 +33,14 @@ export class FastFormBuilder {
   public group(question: GroupQuestion, groupControls?: { [key: string]: AbstractControl }): FormGroup {
     return this.cf.group({
       ...question,
-      type: question.type ?? 'group'
+      type: question.type ?? 'group-v2'
     }, groupControls);
   }
 
   array(question: ArrayQuestion, arrayQuestion: AbstractControl): FormArray {
     return this.cf.array({
       ...question,
-      type: question.type ?? 'array'
+      type: question.type ?? 'array-v2'
     }, arrayQuestion);
   }
 

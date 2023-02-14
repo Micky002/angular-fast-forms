@@ -1,11 +1,13 @@
-import { Directive, Injector, OnInit, Optional, Renderer2, ViewContainerRef } from '@angular/core';
-import { FormGroupDirective } from '@angular/forms';
+import { Directive, Injector, Input, OnInit, Optional, Renderer2, ViewContainerRef } from '@angular/core';
+import { AbstractControl, FormGroupDirective } from '@angular/forms';
 import { FormRenderService } from '../internal/form-render.service';
 
 @Directive({
-  selector: '[affRenderer]'
+  selector: '[affRenderer],[renderControl]'
 })
 export class FormRendererDirective implements OnInit {
+
+  @Input() renderControl: AbstractControl | null = null;
 
   constructor(
       private viewContainerRef: ViewContainerRef,
@@ -16,7 +18,18 @@ export class FormRendererDirective implements OnInit {
   }
 
   ngOnInit(): void {
-    let componentRef = this.renderService.renderOnly(this.viewContainerRef, this.group?.control, {injector: this.injector});
-    this.renderer.appendChild(this.viewContainerRef.element.nativeElement, componentRef.location.nativeElement);
+    if (this.renderControl) {
+      this.render(this.renderControl);
+    } else if (this.group?.control) {
+      this.render(this.group.control);
+    }
+  }
+
+  private render(control: AbstractControl) {
+    const isHtmlElement = this.viewContainerRef.element.nativeElement instanceof HTMLElement;
+    let componentRef = this.renderService.renderOnly(this.viewContainerRef, control, {injector: this.injector});
+    if (isHtmlElement) {
+      this.renderer.appendChild(this.viewContainerRef.element.nativeElement, componentRef.location.nativeElement);
+    }
   }
 }

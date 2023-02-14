@@ -14,7 +14,7 @@ import { ArrayIndexDirective } from '../actions/array-index.directive';
 import { FastFormControl } from '../control/fast-form-control';
 import { FastFormGroup } from '../control/fast-form-group';
 import { QuestionDefinition } from '../components/question-definition';
-import { QuestionWrapper } from '../service/fast-form-builder';
+import { hasControlWrapper, QuestionWrapper } from '../service/fast-form-builder';
 import { ControlWrapperV2 } from './control-wrapper-v2';
 
 @Injectable({
@@ -29,11 +29,14 @@ export class FormRenderService {
 
   renderOnly<T>(
       viewContainerRef: ViewContainerRef,
-      parent: any,
+      parent: AbstractControl,
       opts: {
         injector: Injector
       }
   ): ComponentRef<T> {
+    if (!hasControlWrapper(parent)) {
+      throw new Error('');
+    }
     // console.log(parent);
     let question = (parent[QuestionWrapper] as ControlWrapperV2).question;
     // console.log(question);
