@@ -1,7 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { QuestionDefinition } from '../components/question-definition';
+import { FORM_CONTROL } from '../components/util/inject-token';
 import { Control } from '../control/control.decorator';
-import { FORM_CONTROL, QuestionDefinition } from '@ngx-fast-forms/core';
 
 @Control({
   type: 'dummy-input'

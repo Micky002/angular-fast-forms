@@ -1,6 +1,6 @@
 import { FormControlState } from '@angular/forms';
+import { FormControlType } from '../model';
 import { AnyQuestion, ArrayQuestion, ControlQuestion, GroupQuestion, QuestionV2 } from '../service/fast-form-builder';
-import { FormControlType } from '@ngx-fast-forms/core';
 
 export class ControlWrapperV2 {
 

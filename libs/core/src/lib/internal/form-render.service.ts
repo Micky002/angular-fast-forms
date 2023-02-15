@@ -38,10 +38,10 @@ export class FormRenderService {
       throw new Error('');
     }
     // console.log(parent);
-    let question = (parent[QuestionWrapper] as ControlWrapperV2).question;
+    const question = (parent[QuestionWrapper] as ControlWrapperV2).question;
     // console.log(question);
     // console.log((parent[QuestionWrapper] as ControlWrapperV2).question);
-    let def = this.controlRegistry.getDefinition(question.type as any);
+    const def = this.controlRegistry.getDefinition(question.type as any);
     const providers: StaticProvider[] = [
       {provide: FORM_CONTROL, useValue: parent},
       {provide: QuestionDefinition, useValue: new QuestionDefinition(question as any)}

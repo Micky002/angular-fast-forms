@@ -27,7 +27,7 @@ export class FormRendererDirective implements OnInit {
 
   private render(control: AbstractControl) {
     const isHtmlElement = this.viewContainerRef.element.nativeElement instanceof HTMLElement;
-    let componentRef = this.renderService.renderOnly(this.viewContainerRef, control, {injector: this.injector});
+    const componentRef = this.renderService.renderOnly(this.viewContainerRef, control, {injector: this.injector});
     if (isHtmlElement) {
       this.renderer.appendChild(this.viewContainerRef.element.nativeElement, componentRef.location.nativeElement);
     }

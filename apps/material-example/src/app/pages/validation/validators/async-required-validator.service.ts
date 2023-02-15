@@ -10,11 +10,11 @@ import { of } from 'rxjs';
 @Injectable()
 export class AsyncRequiredValidatorService implements BaseAsyncValidator {
 
-  createValidator(args: string[]): AsyncValidatorFn {
-    return control => {
+  createValidator(): AsyncValidatorFn {
+    return () => {
       return of({
         required: true
-      })
+      });
     };
   }
 }

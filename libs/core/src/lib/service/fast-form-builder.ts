@@ -9,9 +9,9 @@ import {
   FormGroup
 } from '@angular/forms';
 import { ControlRegistry } from '../internal/control/control-registry.service';
-import { QuestionProperties, ValidationOptions } from '@ngx-fast-forms/core';
 import { ControlWrapperV2 } from '../internal/control-wrapper-v2';
 import { ControlFactoryV2 } from './control-factory-v2.service';
+import { QuestionProperties, ValidationOptions } from '../model';
 
 
 export type GroupQuestion = BasicQuestionV2 & AbstractControlOptions;

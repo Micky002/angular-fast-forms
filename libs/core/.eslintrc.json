@@ -30,6 +30,10 @@
             "prefix": "aff",
             "style": "kebab-case"
           }
+        ],
+        "no-restricted-imports": [
+          "error",
+          "@ngx-fast-forms/core"
         ]
       }
     },

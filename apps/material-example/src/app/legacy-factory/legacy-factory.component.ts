@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
@@ -27,10 +27,5 @@ import { MatButtonModule } from '@angular/material/button';
   `,
   styleUrls: ['./legacy-factory.component.scss']
 })
-export class LegacyFactoryComponent implements OnInit {
-  constructor() {
-  }
-
-  ngOnInit(): void {
-  }
+export class LegacyFactoryComponent {
 }

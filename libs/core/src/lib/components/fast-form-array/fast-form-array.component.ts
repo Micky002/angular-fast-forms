@@ -2,7 +2,7 @@ import { Component, Inject, Optional } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Control } from '../../control/control.decorator';
 import { BaseFormArrayComponent } from '../base/base-array.component';
-import { FORM_CONTROL } from '@ngx-fast-forms/core';
+import { FORM_CONTROL } from '../util/inject-token';
 
 @Control({
   type: 'array',

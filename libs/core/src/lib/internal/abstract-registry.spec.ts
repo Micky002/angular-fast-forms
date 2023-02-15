@@ -1,4 +1,3 @@
-import { Control } from '@ngx-fast-forms/core';
 import { AbstractRegistry } from './abstract-registry';
 
 describe('AbstractRegistry', () => {

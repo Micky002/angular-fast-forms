@@ -1,10 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AFF_CONTROL_COMPONENTS, Question } from '../model';
 import { FormRenderService } from './form-render.service';
-import { Control, ControlFactoryService, FastFormControl } from '@ngx-fast-forms/core';
 import { Component, Injector, Provider, ViewChild, ViewContainerRef } from '@angular/core';
 import { ControlRegistry } from './control/control-registry.service';
 import { By } from '@angular/platform-browser';
+import { ControlFactoryService } from '../service/control-factory.service';
+import { Control } from '../control/control.decorator';
+import { FastFormControl } from '../control/fast-form-control';
 
 @Control({
   type: 'dummy'

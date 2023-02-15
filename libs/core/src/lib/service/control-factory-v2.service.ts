@@ -31,11 +31,7 @@ export class ControlFactoryV2 {
       case 'control':
         return this.control(wrapper.initialState, wrapper.question);
       case 'group':
-        const groupDef: { [key: string]: AbstractControl } = {};
-        Object.keys(wrapper.groupQuestion).forEach(key => {
-          groupDef[key] = this.create(wrapper.groupQuestion[key]);
-        });
-        return this.group(wrapper.question, groupDef);
+        return this.group(wrapper.question, this.createSubGroupControls(wrapper.groupQuestion));
       case 'array':
         return this.array(wrapper.question, this.create(wrapper.arrayQuestion));
     }
@@ -78,7 +74,6 @@ export class ControlFactoryV2 {
     return array;
   }
 
-
   public deriveDefinition(control: AbstractControl): ControlWrapperV2 {
     if (!hasControlWrapper(control)) {
       throw new Error('asdf');
@@ -93,5 +88,13 @@ export class ControlFactoryV2 {
     } else {
       throw new Error('asdf');
     }
+  }
+
+  private createSubGroupControls(groupQuestions: { [key: string]: ControlWrapperV2 }): { [key: string]: AbstractControl } {
+    const groupDef: { [key: string]: AbstractControl } = {};
+    Object.keys(groupQuestions).forEach(key => {
+      groupDef[key] = this.create(groupQuestions[key]);
+    });
+    return groupDef;
   }
 }

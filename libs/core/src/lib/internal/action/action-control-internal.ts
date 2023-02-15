@@ -1,16 +1,16 @@
 import { AbstractControl } from '@angular/forms';
-import { FormActionControl } from '../../actions';
+import { FormActionControl } from '../../actions/fast-form-action';
 
 export class FromActionControlInternal extends AbstractControl implements FormActionControl {
+
+  constructor() {
+    super([], []);
+  }
 
   private _disabled = false;
 
   override get disabled(): boolean {
     return this._disabled;
-  }
-
-  constructor() {
-    super([], []);
   }
 
   override disable() {

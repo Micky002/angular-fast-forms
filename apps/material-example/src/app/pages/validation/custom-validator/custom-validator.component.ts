@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { FastFormGroup, FastFormsService } from '@ngx-fast-forms/core';
 
 @Component({
-  selector: 'frontend-custom-validator',
+  selector: 'matex-custom-validator',
   templateUrl: './custom-validator.component.html',
-  styleUrls: ['./custom-validator.component.scss'],
+  styleUrls: ['./custom-validator.component.scss']
 })
 export class CustomValidatorComponent {
 

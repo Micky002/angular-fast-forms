@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FastFormBuilder } from '../../../../../../libs/core/src/lib/service/fast-form-builder';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { FastFormsModule } from '@ngx-fast-forms/core';
+import { FastFormBuilder, FastFormsModule } from '@ngx-fast-forms/core';
 import { MaterialFastFormsModule, SelectProperties } from '@ngx-fast-forms/material';
 
 @Component({
@@ -36,9 +35,6 @@ export class GroupComponent {
         }),
         second: fb.control(null, {type: 'mat-input', label: 'Second input'})
       }))
-    });
-    this.formGroup.valueChanges.subscribe(value => {
-      console.log(value);
     });
   }
 }
