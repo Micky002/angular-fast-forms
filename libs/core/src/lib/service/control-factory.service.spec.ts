@@ -11,8 +11,7 @@ import { Control } from '../control/control.decorator';
 import { AFF_CONTROL_COMPONENTS } from '../model';
 import { FastFormGroup } from '../control/fast-form-group';
 import { FastFormArrayComponent } from '../components/fast-form-array/fast-form-array.component';
-import { FastFormGroupComponent } from '../components';
-import { FastFormControl } from '../control';
+import { FastFormGroupComponent } from '../components/fast-form-group/fast-form-group.component';
 
 
 @Control({

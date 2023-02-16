@@ -49,7 +49,7 @@ export class ControlFactoryV2 {
   }
 
   public group(question: GroupQuestion, groupControls?: { [key: string]: AbstractControl }): FormGroup {
-    const group = new FormGroup<any>(groupControls, {
+    const group = new FormGroup<any>(groupControls ?? {}, {
       validators: question.validators,
       asyncValidators: question.asyncValidators,
       updateOn: question.updateOn

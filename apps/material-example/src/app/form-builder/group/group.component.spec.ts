@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GroupComponent } from './group.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('GroupComponent', () => {
   let component: GroupComponent;
@@ -8,7 +9,10 @@ describe('GroupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GroupComponent],
+      imports: [
+        NoopAnimationsModule,
+        GroupComponent
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(GroupComponent);

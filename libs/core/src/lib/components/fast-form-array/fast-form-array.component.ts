@@ -1,8 +1,7 @@
-import { Component, Inject, Optional } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Control } from '../../control/control.decorator';
 import { BaseFormArrayComponent } from '../base/base-array.component';
-import { FORM_CONTROL } from '../util/inject-token';
 
 @Control({
   type: 'array',
@@ -13,10 +12,6 @@ import { FORM_CONTROL } from '../util/inject-token';
   templateUrl: './fast-form-array.component.html'
 })
 export class FastFormArrayComponent extends BaseFormArrayComponent {
-
-  constructor(@Inject(FORM_CONTROL) @Optional() public array?: FormArray) {
-    super();
-  }
 
   public isControl(data: unknown): boolean {
     return data instanceof FormControl;

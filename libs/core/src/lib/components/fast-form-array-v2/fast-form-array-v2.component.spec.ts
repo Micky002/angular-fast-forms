@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FastFormsModule } from '../../fast-forms.module';
+import { FastFormBuilder } from '../../service/fast-form-builder';
+import { FORM_CONTROL } from '../util/inject-token';
 
 import { FastFormArrayV2Component } from './fast-form-array-v2.component';
 
@@ -8,7 +11,17 @@ describe('FastFormArrayV2Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FastFormArrayV2Component],
+      imports: [
+        FastFormsModule
+      ],
+      declarations: [
+        FastFormArrayV2Component
+      ],
+      providers: [{
+        deps: [FastFormBuilder],
+        provide: FORM_CONTROL,
+        useFactory: (fb: FastFormBuilder) => fb.array({}, fb.control(null, {type: 'test'}))
+      }]
     }).compileComponents();
 
     fixture = TestBed.createComponent(FastFormArrayV2Component);
