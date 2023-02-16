@@ -14,9 +14,9 @@ import { ControlFactoryV2 } from './control-factory-v2.service';
 import { QuestionProperties, ValidationOptions } from '../model';
 
 
-export type GroupQuestion = BasicQuestionV2 & AbstractControlOptions;
+export type GroupQuestion = BasicQuestionV2 & AbstractControlOptions & { type: string };
 export type ControlQuestion = GeneralQuestion & FormControlOptions & { type: string };
-export type ArrayQuestion = BasicQuestionV2 & AbstractControlOptions;
+export type ArrayQuestion = BasicQuestionV2 & AbstractControlOptions & { type: string };
 export type AnyQuestion = ControlQuestion | GroupQuestion | ArrayQuestion;
 
 @Injectable()

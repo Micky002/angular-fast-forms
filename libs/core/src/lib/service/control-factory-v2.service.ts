@@ -1,16 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ControlRegistry } from '../internal/control/control-registry.service';
+import { AbstractControl, FormArray, FormControl, FormControlState, FormGroup } from '@angular/forms';
 import {
-  AbstractControl,
-  AbstractControlOptions,
-  FormArray,
-  FormControl,
-  FormControlState,
-  FormGroup
-} from '@angular/forms';
-import {
-  BasicQuestionV2,
+  ArrayQuestion,
   ControlQuestion,
+  FastFormBuilder,
   GroupQuestion,
   hasControlWrapper,
   QuestionWrapper,
@@ -63,7 +57,7 @@ export class ControlFactoryV2 {
     return group;
   }
 
-  public array(question: BasicQuestionV2 & AbstractControlOptions, arrayQuestion: AbstractControl): FormArray {
+  public array(question: ArrayQuestion, arrayQuestion: AbstractControl): FormArray {
     // this.cr.g;
     const array = new FormArray<any>([], {
       validators: question.validators,
@@ -76,7 +70,7 @@ export class ControlFactoryV2 {
 
   public deriveDefinition(control: AbstractControl): ControlWrapperV2 {
     if (!hasControlWrapper(control)) {
-      throw new Error('asdf');
+      throw new Error(`Cannot create control which is not created via the [${FastFormBuilder.name}].`);
     }
     const wrapper = control[QuestionWrapper];
     if (wrapper.controlType === 'control') {
@@ -86,7 +80,7 @@ export class ControlFactoryV2 {
     } else if (wrapper.controlType === 'array') {
       return wrapper;
     } else {
-      throw new Error('asdf');
+      throw new Error(`The control type [${wrapper.controlType}]} is not supported.`);
     }
   }
 

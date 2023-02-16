@@ -1,6 +1,6 @@
 import { FormControlState } from '@angular/forms';
 import { FormControlType } from '../model';
-import { AnyQuestion, ArrayQuestion, ControlQuestion, GroupQuestion, QuestionV2 } from '../service/fast-form-builder';
+import { AnyQuestion, ArrayQuestion, ControlQuestion, GroupQuestion } from '../service/fast-form-builder';
 
 export class ControlWrapperV2 {
 
@@ -22,7 +22,7 @@ export class ControlWrapperV2 {
     return this._initialState;
   }
 
-  get question(): QuestionV2 {
+  get question(): AnyQuestion {
     return this._question as any;
   }
 
@@ -38,7 +38,7 @@ export class ControlWrapperV2 {
     if (this._groupQuestions) {
       return this._groupQuestions;
     } else {
-      throw new Error('No array question defined.');
+      throw new Error('No group question defined.');
     }
   }
 
