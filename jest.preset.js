@@ -20,5 +20,6 @@ if (process.env.CI) {
 
 module.exports = {
   ...nxPreset,
-  coverageReporters: ['lcov']
+  coverageReporters: ['lcov'],
+  coveragePathIgnorePatterns: ['.*.mock.ts']
 };
