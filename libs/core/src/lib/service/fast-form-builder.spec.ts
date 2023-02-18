@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FastFormBuilder } from './fast-form-builder';
+import { ControlWrapperKey, FastFormBuilder, hasControlWrapper, WrapperProvider } from './fast-form-builder';
 
 describe('FormBuilderService', () => {
-  let cb: FastFormBuilder;
+  let fb: FastFormBuilder;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -11,26 +11,36 @@ describe('FormBuilderService', () => {
         FastFormBuilder
       ]
     });
-    cb = TestBed.inject(FastFormBuilder);
+    fb = TestBed.inject(FastFormBuilder);
   });
 
   it('should be created', () => {
-    expect(cb).toBeTruthy();
+    expect(fb).toBeTruthy();
   });
 
-  it('asdf', () => {
+  it('should set default group', () => {
+    const group = fb.group({});
+    expect(hasControlWrapper(group)).toBeTruthy();
+    const wrapper = (group as WrapperProvider)[ControlWrapperKey];
+    expect(wrapper.question.type).toEqual('group-v2');
+  });
 
+  it('should set default array', () => {
+    const array = fb.array({});
+    expect(hasControlWrapper(array)).toBeTruthy();
+    const wrapper = (array as WrapperProvider)[ControlWrapperKey];
+    expect(wrapper.question.type).toEqual('array-v2');
   });
 
   // it('should derive definition of control', () => {
-  //   const definition = cb.deriveDefinition(cb.control(null, {type: 'mat-input', label: 'test'}));
+  //   const definition = fb.deriveDefinition(fb.control(null, {type: 'mat-input', label: 'test'}));
   //   expect(definition).toEqual({type: 'mat-input', label: 'test'});
   // });
   //
   // it('should derive definition of group', () => {
-  //   const definition = cb.deriveDefinition(cb.group({}, {
-  //     name: cb.control(null, {type: 'mat-input', label: 'Name'}),
-  //     description: cb.control(null, {type: 'mat-input', label: 'Description'})
+  //   const definition = fb.deriveDefinition(fb.group({}, {
+  //     name: fb.control(null, {type: 'mat-input', label: 'Name'}),
+  //     description: fb.control(null, {type: 'mat-input', label: 'Description'})
   //   }));
   //   expect(definition).toEqual({
   //     name: {type: 'mat-input', label: 'Name'},
@@ -39,8 +49,8 @@ describe('FormBuilderService', () => {
   // });
   //
   // it('should derive definition of array', () => {
-  //   const definition = cb.deriveDefinition(cb.array({},
-  //       cb.control(null, {type: 'mat-input', label: 'Name'})
+  //   const definition = fb.deriveDefinition(fb.array({},
+  //       fb.control(null, {type: 'mat-input', label: 'Name'})
   //   ));
   //   expect(definition).toEqual([{type: 'array'}, {label: 'Name', type: 'mat-input'}]);
   // });

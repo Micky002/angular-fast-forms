@@ -14,10 +14,15 @@ import { ControlFactoryV2 } from './control-factory-v2.service';
 import { QuestionProperties, ValidationOptions } from '../model';
 
 
-export type GroupQuestion = BasicQuestionV2 & AbstractControlOptions & { type: string };
+export type GroupQuestion = GeneralQuestion & AbstractControlOptions & { type?: string };
+export type TypedGroupQuestion = GeneralQuestion & AbstractControlOptions & { type: string };
+
+export type ArrayQuestion = GeneralQuestion & AbstractControlOptions & { type?: string };
+export type TypedArrayQuestion = GeneralQuestion & AbstractControlOptions & { type: string };
+
 export type ControlQuestion = GeneralQuestion & FormControlOptions & { type: string };
-export type ArrayQuestion = BasicQuestionV2 & AbstractControlOptions & { type: string };
-export type AnyQuestion = ControlQuestion | GroupQuestion | ArrayQuestion;
+
+export type AnyQuestion = ControlQuestion | TypedGroupQuestion | TypedArrayQuestion;
 
 @Injectable()
 export class FastFormBuilder {
@@ -37,7 +42,7 @@ export class FastFormBuilder {
     }, groupControls);
   }
 
-  array(question: ArrayQuestion, arrayQuestion: AbstractControl): FormArray {
+  public array(question: ArrayQuestion, arrayQuestion?: AbstractControl): FormArray {
     return this.cf.array({
       ...question,
       type: question.type ?? 'array-v2'
@@ -45,7 +50,7 @@ export class FastFormBuilder {
   }
 
   newArrayEntry(array: WrapperProvider): AbstractControl {
-    const wrapper = array[QuestionWrapper];
+    const wrapper = array[ControlWrapperKey];
     if (wrapper.controlType !== 'array') {
       throw new Error(`Cannot create array entry for component type [${wrapper.controlType}].`);
     }
@@ -54,35 +59,17 @@ export class FastFormBuilder {
 }
 
 
-export const QuestionWrapper = 'aff_wrapper';
+export const ControlWrapperKey = 'aff_wrapper';
 
 export type WrapperProvider = (AbstractControl | FormGroup | FormControl | FormArray) & {
-  [QuestionWrapper]: ControlWrapperV2;
+  [ControlWrapperKey]: ControlWrapperV2;
 }
 
 export function hasControlWrapper(control: any): control is WrapperProvider {
-  return QuestionWrapper in control;
-}
-
-export interface BasicQuestionV2 {
-  type?: string;
-  label?: string;
-  hidden?: boolean;
-  disabled?: boolean;
-  validation?: ValidationOptions;
-  properties?: QuestionProperties;
+  return ControlWrapperKey in control;
 }
 
 export interface GeneralQuestion {
-  label?: string;
-  hidden?: boolean;
-  disabled?: boolean;
-  validation?: ValidationOptions;
-  properties?: QuestionProperties;
-}
-
-export interface QuestionV2 {
-  type: string;
   label?: string;
   hidden?: boolean;
   disabled?: boolean;

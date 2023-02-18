@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { ControlRegistry } from '../internal/control/control-registry.service';
 import { AbstractControl, FormArray, FormControl, FormControlState, FormGroup } from '@angular/forms';
 import {
-  ArrayQuestion,
   ControlQuestion,
+  ControlWrapperKey,
   FastFormBuilder,
-  GroupQuestion,
   hasControlWrapper,
-  QuestionWrapper,
+  TypedArrayQuestion,
+  TypedGroupQuestion,
   WrapperProvider
 } from './fast-form-builder';
 import { ControlWrapperV2 } from '../internal/control-wrapper-v2';
@@ -38,11 +38,11 @@ export class ControlFactoryV2 {
       updateOn: question.updateOn,
       nonNullable: question.nonNullable
     });
-    (control as WrapperProvider)[QuestionWrapper] = ControlWrapperV2.fromControl(state, question);
+    (control as WrapperProvider)[ControlWrapperKey] = ControlWrapperV2.fromControl(state, question);
     return control;
   }
 
-  public group(question: GroupQuestion, groupControls?: { [key: string]: AbstractControl }): FormGroup {
+  public group(question: TypedGroupQuestion, groupControls?: { [key: string]: AbstractControl }): FormGroup {
     const group = new FormGroup<any>(groupControls ?? {}, {
       validators: question.validators,
       asyncValidators: question.asyncValidators,
@@ -53,18 +53,21 @@ export class ControlFactoryV2 {
     Object.keys(groupControls ?? {}).forEach(key => {
       groupQuestions[key] = this.deriveDefinition((groupControls ?? {})[key]);
     });
-    (group as WrapperProvider)[QuestionWrapper] = ControlWrapperV2.fromGroup(question, groupQuestions);
+    (group as WrapperProvider)[ControlWrapperKey] = ControlWrapperV2.fromGroup(question, groupQuestions);
     return group;
   }
 
-  public array(question: ArrayQuestion, arrayQuestion: AbstractControl): FormArray {
-    // this.cr.g;
+  public array(question: TypedArrayQuestion, arrayQuestion?: AbstractControl): FormArray {
     const array = new FormArray<any>([], {
       validators: question.validators,
       asyncValidators: question.asyncValidators,
       updateOn: question.updateOn
     });
-    (array as WrapperProvider)[QuestionWrapper] = ControlWrapperV2.fromArray(question, this.deriveDefinition(arrayQuestion));
+    if (arrayQuestion) {
+      (array as WrapperProvider)[ControlWrapperKey] = ControlWrapperV2.fromArray(question, this.deriveDefinition(arrayQuestion));
+    } else {
+      (array as WrapperProvider)[ControlWrapperKey] = ControlWrapperV2.fromArray(question);
+    }
     return array;
   }
 
@@ -72,7 +75,7 @@ export class ControlFactoryV2 {
     if (!hasControlWrapper(control)) {
       throw new Error(`Cannot create control which is not created via the [${FastFormBuilder.name}].`);
     }
-    const wrapper = control[QuestionWrapper];
+    const wrapper = control[ControlWrapperKey];
     if (wrapper.controlType === 'control') {
       return wrapper;
     } else if (wrapper.controlType === 'group') {

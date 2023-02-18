@@ -1,6 +1,6 @@
 import { FormControlState } from '@angular/forms';
 import { FormControlType } from '../model';
-import { AnyQuestion, ArrayQuestion, ControlQuestion, GroupQuestion } from '../service/fast-form-builder';
+import { AnyQuestion, ControlQuestion, TypedArrayQuestion, TypedGroupQuestion } from '../service/fast-form-builder';
 
 export class ControlWrapperV2 {
 
@@ -52,7 +52,7 @@ export class ControlWrapperV2 {
     );
   }
 
-  public static fromGroup(question: GroupQuestion, groupQuestions: { [key: string]: ControlWrapperV2 }): ControlWrapperV2 {
+  public static fromGroup(question: TypedGroupQuestion, groupQuestions: { [key: string]: ControlWrapperV2 }): ControlWrapperV2 {
     return new ControlWrapperV2(
         'group',
         null,
@@ -63,13 +63,13 @@ export class ControlWrapperV2 {
   }
 
   public static fromArray(
-      question: ArrayQuestion,
-      arrayQuestion: ControlWrapperV2): ControlWrapperV2 {
+      question: TypedArrayQuestion,
+      arrayQuestion?: ControlWrapperV2): ControlWrapperV2 {
     return new ControlWrapperV2(
         'array',
         null,
         question,
-        arrayQuestion,
+        arrayQuestion ?? null,
         null
     );
   }

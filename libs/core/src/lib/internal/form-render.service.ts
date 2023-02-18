@@ -14,7 +14,7 @@ import { ArrayIndexDirective } from '../actions/array-index.directive';
 import { FastFormControl } from '../control/fast-form-control';
 import { FastFormGroup } from '../control/fast-form-group';
 import { QuestionDefinition } from '../components/question-definition';
-import { hasControlWrapper, QuestionWrapper } from '../service/fast-form-builder';
+import { ControlWrapperKey, hasControlWrapper } from '../service/fast-form-builder';
 import { ControlWrapperV2 } from './control-wrapper-v2';
 
 @Injectable({
@@ -38,7 +38,7 @@ export class FormRenderService {
       throw new Error('');
     }
     // console.log(parent);
-    const question = (parent[QuestionWrapper] as ControlWrapperV2).question;
+    const question = (parent[ControlWrapperKey] as ControlWrapperV2).question;
     // console.log(question);
     // console.log((parent[QuestionWrapper] as ControlWrapperV2).question);
     const def = this.controlRegistry.getDefinition(question.type as any);

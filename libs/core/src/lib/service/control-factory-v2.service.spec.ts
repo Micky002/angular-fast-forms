@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ControlFactoryV2 } from './control-factory-v2.service';
-import { hasControlWrapper, QuestionWrapper, WrapperProvider } from '@ngx-fast-forms/core';
 import { ControlWrapperV2 } from '../internal/control-wrapper-v2';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ControlWrapperKey, hasControlWrapper, WrapperProvider } from './fast-form-builder';
 
 describe('ControlFactoryV2Service', () => {
   let controlFactory: ControlFactoryV2;
@@ -24,7 +24,7 @@ describe('ControlFactoryV2Service', () => {
     });
     expect(control).toBeDefined();
     expect(hasControlWrapper(control)).toBeTruthy();
-    const wrapper = (control as WrapperProvider)[QuestionWrapper];
+    const wrapper = (control as WrapperProvider)[ControlWrapperKey];
     expect(wrapper).toBeDefined();
     expect(wrapper.initialState).toEqual('one');
     expect(wrapper.question).toEqual({
@@ -41,7 +41,7 @@ describe('ControlFactoryV2Service', () => {
     });
     expect(group).toBeDefined();
     expect(hasControlWrapper(group)).toBeTruthy();
-    const wrapper = (group as WrapperProvider)[QuestionWrapper];
+    const wrapper = (group as WrapperProvider)[ControlWrapperKey];
     expect(wrapper).toBeDefined();
     expect(wrapper.initialState).toBeNull();
     expect(wrapper.question).toEqual({
@@ -59,7 +59,7 @@ describe('ControlFactoryV2Service', () => {
     );
     expect(array).toBeDefined();
     expect(hasControlWrapper(array)).toBeTruthy();
-    const wrapper = (array as WrapperProvider)[QuestionWrapper];
+    const wrapper = (array as WrapperProvider)[ControlWrapperKey];
     expect(wrapper).toBeDefined();
     expect(wrapper.initialState).toBeNull();
     expect(wrapper.question).toEqual({
@@ -78,7 +78,7 @@ describe('ControlFactoryV2Service', () => {
     });
     const control = controlFactory.create(wrapper);
     expect(hasControlWrapper(control)).toBeTruthy();
-    expect((control as WrapperProvider)[QuestionWrapper]).toEqual(wrapper);
+    expect((control as WrapperProvider)[ControlWrapperKey]).toEqual(wrapper);
   });
 
   it('should create group from wrapper and add entry', () => {
@@ -91,12 +91,12 @@ describe('ControlFactoryV2Service', () => {
     });
     const formGroup = controlFactory.create(wrapper);
     expect(formGroup).toBeInstanceOf(FormGroup);
-    expect((formGroup as WrapperProvider)[QuestionWrapper]).toEqual(wrapper);
+    expect((formGroup as WrapperProvider)[ControlWrapperKey]).toEqual(wrapper);
 
     expect(formGroup.get('names')).toBeInstanceOf(FormArray);
     const formArray = formGroup.get('names') as FormArray;
     expect(formArray.length).toEqual(0);
-    formArray.push(controlFactory.create((formArray as WrapperProvider)[QuestionWrapper].arrayQuestion));
+    formArray.push(controlFactory.create((formArray as WrapperProvider)[ControlWrapperKey].arrayQuestion));
     expect(formArray.length).toEqual(1);
 
     expect(formGroup.get(['names', 0])).toBeInstanceOf(FormControl);
