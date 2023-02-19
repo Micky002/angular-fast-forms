@@ -12,15 +12,18 @@ import { ControlRegistry } from '../internal/control/control-registry.service';
 import { ControlWrapperV2 } from '../internal/control-wrapper-v2';
 import { ControlFactoryV2 } from './control-factory-v2.service';
 import { QuestionProperties, ValidationOptions } from '../model';
+import { InitialValue } from '../internal/control/models';
 
 
 export type GroupQuestion = GeneralQuestion & AbstractControlOptions & { type?: string };
 export type TypedGroupQuestion = GeneralQuestion & AbstractControlOptions & { type: string };
+export type GroupDefinition = GeneralQuestion & FormControlOptions & { type: string } & InitialValue;
 
 export type ArrayQuestion = GeneralQuestion & AbstractControlOptions & { type?: string };
 export type TypedArrayQuestion = GeneralQuestion & AbstractControlOptions & { type: string };
 
 export type ControlQuestion = GeneralQuestion & FormControlOptions & { type: string };
+export type ControlDefinition = GeneralQuestion & FormControlOptions & { type: string } & InitialValue;
 
 export type AnyQuestion = ControlQuestion | TypedGroupQuestion | TypedArrayQuestion;
 
@@ -31,7 +34,7 @@ export class FastFormBuilder {
               private cf: ControlFactoryV2) {
   }
 
-  public control(state: FormControlState<any> | any, question: ControlQuestion): FormControl {
+  public control(state: FormControlState<any> | any, question: ControlQuestion): AbstractControl {
     return this.cf.control(state, question) as FormControl;
   }
 

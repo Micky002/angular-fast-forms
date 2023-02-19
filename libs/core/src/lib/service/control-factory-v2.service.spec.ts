@@ -3,13 +3,32 @@ import { TestBed } from '@angular/core/testing';
 import { ControlFactoryV2 } from './control-factory-v2.service';
 import { ControlWrapperV2 } from '../internal/control-wrapper-v2';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ControlWrapperKey, hasControlWrapper, WrapperProvider } from './fast-form-builder';
+import { ControlDefinition, ControlWrapperKey, hasControlWrapper, WrapperProvider } from './fast-form-builder';
+import { Component } from '@angular/core';
+import { FastFormsTestingModule } from '../test/fast-forms-testing.module.test-util';
+import { TestControlType } from '../test/control-types.test-util';
+import { AFF_CONTROL_COMPONENTS } from '../model';
+import { FastFormsModule } from '../fast-forms.module';
+import { ControlFactory } from '../control/control-factory.decorator';
+import { Control } from '../control/control.decorator';
 
 describe('ControlFactoryV2Service', () => {
   let controlFactory: ControlFactoryV2;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [
+        FastFormsModule,
+        FastFormsTestingModule
+      ],
+      providers: [{
+        provide: AFF_CONTROL_COMPONENTS,
+        useValue: [
+          StringInputComponent
+        ],
+        multi: true
+      }]
+    });
     controlFactory = TestBed.inject(ControlFactoryV2);
   });
 
@@ -19,7 +38,7 @@ describe('ControlFactoryV2Service', () => {
 
   it('should create simple control', () => {
     const control = controlFactory.control('one', {
-      type: 'mat-input',
+      type: TestControlType.INPUT,
       updateOn: 'blur'
     });
     expect(control).toBeDefined();
@@ -28,7 +47,7 @@ describe('ControlFactoryV2Service', () => {
     expect(wrapper).toBeDefined();
     expect(wrapper.initialState).toEqual('one');
     expect(wrapper.question).toEqual({
-      type: 'mat-input',
+      type: 'input',
       updateOn: 'blur'
     });
     expect(() => wrapper.arrayQuestion).toThrowError();
@@ -37,7 +56,7 @@ describe('ControlFactoryV2Service', () => {
 
   it('should create simple group', () => {
     const group = controlFactory.group({type: 'group-v2'}, {
-      name: controlFactory.control('Micky', {type: 'mat-input'})
+      name: controlFactory.control('Micky', {type: TestControlType.INPUT})
     });
     expect(group).toBeDefined();
     expect(hasControlWrapper(group)).toBeTruthy();
@@ -48,14 +67,14 @@ describe('ControlFactoryV2Service', () => {
       type: 'group-v2'
     });
     expect(wrapper.groupQuestion).toEqual({
-      name: ControlWrapperV2.fromControl('Micky', {type: 'mat-input'})
+      name: ControlWrapperV2.fromControl('Micky', {type: TestControlType.INPUT})
     });
     expect(() => wrapper.arrayQuestion).toThrowError();
   });
 
   it('should create simple array', () => {
     const array = controlFactory.array({type: 'array-v2'},
-        controlFactory.control('entry', {type: 'mat-input'})
+        controlFactory.control('entry', {type: TestControlType.INPUT})
     );
     expect(array).toBeDefined();
     expect(hasControlWrapper(array)).toBeTruthy();
@@ -66,14 +85,14 @@ describe('ControlFactoryV2Service', () => {
       type: 'array-v2'
     });
     expect(wrapper.arrayQuestion).toEqual(
-        ControlWrapperV2.fromControl('entry', {type: 'mat-input'})
+        ControlWrapperV2.fromControl('entry', {type: TestControlType.INPUT})
     );
     expect(() => wrapper.groupQuestion).toThrowError();
   });
 
   it('should create control from wrapper', () => {
     const wrapper = ControlWrapperV2.fromControl('', {
-      type: 'select',
+      type: TestControlType.INPUT,
       validators: Validators.required
     });
     const control = controlFactory.create(wrapper);
@@ -87,7 +106,7 @@ describe('ControlFactoryV2Service', () => {
     }, {
       names: ControlWrapperV2.fromArray({
         type: 'array'
-      }, ControlWrapperV2.fromControl('e', {type: 'input'}))
+      }, ControlWrapperV2.fromControl('e', {type: TestControlType.INPUT}))
     });
     const formGroup = controlFactory.create(wrapper);
     expect(formGroup).toBeInstanceOf(FormGroup);
@@ -105,7 +124,7 @@ describe('ControlFactoryV2Service', () => {
   it('should add validators to control', () => {
     const control = controlFactory.create(ControlWrapperV2.fromControl(
         '', {
-          type: 'select',
+          type: TestControlType.INPUT,
           validators: Validators.required
         }));
     expect(control.valid).toBeFalsy();
@@ -113,4 +132,44 @@ describe('ControlFactoryV2Service', () => {
     expect(control.valid).toBeTruthy();
   });
 
+  it('should create control from registry factory method', () => {
+    const control = controlFactory.control({value: 'test', disabled: true},
+        {
+          type: 'string-input',
+          validators: Validators.minLength(5)
+        });
+    expect(control).toBeInstanceOf(StringFormControl);
+    expect(control.value).toEqual('test');
+    expect(control.disabled).toEqual(true);
+    control.enable();
+    expect(control.errors).toEqual({
+      minlength: {
+        actualLength: 4,
+        requiredLength: 5
+      }
+    });
+  });
 });
+
+@Control({
+  type: 'string-input'
+})
+@Component({
+  standalone: true,
+  template: ``
+})
+class StringInputComponent {
+
+  @ControlFactory()
+  static createControl(def: ControlDefinition) {
+    return new StringFormControl(def.defaultValue, {
+      validators: def.validators
+    });
+  }
+}
+
+class StringFormControl extends FormControl {
+
+}
+
+

@@ -2,7 +2,8 @@ import { ControlFactoryService } from '../service/control-factory.service';
 import { ValidatorFactoryService } from '../validation/validator-factory.service';
 import { TestBed } from '@angular/core/testing';
 import { FastFormArray } from './fast-form-array';
-import { DummyInputModule } from '../test/dummy-input.module.test-util';
+import { FastFormsTestingModule } from '../test/fast-forms-testing.module.test-util';
+import { TestControlType } from '../test/control-types.test-util';
 
 describe('FastFormArray', () => {
   let controlFactory: ControlFactoryService;
@@ -10,7 +11,7 @@ describe('FastFormArray', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        DummyInputModule
+        FastFormsTestingModule
       ],
       providers: [
         ControlFactoryService,
@@ -31,7 +32,7 @@ describe('FastFormArray', () => {
   it('should update control count on setValue and patchValue', () => {
     const formArray = new FastFormArray({
       id: 'test',
-      type: 'dummy-input'
+      type: TestControlType.INPUT
     }, controlFactory);
     expect(formArray.length).toEqual(0);
 
@@ -45,7 +46,7 @@ describe('FastFormArray', () => {
   it('should copy row at index', () => {
     const formArray = new FastFormArray({
       id: 'test',
-      type: 'dummy-input'
+      type: TestControlType.INPUT
     }, controlFactory);
     expect(formArray.length).toEqual(0);
 
@@ -60,7 +61,7 @@ describe('FastFormArray', () => {
   it('should remove row at index', () => {
     const formArray = new FastFormArray({
       id: 'test',
-      type: 'dummy-input'
+      type: TestControlType.INPUT
     }, controlFactory);
     expect(formArray.length).toEqual(0);
 
@@ -75,7 +76,7 @@ describe('FastFormArray', () => {
   it('should add row at index', () => {
     const formArray = new FastFormArray({
       id: 'test',
-      type: 'dummy-input'
+      type: TestControlType.INPUT
     }, controlFactory);
     expect(formArray.length).toEqual(0);
 

@@ -31,23 +31,40 @@ export class ControlFactoryV2 {
     }
   }
 
-  public control(state: FormControlState<any> | any, question: ControlQuestion): FormControl {
-    const control = new FormControl<any>(state, {
-      validators: question.validators,
-      asyncValidators: question.asyncValidators,
-      updateOn: question.updateOn,
-      nonNullable: question.nonNullable
-    });
+  public control(state: FormControlState<any> | any, question: ControlQuestion): AbstractControl {
+    let control: FormControl;
+    const controlFactory = this.cr.getControlFactory(question.type);
+    if (controlFactory) {
+      return controlFactory({
+        ...question,
+        defaultValue: state
+      });
+    } else {
+      control = new FormControl<any>(state, {
+        validators: question.validators,
+        asyncValidators: question.asyncValidators,
+        updateOn: question.updateOn,
+        nonNullable: question.nonNullable
+      });
+    }
     (control as WrapperProvider)[ControlWrapperKey] = ControlWrapperV2.fromControl(state, question);
     return control;
   }
 
   public group(question: TypedGroupQuestion, groupControls?: { [key: string]: AbstractControl }): FormGroup {
-    const group = new FormGroup<any>(groupControls ?? {}, {
-      validators: question.validators,
-      asyncValidators: question.asyncValidators,
-      updateOn: question.updateOn
-    });
+    const controlFactory = this.cr.getControlFactory(question.type);
+    let group: FormGroup;
+    if (controlFactory) {
+      group = controlFactory({
+        ...question
+      }) as FormGroup;
+    } else {
+      group = new FormGroup<any>(groupControls ?? {}, {
+        validators: question.validators,
+        asyncValidators: question.asyncValidators,
+        updateOn: question.updateOn
+      });
+    }
 
     const groupQuestions: { [key: string]: ControlWrapperV2 } = {};
     Object.keys(groupControls ?? {}).forEach(key => {
@@ -58,11 +75,19 @@ export class ControlFactoryV2 {
   }
 
   public array(question: TypedArrayQuestion, arrayQuestion?: AbstractControl): FormArray {
-    const array = new FormArray<any>([], {
-      validators: question.validators,
-      asyncValidators: question.asyncValidators,
-      updateOn: question.updateOn
-    });
+    const controlFactory = this.cr.getControlFactory(question.type);
+    let array: FormArray;
+    if (controlFactory) {
+      array = controlFactory({
+        ...question
+      }) as FormArray;
+    } else {
+      array = new FormArray<any>([], {
+        validators: question.validators,
+        asyncValidators: question.asyncValidators,
+        updateOn: question.updateOn
+      });
+    }
     if (arrayQuestion) {
       (array as WrapperProvider)[ControlWrapperKey] = ControlWrapperV2.fromArray(question, this.deriveDefinition(arrayQuestion));
     } else {

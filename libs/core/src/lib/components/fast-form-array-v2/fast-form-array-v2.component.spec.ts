@@ -4,6 +4,7 @@ import { FastFormBuilder } from '../../service/fast-form-builder';
 import { FORM_CONTROL } from '../util/inject-token';
 
 import { FastFormArrayV2Component } from './fast-form-array-v2.component';
+import { FastFormsTestingModule } from '../../test/fast-forms-testing.module.test-util';
 
 describe('FastFormArrayV2Component', () => {
   let component: FastFormArrayV2Component;
@@ -12,7 +13,8 @@ describe('FastFormArrayV2Component', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FastFormsModule
+        FastFormsModule,
+        FastFormsTestingModule
       ],
       declarations: [
         FastFormArrayV2Component
@@ -20,7 +22,7 @@ describe('FastFormArrayV2Component', () => {
       providers: [{
         deps: [FastFormBuilder],
         provide: FORM_CONTROL,
-        useFactory: (fb: FastFormBuilder) => fb.array({}, fb.control(null, {type: 'test'}))
+        useFactory: (fb: FastFormBuilder) => fb.array({}, fb.control(null, {type: 'input'}))
       }]
     }).compileComponents();
 

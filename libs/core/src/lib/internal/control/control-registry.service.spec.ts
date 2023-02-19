@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { ControlRegistry } from './control-registry.service';
-import { DummyInputModule } from '../../test/dummy-input.module.test-util';
-import { Control } from '../../control/control.decorator';
+import { FastFormsTestingModule } from '../../test/fast-forms-testing.module.test-util';
+import { TestControlType } from '../../test/control-types.test-util';
 
 describe('ControlRegistry', () => {
   let registry: ControlRegistry;
@@ -9,7 +9,7 @@ describe('ControlRegistry', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        DummyInputModule
+        FastFormsTestingModule
       ]
     });
     registry = TestBed.inject(ControlRegistry);
@@ -20,21 +20,21 @@ describe('ControlRegistry', () => {
   });
 
   it('should find registered control', () => {
-    expect(registry.hasItem('dummy-input')).toBeTruthy();
+    expect(registry.hasItem(TestControlType.INPUT)).toBeTruthy();
     expect(registry.hasItem('not-registered')).toBeFalsy();
   });
 
   it('should map to form definition', () => {
-    const def = registry.getDefinition('dummy-input');
+    const def = registry.getDefinition(TestControlType.INPUT);
     expect(def.controlFactory).toBeUndefined();
-    expect(def.type).toEqual('dummy-input');
+    expect(def.type).toEqual(TestControlType.INPUT);
     expect(def.inline).toBeFalsy();
     expect(def.component).toBeDefined();
     expect(def.internalType).toEqual('control');
   });
 
   it('should check if control has control factory', () => {
-    expect(registry.hasControlFactory('dummy-input')).toBeFalsy();
+    expect(registry.hasControlFactory(TestControlType.INPUT)).toBeFalsy();
     expect(registry.hasControlFactory('invalid')).toBeFalsy();
   });
 
@@ -45,10 +45,4 @@ describe('ControlRegistry', () => {
 });
 
 class InvalidControlComponent {
-}
-
-@Control({
-  type: 'dummy-control'
-})
-class DummyControlComponent {
 }

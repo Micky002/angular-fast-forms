@@ -1,4 +1,4 @@
-import { ControlComponentMetaData, InternalControlComponent } from './models';
+import { ControlComponentMetaData, ControlFactoryMethod, InternalControlComponent } from './models';
 import { META_COMPONENT_OPTIONS_KEY } from '../symbols';
 import { Inject, Injectable, Optional, Type } from '@angular/core';
 import { BaseFormInlineComponent } from '../../components/base/base-inline.component';
@@ -37,6 +37,14 @@ export class ControlRegistry extends AbstractRegistry<InternalControlComponent> 
     } else {
       return false;
     }
+  }
+
+  getControlFactory(type: string): ControlFactoryMethod | null {
+    const def = this.getDefinition(type);
+    if (def.controlFactory !== undefined) {
+      return def.controlFactory;
+    }
+    return null;
   }
 
   getDefinition(type: string): InternalControlDefinition {

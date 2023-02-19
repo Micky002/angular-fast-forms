@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { FastFormsModule } from '../fast-forms.module';
 
 import { ControlWrapperKey, FastFormBuilder, hasControlWrapper, WrapperProvider } from './fast-form-builder';
 
@@ -7,8 +8,8 @@ describe('FormBuilderService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        FastFormBuilder
+      imports: [
+        FastFormsModule
       ]
     });
     fb = TestBed.inject(FastFormBuilder);
