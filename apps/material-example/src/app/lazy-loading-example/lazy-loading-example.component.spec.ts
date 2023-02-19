@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { expect } from '@jest/globals';
 import { LazyLoadingExampleComponent } from './lazy-loading-example.component';
 import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
 

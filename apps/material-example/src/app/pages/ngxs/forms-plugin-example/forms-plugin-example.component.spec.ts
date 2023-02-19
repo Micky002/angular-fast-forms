@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { expect } from '@jest/globals';
 import { FormsPluginExampleComponent } from './forms-plugin-example.component';
 
 describe('FormsPluginExampleComponent', () => {
@@ -8,7 +8,7 @@ describe('FormsPluginExampleComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FormsPluginExampleComponent],
+      declarations: [FormsPluginExampleComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(FormsPluginExampleComponent);

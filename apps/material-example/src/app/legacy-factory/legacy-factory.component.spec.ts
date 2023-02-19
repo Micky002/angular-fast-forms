@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { expect } from '@jest/globals';
 import { LegacyFactoryComponent } from './legacy-factory.component';
 import { RouterTestingModule } from '@angular/router/testing';
 

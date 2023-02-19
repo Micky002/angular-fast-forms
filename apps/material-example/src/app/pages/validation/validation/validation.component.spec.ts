@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { expect } from '@jest/globals';
 import { ValidationComponent } from './validation.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ValidationComponent', () => {
   let component: ValidationComponent;
@@ -8,7 +9,10 @@ describe('ValidationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ValidationComponent],
+      imports: [
+        RouterTestingModule
+      ],
+      declarations: [ValidationComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ValidationComponent);

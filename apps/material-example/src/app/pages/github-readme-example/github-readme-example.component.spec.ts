@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { expect } from '@jest/globals';
 import { GithubReadmeExampleComponent } from './github-readme-example.component';
 import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,7 +16,7 @@ describe('GithubReadmeExampleComponent', () => {
       ],
       declarations: [
         GithubReadmeExampleComponent
-      ],
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(GithubReadmeExampleComponent);
