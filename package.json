@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "nx",
+    "preinstall": "rm -rf .angular && rm -rf coverage && rm -rf dist && rm -rf tmp",
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main",
     "build:core": "nx run core:build",
     "build:material": "nx run material:build",
