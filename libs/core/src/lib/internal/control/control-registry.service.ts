@@ -4,7 +4,7 @@ import { Inject, Injectable, Optional, Type } from '@angular/core';
 import { BaseFormInlineComponent } from '../../components/base/base-inline.component';
 import { BaseFormArrayComponent } from '../../components/base/base-array.component';
 import { AbstractRegistry } from '../abstract-registry';
-import { AFF_CONTROL_COMPONENTS, FormControlType } from '../../model';
+import { AFF_CONTROL_COMPONENTS } from '../../model';
 import { BaseFormControlComponent } from '../../components/base/base-control.component';
 import { BaseFormGroupComponent } from '../../components/base/base-group.component';
 import { InternalControlDefinition, InternalControlType } from '../models';
@@ -57,15 +57,6 @@ export class ControlRegistry extends AbstractRegistry<InternalControlComponent> 
       component: component as any as Type<BaseFormControlComponent<any, any> | BaseFormInlineComponent | BaseFormArrayComponent<any> | BaseFormGroupComponent>,
       internalType: componentMetaData.internalType
     };
-  }
-
-  public getControlType(type: string): FormControlType {
-    const controlType = this.getItem(type)[META_COMPONENT_OPTIONS_KEY].internalType ?? 'control';
-    if (this.POSSIBLE_CONTROL_TYPES.includes(controlType)) {
-      return controlType as FormControlType;
-    } else {
-      throw new Error(`Control type [${controlType}] is not supported.`);
-    }
   }
 
   private getComponentMetaData(type: string): ControlComponentMetaData {

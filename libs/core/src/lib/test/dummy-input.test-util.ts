@@ -4,9 +4,10 @@ import { QuestionDefinition } from '../components/question-definition';
 import { FORM_CONTROL } from '../components/util/inject-token';
 import { Control } from '../control/control.decorator';
 import { CommonModule } from '@angular/common';
+import { TestControlType } from './control-types.test-util';
 
 @Control({
-  type: 'input'
+  type: TestControlType.INPUT
 })
 @Component({
   selector: 'aff-dummy-input',

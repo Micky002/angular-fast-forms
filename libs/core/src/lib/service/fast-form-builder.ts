@@ -52,12 +52,16 @@ export class FastFormBuilder {
     }, arrayQuestion);
   }
 
-  newArrayEntry(array: WrapperProvider): AbstractControl {
-    const wrapper = array[ControlWrapperKey];
-    if (wrapper.controlType !== 'array') {
-      throw new Error(`Cannot create array entry for component type [${wrapper.controlType}].`);
+  newArrayEntry(array: FormArray): AbstractControl {
+    if (hasControlWrapper(array)) {
+      const wrapper = array[ControlWrapperKey];
+      if (wrapper.controlType !== 'array') {
+        throw new Error(`Cannot create array entry for component type [${wrapper.controlType}].`);
+      }
+      return this.cf.create(wrapper.arrayQuestion);
+    } else {
+      throw new Error(`Cannot create array entry when control is not created via [${FastFormBuilder.name}].`);
     }
-    return this.cf.create(wrapper.arrayQuestion);
   }
 }
 
