@@ -11,6 +11,7 @@ export * from './lib/components/base/base-array.component';
 export * from './lib/components/base/base-group.component';
 export * from './lib/components/fast-form-array-v2/fast-form-array-v2.component';
 export * from './lib/components/fast-form-group-v2/fast-form-group-v2.component';
+export * from './lib/components/fast-form-group-v2/properties';
 export * from './lib/components/fast-form-group/fast-form-group.component';
 export * from './lib/components/fast-form-control/fast-form-control.component';
 export * from './lib/components/fast-form-row/fast-form-row.component';
@@ -33,6 +34,7 @@ export * from './lib/directive/form-renderer.directive';
 export * from './lib/service/fast-forms.service';
 export * from './lib/service/fast-form-builder';
 export * from './lib/service/control-factory.service';
+export * from './lib/service/static-control.util';
 
 
 export * from './lib/test/mock/control-id-impl.mock';

@@ -12,6 +12,8 @@ import {
 } from './fast-form-builder';
 import { ControlWrapperV2 } from '../internal/control-wrapper-v2';
 
+//TODO: Check if introducing circ dependency with FastFormBuilder is best solution
+//Possible solution: Add static control enhancement method to add wrapper to control
 @Injectable({
   providedIn: 'root'
 })

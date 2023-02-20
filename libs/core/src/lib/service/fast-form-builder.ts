@@ -11,7 +11,7 @@ import {
 import { ControlRegistry } from '../internal/control/control-registry.service';
 import { ControlWrapperV2 } from '../internal/control-wrapper-v2';
 import { ControlFactoryV2 } from './control-factory-v2.service';
-import { QuestionProperties, ValidationOptions } from '../model';
+import { ValidationOptions } from '../model';
 import { InitialValue } from '../internal/control/models';
 
 
@@ -81,5 +81,5 @@ export interface GeneralQuestion {
   hidden?: boolean;
   disabled?: boolean;
   validation?: ValidationOptions;
-  properties?: QuestionProperties;
+  properties?: unknown;
 }

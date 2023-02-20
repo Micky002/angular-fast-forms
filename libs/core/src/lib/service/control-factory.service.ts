@@ -79,7 +79,7 @@ export class ControlFactoryService {
     control.setValidators(validator);
     control.setAsyncValidators(asyncValidator);
     if (question.disabled) {
-      control.disable({ emitEvent: false });
+      control.disable({emitEvent: false});
     }
     return control;
   }
@@ -111,7 +111,7 @@ export class ControlFactoryService {
   private createAndInitFormGroup(question: Question): AbstractControl {
     const subFormGroup = new FastFormGroup(question.children ?? [], this);
     if (question.disabled) {
-      subFormGroup.disable({ emitEvent: false });
+      subFormGroup.disable({emitEvent: false});
     }
     return subFormGroup;
   }

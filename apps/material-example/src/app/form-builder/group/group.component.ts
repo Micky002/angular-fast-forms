@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { FastFormBuilder, FastFormsModule } from '@ngx-fast-forms/core';
+import { FastFormBuilder, FastFormsModule, FormGroupV2Properties } from '@ngx-fast-forms/core';
 import { MaterialFastFormsModule, SelectProperties } from '@ngx-fast-forms/material';
 
 @Component({
@@ -15,6 +15,7 @@ import { MaterialFastFormsModule, SelectProperties } from '@ngx-fast-forms/mater
   ],
   template: `
     <form [formGroup]="formGroup" affRenderer></form>
+    <div [renderControl]="formGroup.get('arrayControl')"></div>
   `,
   styles: []
 })
@@ -23,7 +24,11 @@ export class GroupComponent {
   public formGroup: FormGroup;
 
   constructor(private fb: FastFormBuilder) {
-    this.formGroup = fb.group({}, {
+    this.formGroup = fb.group({
+      properties: {
+        alignment: 'row'
+      } as FormGroupV2Properties
+    }, {
       name: fb.control('Michael Weisgrab', {type: 'mat-input', label: 'Name'}),
       hans: fb.control(null, {type: 'mat-input', label: 'Hans'}),
       arrayControl: fb.array({}, fb.control('Init value', {type: 'mat-input', label: 'fb array'})),

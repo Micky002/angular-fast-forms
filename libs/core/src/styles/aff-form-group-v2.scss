@@ -1,0 +1,12 @@
+.aff-form-group-v2 {
+  display: flex;
+
+  &.row {
+    flex-direction: row;
+    gap: 15px;
+  }
+
+  &.column {
+    flex-direction: column;
+  }
+}
