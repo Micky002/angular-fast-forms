@@ -35,7 +35,7 @@ export class FormRenderService {
       }
   ): ComponentRef<T> {
     if (!hasControlWrapper(parent)) {
-      throw new Error('');
+      throw new Error('Cannot render control which has no control wrapper.');
     }
     // console.log(parent);
     const question = (parent[ControlWrapperKey] as ControlWrapperV2).question;

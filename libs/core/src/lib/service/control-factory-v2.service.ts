@@ -15,7 +15,7 @@ import { ControlWrapperV2 } from '../internal/control-wrapper-v2';
 //TODO: Check if introducing circ dependency with FastFormBuilder is best solution
 //Possible solution: Add static control enhancement method to add wrapper to control
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'any'
 })
 export class ControlFactoryV2 {
 
@@ -34,10 +34,10 @@ export class ControlFactoryV2 {
   }
 
   public control(state: FormControlState<any> | any, question: ControlQuestion): AbstractControl {
-    let control: FormControl;
+    let control: AbstractControl;
     const controlFactory = this.cr.getControlFactory(question.type);
     if (controlFactory) {
-      return controlFactory({
+      control = controlFactory({
         ...question,
         defaultValue: state
       });

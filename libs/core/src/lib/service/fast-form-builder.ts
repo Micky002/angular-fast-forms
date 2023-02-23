@@ -12,7 +12,6 @@ import { ControlRegistry } from '../internal/control/control-registry.service';
 import { ControlWrapperV2 } from '../internal/control-wrapper-v2';
 import { ControlFactoryV2 } from './control-factory-v2.service';
 import { ValidationOptions } from '../model';
-import { InitialValue } from '../internal/control/models';
 
 
 export type GroupQuestion = GeneralQuestion & AbstractControlOptions & { type?: string };
@@ -35,7 +34,7 @@ export class FastFormBuilder {
   }
 
   public control(state: FormControlState<any> | any, question: ControlQuestion): AbstractControl {
-    return this.cf.control(state, question) as FormControl;
+    return this.cf.control(state, question);
   }
 
   public group(question: GroupQuestion, groupControls?: { [key: string]: AbstractControl }): FormGroup {
@@ -74,6 +73,10 @@ export type WrapperProvider = (AbstractControl | FormGroup | FormControl | FormA
 
 export function hasControlWrapper(control: any): control is WrapperProvider {
   return ControlWrapperKey in control;
+}
+
+export interface InitialValue {
+  defaultValue?: unknown;
 }
 
 export interface GeneralQuestion {

@@ -79,6 +79,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
       {
         path: 'legacy-factory',
         loadChildren: () => import('./legacy-factory/legacy-factory.module').then((m) => m.LegacyFactoryModule)
+      },
+      {
+        path: 'controls',
+        loadChildren: () => import('./controls/controls.module').then(m => m.ControlsModule)
       }
     ]),
     MatButtonModule,

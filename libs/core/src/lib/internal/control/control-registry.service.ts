@@ -7,14 +7,14 @@ import { AbstractRegistry } from '../abstract-registry';
 import { AFF_CONTROL_COMPONENTS } from '../../model';
 import { BaseFormControlComponent } from '../../components/base/base-control.component';
 import { BaseFormGroupComponent } from '../../components/base/base-group.component';
-import { InternalControlDefinition, InternalControlType } from '../models';
+import { InternalControlDefinition } from '../models';
 
 @Injectable({
   providedIn: 'any'
 })
 export class ControlRegistry extends AbstractRegistry<InternalControlComponent> {
 
-  private readonly POSSIBLE_CONTROL_TYPES: InternalControlType[] = ['control', 'group', 'array'];
+  // private readonly POSSIBLE_CONTROL_TYPES: InternalControlType[] = ['control', 'group', 'array'];
 
   constructor(@Optional() @Inject(AFF_CONTROL_COMPONENTS) controlComponentsPerModule?: Array<Array<InternalControlComponent>>) {
     super(controlComponentsPerModule);

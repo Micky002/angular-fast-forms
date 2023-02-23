@@ -1,0 +1,6 @@
+<div class="matex-switch-input">
+  <button (click)="toggleDisabled()" mat-icon-button>
+    <mat-icon>{{disabled ? 'do_not_disturb_off' : 'do_not_disturb_on'}}</mat-icon>
+  </button>
+  <ng-container [renderControl]="valueControl"></ng-container>
+</div>

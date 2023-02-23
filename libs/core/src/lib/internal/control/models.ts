@@ -1,7 +1,7 @@
 import { META_COMPONENT_OPTIONS_KEY } from '../symbols';
 import { AbstractControl } from '@angular/forms';
 import { InternalControlType } from '../models';
-import { AnyQuestion } from '../../service/fast-form-builder';
+import { AnyQuestion, InitialValue } from '../../service/fast-form-builder';
 
 export interface InternalControlComponent {
   [META_COMPONENT_OPTIONS_KEY]: ControlComponentMetaData;
@@ -15,7 +15,3 @@ export interface ControlComponentMetaData {
 }
 
 export type ControlFactoryMethod = (question: AnyQuestion & InitialValue) => AbstractControl;
-
-export interface InitialValue {
-  defaultValue?: unknown;
-}
