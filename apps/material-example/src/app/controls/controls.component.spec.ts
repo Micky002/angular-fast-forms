@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { expect } from '@jest/globals';
 import { ControlsComponent } from './controls.component';
 
 describe('ControlsComponent', () => {
@@ -8,7 +8,7 @@ describe('ControlsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ControlsComponent],
+      imports: [ControlsComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ControlsComponent);
