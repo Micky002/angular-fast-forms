@@ -17,7 +17,8 @@
     "test-component:material:watch": "nx run material:component-test --watch",
     "lint:all": "nx affected --all --target=lint --exclude=storybook,storybook-e2e,material-example-e2e",
     "release": "standard-version",
-    "graph": "nx graph"
+    "graph": "nx graph",
+    "dependency": "nx graph"
   },
   "dependencies": {
     "@angular/animations": "14.2.12",
@@ -69,6 +70,7 @@
     "@typescript-eslint/eslint-plugin": "5.30.7",
     "@typescript-eslint/parser": "5.30.7",
     "cypress": "10.11.0",
+    "dependency-cruiser": "^12.10.0",
     "eslint": "8.34.0",
     "eslint-config-prettier": "8.6.0",
     "eslint-plugin-cypress": "2.12.1",

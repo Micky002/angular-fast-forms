@@ -2,8 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FastFormsModule } from '../../fast-forms.module';
 import { FORM_CONTROL } from '../util/inject-token';
 import { FastFormBuilder } from '../../service/fast-form-builder';
-
 import { FastFormGroupV2Component } from './fast-form-group-v2.component';
+import { QuestionDefinition } from '../question-definition';
 
 describe('FastFormGroupV2Component', () => {
   let component: FastFormGroupV2Component;
@@ -21,6 +21,9 @@ describe('FastFormGroupV2Component', () => {
         deps: [FastFormBuilder],
         provide: FORM_CONTROL,
         useFactory: (fb: FastFormBuilder) => fb.group({})
+      }, {
+        provide: QuestionDefinition,
+        useValue: new QuestionDefinition({id: 'asdf'})
       }]
     }).compileComponents();
 
