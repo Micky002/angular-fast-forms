@@ -1,11 +1,18 @@
 .menu-container {
   display: flex;
+  height: 100%;
 }
 
 .side-container {
   width: 200px;
+  background-color: #f2f2f2;
+  border-right: 1px solid #DBDBDB;
 
   mat-nav-list {
     padding-top: 0;
   }
+}
+
+.content-container {
+  padding: 15px;
 }

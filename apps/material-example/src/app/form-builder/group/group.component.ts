@@ -29,7 +29,7 @@ export class GroupComponent {
         alignment: 'row'
       } as FormGroupV2Properties
     }, {
-      name: fb.control('Michael Weisgrab', {type: 'mat-input', label: 'Name'}),
+      name: fb.control('My Name', {type: 'mat-input', label: 'Name'}),
       hans: fb.control(null, {type: 'mat-input', label: 'Hans'}),
       arrayControl: fb.array({}, fb.control('Init value', {type: 'mat-input', label: 'fb array'})),
       arrayGroup: fb.array({}, fb.group({}, {
