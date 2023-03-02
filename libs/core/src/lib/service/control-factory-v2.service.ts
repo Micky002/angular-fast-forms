@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { ControlRegistry } from '../internal/control/control-registry.service';
 import {
   AbstractControl,
+  AsyncValidatorFn,
   FormArray,
   FormControl,
   FormControlOptions,
   FormControlState,
-  FormGroup
+  FormGroup,
+  ValidatorFn
 } from '@angular/forms';
 import {
   ControlWrapperKey,
@@ -20,6 +22,7 @@ import {
 import { ControlWrapperV2 } from '../internal/control-wrapper-v2';
 import { ValidatorFactoryService } from '../validation/validator-factory.service';
 import { ValidationOptions } from '../model';
+import { ValidatorFunctionType, ValidatorType } from '../validation/symbols';
 
 //TODO: Check if introducing circ dependency with FastFormBuilder is best solution
 //Possible solution: Add static control enhancement method to add wrapper to control
@@ -55,8 +58,7 @@ export class ControlFactoryV2 {
       });
     } else {
       control = new FormControl<any>(state, {
-        validators: question.validators,
-        asyncValidators: question.asyncValidators,
+        ...this.createValidators(question),
         updateOn: question.updateOn,
         nonNullable: question.nonNullable
       });
@@ -77,8 +79,7 @@ export class ControlFactoryV2 {
       }) as FormGroup;
     } else {
       group = new FormGroup<any>(groupControls ?? {}, {
-        validators: question.validators,
-        asyncValidators: question.asyncValidators,
+        ...this.createValidators(question),
         updateOn: question.updateOn
       });
     }
@@ -103,8 +104,7 @@ export class ControlFactoryV2 {
       }) as FormArray;
     } else {
       array = new FormArray<any>([], {
-        validators: question.validators,
-        asyncValidators: question.asyncValidators,
+        ...this.createValidators(question),
         updateOn: question.updateOn
       });
     }
@@ -143,6 +143,43 @@ export class ControlFactoryV2 {
       if (asyncValidators) {
         control.addAsyncValidators(asyncValidators);
       }
+    }
+  }
+
+  private createValidators(question: { validation?: ValidationOptions } & FormControlOptions): {
+    validators: ValidatorFn[] | null,
+    asyncValidators: AsyncValidatorFn[] | null
+  } {
+    return {
+      validators: this.createValidatorsByType('sync', question.validators, question.validation),
+      asyncValidators: this.createValidatorsByType('async', question.asyncValidators, question.validation)
+    };
+  }
+
+  private createValidatorsByType<T extends ValidatorType>(
+      type: T,
+      validators: ValidatorFunctionType[T] | ValidatorFunctionType[T][] | null | undefined,
+      opts?: ValidationOptions
+  ): ValidatorFunctionType[T][] | null {
+    const combinedValidators: ValidatorFunctionType[T][] = [];
+    if (validators) {
+      if (validators instanceof Array) {
+        validators.forEach(v => combinedValidators.push(v));
+      } else {
+        combinedValidators.push(validators);
+      }
+    }
+    if (opts) {
+      if (type === 'sync') {
+        combinedValidators.push(...this.validatorFactory.createValidators(opts) as any);
+      } else if (type === 'async') {
+        combinedValidators.push(...this.validatorFactory.createAsyncValidators(opts));
+      }
+    }
+    if (combinedValidators.length === 0) {
+      return null;
+    } else {
+      return combinedValidators;
     }
   }
 

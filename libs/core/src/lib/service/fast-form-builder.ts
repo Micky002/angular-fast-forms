@@ -26,7 +26,9 @@ export type ControlDefinition<T = unknown> = TypedGeneralQuestion<T> & FormContr
 export type AnyQuestion = TypedGeneralQuestion & (FormControlOptions | AbstractControlOptions);
 export type TypedGeneralQuestion<T = unknown> = GeneralQuestion<T> & { type: string };
 
-@Injectable()
+@Injectable({
+  providedIn: 'any'
+})
 export class FastFormBuilder {
 
   constructor(private cf: ControlFactoryV2) {

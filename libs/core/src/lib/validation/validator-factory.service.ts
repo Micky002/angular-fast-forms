@@ -21,10 +21,10 @@ export class ValidatorFactoryService {
     this.registry = new ValidatorRegistry(injector, registeredValidators ?? []);
   }
 
-  public createValidators(options?: ValidationOptions): Array<ValidatorFn> | null {
+  public createValidators(options?: ValidationOptions): Array<ValidatorFn> {
     const validators: ValidatorFn[] = [];
     if (!options) {
-      return null;
+      return validators;
     }
     if (options.required) {
       validators.push(Validators.required);
@@ -58,15 +58,15 @@ export class ValidatorFactoryService {
   private createCustomValidators(type: ValidatorType, options?: ValidationOptions): Array<ValidatorFn> | Array<AsyncValidatorFn> {
     const validatorIds = toArray(type === 'sync' ? options?.custom : options?.customAsync);
     const validators = validatorIds.map(id => new ValidatorDefinition(id))
-      .filter(def => {
-        if (this.registry.hasValidator(def.id, type)) {
-          return true;
-        } else {
-          console.warn(`No ${type} validator registered with id [${def.id}].`)
-          return false;
-        }
-      })
-      .map(def => this.registry.getValidator(def, type));
+        .filter(def => {
+          if (this.registry.hasValidator(def.id, type)) {
+            return true;
+          } else {
+            console.warn(`No ${type} validator registered with id [${def.id}].`);
+            return false;
+          }
+        })
+        .map(def => this.registry.getValidator(def, type));
 
     if (type === 'sync') {
       validators.push(...toArray(options?.customFn));
@@ -77,3 +77,4 @@ export class ValidatorFactoryService {
 
   }
 }
+

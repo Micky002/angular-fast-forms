@@ -8,7 +8,6 @@ import { FastFormGroupComponent } from './components/fast-form-group/fast-form-g
 import { FastFormRowComponent } from './components/fast-form-row/fast-form-row.component';
 import { VALIDATORS } from './internal/token';
 import { AFF_CONTROL_COMPONENTS } from './model';
-import { FastFormBuilder } from './service/fast-form-builder';
 import { FormRendererDirective } from './directive/form-renderer.directive';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -37,7 +36,6 @@ import { FastFormArrayV2Component } from './components/fast-form-array-v2/fast-f
     FormRendererDirective
   ],
   providers: [
-    FastFormBuilder,
     {
       provide: AFF_CONTROL_COMPONENTS,
       useValue: [
