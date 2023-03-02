@@ -12,6 +12,7 @@ import { AFF_CONTROL_COMPONENTS } from '../model';
 import { FastFormGroup } from '../control/fast-form-group';
 import { FastFormArrayComponent } from '../components/fast-form-array/fast-form-array.component';
 import { FastFormGroupComponent } from '../components/fast-form-group/fast-form-group.component';
+import { FastFormBuilder } from './fast-form-builder';
 
 
 @Control({
@@ -54,6 +55,7 @@ describe('ControlFactoryService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        FastFormBuilder,
         ControlFactoryService,
         ValidatorFactoryService,
         {

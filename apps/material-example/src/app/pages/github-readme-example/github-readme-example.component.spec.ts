@@ -3,6 +3,7 @@ import { expect } from '@jest/globals';
 import { GithubReadmeExampleComponent } from './github-readme-example.component';
 import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { FastFormsModule } from '@ngx-fast-forms/core';
 
 describe('GithubReadmeExampleComponent', () => {
   let component: GithubReadmeExampleComponent;
@@ -12,6 +13,7 @@ describe('GithubReadmeExampleComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule,
+        FastFormsModule,
         MaterialFastFormsModule
       ],
       declarations: [

@@ -24,13 +24,6 @@ import { RouterModule } from '@angular/router';
         <router-outlet></router-outlet>
       </div>
     </div>
-    <!--    <mat-sidenav-container>-->
-    <!--      <mat-sidenav mode="side" opened>-->
-
-    <!--      </mat-sidenav>-->
-    <!--      <mat-sidenav-content>-->
-    <!--      </mat-sidenav-content>-->
-    <!--    </mat-sidenav-container>-->
   `,
   styleUrls: ['./form-builder.component.scss']
 })

@@ -4,6 +4,7 @@ import { FastFormArrayComponent } from './fast-form-array.component';
 import { FastFormArray } from '../../control/fast-form-array';
 import { ControlFactoryService } from '../../service/control-factory.service';
 import { ValidatorFactoryService } from '../../validation/validator-factory.service';
+import { FastFormBuilder } from '../../service/fast-form-builder';
 
 describe('FastFormArrayComponent', () => {
   let component: FastFormArrayComponent;
@@ -15,6 +16,7 @@ describe('FastFormArrayComponent', () => {
         FastFormArrayComponent
       ],
       providers: [
+        FastFormBuilder,
         ControlFactoryService,
         ValidatorFactoryService
       ]

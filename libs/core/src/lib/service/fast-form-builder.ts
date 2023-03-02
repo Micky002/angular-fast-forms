@@ -8,7 +8,6 @@ import {
   FormControlState,
   FormGroup
 } from '@angular/forms';
-import { ControlRegistry } from '../internal/control/control-registry.service';
 import { ControlWrapperV2 } from '../internal/control-wrapper-v2';
 import { ControlFactoryV2 } from './control-factory-v2.service';
 import { ValidationOptions } from '../model';
@@ -21,20 +20,20 @@ export type GroupDefinition = GeneralQuestion & FormControlOptions & { type: str
 export type ArrayQuestion = GeneralQuestion & AbstractControlOptions & { type?: string };
 export type TypedArrayQuestion = GeneralQuestion & AbstractControlOptions & { type: string };
 
-export type ControlQuestion = GeneralQuestion & FormControlOptions & { type: string };
-export type ControlDefinition = GeneralQuestion & FormControlOptions & { type: string } & InitialValue;
+// export type ControlQuestion = GeneralQuestion & FormControlOptions & { type: string };
+export type ControlDefinition<T = unknown> = TypedGeneralQuestion<T> & FormControlOptions & InitialValue;
 
-export type AnyQuestion = ControlQuestion | TypedGroupQuestion | TypedArrayQuestion;
+export type AnyQuestion = TypedGeneralQuestion & (FormControlOptions | AbstractControlOptions);
+export type TypedGeneralQuestion<T = unknown> = GeneralQuestion<T> & { type: string };
 
 @Injectable()
 export class FastFormBuilder {
 
-  constructor(private cr: ControlRegistry,
-              private cf: ControlFactoryV2) {
+  constructor(private cf: ControlFactoryV2) {
   }
 
-  public control(state: FormControlState<any> | any, question: ControlQuestion): AbstractControl {
-    return this.cf.control(state, question);
+  public control<T = any>(state: FormControlState<T> | T, opts: FormControlOptions & GeneralQuestion & { type: string }): AbstractControl {
+    return this.cf.control(state, opts);
   }
 
   public group(question: GroupQuestion, groupControls?: { [key: string]: AbstractControl }): FormGroup {
@@ -79,10 +78,10 @@ export interface InitialValue {
   defaultValue?: unknown;
 }
 
-export interface GeneralQuestion {
+export interface GeneralQuestion<T = unknown> {
   label?: string;
   hidden?: boolean;
   disabled?: boolean;
   validation?: ValidationOptions;
-  properties?: unknown;
+  properties?: T;
 }

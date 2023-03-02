@@ -1,6 +1,6 @@
-import { FormControlState } from '@angular/forms';
+import { FormControlOptions, FormControlState } from '@angular/forms';
 import { FormControlType } from '../model';
-import { AnyQuestion, ControlQuestion, TypedArrayQuestion, TypedGroupQuestion } from '../service/fast-form-builder';
+import { AnyQuestion, GeneralQuestion, TypedArrayQuestion, TypedGroupQuestion } from '../service/fast-form-builder';
 
 export class ControlWrapperV2 {
 
@@ -42,11 +42,11 @@ export class ControlWrapperV2 {
     }
   }
 
-  public static fromControl(initialState: FormControlState<any> | any, question: ControlQuestion): ControlWrapperV2 {
+  public static fromControl(initialState: FormControlState<any> | any, opts: FormControlOptions & GeneralQuestion & {type: string}): ControlWrapperV2 {
     return new ControlWrapperV2(
         'control',
         initialState,
-        question,
+        opts,
         null,
         null
     );

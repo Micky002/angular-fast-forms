@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { expect } from '@jest/globals';
 import { SwitchableInputComponent } from './switchable-input.component';
-import { FORM_CONTROL } from '@ngx-fast-forms/core';
+import { FastFormBuilder, FastFormsModule, FORM_CONTROL } from '@ngx-fast-forms/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { SwitchableInputModule } from './switchable-input.module';
 
 describe('SwitchableInputComponent', () => {
   let component: SwitchableInputComponent;
@@ -12,11 +13,15 @@ describe('SwitchableInputComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule,
-        SwitchableInputComponent
+        SwitchableInputComponent,
+        SwitchableInputModule,
+        FastFormsModule
       ],
       providers: [{
         provide: FORM_CONTROL,
-        useValue: SwitchableInputComponent.createControl({type: 'switch-input'})
+        deps: [FastFormBuilder],
+        useFactory: (fb: FastFormBuilder) =>
+            fb.control(null, {type: 'switch-input'})
       }]
     }).compileComponents();
 

@@ -10,6 +10,7 @@ import { ControlRegistry } from '../internal/control/control-registry.service';
 import { FromActionControlInternal } from '../internal/action/action-control-internal';
 import { ControlWrapper } from '../internal/control-wrapper';
 import { flattenArray } from '../util/list.util';
+import { FastFormBuilder } from './fast-form-builder';
 
 @Injectable({
   providedIn: 'any'
@@ -18,7 +19,8 @@ export class ControlFactoryService {
 
   constructor(private validatorFactory: ValidatorFactoryService,
               private renderService: FormRenderService,
-              private controlRegistry: ControlRegistry) {
+              private controlRegistry: ControlRegistry,
+              private fb: FastFormBuilder) {
   }
 
   public createFromQuestions(parent: FormGroup, questions: Array<Question>) {
@@ -88,7 +90,7 @@ export class ControlFactoryService {
     if (this.controlRegistry.hasControlFactory(question.type)) {
       const def = this.controlRegistry.getDefinition(question.type);
       if (def.controlFactory !== undefined) {
-        return def.controlFactory(question);
+        return def.controlFactory(question, {fb: this.fb});
       }
     }
     return undefined;
@@ -102,7 +104,7 @@ export class ControlFactoryService {
     const definition = this.controlRegistry.getDefinition(question.type);
     if (definition) {
       if (definition.controlFactory) {
-        return definition.controlFactory(question);
+        return definition.controlFactory(question, {fb: this.fb});
       }
     }
     return new FromActionControlInternal();

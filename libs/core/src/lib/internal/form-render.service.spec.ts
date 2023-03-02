@@ -7,6 +7,7 @@ import { By } from '@angular/platform-browser';
 import { ControlFactoryService } from '../service/control-factory.service';
 import { Control } from '../control/control.decorator';
 import { FastFormControl } from '../control/fast-form-control';
+import { FastFormBuilder } from '../service/fast-form-builder';
 
 @Control({
   type: 'dummy'
@@ -31,6 +32,7 @@ describe('FormRenderService', () => {
       ],
       providers: [
         ControlRegistry,
+        FastFormBuilder,
         ControlFactoryService,
         {
           provide: AFF_CONTROL_COMPONENTS,

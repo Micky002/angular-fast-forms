@@ -1,16 +1,25 @@
 import { Injectable } from '@angular/core';
 import { ControlRegistry } from '../internal/control/control-registry.service';
-import { AbstractControl, FormArray, FormControl, FormControlState, FormGroup } from '@angular/forms';
 import {
-  ControlQuestion,
+  AbstractControl,
+  FormArray,
+  FormControl,
+  FormControlOptions,
+  FormControlState,
+  FormGroup
+} from '@angular/forms';
+import {
   ControlWrapperKey,
   FastFormBuilder,
+  GeneralQuestion,
   hasControlWrapper,
   TypedArrayQuestion,
   TypedGroupQuestion,
   WrapperProvider
 } from './fast-form-builder';
 import { ControlWrapperV2 } from '../internal/control-wrapper-v2';
+import { ValidatorFactoryService } from '../validation/validator-factory.service';
+import { ValidationOptions } from '../model';
 
 //TODO: Check if introducing circ dependency with FastFormBuilder is best solution
 //Possible solution: Add static control enhancement method to add wrapper to control
@@ -19,7 +28,8 @@ import { ControlWrapperV2 } from '../internal/control-wrapper-v2';
 })
 export class ControlFactoryV2 {
 
-  constructor(private readonly cr: ControlRegistry) {
+  constructor(private readonly validatorFactory: ValidatorFactoryService,
+              private readonly cr: ControlRegistry) {
   }
 
   create(wrapper: ControlWrapperV2): AbstractControl {
@@ -33,13 +43,15 @@ export class ControlFactoryV2 {
     }
   }
 
-  public control(state: FormControlState<any> | any, question: ControlQuestion): AbstractControl {
+  public control(state: FormControlState<any> | any, question: FormControlOptions & GeneralQuestion & { type: string }): AbstractControl {
     let control: AbstractControl;
     const controlFactory = this.cr.getControlFactory(question.type);
     if (controlFactory) {
       control = controlFactory({
         ...question,
         defaultValue: state
+      }, {
+        fb: new FastFormBuilder(this)
       });
     } else {
       control = new FormControl<any>(state, {
@@ -49,6 +61,7 @@ export class ControlFactoryV2 {
         nonNullable: question.nonNullable
       });
     }
+    this.addValidators(control, question.validation);
     (control as WrapperProvider)[ControlWrapperKey] = ControlWrapperV2.fromControl(state, question);
     return control;
   }
@@ -59,6 +72,8 @@ export class ControlFactoryV2 {
     if (controlFactory) {
       group = controlFactory({
         ...question
+      }, {
+        fb: new FastFormBuilder(this)
       }) as FormGroup;
     } else {
       group = new FormGroup<any>(groupControls ?? {}, {
@@ -72,6 +87,7 @@ export class ControlFactoryV2 {
     Object.keys(groupControls ?? {}).forEach(key => {
       groupQuestions[key] = this.deriveDefinition((groupControls ?? {})[key]);
     });
+    this.addValidators(group, question.validation);
     (group as WrapperProvider)[ControlWrapperKey] = ControlWrapperV2.fromGroup(question, groupQuestions);
     return group;
   }
@@ -82,6 +98,8 @@ export class ControlFactoryV2 {
     if (controlFactory) {
       array = controlFactory({
         ...question
+      }, {
+        fb: new FastFormBuilder(this)
       }) as FormArray;
     } else {
       array = new FormArray<any>([], {
@@ -90,6 +108,7 @@ export class ControlFactoryV2 {
         updateOn: question.updateOn
       });
     }
+    this.addValidators(array, question.validation);
     if (arrayQuestion) {
       (array as WrapperProvider)[ControlWrapperKey] = ControlWrapperV2.fromArray(question, this.deriveDefinition(arrayQuestion));
     } else {
@@ -111,6 +130,19 @@ export class ControlFactoryV2 {
       return wrapper;
     } else {
       throw new Error(`The control type [${wrapper.controlType}]} is not supported.`);
+    }
+  }
+
+  private addValidators(control: AbstractControl, opts?: ValidationOptions) {
+    if (opts) {
+      const syncValidators = this.validatorFactory.createValidators(opts);
+      if (syncValidators) {
+        control.addValidators(syncValidators);
+      }
+      const asyncValidators = this.validatorFactory.createAsyncValidators(opts);
+      if (asyncValidators) {
+        control.addAsyncValidators(asyncValidators);
+      }
     }
   }
 

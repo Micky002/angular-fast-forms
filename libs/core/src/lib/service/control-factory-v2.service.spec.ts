@@ -132,6 +132,27 @@ describe('ControlFactoryV2Service', () => {
     expect(control.valid).toBeTruthy();
   });
 
+  it('should add validators from definition', () => {
+    const control = controlFactory.create(ControlWrapperV2.fromControl(
+        '', {
+          type: TestControlType.INPUT,
+          validation: {
+            required: true,
+            minLength: 5
+          }
+        }
+    ));
+    control.setValue('');
+    expect(control.errors).toEqual({required: true});
+    control.setValue('at');
+    expect(control.errors).toEqual({
+      minlength: {
+        actualLength: 2,
+        requiredLength: 5
+      }
+    });
+  });
+
   it('should create control from registry factory method', () => {
     const control = controlFactory.control({value: 'test', disabled: true},
         {
