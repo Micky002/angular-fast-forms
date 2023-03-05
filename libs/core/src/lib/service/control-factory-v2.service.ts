@@ -46,7 +46,7 @@ export class ControlFactoryV2 {
     }
   }
 
-  public control(state: FormControlState<any> | any, question: FormControlOptions & GeneralQuestion & { type: string }): AbstractControl {
+  public control(state: FormControlState<any> | any, question: FormControlOptions & GeneralQuestion & { type: string } & { id?: string }): AbstractControl {
     let control: AbstractControl;
     const controlFactory = this.cr.getControlFactory(question.type);
     if (controlFactory) {
@@ -86,7 +86,11 @@ export class ControlFactoryV2 {
 
     const groupQuestions: { [key: string]: ControlWrapperV2 } = {};
     Object.keys(groupControls ?? {}).forEach(key => {
-      groupQuestions[key] = this.deriveDefinition((groupControls ?? {})[key]);
+      const childControl = this.deriveDefinition(null, (groupControls ?? {})[key]);
+      if (!childControl.question.id) {
+        childControl.question.id = key;
+      }
+      groupQuestions[key] = childControl;
     });
     this.addValidators(group, question.validation);
     (group as WrapperProvider)[ControlWrapperKey] = ControlWrapperV2.fromGroup(question, groupQuestions);
@@ -110,14 +114,14 @@ export class ControlFactoryV2 {
     }
     this.addValidators(array, question.validation);
     if (arrayQuestion) {
-      (array as WrapperProvider)[ControlWrapperKey] = ControlWrapperV2.fromArray(question, this.deriveDefinition(arrayQuestion));
+      (array as WrapperProvider)[ControlWrapperKey] = ControlWrapperV2.fromArray(question, this.deriveDefinition(null, arrayQuestion));
     } else {
       (array as WrapperProvider)[ControlWrapperKey] = ControlWrapperV2.fromArray(question);
     }
     return array;
   }
 
-  public deriveDefinition(control: AbstractControl): ControlWrapperV2 {
+  public deriveDefinition(key: string | null, control: AbstractControl): ControlWrapperV2 {
     if (!hasControlWrapper(control)) {
       throw new Error(`Cannot create control which is not created via the [${FastFormBuilder.name}].`);
     }

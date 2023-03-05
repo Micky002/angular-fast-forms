@@ -67,7 +67,7 @@ describe('ControlFactoryV2Service', () => {
       type: 'group-v2'
     });
     expect(wrapper.groupQuestion).toEqual({
-      name: ControlWrapperV2.fromControl('Micky', {type: TestControlType.INPUT})
+      name: ControlWrapperV2.fromControl('Micky', {type: TestControlType.INPUT, id: 'name'})
     });
     expect(() => wrapper.arrayQuestion).toThrowError();
   });

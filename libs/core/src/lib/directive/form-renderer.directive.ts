@@ -3,26 +3,38 @@ import { AbstractControl, FormGroupDirective } from '@angular/forms';
 import { FormRenderService } from '../internal/form-render.service';
 
 @Directive({
-  selector: '[affRenderer],[renderControl]'
+  selector: '[affRenderer],[renderControl],[renderControlName]'
 })
 export class FormRendererDirective implements OnInit {
 
   @Input() renderControl: AbstractControl | null = null;
+  @Input() renderControlName: string | null = null;
 
   constructor(
       private viewContainerRef: ViewContainerRef,
       private renderer: Renderer2,
       private renderService: FormRenderService,
       private injector: Injector,
-      @Optional() private group?: FormGroupDirective) {
+      @Optional() private groupDirective?: FormGroupDirective) {
   }
 
   ngOnInit(): void {
-    if (this.renderControl) {
-      this.render(this.renderControl);
-    } else if (this.group?.control) {
-      this.render(this.group.control);
+    const control = this.controlToRender;
+    if (control) {
+      this.render(control);
     }
+  }
+
+  private get controlToRender(): AbstractControl | null {
+    let control: AbstractControl | null = null;
+    if (this.renderControlName) {
+      control = this.groupDirective?.form.controls[this.renderControlName] ?? null;
+    } else if (this.renderControl) {
+      control = this.renderControl;
+    } else if (this.groupDirective?.control) {
+      control = this.groupDirective.control;
+    }
+    return control;
   }
 
   private render(control: AbstractControl) {

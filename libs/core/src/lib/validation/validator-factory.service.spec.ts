@@ -12,43 +12,6 @@ import { Validator } from './validation.decorator';
 import { BaseAsyncValidator } from './base-async-validator.service';
 import { ValidationOptions } from '../model';
 
-@Validator({
-  id: 'test-max-length',
-  type: 'sync'
-})
-@Injectable()
-class CustomMaxLengthValidator implements BaseValidator {
-  createValidator(): ValidatorFn {
-    return Validators.maxLength(5);
-  }
-}
-
-@Validator({
-  id: 'test-required',
-  type: 'sync'
-})
-@Injectable()
-class CustomRequiredValidator implements BaseValidator {
-  createValidator(): ValidatorFn {
-    return Validators.required;
-  }
-}
-
-@Validator({
-  id: 'test-async-required',
-  type: 'async'
-})
-@Injectable()
-class CustomAsyncValidator implements BaseAsyncValidator {
-
-  constructor(private http: HttpClient) {
-  }
-
-  createValidator(): AsyncValidatorFn {
-    return () => this.http.get('/test').pipe(map(value => value ? null : {asyncRequired: true}));
-  }
-}
-
 describe('ValidatorFactoryService', () => {
   let service: ValidatorFactoryService;
   let httpMock: HttpTestingController;
@@ -274,3 +237,40 @@ describe('ValidatorFactoryService', () => {
     return Validators.compose(service.createValidators(options) ?? []);
   }
 });
+
+@Validator({
+  id: 'test-max-length',
+  type: 'sync'
+})
+@Injectable()
+class CustomMaxLengthValidator implements BaseValidator {
+  createValidator(): ValidatorFn {
+    return Validators.maxLength(5);
+  }
+}
+
+@Validator({
+  id: 'test-required',
+  type: 'sync'
+})
+@Injectable()
+class CustomRequiredValidator implements BaseValidator {
+  createValidator(): ValidatorFn {
+    return Validators.required;
+  }
+}
+
+@Validator({
+  id: 'test-async-required',
+  type: 'async'
+})
+@Injectable()
+class CustomAsyncValidator implements BaseAsyncValidator {
+
+  constructor(private http: HttpClient) {
+  }
+
+  createValidator(): AsyncValidatorFn {
+    return () => this.http.get('/test').pipe(map(value => value ? null : {asyncRequired: true}));
+  }
+}

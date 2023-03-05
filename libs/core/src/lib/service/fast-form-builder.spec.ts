@@ -12,7 +12,7 @@ describe(FastFormBuilder.name, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        FastFormsModule.forChild({
+        FastFormsModule.forRoot({
           controls: [DummyInputComponent]
         })
       ]

@@ -22,7 +22,7 @@ export class ControlWrapperV2 {
     return this._initialState;
   }
 
-  get question(): AnyQuestion {
+  get question(): AnyQuestion & { id?: string } {
     return this._question as any;
   }
 
@@ -42,7 +42,7 @@ export class ControlWrapperV2 {
     }
   }
 
-  public static fromControl(initialState: FormControlState<any> | any, opts: FormControlOptions & GeneralQuestion & {type: string}): ControlWrapperV2 {
+  public static fromControl(initialState: FormControlState<any> | any, opts: FormControlOptions & GeneralQuestion & { type: string } & { id?: string }): ControlWrapperV2 {
     return new ControlWrapperV2(
         'control',
         initialState,

@@ -29,22 +29,27 @@ export class FormRenderService {
 
   renderOnly<T>(
       viewContainerRef: ViewContainerRef,
-      parent: AbstractControl,
+      control: AbstractControl,
       opts: {
         injector: Injector
       }
   ): ComponentRef<T> {
-    if (!hasControlWrapper(parent)) {
+    if (!hasControlWrapper(control)) {
       throw new Error('Cannot render control which has no control wrapper.');
     }
     // console.log(parent);
-    const question = (parent[ControlWrapperKey] as ControlWrapperV2).question;
+    const question = (control[ControlWrapperKey] as ControlWrapperV2).question;
     // console.log(question);
     // console.log((parent[QuestionWrapper] as ControlWrapperV2).question);
     const def = this.controlRegistry.getDefinition(question.type as any);
     const providers: StaticProvider[] = [
-      {provide: FORM_CONTROL, useValue: parent},
-      {provide: QuestionDefinition, useValue: new QuestionDefinition(question as any)}
+      {provide: FORM_CONTROL, useValue: control},
+      {
+        provide: QuestionDefinition, useValue: new QuestionDefinition({
+          id: '',
+          ...question
+        })
+      }
     ];
     if (question.properties) {
       providers.push({provide: CONTROL_PROPERTIES, useValue: question.properties});
@@ -57,7 +62,7 @@ export class FormRenderService {
     });
 
     // this.renderer.appendChild(viewContainerRef.element.nativeElement, ComponentRef);
-    if (parent instanceof FormGroup) {
+    if (control instanceof FormGroup) {
       // Object.keys(parent.controls).forEach(key => {
       //   const controlComponentRef = viewContainerRef.createComponent(def.component, {
       //     injector: Injector.create({

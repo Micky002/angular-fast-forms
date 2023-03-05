@@ -34,7 +34,7 @@ export class FastFormBuilder {
   constructor(private cf: ControlFactoryV2) {
   }
 
-  public control<T = any>(state: FormControlState<T> | T, opts: FormControlOptions & GeneralQuestion & { type: string }): AbstractControl {
+  public control<T = any>(state: FormControlState<T> | T, opts: FormControlOptions & GeneralQuestion & { type: string } & { id?: string }): AbstractControl {
     return this.cf.control(state, opts);
   }
 
@@ -72,7 +72,7 @@ export type WrapperProvider = (AbstractControl | FormGroup | FormControl | FormA
   [ControlWrapperKey]: ControlWrapperV2;
 }
 
-export function hasControlWrapper(control: any): control is WrapperProvider {
+export function hasControlWrapper(control: object): control is WrapperProvider {
   return ControlWrapperKey in control;
 }
 

@@ -1,7 +1,7 @@
 import { Question, ValidationOptions } from '../model';
 
 export class QuestionDefinition<T = any> {
-  public readonly id: string;
+  public readonly id?: string;
   public readonly label?: string;
   public readonly hidden?: boolean;
   public readonly disabled?: boolean;
