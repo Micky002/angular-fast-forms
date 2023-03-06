@@ -16,7 +16,7 @@ import { ControlWrapperV2 } from '../internal/control-wrapper-v2';
 import { ValidatorFactoryService } from '../validation/validator-factory.service';
 import { ValidationOptions } from '../model';
 import { ValidatorFunctionType, ValidatorType } from '../validation/symbols';
-import { ControlBuilderDefinition, TypedQuestion } from '../question-definition';
+import { ControlFactoryMethod, TypedQuestion } from '../question-definition';
 
 //TODO: Check if introducing circ dependency with FastFormBuilder is best solution
 //Possible solution: Add static control enhancement method to add wrapper to control
@@ -40,25 +40,19 @@ export class ControlFactoryV2 {
     }
   }
 
-  public control<T>(state: FormControlState<T> | T, question: ControlBuilderDefinition & { nonNullable: true }): FormControl<T>;
-  public control<T>(state: FormControlState<T> | T, question: ControlBuilderDefinition): FormControl<T | null>;
-  public control<T>(state: FormControlState<T> | T, question: ControlBuilderDefinition): FormControl<T> {
+  public control<T>(state: FormControlState<T> | T, question: TypedQuestion<T> & FormControlOptions & { nonNullable: true }): FormControl<T>;
+  public control<T>(state: FormControlState<T> | T, question: TypedQuestion<T> & FormControlOptions): FormControl<T | null>;
+  public control<T>(state: FormControlState<T> | T, question: TypedQuestion<T> & FormControlOptions): FormControl<T> {
     return this.dynamicControl(state, question) as FormControl<T>;
   }
 
-  public dynamicControl(state: FormControlState<any> | any, question: ControlBuilderDefinition): AbstractControl {
+  public dynamicControl(state: FormControlState<any> | any, question: TypedQuestion & FormControlOptions): AbstractControl {
     let control: AbstractControl;
     const controlFactory = this.cr.getControlFactory(question.type);
     if (controlFactory) {
-      control = controlFactory({
-        ...question,
-        defaultValue: state
-      }, {
-        ...this.createValidators(question),
-        fb: new FastFormBuilder(this)
-      });
+      control = this.createViaFactoryMethod(controlFactory, question, state);
     } else {
-      control = new FormControl<any>(state, {
+      control = new FormControl(state, {
         ...this.createValidators(question),
         updateOn: question.updateOn,
         nonNullable: question.nonNullable
@@ -72,12 +66,7 @@ export class ControlFactoryV2 {
     const controlFactory = this.cr.getControlFactory(question.type);
     let group: FormGroup;
     if (controlFactory) {
-      group = controlFactory({
-        ...question
-      }, {
-        ...this.createValidators(question),
-        fb: new FastFormBuilder(this)
-      }) as FormGroup;
+      group = this.createViaFactoryMethod(controlFactory, question) as FormGroup;
     } else {
       group = new FormGroup<any>(groupControls ?? {}, {
         ...this.createValidators(question),
@@ -101,12 +90,7 @@ export class ControlFactoryV2 {
     const controlFactory = this.cr.getControlFactory(question.type);
     let array: FormArray;
     if (controlFactory) {
-      array = controlFactory({
-        ...question
-      }, {
-        ...this.createValidators(question),
-        fb: new FastFormBuilder(this)
-      }) as FormArray;
+      array = this.createViaFactoryMethod(controlFactory, question) as FormArray;
     } else {
       array = new FormArray<any>([], {
         ...this.createValidators(question),
@@ -180,5 +164,15 @@ export class ControlFactoryV2 {
       groupDef[key] = this.create(groupQuestions[key]);
     });
     return groupDef;
+  }
+
+  private createViaFactoryMethod(method: ControlFactoryMethod, question: TypedQuestion, defaultValue?: any): AbstractControl {
+    return method({
+      ...question,
+      defaultValue: defaultValue
+    }, {
+      ...this.createValidators(question),
+      fb: new FastFormBuilder(this)
+    });
   }
 }
