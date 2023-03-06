@@ -4,6 +4,7 @@ import { FastFormBuilder, FastFormsModule } from '@ngx-fast-forms/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SwitchableInputModule } from './switchable-input/switchable-input.module';
 import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
+import { SwitchableInputModel } from './switchable-input/switchable-input.model';
 
 @Component({
   selector: 'matex-control-composition',
@@ -23,6 +24,9 @@ export class ControlCompositionComponent {
 
   constructor(private fb: FastFormBuilder,
               private afb: FormBuilder) {
-    this.form = this.fb.control('asdf', {type: 'switch-input', label: 'Name'}) as FormGroup;
+    this.form = this.fb.controlGroup<SwitchableInputModel>(
+        {value: 'asdf', disabled: false},
+        {type: 'switch-input', label: 'Name'}
+    );
   }
 }

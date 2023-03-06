@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ControlRegistry } from '../internal/control/control-registry.service';
 import {
   AbstractControl,
+  AbstractControlOptions,
   AsyncValidatorFn,
   FormArray,
   FormControl,
@@ -10,19 +11,12 @@ import {
   FormGroup,
   ValidatorFn
 } from '@angular/forms';
-import {
-  ControlWrapperKey,
-  FastFormBuilder,
-  GeneralQuestion,
-  hasControlWrapper,
-  TypedArrayQuestion,
-  TypedGroupQuestion,
-  WrapperProvider
-} from './fast-form-builder';
+import { ControlWrapperKey, FastFormBuilder, hasControlWrapper, WrapperProvider } from './fast-form-builder';
 import { ControlWrapperV2 } from '../internal/control-wrapper-v2';
 import { ValidatorFactoryService } from '../validation/validator-factory.service';
 import { ValidationOptions } from '../model';
 import { ValidatorFunctionType, ValidatorType } from '../validation/symbols';
+import { ControlBuilderDefinition, TypedQuestion } from '../question-definition';
 
 //TODO: Check if introducing circ dependency with FastFormBuilder is best solution
 //Possible solution: Add static control enhancement method to add wrapper to control
@@ -38,7 +32,7 @@ export class ControlFactoryV2 {
   create(wrapper: ControlWrapperV2): AbstractControl {
     switch (wrapper.controlType) {
       case 'control':
-        return this.control(wrapper.initialState, wrapper.question);
+        return this.dynamicControl(wrapper.initialState, wrapper.question);
       case 'group':
         return this.group(wrapper.question, this.createSubGroupControls(wrapper.groupQuestion));
       case 'array':
@@ -46,7 +40,13 @@ export class ControlFactoryV2 {
     }
   }
 
-  public control(state: FormControlState<any> | any, question: FormControlOptions & GeneralQuestion & { type: string } & { id?: string }): AbstractControl {
+  public control<T>(state: FormControlState<T> | T, question: ControlBuilderDefinition & { nonNullable: true }): FormControl<T>;
+  public control<T>(state: FormControlState<T> | T, question: ControlBuilderDefinition): FormControl<T | null>;
+  public control<T>(state: FormControlState<T> | T, question: ControlBuilderDefinition): FormControl<T> {
+    return this.dynamicControl(state, question) as FormControl<T>;
+  }
+
+  public dynamicControl(state: FormControlState<any> | any, question: ControlBuilderDefinition): AbstractControl {
     let control: AbstractControl;
     const controlFactory = this.cr.getControlFactory(question.type);
     if (controlFactory) {
@@ -54,6 +54,7 @@ export class ControlFactoryV2 {
         ...question,
         defaultValue: state
       }, {
+        ...this.createValidators(question),
         fb: new FastFormBuilder(this)
       });
     } else {
@@ -63,18 +64,18 @@ export class ControlFactoryV2 {
         nonNullable: question.nonNullable
       });
     }
-    this.addValidators(control, question.validation);
     (control as WrapperProvider)[ControlWrapperKey] = ControlWrapperV2.fromControl(state, question);
     return control;
   }
 
-  public group(question: TypedGroupQuestion, groupControls?: { [key: string]: AbstractControl }): FormGroup {
+  public group(question: TypedQuestion & AbstractControlOptions, groupControls?: { [key: string]: AbstractControl }): FormGroup {
     const controlFactory = this.cr.getControlFactory(question.type);
     let group: FormGroup;
     if (controlFactory) {
       group = controlFactory({
         ...question
       }, {
+        ...this.createValidators(question),
         fb: new FastFormBuilder(this)
       }) as FormGroup;
     } else {
@@ -92,18 +93,18 @@ export class ControlFactoryV2 {
       }
       groupQuestions[key] = childControl;
     });
-    this.addValidators(group, question.validation);
     (group as WrapperProvider)[ControlWrapperKey] = ControlWrapperV2.fromGroup(question, groupQuestions);
     return group;
   }
 
-  public array(question: TypedArrayQuestion, arrayQuestion?: AbstractControl): FormArray {
+  public array(question: TypedQuestion & AbstractControlOptions, arrayQuestion?: AbstractControl): FormArray {
     const controlFactory = this.cr.getControlFactory(question.type);
     let array: FormArray;
     if (controlFactory) {
       array = controlFactory({
         ...question
       }, {
+        ...this.createValidators(question),
         fb: new FastFormBuilder(this)
       }) as FormArray;
     } else {
@@ -112,7 +113,6 @@ export class ControlFactoryV2 {
         updateOn: question.updateOn
       });
     }
-    this.addValidators(array, question.validation);
     if (arrayQuestion) {
       (array as WrapperProvider)[ControlWrapperKey] = ControlWrapperV2.fromArray(question, this.deriveDefinition(null, arrayQuestion));
     } else {
@@ -134,19 +134,6 @@ export class ControlFactoryV2 {
       return wrapper;
     } else {
       throw new Error(`The control type [${wrapper.controlType}]} is not supported.`);
-    }
-  }
-
-  private addValidators(control: AbstractControl, opts?: ValidationOptions) {
-    if (opts) {
-      const syncValidators = this.validatorFactory.createValidators(opts);
-      if (syncValidators) {
-        control.addValidators(syncValidators);
-      }
-      const asyncValidators = this.validatorFactory.createAsyncValidators(opts);
-      if (asyncValidators) {
-        control.addAsyncValidators(asyncValidators);
-      }
     }
   }
 

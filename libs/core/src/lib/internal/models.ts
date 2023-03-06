@@ -4,10 +4,11 @@ import { BaseFormControlComponent } from '../components/base/base-control.compon
 import { BaseFormGroupComponent } from '../components/base/base-group.component';
 import { BaseFormInlineComponent } from '../components/base/base-inline.component';
 import { FormActionType, FormControlType } from '../model';
-import { ControlFactoryMethod } from './control/models';
+import { ControlFactoryMethod } from '../question-definition';
 
 export type InternalControlType = FormControlType | FormActionType;
 
+//TODO: Check why this interface is needed?
 export interface InternalControlDefinition {
   type: string;
   inline?: boolean;
@@ -16,3 +17,4 @@ export interface InternalControlDefinition {
   controlFactory?: ControlFactoryMethod;
   internalType: InternalControlType;
 }
+

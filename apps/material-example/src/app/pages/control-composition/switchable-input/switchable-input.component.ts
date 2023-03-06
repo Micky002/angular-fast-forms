@@ -2,16 +2,17 @@ import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   Control,
-  ControlDefinition,
   ControlFactory,
   ControlFactoryOptions,
+  FactoryQuestionDefinition,
   FastFormsModule,
   FORM_CONTROL
 } from '@ngx-fast-forms/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
+import { InputProperties, MaterialFastFormsModule } from '@ngx-fast-forms/material';
 import { MatIconModule } from '@angular/material/icon';
+import { SwitchableInputModel } from './switchable-input.model';
 
 @Control({
   type: 'switch-input'
@@ -51,16 +52,16 @@ export class SwitchableInputComponent {
   }
 
   @ControlFactory()
-  static createControl(question: ControlDefinition, {fb}: ControlFactoryOptions){
+  static createControl(question: FactoryQuestionDefinition<InputProperties, SwitchableInputModel>, {fb}: ControlFactoryOptions) {
     return new FormGroup({
-      value: fb.control(question.defaultValue as string, {
+      value: fb.control(question.defaultValue?.value ?? '', {
         type: 'mat-input',
         label: question.label,
         validation: {
           required: true
         }
       }),
-      disabled: new FormControl(false, {
+      disabled: new FormControl(question.defaultValue?.disabled ?? false, {
         nonNullable: true
       })
     });

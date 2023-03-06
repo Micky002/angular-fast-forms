@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { ControlFactoryV2 } from './control-factory-v2.service';
 import { ControlWrapperV2 } from '../internal/control-wrapper-v2';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ControlDefinition, ControlWrapperKey, hasControlWrapper, WrapperProvider } from './fast-form-builder';
+import { ControlWrapperKey, hasControlWrapper, WrapperProvider } from './fast-form-builder';
 import { Component } from '@angular/core';
 import { FastFormsTestingModule } from '../test/fast-forms-testing.module.test-util';
 import { TestControlType } from '../test/control-types.test-util';
@@ -11,6 +11,7 @@ import { AFF_CONTROL_COMPONENTS } from '../model';
 import { FastFormsModule } from '../fast-forms.module';
 import { ControlFactory } from '../control/control-factory.decorator';
 import { Control } from '../control/control.decorator';
+import { ControlFactoryOptions, FactoryQuestionDefinition } from '../question-definition';
 
 describe('ControlFactoryV2Service', () => {
   let controlFactory: ControlFactoryV2;
@@ -37,7 +38,7 @@ describe('ControlFactoryV2Service', () => {
   });
 
   it('should create simple control', () => {
-    const control = controlFactory.control('one', {
+    const control = controlFactory.dynamicControl('one', {
       type: TestControlType.INPUT,
       updateOn: 'blur'
     });
@@ -74,7 +75,7 @@ describe('ControlFactoryV2Service', () => {
 
   it('should create simple array', () => {
     const array = controlFactory.array({type: 'array-v2'},
-        controlFactory.control('entry', {type: TestControlType.INPUT})
+        controlFactory.dynamicControl('entry', {type: TestControlType.INPUT})
     );
     expect(array).toBeDefined();
     expect(hasControlWrapper(array)).toBeTruthy();
@@ -154,10 +155,13 @@ describe('ControlFactoryV2Service', () => {
   });
 
   it('should create control from registry factory method', () => {
-    const control = controlFactory.control({value: 'test', disabled: true},
+    const control = controlFactory.dynamicControl({value: 'test', disabled: true},
         {
           type: 'string-input',
-          validators: Validators.minLength(5)
+          validators: Validators.minLength(5),
+          validation: {
+            required: true
+          }
         });
     expect(control).toBeInstanceOf(StringFormControl);
     expect(control.value).toEqual('test');
@@ -169,6 +173,8 @@ describe('ControlFactoryV2Service', () => {
         requiredLength: 5
       }
     });
+    control.patchValue(null);
+    expect(control.errors).toEqual({required: true});
   });
 });
 
@@ -182,9 +188,9 @@ describe('ControlFactoryV2Service', () => {
 class StringInputComponent {
 
   @ControlFactory()
-  static createControl(def: ControlDefinition) {
+  static createControl(def: FactoryQuestionDefinition, {validators}: ControlFactoryOptions) {
     return new StringFormControl(def.defaultValue, {
-      validators: def.validators
+      validators: validators
     });
   }
 }

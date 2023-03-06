@@ -1,30 +1,9 @@
 import { Injectable } from '@angular/core';
-import {
-  AbstractControl,
-  AbstractControlOptions,
-  FormArray,
-  FormControl,
-  FormControlOptions,
-  FormControlState,
-  FormGroup
-} from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormControlState, FormGroup } from '@angular/forms';
 import { ControlWrapperV2 } from '../internal/control-wrapper-v2';
 import { ControlFactoryV2 } from './control-factory-v2.service';
-import { ValidationOptions } from '../model';
+import { ArrayBuilderDefinition, ControlBuilderDefinition, GroupBuilderDefinition } from '../question-definition';
 
-
-export type GroupQuestion = GeneralQuestion & AbstractControlOptions & { type?: string };
-export type TypedGroupQuestion = GeneralQuestion & AbstractControlOptions & { type: string };
-export type GroupDefinition = GeneralQuestion & FormControlOptions & { type: string } & InitialValue;
-
-export type ArrayQuestion = GeneralQuestion & AbstractControlOptions & { type?: string };
-export type TypedArrayQuestion = GeneralQuestion & AbstractControlOptions & { type: string };
-
-// export type ControlQuestion = GeneralQuestion & FormControlOptions & { type: string };
-export type ControlDefinition<T = unknown> = TypedGeneralQuestion<T> & FormControlOptions & InitialValue;
-
-export type AnyQuestion = TypedGeneralQuestion & (FormControlOptions | AbstractControlOptions);
-export type TypedGeneralQuestion<T = unknown> = GeneralQuestion<T> & { type: string };
 
 @Injectable({
   providedIn: 'any'
@@ -34,18 +13,35 @@ export class FastFormBuilder {
   constructor(private cf: ControlFactoryV2) {
   }
 
-  public control<T = any>(state: FormControlState<T> | T, opts: FormControlOptions & GeneralQuestion & { type: string } & { id?: string }): AbstractControl {
-    return this.cf.control(state, opts);
+
+  public control<T = any>(state: FormControlState<T> | T, opts: ControlBuilderDefinition & { nonNullable: true }): FormControl<T>;
+  public control<T = any>(state: FormControlState<T> | T, opts: ControlBuilderDefinition): FormControl<T | null>;
+  public control<T = any>(state: FormControlState<T> | T, opts: ControlBuilderDefinition): FormControl<T> {
+    return this.dynamicControl(state, opts) as FormControl<T>;
   }
 
-  public group(question: GroupQuestion, groupControls?: { [key: string]: AbstractControl }): FormGroup {
+  public controlGroup<T extends object>(
+      state: T,
+      opts: ControlBuilderDefinition
+  ): FormGroup<{ [K in keyof T]: AbstractControl<T[K]> }> {
+    return this.dynamicControl(state, opts) as FormGroup<{ [K in keyof T]: AbstractControl<T[K]> }>;
+  }
+
+  public dynamicControl<T = any>(state: FormControlState<T> | T, opts: ControlBuilderDefinition): AbstractControl {
+    return this.cf.dynamicControl(state, opts);
+  }
+
+  public group<T extends object>(
+      question: GroupBuilderDefinition,
+      groupControls?: { [key: string]: AbstractControl }
+  ): FormGroup<{ [K in keyof T]: AbstractControl<T[K]> }> {
     return this.cf.group({
       ...question,
       type: question.type ?? 'group-v2'
     }, groupControls);
   }
 
-  public array(question: ArrayQuestion, arrayQuestion?: AbstractControl): FormArray {
+  public array<T>(question: ArrayBuilderDefinition, arrayQuestion?: AbstractControl<T>): FormArray<AbstractControl<T>> {
     return this.cf.array({
       ...question,
       type: question.type ?? 'array-v2'
@@ -76,14 +72,6 @@ export function hasControlWrapper(control: object): control is WrapperProvider {
   return ControlWrapperKey in control;
 }
 
-export interface InitialValue {
-  defaultValue?: unknown;
-}
 
-export interface GeneralQuestion<T = unknown> {
-  label?: string;
-  hidden?: boolean;
-  disabled?: boolean;
-  validation?: ValidationOptions;
-  properties?: T;
-}
+
+

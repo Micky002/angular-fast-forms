@@ -21,7 +21,7 @@ describe('SwitchableInputComponent', () => {
         provide: FORM_CONTROL,
         deps: [FastFormBuilder],
         useFactory: (fb: FastFormBuilder) =>
-            fb.control(null, {type: 'switch-input'})
+            fb.dynamicControl(null, {type: 'switch-input'})
       }]
     }).compileComponents();
 

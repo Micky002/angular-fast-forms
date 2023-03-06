@@ -1,4 +1,4 @@
-import { ControlComponentMetaData, ControlFactoryMethod, InternalControlComponent } from './models';
+import { ControlComponentMetaData, InternalControlComponent } from './models';
 import { META_COMPONENT_OPTIONS_KEY } from '../symbols';
 import { Inject, Injectable, Optional, Type } from '@angular/core';
 import { BaseFormInlineComponent } from '../../components/base/base-inline.component';
@@ -8,13 +8,12 @@ import { AFF_CONTROL_COMPONENTS } from '../../model';
 import { BaseFormControlComponent } from '../../components/base/base-control.component';
 import { BaseFormGroupComponent } from '../../components/base/base-group.component';
 import { InternalControlDefinition } from '../models';
+import { ControlFactoryMethod } from '../../question-definition';
 
 @Injectable({
   providedIn: 'any'
 })
 export class ControlRegistry extends AbstractRegistry<InternalControlComponent> {
-
-  // private readonly POSSIBLE_CONTROL_TYPES: InternalControlType[] = ['control', 'group', 'array'];
 
   constructor(@Optional() @Inject(AFF_CONTROL_COMPONENTS) controlComponentsPerModule?: Array<Array<InternalControlComponent>>) {
     super(controlComponentsPerModule);

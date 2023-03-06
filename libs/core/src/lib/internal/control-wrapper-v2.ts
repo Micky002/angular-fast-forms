@@ -1,14 +1,15 @@
-import { FormControlOptions, FormControlState } from '@angular/forms';
+import { AbstractControlOptions, FormControlOptions, FormControlState } from '@angular/forms';
 import { FormControlType } from '../model';
-import { AnyQuestion, GeneralQuestion, TypedArrayQuestion, TypedGroupQuestion } from '../service/fast-form-builder';
+import { TypedQuestion } from '../question-definition';
 
+//TODO: Remove this and render with old render service and old control wrapper
 export class ControlWrapperV2 {
 
 
   constructor(
       private _controlType: FormControlType,
       private _initialState: FormControlState<any> | any,
-      private _question: AnyQuestion,
+      private _question: TypedQuestion & (AbstractControlOptions | FormControlOptions),
       private _arrayQuestion: ControlWrapperV2 | null,
       private _groupQuestions: { [key: string]: ControlWrapperV2 } | null
   ) {
@@ -22,7 +23,7 @@ export class ControlWrapperV2 {
     return this._initialState;
   }
 
-  get question(): AnyQuestion & { id?: string } {
+  get question(): TypedQuestion & (AbstractControlOptions | FormControlOptions) {
     return this._question as any;
   }
 
@@ -42,7 +43,7 @@ export class ControlWrapperV2 {
     }
   }
 
-  public static fromControl(initialState: FormControlState<any> | any, opts: FormControlOptions & GeneralQuestion & { type: string } & { id?: string }): ControlWrapperV2 {
+  public static fromControl(initialState: FormControlState<any> | any, opts: TypedQuestion & FormControlOptions): ControlWrapperV2 {
     return new ControlWrapperV2(
         'control',
         initialState,
@@ -52,7 +53,7 @@ export class ControlWrapperV2 {
     );
   }
 
-  public static fromGroup(question: TypedGroupQuestion, groupQuestions: { [key: string]: ControlWrapperV2 }): ControlWrapperV2 {
+  public static fromGroup(question: TypedQuestion & AbstractControlOptions, groupQuestions: { [key: string]: ControlWrapperV2 }): ControlWrapperV2 {
     return new ControlWrapperV2(
         'group',
         null,
@@ -63,7 +64,7 @@ export class ControlWrapperV2 {
   }
 
   public static fromArray(
-      question: TypedArrayQuestion,
+      question: TypedQuestion & AbstractControlOptions,
       arrayQuestion?: ControlWrapperV2): ControlWrapperV2 {
     return new ControlWrapperV2(
         'array',

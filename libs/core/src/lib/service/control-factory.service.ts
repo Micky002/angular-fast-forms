@@ -90,7 +90,11 @@ export class ControlFactoryService {
     if (this.controlRegistry.hasControlFactory(question.type)) {
       const def = this.controlRegistry.getDefinition(question.type);
       if (def.controlFactory !== undefined) {
-        return def.controlFactory(question, {fb: this.fb});
+        return def.controlFactory(question, {
+          fb: this.fb,
+          validators: this.validatorFactory.createValidators(question.validation),
+          asyncValidators: this.validatorFactory.createAsyncValidators(question.validation)
+        });
       }
     }
     return undefined;
@@ -104,7 +108,11 @@ export class ControlFactoryService {
     const definition = this.controlRegistry.getDefinition(question.type);
     if (definition) {
       if (definition.controlFactory) {
-        return definition.controlFactory(question, {fb: this.fb});
+        return definition.controlFactory(question, {
+          fb: this.fb,
+          validators: this.validatorFactory.createValidators(question.validation),
+          asyncValidators: this.validatorFactory.createAsyncValidators(question.validation)
+        });
       }
     }
     return new FromActionControlInternal();

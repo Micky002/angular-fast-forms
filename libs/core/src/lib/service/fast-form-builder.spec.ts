@@ -39,13 +39,13 @@ describe(FastFormBuilder.name, () => {
   });
 
   it('should create control', () => {
-    const control = fb.control('initial value', {type: TestControlType.INPUT});
+    const control = fb.dynamicControl('initial value', {type: TestControlType.INPUT});
     expect(control).toBeDefined();
     expect(control.value).toEqual('initial value');
   });
 
   it('should create new array entry', () => {
-    const array = fb.array({}, fb.control(null, {type: TestControlType.INPUT}));
+    const array = fb.array({}, fb.dynamicControl(null, {type: TestControlType.INPUT}));
     expect(array.length).toEqual(0);
     const entry = fb.newArrayEntry(array);
     expect(entry).toBeDefined();
@@ -60,27 +60,4 @@ describe(FastFormBuilder.name, () => {
   it('should validate array entry is created from control with wrapper', () => {
     expect(() => fb.newArrayEntry(new FormArray<any>([]))).toThrowError();
   });
-
-  // it('should derive definition of control', () => {
-  //   const definition = fb.deriveDefinition(fb.control(null, {type: 'mat-input', label: 'test'}));
-  //   expect(definition).toEqual({type: 'mat-input', label: 'test'});
-  // });
-  //
-  // it('should derive definition of group', () => {
-  //   const definition = fb.deriveDefinition(fb.group({}, {
-  //     name: fb.control(null, {type: 'mat-input', label: 'Name'}),
-  //     description: fb.control(null, {type: 'mat-input', label: 'Description'})
-  //   }));
-  //   expect(definition).toEqual({
-  //     name: {type: 'mat-input', label: 'Name'},
-  //     description: {type: 'mat-input', label: 'Description'}
-  //   });
-  // });
-  //
-  // it('should derive definition of array', () => {
-  //   const definition = fb.deriveDefinition(fb.array({},
-  //       fb.control(null, {type: 'mat-input', label: 'Name'})
-  //   ));
-  //   expect(definition).toEqual([{type: 'array'}, {label: 'Name', type: 'mat-input'}]);
-  // });
 });

@@ -39,8 +39,8 @@ describe(FormRendererDirective.name, () => {
 
     it('should render single control', () => {
       component.group = fb.group({}, {
-        name: fb.control('test', {type: TestControlType.INPUT}),
-        age: fb.control('test', {type: TestControlType.INPUT})
+        name: fb.dynamicControl('test', {type: TestControlType.INPUT}),
+        age: fb.dynamicControl('test', {type: TestControlType.INPUT})
       });
       fixture.detectChanges();
       const container = fixture.debugElement.query(By.css('#name-container'));
@@ -74,7 +74,7 @@ describe(FormRendererDirective.name, () => {
     });
 
     it('should render single control', () => {
-      component.control = fb.control('test', {
+      component.control = fb.dynamicControl('test', {
         type: TestControlType.INPUT,
         id: 'name'
       }) as FormControl;
@@ -86,8 +86,8 @@ describe(FormRendererDirective.name, () => {
 
     it('should render group', () => {
       component.group = fb.group({}, {
-        name: fb.control('Hans', {type: TestControlType.INPUT}),
-        firstName: fb.control('Maier', {type: TestControlType.INPUT})
+        name: fb.dynamicControl('Hans', {type: TestControlType.INPUT}),
+        firstName: fb.dynamicControl('Maier', {type: TestControlType.INPUT})
       });
       fixture.detectChanges();
       const nameInput = getById<HTMLInputElement>(fixture, 'name');

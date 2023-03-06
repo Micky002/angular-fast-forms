@@ -29,16 +29,16 @@ export class GroupComponent {
         alignment: 'row'
       } as FormGroupV2Properties
     }, {
-      name: fb.control('My Name', {type: 'mat-input', label: 'Name'}),
-      hans: fb.control(null, {type: 'mat-input', label: 'Hans'}),
-      arrayControl: fb.array({}, fb.control('Init value', {type: 'mat-input', label: 'fb array'})),
+      name: fb.dynamicControl('My Name', {type: 'mat-input', label: 'Name'}),
+      hans: fb.dynamicControl(null, {type: 'mat-input', label: 'Hans'}),
+      arrayControl: fb.array({}, fb.dynamicControl('Init value', {type: 'mat-input', label: 'fb array'})),
       arrayGroup: fb.array({}, fb.group({}, {
-        first: fb.control(2, {
+        first: fb.dynamicControl(2, {
           type: 'mat-select',
           label: 'First select',
           properties: {options: [{name: 'Eins', value: 1}, {name: 'Zwei', value: 2}]} as SelectProperties
         }),
-        second: fb.control(null, {type: 'mat-input', label: 'Second input'})
+        second: fb.dynamicControl(null, {type: 'mat-input', label: 'Second input'})
       }))
     });
   }

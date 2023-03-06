@@ -22,7 +22,7 @@ describe('FastFormArrayV2Component', () => {
       providers: [{
         deps: [FastFormBuilder],
         provide: FORM_CONTROL,
-        useFactory: (fb: FastFormBuilder) => fb.array({}, fb.control(null, {type: 'input'}))
+        useFactory: (fb: FastFormBuilder) => fb.array({}, fb.dynamicControl(null, {type: 'input'}))
       }]
     }).compileComponents();
 

@@ -4,9 +4,9 @@ import { BaseFormControlComponent } from './components/base/base-control.compone
 import { BaseFormInlineComponent } from './components/base/base-inline.component';
 import { BaseFormArrayComponent } from './components/base/base-array.component';
 import { BaseFormGroupComponent } from './components/base/base-group.component';
-import { ControlFactoryMethod, InternalControlComponent } from './internal/control/models';
+import { InternalControlComponent } from './internal/control/models';
 import { BasicQuestion } from './components/question-definition';
-import { FastFormBuilder } from './service/fast-form-builder';
+import { ControlFactoryMethod } from './question-definition';
 
 export const AFF_CONTROL_COMPONENTS = new InjectionToken<Array<Array<InternalControlComponent>>>('AFF_CONTROL_COMPONENTS');
 
@@ -46,6 +46,4 @@ export interface FastFormSubmitEvent {
 export type FormControlType = 'control' | 'array' | 'group';
 export type FormActionType = 'action';
 
-export interface ControlFactoryOptions {
-  fb: FastFormBuilder;
-}
+
