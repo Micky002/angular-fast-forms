@@ -31,6 +31,9 @@ export class FastFormBuilder {
     return this.cf.dynamicControl(state, opts);
   }
 
+  /**
+   * Experimental
+   */
   public group<T extends object>(
       question: GroupBuilderDefinition,
       groupControls?: { [key: string]: AbstractControl }
@@ -41,6 +44,9 @@ export class FastFormBuilder {
     }, groupControls);
   }
 
+  /**
+   * Experimental
+   */
   public array<T>(question: ArrayBuilderDefinition, arrayQuestion?: AbstractControl<T>): FormArray<AbstractControl<T>> {
     return this.cf.array({
       ...question,
@@ -48,6 +54,9 @@ export class FastFormBuilder {
     }, arrayQuestion);
   }
 
+  /**
+   * Experimental
+   */
   newArrayEntry(array: FormArray): AbstractControl {
     if (hasControlWrapper(array)) {
       const wrapper = array[ControlWrapperKey];
