@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0-rc.0](https://github.com/Micky002/angular-fast-forms/compare/v2.3.0...v2.4.0-rc.0) (2023-03-13)
+
+
+### Features
+
+* add form builder, extend factory method, update versions, add form builder example ([#48](https://github.com/Micky002/angular-fast-forms/issues/48)) ([261fbf8](https://github.com/Micky002/angular-fast-forms/commit/261fbf82db4411e98ad047f9cee93ef41d90809d))
+
 ## [2.3.0](https://github.com/Micky002/angular-fast-forms/compare/v2.1.0...v2.3.0) (2022-12-14)
 
 
