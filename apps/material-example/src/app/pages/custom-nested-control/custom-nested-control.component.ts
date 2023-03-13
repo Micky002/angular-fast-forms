@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FastFormGroup, FastFormsService } from '@ngx-fast-forms/core';
 
 @Component({
-  selector: 'frontend-custom-nested-control',
+  selector: 'matex-custom-nested-control',
   templateUrl: './custom-nested-control.component.html',
-  styleUrls: ['./custom-nested-control.component.scss'],
+  styleUrls: ['./custom-nested-control.component.scss']
 })
 export class CustomNestedControlComponent implements OnInit {
 

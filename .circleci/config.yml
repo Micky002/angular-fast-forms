@@ -23,7 +23,7 @@ jobs:
           command: npm run lint:all
       - run:
           name: Run tests
-          command: npm run test:all
+          command: npm run test:ci
       - run:
           name: Code climate coverage
           command: |

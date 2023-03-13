@@ -1,6 +1,6 @@
 import { ArrayIndexDirective } from './array-index.directive';
 import { FormControlDirective, FormGroupDirective } from '@angular/forms';
-import { FastFormControl } from '@ngx-fast-forms/core';
+import { FastFormControl } from '../control/fast-form-control';
 
 describe('ArrayIndexDirective', () => {
   it('should create an instance', () => {

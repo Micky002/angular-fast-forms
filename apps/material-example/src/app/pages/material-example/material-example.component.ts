@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FastFormGroup, FastFormsService, Question } from '@ngx-fast-forms/core';
 
 @Component({
-  selector: 'frontend-material-example',
+  selector: 'matex-material-example',
   templateUrl: './material-example.component.html',
   styleUrls: ['./material-example.component.scss']
 })
@@ -67,14 +67,14 @@ export class MaterialExampleComponent implements OnInit {
     }]
   }];
 
-  set def(value: Array<Question>) {
-    this.definition = value;
-    this.form.setQuestions(this.definition);
-  }
-
   constructor(private fastFormService: FastFormsService) {
     this.form = fastFormService.createDynamicForm(this.definition);
     this.disabledForm = fastFormService.createDynamicForm(this.disabledFormDefinition);
+  }
+
+  set def(value: Array<Question>) {
+    this.definition = value;
+    this.form.setQuestions(this.definition);
   }
 
   ngOnInit(): void {

@@ -7,7 +7,7 @@ import { ValidatorFactoryService } from '../validation/validator-factory.service
 import { FastFormGroup } from '../control/fast-form-group';
 import { ControlRegistry } from '../internal/control/control-registry.service';
 import { FastFormControl } from '../control/fast-form-control';
-import { DummyInputModule } from '../test/dummy-input.module.test-util';
+import { FastFormsTestingModule } from '../test/fast-forms-testing.module.test-util';
 
 
 describe('FastFormsService', () => {
@@ -18,7 +18,7 @@ describe('FastFormsService', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        DummyInputModule
+        FastFormsTestingModule
       ],
       providers: [
         FastFormsService,
@@ -53,7 +53,7 @@ describe('FastFormsService', () => {
     const group = service.createHttpForm('/test-endpoint');
     http.expectOne('/test-endpoint').flush([{
       id: 'name',
-      type: 'dummy-input'
+      type: 'input'
     }]);
     expect(group).toBeInstanceOf(FastFormGroup);
     expect(group.get('name')).not.toBeNull();

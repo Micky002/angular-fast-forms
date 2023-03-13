@@ -5,6 +5,8 @@
     "entryFile": "src/index.ts"
   },
   "assets": [
-    "./src/styles/styles.scss"
+    "./src/styles/styles.scss",
+    "./src/styles/array.scss",
+    "./src/styles/aff-form-group-v2.scss"
   ]
 }

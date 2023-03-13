@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { expect } from '@jest/globals';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FastFormsModule } from '@ngx-fast-forms/core';
 import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
@@ -18,7 +18,7 @@ describe('FormArrayComponent', () => {
       ],
       declarations: [
         FormArrayComponent
-      ],
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(FormArrayComponent);

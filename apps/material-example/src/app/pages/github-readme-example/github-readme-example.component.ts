@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { FastFormGroup, FastFormsService } from '@ngx-fast-forms/core';
 
 @Component({
-  selector: 'frontend-github-readme-example',
+  selector: 'matex-github-readme-example',
   templateUrl: './github-readme-example.component.html',
-  styleUrls: ['./github-readme-example.component.scss'],
+  styleUrls: ['./github-readme-example.component.scss']
 })
 export class GithubReadmeExampleComponent {
 

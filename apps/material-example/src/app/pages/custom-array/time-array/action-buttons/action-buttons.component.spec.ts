@@ -1,8 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { expect } from '@jest/globals';
 import { ActionButtonsComponent } from './action-buttons.component';
 import { Provider } from '@angular/core';
-import { ActionService, CONTROL_ID, ControlIdMock, FORM_CONTROL, ActionGroupFactory, ActionControlFactory } from '@ngx-fast-forms/core';
+import {
+  ActionControlFactory,
+  ActionGroupFactory,
+  ActionService,
+  CONTROL_ID,
+  ControlIdMock,
+  FORM_CONTROL
+} from '@ngx-fast-forms/core';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('ActionButtonsComponent', () => {
   let component: ActionButtonsComponent;
@@ -10,6 +18,9 @@ describe('ActionButtonsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [
+        MatIconModule
+      ],
       declarations: [ActionButtonsComponent],
       providers: [
         ActionService,

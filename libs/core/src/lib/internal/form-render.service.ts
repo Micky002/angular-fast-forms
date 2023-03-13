@@ -14,6 +14,8 @@ import { ArrayIndexDirective } from '../actions/array-index.directive';
 import { FastFormControl } from '../control/fast-form-control';
 import { FastFormGroup } from '../control/fast-form-group';
 import { QuestionDefinition } from '../components/question-definition';
+import { ControlWrapperKey, hasControlWrapper } from '../service/fast-form-builder';
+import { ControlWrapperV2 } from './control-wrapper-v2';
 
 @Injectable({
   providedIn: 'any'
@@ -23,6 +25,61 @@ export class FormRenderService {
   constructor(
       private controlRegistry: ControlRegistry,
       private injector: Injector) {
+  }
+
+  renderOnly<T>(
+      viewContainerRef: ViewContainerRef,
+      control: AbstractControl,
+      opts: {
+        injector: Injector
+      }
+  ): ComponentRef<T> {
+    if (!hasControlWrapper(control)) {
+      throw new Error('Cannot render control which has no control wrapper.');
+    }
+    // console.log(parent);
+    const question = (control[ControlWrapperKey] as ControlWrapperV2).question;
+    // console.log(question);
+    // console.log((parent[QuestionWrapper] as ControlWrapperV2).question);
+    const def = this.controlRegistry.getDefinition(question.type as any);
+    const providers: StaticProvider[] = [
+      {provide: FORM_CONTROL, useValue: control},
+      {
+        provide: QuestionDefinition, useValue: new QuestionDefinition({
+          id: '',
+          ...question
+        })
+      }
+    ];
+    //TODO: Check if this injection is valid
+    if (question.properties) {
+      providers.push({provide: CONTROL_PROPERTIES, useValue: question.properties});
+    }
+    const controlComponentRef = viewContainerRef.createComponent(def.component, {
+      injector: Injector.create({
+        providers,
+        parent: opts.injector ? opts.injector : this.injector
+      })
+    });
+
+    // this.renderer.appendChild(viewContainerRef.element.nativeElement, ComponentRef);
+    if (control instanceof FormGroup) {
+      // Object.keys(parent.controls).forEach(key => {
+      //   const controlComponentRef = viewContainerRef.createComponent(def.component, {
+      //     injector: Injector.create({
+      //       providers: [
+      //         {provide: FORM_CONTROL, useValue: parent}
+      //       ]
+      //       // parent: injector ? injector : this.injector
+      //     })
+      //   });
+      //
+      // })
+    }
+    // if (this.shouldInitialize(controlComponentRef.instance)) {
+    //   this.initializeComponent(parent, question, formDefinition.component.name, controlComponentRef.instance);
+    // }
+    return controlComponentRef as any;
   }
 
   render<T>(

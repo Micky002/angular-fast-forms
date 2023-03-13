@@ -3,7 +3,7 @@ import { ActionEvent, FastFormArray, FastFormGroup, FastFormsService } from '@ng
 import { ButtonProperties } from '@ngx-fast-forms/material';
 
 @Component({
-  selector: 'frontend-form-array',
+  selector: 'matex-form-array',
   templateUrl: './form-array.component.html',
   styleUrls: ['./form-array.component.scss']
 })

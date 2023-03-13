@@ -8,7 +8,8 @@ import { FastFormsService } from '../../service/fast-forms.service';
 import { ControlFactoryService } from '../../service/control-factory.service';
 import { ValidatorFactoryService } from '../../validation/validator-factory.service';
 import { Provider } from '@angular/core';
-import { AFF_CONTROL_COMPONENTS } from '@ngx-fast-forms/core';
+import { AFF_CONTROL_COMPONENTS } from '../../model';
+import { FastFormBuilder } from '../../service/fast-form-builder';
 
 @Control({
   type: 'input'
@@ -30,6 +31,7 @@ describe('FastFormGroupComponent', () => {
         FastFormGroupComponent
       ],
       providers: [
+        FastFormBuilder,
         FastFormsService,
         ControlFactoryService,
         ValidatorFactoryService, {

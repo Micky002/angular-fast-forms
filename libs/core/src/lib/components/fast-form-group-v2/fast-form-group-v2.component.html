@@ -1,0 +1,6 @@
+<div [ngClass]="{
+  'row': props.alignment === 'row',
+  'column': props.alignment === 'column'
+}" class="aff-form-group-v2">
+  <ng-container *ngFor="let key of controlKeys" [renderControl]="formGroup.get(key)"></ng-container>
+</div>

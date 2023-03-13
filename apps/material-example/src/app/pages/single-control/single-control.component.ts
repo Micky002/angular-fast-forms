@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FastFormControl, FastFormsService } from '@ngx-fast-forms/core';
 
 @Component({
-  selector: 'frontend-single-control',
+  selector: 'matex-single-control',
   templateUrl: './single-control.component.html',
   styleUrls: ['./single-control.component.scss']
 })

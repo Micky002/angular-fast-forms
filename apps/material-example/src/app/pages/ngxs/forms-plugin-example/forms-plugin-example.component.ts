@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FastFormGroup, FastFormsService } from '@ngx-fast-forms/core';
 
 @Component({
-  selector: 'frontend-forms-plugin-example',
+  selector: 'matex-forms-plugin-example',
   templateUrl: './forms-plugin-example.component.html',
   styleUrls: ['./forms-plugin-example.component.scss']
 })

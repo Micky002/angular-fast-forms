@@ -27,8 +27,12 @@
         "coverage/libs/material"
       ],
       "options": {
-        "jestConfig": "libs/material/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/material/jest.config.ts"
+      },
+      "configurations": {
+        "watch": {
+          "watchAll": true
+        }
       }
     },
     "lint": {

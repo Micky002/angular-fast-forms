@@ -11,11 +11,8 @@ import { FastFormsModule } from '../fast-forms.module';
         DummyInputComponent
       ]
     })
-  ],
-  declarations: [
-    DummyInputComponent
   ]
 })
-export class DummyInputModule {
+export class FastFormsTestingModule {
 
 }

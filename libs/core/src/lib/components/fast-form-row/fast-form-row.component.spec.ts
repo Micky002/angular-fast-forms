@@ -4,7 +4,7 @@ import { ControlFactoryService } from '../../service/control-factory.service';
 import { By } from '@angular/platform-browser';
 import { FastFormsModule } from '../../fast-forms.module';
 import { FastFormGroup } from '../../control/fast-form-group';
-import { DummyInputModule } from '../../test/dummy-input.module.test-util';
+import { FastFormsTestingModule } from '../../test/fast-forms-testing.module.test-util';
 import { CONTROL_PROPERTIES, FORM_CONTROL } from '../util/inject-token';
 import { FormGroup } from '@angular/forms';
 import { Provider } from '@angular/core';
@@ -20,7 +20,7 @@ describe('FastFormRowComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         FastFormsModule.forRoot(),
-        DummyInputModule
+        FastFormsTestingModule
       ],
       providers: [{
         provide: QuestionDefinition,
@@ -28,11 +28,11 @@ describe('FastFormRowComponent', () => {
           id: 'row',
           children: [{
             id: 'name',
-            type: 'dummy-input',
+            type: 'input',
             defaultValue: 'meins'
           }, {
             id: 'surname',
-            type: 'dummy-input'
+            type: 'input'
           }]
         })
       } as Provider, {
@@ -43,11 +43,11 @@ describe('FastFormRowComponent', () => {
         deps: [ControlFactoryService],
         useFactory: (cf: ControlFactoryService) => new FastFormGroup([{
           id: 'name',
-          type: 'dummy-input',
+          type: 'input',
           defaultValue: 'meins'
         }, {
           id: 'surname',
-          type: 'dummy-input'
+          type: 'input'
         }], cf)
       } as Provider]
     }).compileComponents();

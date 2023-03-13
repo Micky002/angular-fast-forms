@@ -25,5 +25,11 @@
     "angular",
     "forms",
     "dynamic"
-  ]
+  ],
+  "nx": {
+    "tags:": [
+      "scope:core",
+      "scope:lib"
+    ]
+  }
 }

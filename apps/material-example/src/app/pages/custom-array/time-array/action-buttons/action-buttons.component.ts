@@ -1,21 +1,21 @@
 import { Component, Inject } from '@angular/core';
 import {
   ActionControl,
+  ActionControlFactory,
+  ActionGroupFactory,
   ActionService,
   CONTROL_ID,
   ControlFactory,
   ControlId,
   FORM_CONTROL,
-  FormActionGroup,
-  ActionGroupFactory,
-  ActionControlFactory
+  FormActionGroup
 } from '@ngx-fast-forms/core';
 
 @ActionControl({
   type: 'time-array-actions'
 })
 @Component({
-  selector: 'frontend-action-buttons',
+  selector: 'matex-action-buttons',
   templateUrl: './action-buttons.component.html',
   styleUrls: ['./action-buttons.component.scss']
 })

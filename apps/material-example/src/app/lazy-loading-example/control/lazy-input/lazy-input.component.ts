@@ -7,10 +7,10 @@ import { FormControl } from '@angular/forms';
   type: 'lazy-input'
 })
 @Component({
-  selector: 'frontend-lazy-input',
+  selector: 'matex-lazy-input',
   templateUrl: './lazy-input.component.html',
-  styleUrls: ['./lazy-input.component.scss'],
+  styleUrls: ['./lazy-input.component.scss']
 })
-export class LazyInputComponent extends BaseFormControlComponent<any, FormControl> {
+export class LazyInputComponent extends BaseFormControlComponent<unknown, FormControl> {
 
 }

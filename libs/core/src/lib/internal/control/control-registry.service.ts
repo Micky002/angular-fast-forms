@@ -8,6 +8,7 @@ import { AFF_CONTROL_COMPONENTS } from '../../model';
 import { BaseFormControlComponent } from '../../components/base/base-control.component';
 import { BaseFormGroupComponent } from '../../components/base/base-group.component';
 import { InternalControlDefinition } from '../models';
+import { ControlFactoryMethod } from '../../question-definition';
 
 @Injectable({
   providedIn: 'any'
@@ -35,6 +36,14 @@ export class ControlRegistry extends AbstractRegistry<InternalControlComponent> 
     } else {
       return false;
     }
+  }
+
+  getControlFactory(type: string): ControlFactoryMethod | null {
+    const def = this.getDefinition(type);
+    if (def.controlFactory !== undefined) {
+      return def.controlFactory;
+    }
+    return null;
   }
 
   getDefinition(type: string): InternalControlDefinition {

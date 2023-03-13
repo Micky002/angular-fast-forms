@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { expect } from '@jest/globals';
 import { LazyInputComponent } from './lazy-input.component';
 
 describe('LazyInputComponent', () => {
@@ -8,7 +8,7 @@ describe('LazyInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LazyInputComponent],
+      declarations: [LazyInputComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(LazyInputComponent);

@@ -9,6 +9,6 @@ declare namespace Cypress {
      * @example cy.testId('greeting')
      * @example cy.testId([greeting, name])
      */
-    testId(...id: string[]): Chainable<Element>
+    testId(...id: string[]): Chainable<JQuery>;
   }
 }

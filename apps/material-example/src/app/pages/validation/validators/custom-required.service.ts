@@ -9,7 +9,7 @@ import { ValidatorFn } from '@angular/forms';
 @Injectable()
 export class CustomRequiredService implements BaseValidator {
 
-  createValidator(args: string[]): ValidatorFn {
+  createValidator(): ValidatorFn {
     return control => {
       if (control.value) {
         return null;

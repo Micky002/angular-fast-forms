@@ -1,8 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { expect } from '@jest/globals';
 import { TimeArrayComponent } from './time-array.component';
-import { ActionService, ControlFactoryService, FastFormArray, FORM_CONTROL } from '@ngx-fast-forms/core';
+import {
+  ActionService,
+  ControlFactoryService,
+  FastFormArray,
+  FastFormsModule,
+  FORM_CONTROL
+} from '@ngx-fast-forms/core';
 import { Provider } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('TimeArrayComponent', () => {
   let component: TimeArrayComponent;
@@ -10,6 +17,10 @@ describe('TimeArrayComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [
+        FastFormsModule,
+        MatIconModule
+      ],
       declarations: [
         TimeArrayComponent
       ],

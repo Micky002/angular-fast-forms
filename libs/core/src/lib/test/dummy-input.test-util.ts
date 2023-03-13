@@ -1,13 +1,21 @@
 import { Component, Inject } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { QuestionDefinition } from '../components/question-definition';
+import { FORM_CONTROL } from '../components/util/inject-token';
 import { Control } from '../control/control.decorator';
-import { FORM_CONTROL, QuestionDefinition } from '@ngx-fast-forms/core';
+import { CommonModule } from '@angular/common';
+import { TestControlType } from './control-types.test-util';
 
 @Control({
-  type: 'dummy-input'
+  type: TestControlType.INPUT
 })
 @Component({
   selector: 'aff-dummy-input',
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule
+  ],
   template: `
     <div>
       <input [formControl]="control" [id]="question.id">

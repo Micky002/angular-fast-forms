@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FastFormGroup, FastFormsService } from '@ngx-fast-forms/core';
 
 @Component({
-  selector: 'frontend-custom-array-example',
+  selector: 'matex-custom-array-example',
   templateUrl: './custom-array-example.component.html',
   styleUrls: ['./custom-array-example.component.scss']
 })

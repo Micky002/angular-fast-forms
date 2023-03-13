@@ -16,10 +16,10 @@ import { FormRenderService } from '../../internal/form-render.service';
 import { CONTROL_PROPERTIES, FORM_CONTROL } from '../util/inject-token';
 import { FastFormsRowProperties } from './models';
 import { ActionService } from '../../actions/action.service';
-import { Control } from '../../control';
 import { QuestionDefinition } from '../question-definition';
 import { AbstractControl } from '@angular/forms';
 import { ControlRegistry } from '../../internal/control/control-registry.service';
+import { Control } from '../../control/control.decorator';
 
 @Control({
   type: 'row',
@@ -38,10 +38,6 @@ export class FastFormRowComponent implements OnInit, OnChanges {
 
   @Output() codeOnSubmit = new EventEmitter();
 
-  private get children(): Question[] {
-    return this.definition.children ?? [];
-  }
-
   constructor(private uiRegistry: FormRenderService,
               private renderer: Renderer2,
               private injector: Injector,
@@ -50,6 +46,10 @@ export class FastFormRowComponent implements OnInit, OnChanges {
               @Inject(FORM_CONTROL) private control: AbstractControl,
               @Inject(CONTROL_PROPERTIES) private properties: FastFormsRowProperties,
               @Optional() private actionService: ActionService) {
+  }
+
+  private get children(): Question[] {
+    return this.definition.children ?? [];
   }
 
   ngOnInit(): void {
