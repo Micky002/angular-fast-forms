@@ -8,7 +8,7 @@ import {
 import { ValidationOptions } from './model';
 import { FastFormBuilder } from './service/fast-form-builder';
 
-export type TypedQuestion<PropType = unknown> = Omit<GeneralQuestion, 'type'> & { type: string };
+export type TypedQuestion<PropType = unknown> = Omit<GeneralQuestion<PropType>, 'type'> & { type: string };
 
 export interface GeneralQuestion<PropType = unknown> {
   type?: string;

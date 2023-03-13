@@ -51,6 +51,7 @@ export class FormRenderService {
         })
       }
     ];
+    //TODO: Check if this injection is valid
     if (question.properties) {
       providers.push({provide: CONTROL_PROPERTIES, useValue: question.properties});
     }
