@@ -47,3 +47,10 @@ export type FormControlType = 'control' | 'array' | 'group';
 export type FormActionType = 'action';
 
 
+export type EmitEventOption = {
+  emitEvent?: boolean
+}
+
+export type IndexOption = {
+  index?: number
+}

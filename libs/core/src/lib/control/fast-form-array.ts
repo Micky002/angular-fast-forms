@@ -1,5 +1,5 @@
 import { FormArray } from '@angular/forms';
-import { Question } from '../model';
+import { EmitEventOption, IndexOption, Question } from '../model';
 import { ControlFactoryService } from '../service/control-factory.service';
 
 export class FastFormArray extends FormArray {
@@ -33,8 +33,11 @@ export class FastFormArray extends FormArray {
     super.patchValue(values, options);
   }
 
-  public addRow(index?: number) {
-    this.addControlsToArray(1, index);
+  public addRow(index?: number, options?: EmitEventOption) {
+    this.addControlsToArray(1, {
+      index: index,
+      emitEvent: options?.emitEvent
+    });
   }
 
   public copyRow(index: number) {
@@ -52,9 +55,9 @@ export class FastFormArray extends FormArray {
     }
   }
 
-  private addControlsToArray(amount: number, index?: number) {
+  private addControlsToArray(amount: number, options?: EmitEventOption & IndexOption) {
     for (let i = 0; i < amount; i++) {
-      this.controlFactory.createFromQuestion(this, this.question, index);
+      this.controlFactory.createFromQuestion(this, this.question, options);
     }
   }
 
