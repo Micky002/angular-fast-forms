@@ -1,7 +1,8 @@
-import { AbstractControl, FormArray, FormGroup } from "@angular/forms";
-import { FastFormGroup } from "../control/fast-form-group";
-import { FromActionControlInternal } from "./action/action-control-internal";
-import { InternalControlType } from "./models";
+import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
+import { FastFormGroup } from '../control/fast-form-group';
+import { EmitEventOption, IndexOption } from '../model';
+import { FromActionControlInternal } from './action/action-control-internal';
+import { InternalControlType } from './models';
 
 export class ControlWrapper {
 
@@ -32,20 +33,24 @@ export class ControlWrapper {
       return new ControlWrapper(id, actionControl, 'action');
     }
   
-    public addToParent(parent: FormGroup | FormArray, index?: number) {
+    public addToParent(parent: FormGroup | FormArray, options?: IndexOption & EmitEventOption) {
       if (parent instanceof FormGroup) {
-        this.addToGroup(parent);
+        this.addToGroup(parent, {
+          emitEvent: options?.emitEvent
+        });
       } else {
-        this.addToArray(parent, index);
+        this.addToArray(parent, options?.index, {
+          emitEvent: options?.emitEvent
+        });
       }
     }
 
-    private addToGroup(parent: FormGroup) {
+    private addToGroup(parent: FormGroup, options?: EmitEventOption) {
       if (this.control !== null) {
-        parent.addControl(this.id, this.control);
+        parent.addControl(this.id, this.control, options);
       } else if (this.action !== null) {
         if (parent instanceof FastFormGroup) {
-            parent.addControl(this.id, this.action);
+            parent.addControl(this.id, this.action, options);
         } else {
             console.warn('Cannot add action to standard reactive form.');
         }
@@ -54,12 +59,12 @@ export class ControlWrapper {
       }
     }
 
-    private addToArray(parent: FormArray, index?: number) {
+    private addToArray(parent: FormArray, index?: number, options?: EmitEventOption) {
       if (this.control !== null) {
         if (index !== undefined) {
-          parent.insert(index, this.control);
+          parent.insert(index, this.control, options);
         } else {
-          parent.push(this.control);
+          parent.push(this.control, options);
         }
       } else if (this.action !== null) {
         console.warn('Actions are not supported in form arrays.');

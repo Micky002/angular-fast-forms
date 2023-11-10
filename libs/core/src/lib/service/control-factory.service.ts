@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
-import { Question } from '../model';
+import { EmitEventOption, IndexOption, Question } from '../model';
 import { ValidatorFactoryService } from '../validation/validator-factory.service';
 import { FormRenderService } from '../internal/form-render.service';
 import { FastFormArray } from '../control/fast-form-array';
@@ -23,13 +23,13 @@ export class ControlFactoryService {
               private fb: FastFormBuilder) {
   }
 
-  public createFromQuestions(parent: FormGroup, questions: Array<Question>) {
+  public createFromQuestions(parent: FormGroup, questions: Array<Question>, options?: EmitEventOption) {
     for (const question of questions || []) {
-      this.createFromQuestion(parent, question);
+      this.createFromQuestion(parent, question, options);
     }
   }
 
-  public createFromQuestion(parent: FormGroup | FormArray, question: Question, index?: number) {
+  public createFromQuestion(parent: FormGroup | FormArray, question: Question, options?: IndexOption & EmitEventOption) {
     let createdControls: ControlWrapper[];
     if (this.controlRegistry.hasItem(question.type)) {
       const def = this.controlRegistry.getDefinition(question.type);
@@ -45,7 +45,7 @@ export class ControlFactoryService {
     } else {
       createdControls = this.createControl(question);
     }
-    createdControls.map((control) => control.addToParent(parent, index));
+    createdControls.map((control) => control.addToParent(parent, options));
   }
 
   public createFormControl(question: Question): AbstractControl {
