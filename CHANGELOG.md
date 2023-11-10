@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0](https://github.com/Micky002/angular-fast-forms/compare/v2.4.0-rc.0...v2.4.0) (2023-11-10)
+
+
+### Features
+
+* [#52](https://github.com/Micky002/angular-fast-forms/issues/52) add emit event option to fast form array ([#53](https://github.com/Micky002/angular-fast-forms/issues/53)) ([0e6b9b7](https://github.com/Micky002/angular-fast-forms/commit/0e6b9b718a09de98dc25414c19fb8f15a24df603))
+
 ## [2.4.0-rc.0](https://github.com/Micky002/angular-fast-forms/compare/v2.3.0...v2.4.0-rc.0) (2023-03-13)
 
 
