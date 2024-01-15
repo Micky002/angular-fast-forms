@@ -1,3 +1,4 @@
+import { TestBed } from '@angular/core/testing';
 import { Provider } from '@angular/core';
 import { FormArray } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -11,41 +12,46 @@ describe(TimeArrayComponent.name, () => {
   let formArray: FormArray;
 
   beforeEach(() => {
+    TestBed.overrideComponent(TimeArrayComponent, {
+      add: {
+        providers: [
+          ActionService,
+          {
+            provide: FORM_CONTROL,
+            deps: [ControlFactoryService],
+            useFactory: (cf: ControlFactoryService) => {
+              formArray = new FastFormArray(
+                {
+                  id: 'group',
+                  type: 'group',
+                  children: [
+                    {
+                      id: 'name',
+                      type: 'mat-input',
+                      label: 'Name',
+                    },
+                    {
+                      id: 'dateRange',
+                      type: 'date-range',
+                    },
+                    {
+                      id: 'actions',
+                      type: 'time-array-actions',
+                    },
+                  ],
+                },
+                cf
+              );
+              return formArray;
+            },
+          } as Provider,
+        ],
+      },
+    });
     cy.mount(TimeArrayComponent, {
       declarations: [],
       imports: [NgxsModule.forRoot(), NoopAnimationsModule, CustomArrayModule],
-      providers: [
-        ActionService,
-        {
-          provide: FORM_CONTROL,
-          deps: [ControlFactoryService],
-          useFactory: (cf: ControlFactoryService) => {
-            formArray = new FastFormArray(
-              {
-                id: 'group',
-                type: 'group',
-                children: [
-                  {
-                    id: 'name',
-                    type: 'mat-input',
-                    label: 'Name',
-                  },
-                  {
-                    id: 'dateRange',
-                    type: 'date-range',
-                  },
-                  {
-                    id: 'actions',
-                    type: 'time-array-actions',
-                  },
-                ],
-              },
-              cf,
-            );
-            return formArray;
-          },
-        } as Provider,
-      ],
+      providers: undefined,
     });
   });
 
@@ -63,15 +69,24 @@ describe(TimeArrayComponent.name, () => {
     formArray.setValue([
       {
         name: 'Michael',
-        dateRange: { from: now.toJSDate(), until: now.plus({ days: 10 }).toJSDate() },
+        dateRange: {
+          from: now.toJSDate(),
+          until: now.plus({ days: 10 }).toJSDate(),
+        },
       },
       {
         name: 'Weisgrab',
-        dateRange: { from: now.plus({ days: 11 }).toJSDate(), until: now.plus({ days: 14 }).toJSDate() },
+        dateRange: {
+          from: now.plus({ days: 11 }).toJSDate(),
+          until: now.plus({ days: 14 }).toJSDate(),
+        },
       },
       {
         name: 'Test',
-        dateRange: { from: now.plus({ days: 20 }).toJSDate(), until: now.plus({ days: 22 }).toJSDate() },
+        dateRange: {
+          from: now.plus({ days: 20 }).toJSDate(),
+          until: now.plus({ days: 22 }).toJSDate(),
+        },
       },
     ]);
     cy.get('[data-test-id=entry-1] [data-test-id=copy-action]')
@@ -80,7 +95,10 @@ describe(TimeArrayComponent.name, () => {
         expect(formArray).lengthOf(4);
         expect(formArray.controls[2].value).to.deep.equal({
           name: 'Weisgrab',
-          dateRange: { from: now.plus({ days: 11 }).toJSDate(), until: now.plus({ days: 14 }).toJSDate() },
+          dateRange: {
+            from: now.plus({ days: 11 }).toJSDate(),
+            until: now.plus({ days: 14 }).toJSDate(),
+          },
         });
       })
       .get('[data-test-id=entry-1] [data-test-id=name]')
@@ -88,7 +106,9 @@ describe(TimeArrayComponent.name, () => {
       .type('New value')
       .then(() => {
         expect(formArray).lengthOf(4);
-        expect(formArray.controls[1].get('name')?.value).to.deep.equal('New value');
+        expect(formArray.controls[1].get('name')?.value).to.deep.equal(
+          'New value'
+        );
       });
   });
 });
