@@ -40,7 +40,7 @@ describe(TimeArrayComponent.name, () => {
                     },
                   ],
                 },
-                cf
+                cf,
               );
               return formArray;
             },
@@ -107,7 +107,7 @@ describe(TimeArrayComponent.name, () => {
       .then(() => {
         expect(formArray).lengthOf(4);
         expect(formArray.controls[1].get('name')?.value).to.deep.equal(
-          'New value'
+          'New value',
         );
       });
   });
