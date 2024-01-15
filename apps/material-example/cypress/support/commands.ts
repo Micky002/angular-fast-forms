@@ -1,3 +1,4 @@
+import { mount } from 'cypress/angular';
 /// <reference types="cypress" />
 // ***********************************************
 // This example commands.ts shows you how to
@@ -8,17 +9,23 @@
 // commands please read more here:
 // https://on.cypress.io/custom-commands
 // ***********************************************
-
 import Chainable = Cypress.Chainable;
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
-declare namespace Cypress {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  interface Chainable<Subject> {
-    testId(...id: string[]): Chainable<JQuery>;
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Cypress {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    interface Chainable<Subject> {
+      testId(...id: string[]): Chainable<JQuery>;
+
+      mount: typeof mount;
+    }
   }
 }
 
 Cypress.Commands.add('testId', (...ids: string[]): Chainable<JQuery> => {
-  return cy.get(`${ids.map(id => (`[data-test-id=${id}]`)).join(' ')}`);
+  return cy.get(`${ids.map((id) => `[data-test-id=${id}]`).join(' ')}`);
 });
+
+Cypress.Commands.add('mount', mount);

@@ -5,9 +5,7 @@
   "targets": {
     "build": {
       "executor": "@nrwl/angular:package",
-      "outputs": [
-        "dist/libs/material"
-      ],
+      "outputs": ["{workspaceRoot}/dist/libs/material"],
       "options": {
         "project": "libs/material/ng-package.json"
       },
@@ -23,9 +21,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/libs/material"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/libs/material"],
       "options": {
         "jestConfig": "libs/material/jest.config.ts"
       },
@@ -38,10 +34,7 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": [
-          "libs/material/**/*.ts",
-          "libs/material/**/*.html"
-        ]
+        "lintFilePatterns": ["libs/material/**/*.ts", "libs/material/**/*.html"]
       }
     },
     "component-test": {

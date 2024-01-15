@@ -1,3 +1,4 @@
+import { mount } from 'cypress/angular';
 /// <reference types="cypress" />
 // ***********************************************
 // This example commands.ts shows you how to
@@ -10,17 +11,22 @@
 // ***********************************************
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
-  declare namespace Cypress {
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Cypress {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     interface Chainable<Subject> {
       login(email: string, password: string): void;
+
+      mount: typeof mount;
     }
   }
+}
 //
 // -- This is a parent command --
-    Cypress.Commands.add('login', (email, password) => {
-      console.warn('Custom command example: Login', email, password);
-    });
+Cypress.Commands.add('login', (email, password) => {
+  console.warn('Custom command example: Login', email, password);
+});
 //
 // -- This is a child command --
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
@@ -32,3 +38,5 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('mount', mount);
