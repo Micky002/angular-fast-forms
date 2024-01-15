@@ -8,11 +8,11 @@ import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActionButtonsComponent } from './time-array/action-buttons/action-buttons.component';
 import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
 import { NgxsModule } from '@ngxs/store';
 import { CustomArrayState } from './custom-array.state';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { DateRangeInputModule } from '../custom-nested-control/date-range-input/date-range-input.module';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [TimeArrayComponent, CustomArrayExampleComponent, ActionButtonsComponent],
@@ -22,22 +22,22 @@ import { DateRangeInputModule } from '../custom-nested-control/date-range-input/
     RouterModule.forChild([
       {
         path: '',
-        component: CustomArrayExampleComponent
-      }
+        component: CustomArrayExampleComponent,
+      },
     ]),
     FastFormsModule.forChild({
       controls: [
         TimeArrayComponent,
-        ActionButtonsComponent
-      ]
+        ActionButtonsComponent,
+      ],
     }),
     MaterialFastFormsModule,
     MatIconModule,
     MatButtonModule,
     NgxsModule.forFeature([CustomArrayState]),
     NgxsFormPluginModule,
-    DateRangeInputModule
-  ]
+    DateRangeInputModule,
+  ],
 })
 export class CustomArrayModule {
 }

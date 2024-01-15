@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [
     CommonModule,
     RouterModule,
-    MatButtonModule
+    MatButtonModule,
   ],
   template: `
     <div class="example-header">
@@ -25,7 +25,7 @@ import { MatButtonModule } from '@angular/material/button';
 
     <router-outlet></router-outlet>
   `,
-  styleUrls: ['./legacy-factory.component.scss']
+  styleUrls: ['./legacy-factory.component.scss'],
 })
 export class LegacyFactoryComponent {
 }

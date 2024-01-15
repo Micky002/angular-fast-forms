@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
 import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -9,20 +8,20 @@ import { MaterialExampleComponent } from './pages/material-example/material-exam
 import { HttpClientModule } from '@angular/common/http';
 import { FormArrayComponent } from './pages/form-array/form-array.component';
 import { GithubReadmeExampleComponent } from './pages/github-readme-example/github-readme-example.component';
-import { MatButtonModule } from '@angular/material/button';
 import { FastFormsModule } from '@ngx-fast-forms/core';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
     AppComponent,
     MaterialExampleComponent,
     FormArrayComponent,
-    GithubReadmeExampleComponent
+    GithubReadmeExampleComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,61 +35,61 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     RouterModule.forRoot([
       {
         path: 'home',
-        component: MaterialExampleComponent
+        component: MaterialExampleComponent,
       },
       {
         path: 'form-array',
-        component: FormArrayComponent
+        component: FormArrayComponent,
       },
       {
         path: 'github-example',
-        component: GithubReadmeExampleComponent
+        component: GithubReadmeExampleComponent,
       },
       {
         path: 'lazy-loading-example',
         loadChildren: () =>
-            import('./lazy-loading-example/lazy-loading-example.module').then((m) => m.LazyLoadingExampleModule)
+          import('./lazy-loading-example/lazy-loading-example.module').then((m) => m.LazyLoadingExampleModule),
       },
       {
         path: 'validation',
-        loadChildren: () => import('./pages/validation/validation.module').then((m) => m.ValidationModule)
+        loadChildren: () => import('./pages/validation/validation.module').then((m) => m.ValidationModule),
       },
       {
         path: 'nested-control',
         loadChildren: () =>
-            import('./pages/custom-nested-control/custom-nested-control.module').then((m) => m.CustomNestedControlModule)
+          import('./pages/custom-nested-control/custom-nested-control.module').then((m) => m.CustomNestedControlModule),
       },
       {
         path: 'ngxs',
-        loadChildren: () => import('./pages/ngxs/example-ngxs.module').then((m) => m.ExampleNgxsModule)
+        loadChildren: () => import('./pages/ngxs/example-ngxs.module').then((m) => m.ExampleNgxsModule),
       },
       {
         path: 'custom-array',
-        loadChildren: () => import('./pages/custom-array/custom-array.module').then((m) => m.CustomArrayModule)
+        loadChildren: () => import('./pages/custom-array/custom-array.module').then((m) => m.CustomArrayModule),
       },
       {
         path: 'single-control',
-        loadChildren: () => import('./pages/single-control/single-control.module').then((m) => m.SingleControlModule)
+        loadChildren: () => import('./pages/single-control/single-control.module').then((m) => m.SingleControlModule),
       },
       {
         path: 'form-builder',
-        loadChildren: () => import('./form-builder/form-builder.module').then((m) => m.FormBuilderModule)
+        loadChildren: () => import('./form-builder/form-builder.module').then((m) => m.FormBuilderModule),
       },
       {
         path: 'legacy-factory',
-        loadChildren: () => import('./legacy-factory/legacy-factory.module').then((m) => m.LegacyFactoryModule)
+        loadChildren: () => import('./legacy-factory/legacy-factory.module').then((m) => m.LegacyFactoryModule),
       },
       {
         path: 'controls',
-        loadChildren: () => import('./controls/controls.module').then(m => m.ControlsModule)
-      }
+        loadChildren: () => import('./controls/controls.module').then(m => m.ControlsModule),
+      },
     ]),
     MatButtonModule,
     MatIconModule,
-    MatToolbarModule
+    MatToolbarModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {
 }

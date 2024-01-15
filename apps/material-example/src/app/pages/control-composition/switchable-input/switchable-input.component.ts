@@ -6,16 +6,16 @@ import {
   ControlFactoryOptions,
   FactoryQuestionDefinition,
   FastFormsModule,
-  FORM_CONTROL
+  FORM_CONTROL,
 } from '@ngx-fast-forms/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
 import { InputProperties, MaterialFastFormsModule } from '@ngx-fast-forms/material';
 import { MatIconModule } from '@angular/material/icon';
 import { SwitchableInputModel } from './switchable-input.model';
+import { MatButtonModule } from '@angular/material/button';
 
 @Control({
-  type: 'switch-input'
+  type: 'switch-input',
 })
 @Component({
   selector: 'matex-switch-input',
@@ -25,10 +25,10 @@ import { SwitchableInputModel } from './switchable-input.model';
     FastFormsModule,
     MaterialFastFormsModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
   ],
   templateUrl: './switchable-input.component.html',
-  styleUrls: ['./switchable-input.component.scss']
+  styleUrls: ['./switchable-input.component.scss'],
 })
 export class SwitchableInputComponent {
 
@@ -52,18 +52,18 @@ export class SwitchableInputComponent {
   }
 
   @ControlFactory()
-  static createControl(question: FactoryQuestionDefinition<InputProperties, SwitchableInputModel>, {fb}: ControlFactoryOptions) {
+  static createControl(question: FactoryQuestionDefinition<InputProperties, SwitchableInputModel>, { fb }: ControlFactoryOptions) {
     return new FormGroup({
       value: fb.control(question.defaultValue?.value ?? '', {
         type: 'mat-input',
         label: question.label,
         validation: {
-          required: true
-        }
+          required: true,
+        },
       }),
       disabled: new FormControl(question.defaultValue?.disabled ?? false, {
-        nonNullable: true
-      })
+        nonNullable: true,
+      }),
     });
   }
 
