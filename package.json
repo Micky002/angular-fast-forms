@@ -21,8 +21,7 @@
     "test-component:material:watch": "nx run material:component-test --watch",
     "lint:all": "nx affected --all --target=lint --exclude=storybook,storybook-e2e,material-example-e2e",
     "release": "standard-version",
-    "graph": "nx graph",
-    "dependency": "nx graph"
+    "graph": "nx graph"
   },
   "dependencies": {
     "@angular/animations": "^15.2.0",
