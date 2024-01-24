@@ -10,13 +10,14 @@ import { DoubleColumnComponent } from './component/util/double-column/double-col
   declarations: [AppComponent, DoubleColumnComponent],
   imports: [
     BrowserModule,
-    RouterModule.forRoot([], {initialNavigation: 'enabledBlocking'}),
-    FastFormsModule.forRoot()
+    RouterModule.forRoot([], { initialNavigation: 'enabledBlocking' }),
+    FastFormsModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],
   exports: [
-    DoubleColumnComponent
-  ]
+    DoubleColumnComponent,
+  ],
 })
-export class AppModule {}
+export class AppModule {
+}

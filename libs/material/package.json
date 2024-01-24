@@ -3,11 +3,11 @@
   "version": "2.4.0",
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": "^14.0.0",
-    "@angular/core": "^14.0.0",
-    "@angular/forms": "^14.0.0",
-    "@angular/platform-browser": "^14.0.0",
-    "@angular/material": "^14.0.0",
+    "@angular/common": "^15.0.0",
+    "@angular/core": "^15.0.0",
+    "@angular/forms": "^15.0.0",
+    "@angular/platform-browser": "^15.0.0",
+    "@angular/material": "^15.0.0",
     "rxjs": "^6.5.3 || ^7.4.0"
   },
   "dependencies": {
