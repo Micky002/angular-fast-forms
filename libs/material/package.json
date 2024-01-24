@@ -1,6 +1,6 @@
 {
   "name": "@ngx-fast-forms/material",
-  "version": "3.0.0-rc.0",
+  "version": "3.0.0-rc.1",
   "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^15.0.0",

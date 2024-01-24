@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0-rc.1](https://github.com/Micky002/angular-fast-forms/compare/v3.0.0-rc.0...v3.0.0-rc.1) (2024-01-24)
+
+
+### Bug Fixes
+
+* remove angular material from core dependencies ([#55](https://github.com/Micky002/angular-fast-forms/issues/55)) ([1ed46eb](https://github.com/Micky002/angular-fast-forms/commit/1ed46ebc1fabf5c29aacc5f6179cb84bf5b7be71))
+
 ## [3.0.0-rc.0](https://github.com/Micky002/angular-fast-forms/compare/v2.4.0...v3.0.0-rc.0) (2024-01-24)
 
 
