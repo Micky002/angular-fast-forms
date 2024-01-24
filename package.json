@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "nx",
-    "preinstall": "rm -rf .angular && rm -rf coverage && rm -rf dist && rm -rf tmp",
+    "preinstall": "rm -rf .angular && rm -rf coverage && rm -rf dist && rm -rf tmp && nx reset",
     "postinstall": "node ./decorate-angular-cli.js",
     "build:core": "nx run core:build",
     "build:material": "nx run material:build",
@@ -12,8 +12,7 @@
     "start:material-example": "nx serve material-example",
     "start:storybook": "nx storybook storybook",
     "pretest": "npm run lint:all",
-    "test": "nx affected --all --target=test",
-    "posttest": "npm run test-component:all",
+    "test": "nx affected --all --target=test && npm run test-component:all && npm run build:all",
     "test:ci": "nx affected --all --target=test --runInBand --coverage --parallel=1 --output-style=static",
     "test:all": "nx affected --all --target=test --coverage",
     "test-component:all": "nx affected --all --target=component-test --parallel=1",

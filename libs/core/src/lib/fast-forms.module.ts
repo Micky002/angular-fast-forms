@@ -9,13 +9,14 @@ import { FastFormRowComponent } from './components/fast-form-row/fast-form-row.c
 import { VALIDATORS } from './internal/token';
 import { AFF_CONTROL_COMPONENTS } from './model';
 import { FormRendererDirective } from './directive/form-renderer.directive';
-import { MatIconModule } from '@angular/material/icon';
 import { FastFormGroupV2Component } from './components/fast-form-group-v2/fast-form-group-v2.component';
 import { FastFormArrayV2Component } from './components/fast-form-array-v2/fast-form-array-v2.component';
-import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
-  imports: [CommonModule, ReactiveFormsModule, MatButtonModule, MatIconModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+  ],
   declarations: [
     FastFormGroupComponent,
     FastFormGroupV2Component,

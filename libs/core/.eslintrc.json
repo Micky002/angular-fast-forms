@@ -33,8 +33,7 @@
         ],
         "no-restricted-imports": [
           "error",
-          "@ngx-fast-forms/core",
-          "@angular/material"
+          "@ngx-fast-forms/core"
         ]
       }
     },
