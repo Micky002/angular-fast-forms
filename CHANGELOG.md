@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0-rc.0](https://github.com/Micky002/angular-fast-forms/compare/v2.4.0...v3.0.0-rc.0) (2024-01-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* angular 15 update (#54)
+
+### Features
+
+* angular 15 update ([#54](https://github.com/Micky002/angular-fast-forms/issues/54)) ([d162140](https://github.com/Micky002/angular-fast-forms/commit/d1621402bc5515ccecd4120767ac0d9f0b9b70c9))
+
 ## [2.4.0](https://github.com/Micky002/angular-fast-forms/compare/v2.4.0-rc.0...v2.4.0) (2023-11-10)
 
 
