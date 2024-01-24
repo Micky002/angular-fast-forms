@@ -4,7 +4,7 @@ import { GeneralFormComponent } from './general-form.component';
 import { MaterialFastFormsModule } from '@ngx-fast-forms/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DoubleColumnComponent } from "../util/double-column/double-column.component";
+import { DoubleColumnComponent } from '../util/double-column/double-column.component';
 
 export default {
   title: 'General Form Group',
@@ -15,17 +15,17 @@ export default {
         ReactiveFormsModule,
         BrowserAnimationsModule,
         FastFormsModule.forRoot(),
-        MaterialFastFormsModule
+        MaterialFastFormsModule,
       ],
       declarations: [
-        DoubleColumnComponent
-      ]
-    })
-  ]
+        DoubleColumnComponent,
+      ],
+    }),
+  ],
 } as Meta<GeneralFormComponent>;
 
 const Template: Story<GeneralFormComponent> = (args: GeneralFormComponent) => ({
-  props: args
+  props: args,
 });
 
 export const singleInput = Template.bind({});
@@ -33,8 +33,8 @@ singleInput.args = {
   formDefinition: [{
     id: 'name',
     type: 'mat-input',
-    label: 'Name'
-  }]
+    label: 'Name',
+  }],
 };
 
 export const row = Template.bind({});
@@ -45,13 +45,13 @@ row.args = {
     children: [{
       id: 'name',
       type: 'mat-input',
-      label: 'Name'
+      label: 'Name',
     }, {
       id: 'surname',
       type: 'mat-input',
-      label: 'Surname'
-    }]
-  }]
+      label: 'Surname',
+    }],
+  }],
 };
 
 export const rowDefaultValue = Template.bind({});
@@ -63,14 +63,14 @@ rowDefaultValue.args = {
       id: 'name',
       type: 'mat-input',
       label: 'Name',
-      defaultValue: 'Donald'
+      defaultValue: 'Donald',
     }, {
       id: 'surname',
       type: 'mat-input',
       label: 'Surname',
-      defaultValue: 'Duck'
-    }]
-  }]
+      defaultValue: 'Duck',
+    }],
+  }],
 };
 
 export const validation = Template.bind({});
@@ -80,14 +80,14 @@ validation.args = {
     type: 'mat-input',
     label: 'Name',
     validation: {
-      minLength: 6
-    }
+      minLength: 6,
+    },
   }, {
     id: 'surname',
     type: 'mat-input',
     label: 'Surname',
     validation: {
-      required: true
-    }
-  }]
+      required: true,
+    },
+  }],
 };

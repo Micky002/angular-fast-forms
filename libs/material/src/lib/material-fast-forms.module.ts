@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatSelectModule } from '@angular/material/select';
 import { SelectComponent } from './ui/select/select.component';
 import { InputComponent } from './ui/input/input.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { AFF_CONTROL_COMPONENTS } from '@ngx-fast-forms/core';
 import { ButtonComponent } from './action/button/button.component';
-import { MatButtonModule } from "@angular/material/button";
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   imports: [
@@ -19,12 +19,12 @@ import { MatButtonModule } from "@angular/material/button";
     MatSelectModule,
     MatIconModule,
     MatDatepickerModule,
-    MatButtonModule
+    MatButtonModule,
   ],
   declarations: [
     SelectComponent,
     InputComponent,
-    ButtonComponent
+    ButtonComponent,
   ],
   providers: [
     {
@@ -33,7 +33,7 @@ import { MatButtonModule } from "@angular/material/button";
       useValue: [
         SelectComponent,
         InputComponent,
-        ButtonComponent
+        ButtonComponent,
       ],
     },
   ],

@@ -1,4 +1,4 @@
-import { mount } from 'cypress/angular';
+import { TestBed } from '@angular/core/testing';
 import { SingleControlComponent } from './single-control.component';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -7,18 +7,20 @@ import { FastFormsModule } from '@ngx-fast-forms/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe(SingleControlComponent.name, () => {
-
   beforeEach(() => {
-    mount(SingleControlComponent, {
+    TestBed.overrideComponent(SingleControlComponent, {
+      add: { providers: [] },
+    });
+    cy.mount(SingleControlComponent, {
       declarations: [],
       imports: [
         NoopAnimationsModule,
         ReactiveFormsModule,
         MatInputModule,
         FastFormsModule.forRoot(),
-        MaterialFastFormsModule
+        MaterialFastFormsModule,
       ],
-      providers: []
+      providers: undefined,
     });
   });
 

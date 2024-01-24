@@ -9,10 +9,10 @@ import { FastFormRowComponent } from './components/fast-form-row/fast-form-row.c
 import { VALIDATORS } from './internal/token';
 import { AFF_CONTROL_COMPONENTS } from './model';
 import { FormRendererDirective } from './directive/form-renderer.directive';
-import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { FastFormGroupV2Component } from './components/fast-form-group-v2/fast-form-group-v2.component';
 import { FastFormArrayV2Component } from './components/fast-form-array-v2/fast-form-array-v2.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   imports: [CommonModule, ReactiveFormsModule, MatButtonModule, MatIconModule],
@@ -24,7 +24,7 @@ import { FastFormArrayV2Component } from './components/fast-form-array-v2/fast-f
     FastFormRowComponent,
     ArrayIndexDirective,
     FormRendererDirective,
-    FastFormArrayV2Component
+    FastFormArrayV2Component,
   ],
   exports: [
     FastFormControlComponent,
@@ -33,7 +33,7 @@ import { FastFormArrayV2Component } from './components/fast-form-array-v2/fast-f
     FastFormArrayV2Component,
     FastFormRowComponent,
     ArrayIndexDirective,
-    FormRendererDirective
+    FormRendererDirective,
   ],
   providers: [
     {
@@ -44,9 +44,9 @@ import { FastFormArrayV2Component } from './components/fast-form-array-v2/fast-f
         FastFormArrayComponent,
         FastFormArrayV2Component,
         FastFormRowComponent],
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 export class FastFormsModule {
   public static forRoot(options?: {
@@ -60,14 +60,14 @@ export class FastFormsModule {
         {
           provide: VALIDATORS,
           multi: true,
-          useValue: options?.validators ?? []
+          useValue: options?.validators ?? [],
         },
         {
           provide: AFF_CONTROL_COMPONENTS,
           multi: true,
-          useValue: options?.controls ?? []
-        }
-      ]
+          useValue: options?.controls ?? [],
+        },
+      ],
     };
   }
 
@@ -82,14 +82,14 @@ export class FastFormsModule {
         {
           provide: VALIDATORS,
           multi: true,
-          useValue: options?.validators ?? []
+          useValue: options?.validators ?? [],
         },
         {
           provide: AFF_CONTROL_COMPONENTS,
           multi: true,
-          useValue: options?.controls ?? []
-        }
-      ]
+          useValue: options?.controls ?? [],
+        },
+      ],
     };
   }
 }

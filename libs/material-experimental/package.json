@@ -2,14 +2,14 @@
   "name": "@ngx-fast-forms/material-experimental",
   "version": "2.4.0",
   "peerDependencies": {
-    "@angular/common": "^14.0.0",
-    "@angular/core": "^14.0.0",
-    "@angular/forms": "^14.0.0",
-    "@angular/platform-browser": "^14.0.0",
-    "@angular/material": "^14.0.0",
-    "@angular/material-luxon-adapter": "^14.0.0",
+    "@angular/common": "^15.0.0",
+    "@angular/core": "^15.0.0",
+    "@angular/forms": "^15.0.0",
+    "@angular/platform-browser": "^15.0.0",
+    "@angular/material": "^15.0.0",
+    "@angular/material-luxon-adapter": "^15.0.0",
     "rxjs": "^6.5.3 || ^7.4.0",
-    "luxon": "^2.0.0"
+    "luxon": "^3.0.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"

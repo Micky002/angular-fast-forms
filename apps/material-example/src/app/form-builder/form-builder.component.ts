@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
+import { MatListModule } from '@angular/material/list';
 
 @Component({
   selector: 'matex-form-builder',
@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     MatSidenavModule,
     MatListModule,
-    RouterModule
+    RouterModule,
   ],
   template: `
     <div class="menu-container">
@@ -25,7 +25,7 @@ import { RouterModule } from '@angular/router';
       </div>
     </div>
   `,
-  styleUrls: ['./form-builder.component.scss']
+  styleUrls: ['./form-builder.component.scss'],
 })
 export class FormBuilderComponent {
 }

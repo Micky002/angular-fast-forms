@@ -1,13 +1,13 @@
 {
+  "name": "material-example",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "apps/material-example/src",
   "prefix": "frontend",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/material-example",
         "index": "apps/material-example/src/index.html",
@@ -90,9 +90,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/apps/material-example"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/apps/material-example"],
       "options": {
         "jestConfig": "apps/material-example/jest.config.ts",
         "passWithNoTests": true,
@@ -115,7 +113,5 @@
       }
     }
   },
-  "tags": [
-    "scope:app"
-  ]
+  "tags": ["scope:app"]
 }

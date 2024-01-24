@@ -1,11 +1,13 @@
 {
+  "name": "material-experimental",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/material-experimental/src",
   "prefix": "angular-fast-forms",
   "targets": {
     "build": {
       "executor": "@nrwl/angular:package",
-      "outputs": ["dist/libs/material-experimental"],
+      "outputs": ["{workspaceRoot}/dist/libs/material-experimental"],
       "options": {
         "project": "libs/material-experimental/ng-package.json"
       },
@@ -21,7 +23,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/material-experimental"],
+      "outputs": ["{workspaceRoot}/coverage/libs/material-experimental"],
       "options": {
         "jestConfig": "libs/material-experimental/jest.config.ts",
         "passWithNoTests": true
