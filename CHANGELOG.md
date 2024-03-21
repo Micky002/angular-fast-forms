@@ -2,23 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [3.0.0-rc.1](https://github.com/Micky002/angular-fast-forms/compare/v3.0.0-rc.0...v3.0.0-rc.1) (2024-01-24)
+### [2.4.1](https://github.com/Micky002/angular-fast-forms/compare/v2.4.0...v2.4.1) (2024-03-21)
 
 
 ### Bug Fixes
 
-* remove angular material from core dependencies ([#55](https://github.com/Micky002/angular-fast-forms/issues/55)) ([1ed46eb](https://github.com/Micky002/angular-fast-forms/commit/1ed46ebc1fabf5c29aacc5f6179cb84bf5b7be71))
-
-## [3.0.0-rc.0](https://github.com/Micky002/angular-fast-forms/compare/v2.4.0...v3.0.0-rc.0) (2024-01-24)
-
-
-### ⚠ BREAKING CHANGES
-
-* angular 15 update (#54)
-
-### Features
-
-* angular 15 update ([#54](https://github.com/Micky002/angular-fast-forms/issues/54)) ([d162140](https://github.com/Micky002/angular-fast-forms/commit/d1621402bc5515ccecd4120767ac0d9f0b9b70c9))
+* [#56](https://github.com/Micky002/angular-fast-forms/issues/56) use raw value on copy row to include disabled rows ([#57](https://github.com/Micky002/angular-fast-forms/issues/57)) ([e560fb8](https://github.com/Micky002/angular-fast-forms/commit/e560fb8fcd96cf9063f0da8f42879fc6e9eebbf8))
 
 ## [2.4.0](https://github.com/Micky002/angular-fast-forms/compare/v2.4.0-rc.0...v2.4.0) (2023-11-10)
 
