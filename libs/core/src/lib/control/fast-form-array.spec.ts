@@ -68,7 +68,17 @@ describe('FastFormArray', () => {
     expect(array.controls[0].disabled).toBeTruthy();
     expect(array.controls[1].disabled).toBeFalsy();
     expect(array.controls[2].disabled).toBeFalsy();
+  });
 
+  it('should pass emit event option on copy', () => {
+    const array = new FastFormArray({id: 'test', type: TestControlType.INPUT}, controlFactory);
+    array.patchValue([{test: '1'}]);
+    const mockFn = jest.fn();
+    array.valueChanges.subscribe(() => mockFn());
+    array.copyRow(0, {emitEvent: false});
+    expect(mockFn).toBeCalledTimes(0);
+    array.copyRow(0);
+    expect(mockFn).toBeCalledTimes(1);
   });
 
   it('should remove row at index', () => {
