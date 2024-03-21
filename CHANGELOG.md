@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.4.1](https://github.com/Micky002/angular-fast-forms/compare/v2.4.0...v2.4.1) (2024-03-21)
+
+
+### Bug Fixes
+
+* [#56](https://github.com/Micky002/angular-fast-forms/issues/56) use raw value on copy row to include disabled rows ([#57](https://github.com/Micky002/angular-fast-forms/issues/57)) ([e560fb8](https://github.com/Micky002/angular-fast-forms/commit/e560fb8fcd96cf9063f0da8f42879fc6e9eebbf8))
+
 ## [2.4.0](https://github.com/Micky002/angular-fast-forms/compare/v2.4.0-rc.0...v2.4.0) (2023-11-10)
 
 
