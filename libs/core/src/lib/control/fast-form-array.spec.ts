@@ -58,6 +58,19 @@ describe('FastFormArray', () => {
     expect(formArray.value).toEqual(['first', 'second', 'second', 'third']);
   });
 
+  it('should keep disabled rows', () => {
+    const array = new FastFormArray({id: 'test', type: TestControlType.INPUT}, controlFactory);
+    array.patchValue([{test: '1'}, {test: '2'}]);
+    expect(array.controls).toHaveLength(2);
+    array.controls[0].disable();
+    array.copyRow(1);
+    expect(array.controls).toHaveLength(3);
+    expect(array.controls[0].disabled).toBeTruthy();
+    expect(array.controls[1].disabled).toBeFalsy();
+    expect(array.controls[2].disabled).toBeFalsy();
+
+  });
+
   it('should remove row at index', () => {
     const formArray = new FastFormArray({
       id: 'test',

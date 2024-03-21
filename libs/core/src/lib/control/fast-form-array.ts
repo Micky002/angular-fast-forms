@@ -4,10 +4,6 @@ import { ControlFactoryService } from '../service/control-factory.service';
 
 export class FastFormArray extends FormArray {
 
-  private get getValue(): any[] {
-    return this.value;
-  }
-
   constructor(private question: Question,
               private controlFactory: ControlFactoryService) {
     super([]);
@@ -41,7 +37,7 @@ export class FastFormArray extends FormArray {
   }
 
   public copyRow(index: number) {
-    const listValue = this.getValue;
+    const listValue = this.getRawValue();
     listValue.splice(index, 0, listValue[index]);
     this.patchValue(listValue);
   }
