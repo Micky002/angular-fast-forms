@@ -3,15 +3,8 @@
     <div [renderControl]="subForm"></div>
   </div>
   <div class="array-actions">
-    <button (click)="addRow(i)" mat-icon-button>
-      <mat-icon>add</mat-icon>
-    </button>
-    <button (click)="deleteRow(i)" mat-icon-button>
-      <mat-icon>delete</mat-icon>
-    </button>
+    <button (click)="addRow(i)">Add</button>
+    <button (click)="deleteRow(i)">Delete</button>
   </div>
 </div>
-<button (click)="addRow()" *ngIf="array.controls.length === 0" mat-icon-button>
-  <mat-icon>add</mat-icon>
-  <span>New entry</span>
-</button>
+<button (click)="addRow()" *ngIf="array.controls.length === 0">New entry</button>
