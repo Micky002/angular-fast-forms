@@ -51,6 +51,10 @@ export type EmitEventOption = {
   emitEvent?: boolean
 }
 
+export type OnlySelfOption = {
+  onlySelf?: boolean;
+}
+
 export type IndexOption = {
   index?: number
 }

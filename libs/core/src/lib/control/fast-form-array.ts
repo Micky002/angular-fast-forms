@@ -1,5 +1,5 @@
 import { FormArray } from '@angular/forms';
-import { EmitEventOption, IndexOption, Question } from '../model';
+import { EmitEventOption, IndexOption, OnlySelfOption, Question } from '../model';
 import { ControlFactoryService } from '../service/control-factory.service';
 
 export class FastFormArray extends FormArray {
@@ -10,9 +10,9 @@ export class FastFormArray extends FormArray {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  override setValue(values: any, options?: { onlySelf?: boolean; emitEvent?: boolean }) {
+  override setValue(values: any, options?: EmitEventOption & OnlySelfOption) {
     if (values instanceof Array) {
-      this.updateControlCount(values.length);
+      this.updateControlCount(values.length, {emitEvent: false});
     } else {
       // TODO error handling
     }
@@ -20,9 +20,9 @@ export class FastFormArray extends FormArray {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  override patchValue(values: any, options?: { onlySelf?: boolean; emitEvent?: boolean }) {
+  override patchValue(values: any, options?: EmitEventOption & OnlySelfOption) {
     if (values instanceof Array) {
-      this.updateControlCount(values.length);
+      this.updateControlCount(values.length, {emitEvent: false});
     } else {
       // TODO error handling
     }
@@ -36,18 +36,23 @@ export class FastFormArray extends FormArray {
     });
   }
 
-  public copyRow(index: number) {
+  public copyRow(index: number, options?: EmitEventOption & OnlySelfOption & { insertAfter?: number }) {
     const listValue = this.getRawValue();
     listValue.splice(index, 0, listValue[index]);
-    this.patchValue(listValue);
+    const newIndex = options?.insertAfter != null ? options?.insertAfter + 1 : index + 1;
+    this.addControlsToArray(1, {
+      index: newIndex,
+      emitEvent: false
+    });
+    this.controls[newIndex].patchValue(listValue[index], options);
   }
 
-  private updateControlCount(dataLength: number) {
+  private updateControlCount(dataLength: number, options?: EmitEventOption) {
     if (dataLength > this.controls.length) {
-      this.addControlsToArray(dataLength - this.controls.length);
+      this.addControlsToArray(dataLength - this.controls.length, options);
     }
     if (dataLength < this.controls.length) {
-      this.removeControlsFromArray(this.controls.length - dataLength);
+      this.removeControlsFromArray(this.controls.length - dataLength, options);
     }
   }
 
@@ -57,11 +62,11 @@ export class FastFormArray extends FormArray {
     }
   }
 
-  private removeControlsFromArray(amount: number, index?: number) {
+  private removeControlsFromArray(amount: number, options?: EmitEventOption & IndexOption) {
     const lastControlIndex = this.controls.length - 1;
-    const startIndex = index !== undefined ? index : lastControlIndex;
+    const startIndex = options?.index !== undefined ? options.index : lastControlIndex;
     for (let i = startIndex; i > startIndex - amount; i--) {
-      this.removeAt(i);
+      this.removeAt(i, {emitEvent: options?.emitEvent});
     }
   }
 }
