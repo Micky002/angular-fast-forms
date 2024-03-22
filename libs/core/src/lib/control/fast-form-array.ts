@@ -36,10 +36,15 @@ export class FastFormArray extends FormArray {
     });
   }
 
-  public copyRow(index: number, options?: EmitEventOption & OnlySelfOption) {
+  public copyRow(index: number, options?: EmitEventOption & OnlySelfOption & { insertAfter?: number }) {
     const listValue = this.getRawValue();
     listValue.splice(index, 0, listValue[index]);
-    this.patchValue(listValue, options);
+    const newIndex = options?.insertAfter != null ? options?.insertAfter + 1 : index + 1;
+    this.addControlsToArray(1, {
+      index: newIndex,
+      emitEvent: false
+    });
+    this.controls[newIndex].patchValue(listValue[index], options);
   }
 
   private updateControlCount(dataLength: number, options?: EmitEventOption) {
