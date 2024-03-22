@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.6.0](https://github.com/Micky002/angular-fast-forms/compare/v2.5.0...v2.6.0) (2024-03-22)
+
+
+### Features
+
+* add insert-after option when coping row ([4622a5b](https://github.com/Micky002/angular-fast-forms/commit/4622a5be246c0bbe827c1f71fe2306b5a5f59c01))
+
+
+### Bug Fixes
+
+* remove unwanted angular/material library dependency from core lib ([4574261](https://github.com/Micky002/angular-fast-forms/commit/457426142cfea0c527e8ece5a10bcc19aa81169d))
+
 ## [2.5.0](https://github.com/Micky002/angular-fast-forms/compare/v2.4.1...v2.5.0) (2024-03-21)
 
 

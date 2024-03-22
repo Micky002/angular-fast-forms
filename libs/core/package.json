@@ -1,6 +1,6 @@
 {
   "name": "@ngx-fast-forms/core",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^14.0.0",
