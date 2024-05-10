@@ -1,5 +1,6 @@
 import { Type } from '@angular/core';
-import { ControlFactoryMethod, InternalControlComponent } from '../control/models';
+import { ControlFactoryMethod } from '../../question-definition';
+import { InternalControlComponent } from '../control/models';
 import { META_COMPONENT_OPTIONS_KEY } from '../symbols';
 
 export function getControlFactory(component: Type<unknown>): ControlFactoryMethod | null {

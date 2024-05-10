@@ -1,0 +1,24 @@
+#name: "Create release"
+#
+#on:
+#  push:
+#    branches:
+#      - main
+#      - angular-14
+#
+#jobs:
+#  release:
+#    name: 'Release'
+#    runs-on: ubuntu-latest
+#    permissions:
+#      contents: write
+#      pull-requests: write
+#
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v4
+#
+#      - uses: google-github-actions/release-please-action@v4
+#        with:
+#          release-type: node
+#          target-branch: ${{ github.ref_name }}

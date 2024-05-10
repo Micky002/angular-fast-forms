@@ -24,6 +24,13 @@ form components.
 
 The documentation can be found at [angular-fast-forms.codentury.com](https://angular-fast-forms.codentury.com)
 
+## Version compatibility
+
+| Angular Version | Fast Forms Version |
+|-----------------|--------------------|
+| 14              | 2.x.x              |
+| 15              | 3.x.x              |
+
 ## Changelog
 
 See the [CHANGELOG.md](CHANGELOG.md) file for release information.
