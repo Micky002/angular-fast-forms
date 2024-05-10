@@ -1,0 +1,19 @@
+name: "Create release"
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    name: 'Release'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: google-github-actions/release-please-action@v4
+        with:
+          release-type: node
