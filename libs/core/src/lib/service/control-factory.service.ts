@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { EmitEventOption, IndexOption, Question } from '../model';
 import { ValidatorFactoryService } from '../validation/validator-factory.service';
-import { FormRenderService } from '../internal/form-render.service';
 import { FastFormArray } from '../control/fast-form-array';
 import { FastFormControl } from '../control/fast-form-control';
 import { FastFormGroup } from '../control/fast-form-group';
@@ -13,12 +12,11 @@ import { flattenArray } from '../util/list.util';
 import { FastFormBuilder } from './fast-form-builder';
 
 @Injectable({
-  providedIn: 'any'
+  providedIn: 'any',
 })
 export class ControlFactoryService {
 
   constructor(private validatorFactory: ValidatorFactoryService,
-              private renderService: FormRenderService,
               private controlRegistry: ControlRegistry,
               private fb: FastFormBuilder) {
   }
@@ -35,9 +33,9 @@ export class ControlFactoryService {
       const def = this.controlRegistry.getDefinition(question.type);
       if (def.inline) {
         createdControls = flattenArray(
-            (question.children ?? []).map((childQuestion) => {
-              return this.createControl(childQuestion);
-            })
+          (question.children ?? []).map((childQuestion) => {
+            return this.createControl(childQuestion);
+          }),
         );
       } else {
         createdControls = this.createControl(question);
@@ -50,7 +48,7 @@ export class ControlFactoryService {
 
   public createFormControl(question: Question): AbstractControl {
     return this.createControlFromDecoratedComponents(question) ??
-        this.createControlDefault(question);
+      this.createControlDefault(question);
   }
 
   private createControl(question: Question): ControlWrapper[] {
@@ -81,7 +79,7 @@ export class ControlFactoryService {
     control.setValidators(validator);
     control.setAsyncValidators(asyncValidator);
     if (question.disabled) {
-      control.disable({emitEvent: false});
+      control.disable({ emitEvent: false });
     }
     return control;
   }
@@ -93,7 +91,7 @@ export class ControlFactoryService {
         return def.controlFactory(question, {
           fb: this.fb,
           validators: this.validatorFactory.createValidators(question.validation),
-          asyncValidators: this.validatorFactory.createAsyncValidators(question.validation)
+          asyncValidators: this.validatorFactory.createAsyncValidators(question.validation),
         });
       }
     }
@@ -111,7 +109,7 @@ export class ControlFactoryService {
         return definition.controlFactory(question, {
           fb: this.fb,
           validators: this.validatorFactory.createValidators(question.validation),
-          asyncValidators: this.validatorFactory.createAsyncValidators(question.validation)
+          asyncValidators: this.validatorFactory.createAsyncValidators(question.validation),
         });
       }
     }
@@ -121,7 +119,7 @@ export class ControlFactoryService {
   private createAndInitFormGroup(question: Question): AbstractControl {
     const subFormGroup = new FastFormGroup(question.children ?? [], this);
     if (question.disabled) {
-      subFormGroup.disable({emitEvent: false});
+      subFormGroup.disable({ emitEvent: false });
     }
     return subFormGroup;
   }

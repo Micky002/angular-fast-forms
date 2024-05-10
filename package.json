@@ -2,6 +2,10 @@
   "name": "angular-fast-forms",
   "version": "3.0.0-rc.2",
   "license": "MIT",
+  "packageManager": "npm@10.2.3",
+  "engines": {
+    "node": "18.19.0"
+  },
   "scripts": {
     "ng": "nx",
     "preinstall": "rm -rf .angular && rm -rf coverage && rm -rf dist && rm -rf tmp && nx reset",
