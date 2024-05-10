@@ -5,8 +5,10 @@ import { FastFormGroup } from './fast-form-group';
 import { FromActionControlInternal as FormActionControlInternal } from '../internal/action/action-control-internal';
 import { FormControl } from '@angular/forms';
 import { FastFormBuilder } from '../service/fast-form-builder';
+import { DummyInputComponent } from '../test/dummy-input.test-util';
+import { AFF_CONTROL_COMPONENTS } from '../model';
 
-describe('FastFormGroup', () => {
+describe(FastFormGroup.name, () => {
   let controlFactory: ControlFactoryService;
 
   beforeEach(() => {
@@ -14,21 +16,26 @@ describe('FastFormGroup', () => {
       providers: [
         FastFormBuilder,
         ControlFactoryService,
-        ValidatorFactoryService
-      ]
+        ValidatorFactoryService,
+        {
+          provide: AFF_CONTROL_COMPONENTS,
+          multi: true,
+          useValue: [DummyInputComponent],
+        },
+      ],
     });
     controlFactory = TestBed.inject(ControlFactoryService);
   });
 
   it('should throw error when id is duplicated', () => {
     expect(() =>
-        new FastFormGroup([{
-          id: 'test',
-          type: ''
-        }, {
-          id: 'test',
-          type: ''
-        }], controlFactory)
+      new FastFormGroup([{
+        id: 'test',
+        type: '',
+      }, {
+        id: 'test',
+        type: '',
+      }], controlFactory),
     ).toThrowError();
   });
 

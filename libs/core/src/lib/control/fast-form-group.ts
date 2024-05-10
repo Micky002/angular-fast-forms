@@ -25,7 +25,7 @@ export class FastFormGroup extends FormGroup {
   private get mergedControls() {
     return {
       ...this.actions,
-      ...this.controls
+      ...this.controls,
     };
   }
 
@@ -60,7 +60,9 @@ export class FastFormGroup extends FormGroup {
     this._questionChanges$.next(questions);
   }
 
-  override addControl(name: string, control: AbstractControl, options?: { emitEvent?: boolean | undefined; } | undefined): void {
+  override addControl(name: string, control: AbstractControl, options?: {
+    emitEvent?: boolean | undefined;
+  } | undefined): void {
     if (control instanceof FromActionControlInternal || control instanceof FormActionGroupInternal) {
       this.actions[name] = control;
     } else {
